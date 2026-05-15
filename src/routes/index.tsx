@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   Menu,
@@ -169,9 +169,13 @@ function CreateCard({ type, description }: { type: CircleType; description: stri
       <p className="text-xs text-muted-foreground">Create a circle</p>
       <p className="mt-0.5 text-base font-semibold text-primary">{m.title}</p>
       <p className="mt-2 line-clamp-2 text-xs text-muted-foreground">{description}</p>
-      <button className="mt-3 w-full rounded-full bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground transition hover:opacity-90">
+      <Link
+        to="/circles/create/$type"
+        params={{ type }}
+        className="mt-3 inline-block w-full rounded-full bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground transition hover:opacity-90"
+      >
         Start
-      </button>
+      </Link>
     </div>
   );
 }
@@ -202,19 +206,27 @@ function CircleRow({ title, type }: { title: string; type: CircleType }) {
     <section>
       <div className="mb-2 flex items-center justify-between">
         <h2 className="text-sm font-semibold">{title}</h2>
-        <button className="flex items-center gap-0.5 text-xs font-medium text-primary">
-          see all <ChevronRight className="h-3.5 w-3.5" />
-        </button>
+        {type === "quran" ? (
+          <Link to="/circles/quran" className="flex items-center gap-0.5 text-xs font-medium text-primary">
+            see all <ChevronRight className="h-3.5 w-3.5" />
+          </Link>
+        ) : (
+          <button className="flex items-center gap-0.5 text-xs font-medium text-primary">
+            see all <ChevronRight className="h-3.5 w-3.5" />
+          </button>
+        )}
       </div>
       <div className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-1">
         {items.map((_, i) => (
-          <button
+          <Link
             key={i}
+            to="/circles/join/$id"
+            params={{ id: `${type}-${i + 1}` }}
             className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-full ring-2 ${m.ring} ${m.tone} shadow-sm transition hover:scale-105`}
             aria-label={`${title} ${i + 1}`}
           >
             <Icon className="h-7 w-7" />
-          </button>
+          </Link>
         ))}
       </div>
     </section>
