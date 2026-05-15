@@ -10,33 +10,102 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CirclesQuranRouteImport } from './routes/circles.quran'
+import { Route as CirclesSessionIdRouteImport } from './routes/circles.session.$id'
+import { Route as CirclesPublishedCodeRouteImport } from './routes/circles.published.$code'
+import { Route as CirclesJoinIdRouteImport } from './routes/circles.join.$id'
+import { Route as CirclesCreateTypeRouteImport } from './routes/circles.create.$type'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CirclesQuranRoute = CirclesQuranRouteImport.update({
+  id: '/circles/quran',
+  path: '/circles/quran',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CirclesSessionIdRoute = CirclesSessionIdRouteImport.update({
+  id: '/circles/session/$id',
+  path: '/circles/session/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CirclesPublishedCodeRoute = CirclesPublishedCodeRouteImport.update({
+  id: '/circles/published/$code',
+  path: '/circles/published/$code',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CirclesJoinIdRoute = CirclesJoinIdRouteImport.update({
+  id: '/circles/join/$id',
+  path: '/circles/join/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CirclesCreateTypeRoute = CirclesCreateTypeRouteImport.update({
+  id: '/circles/create/$type',
+  path: '/circles/create/$type',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/circles/quran': typeof CirclesQuranRoute
+  '/circles/create/$type': typeof CirclesCreateTypeRoute
+  '/circles/join/$id': typeof CirclesJoinIdRoute
+  '/circles/published/$code': typeof CirclesPublishedCodeRoute
+  '/circles/session/$id': typeof CirclesSessionIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/circles/quran': typeof CirclesQuranRoute
+  '/circles/create/$type': typeof CirclesCreateTypeRoute
+  '/circles/join/$id': typeof CirclesJoinIdRoute
+  '/circles/published/$code': typeof CirclesPublishedCodeRoute
+  '/circles/session/$id': typeof CirclesSessionIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/circles/quran': typeof CirclesQuranRoute
+  '/circles/create/$type': typeof CirclesCreateTypeRoute
+  '/circles/join/$id': typeof CirclesJoinIdRoute
+  '/circles/published/$code': typeof CirclesPublishedCodeRoute
+  '/circles/session/$id': typeof CirclesSessionIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/circles/quran'
+    | '/circles/create/$type'
+    | '/circles/join/$id'
+    | '/circles/published/$code'
+    | '/circles/session/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/circles/quran'
+    | '/circles/create/$type'
+    | '/circles/join/$id'
+    | '/circles/published/$code'
+    | '/circles/session/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/circles/quran'
+    | '/circles/create/$type'
+    | '/circles/join/$id'
+    | '/circles/published/$code'
+    | '/circles/session/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CirclesQuranRoute: typeof CirclesQuranRoute
+  CirclesCreateTypeRoute: typeof CirclesCreateTypeRoute
+  CirclesJoinIdRoute: typeof CirclesJoinIdRoute
+  CirclesPublishedCodeRoute: typeof CirclesPublishedCodeRoute
+  CirclesSessionIdRoute: typeof CirclesSessionIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +117,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/circles/quran': {
+      id: '/circles/quran'
+      path: '/circles/quran'
+      fullPath: '/circles/quran'
+      preLoaderRoute: typeof CirclesQuranRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/circles/session/$id': {
+      id: '/circles/session/$id'
+      path: '/circles/session/$id'
+      fullPath: '/circles/session/$id'
+      preLoaderRoute: typeof CirclesSessionIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/circles/published/$code': {
+      id: '/circles/published/$code'
+      path: '/circles/published/$code'
+      fullPath: '/circles/published/$code'
+      preLoaderRoute: typeof CirclesPublishedCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/circles/join/$id': {
+      id: '/circles/join/$id'
+      path: '/circles/join/$id'
+      fullPath: '/circles/join/$id'
+      preLoaderRoute: typeof CirclesJoinIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/circles/create/$type': {
+      id: '/circles/create/$type'
+      path: '/circles/create/$type'
+      fullPath: '/circles/create/$type'
+      preLoaderRoute: typeof CirclesCreateTypeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CirclesQuranRoute: CirclesQuranRoute,
+  CirclesCreateTypeRoute: CirclesCreateTypeRoute,
+  CirclesJoinIdRoute: CirclesJoinIdRoute,
+  CirclesPublishedCodeRoute: CirclesPublishedCodeRoute,
+  CirclesSessionIdRoute: CirclesSessionIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
