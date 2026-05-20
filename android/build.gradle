@@ -1,0 +1,45 @@
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.layout.buildDirectory
+}
+
+subprojects {
+    def fixProject = { prj ->
+        if (prj.hasProperty('android')) {
+            prj.android {
+                if (namespace == null) {
+                    namespace prj.group
+                }
+                compileOptions {
+                    sourceCompatibility JavaVersion.VERSION_17
+                    targetCompatibility JavaVersion.VERSION_17
+                }
+            }
+        }
+    }
+    if (project.state.executed) {
+        fixProject(project)
+    } else {
+        project.afterEvaluate { fixProject(it) }
+    }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions {
+            jvmTarget = "17"
+        }
+    }
+}

@@ -1,0 +1,53 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../../../constants/image_strings.dart';
+import '../../../../constants/sizes.dart';
+import '../../../../constants/text_strings.dart';
+import '../sign_up/signup_screen.dart';
+
+class login_footer_widget extends StatelessWidget {
+  const login_footer_widget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Text("OR"),
+        const SizedBox(
+          height: tFormHeight - 20,
+        ),
+        SizedBox(
+          width: double.infinity,
+          child: OutlinedButton.icon(
+            icon: const Image(
+              image: AssetImage(tgoogle),
+              width: 20.0,
+            ),
+            onPressed: () {},
+            label: Text(tSignInWithGoogle.toUpperCase()),
+          ),
+        ),
+        const SizedBox(
+          height: tFormHeight - 20,
+        ),
+        TextButton(
+          onPressed: () => Get.to(
+            () => const SignUpScreen(),
+          ),
+          child: Text.rich(
+            TextSpan(
+                text: tDontHaveAnAccount,
+                style: Theme.of(context).textTheme.displaySmall,
+                children: const [
+                  TextSpan(text: tSignUp, style: TextStyle(color: Colors.blue))
+                ]),
+          ),
+        )
+      ],
+    );
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "997595468011",
+    "project_id": "circlesonlinemuslim",
+    "storage_bucket": "circlesonlinemuslim.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997595468011:android:a887a4ef9e9f50181caeae",
+        "android_client_info": {
+          "package_name": "com.example.circles_online_muslim_community"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "997595468011-2vvjqu1ps3krngjl6tlbc6mofvrppc2j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.circles_online_muslim_community",
+            "certificate_hash": "5388bb311df56e360a21c5e291f486cde538ba26"
+          }
+        },
+        {
+          "client_id": "997595468011-td13mdg3fn9hg8qr85k9rrmqs7v9vdbo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqKaFkHeAEBjXOIuuS2Bcg8yiZiReMQiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "997595468011-td13mdg3fn9hg8qr85k9rrmqs7v9vdbo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "997595468011-54t6o667boo1s6hiilt7q9gtpic7fm8f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.circlesOnlineMuslimCommunity"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
