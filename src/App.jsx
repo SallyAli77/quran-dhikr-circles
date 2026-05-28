@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { AppProvider, useApp } from './context/AppContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -58,6 +59,7 @@ export default function App() {
   return (
     <AppProvider>
       <AppContent />
+      <SpeedInsights />
     </AppProvider>
   );
 }
