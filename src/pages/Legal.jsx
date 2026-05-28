@@ -78,38 +78,38 @@ export default function Legal({ initialTab = "privacy", setActivePage }) {
               {language === 'en' ? (
                 <>
                   <h3>1. Introduction</h3>
-                  <p>Welcome to ArabicMuslim ("we," "our," "us"). We are highly committed to protecting your personal privacy and secure usage of our digital portal. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, including any other media form, media channel, or mobile website related or connected thereto.</p>
+                  <p>Welcome to ArabicMuslim ("we," "our," "us"). We are deeply committed to protecting your personal privacy and providing a secure, spiritually enriching digital experience. This Privacy Policy outlines how we collect, use, safeguard, and disclose your information when you interact with our Islamic portal, including memorizing the Holy Quran, reciting daily Adhkar, using our interactive Tasbih counter, joining or creating collaborative recitation/memorization circles, browsing and purchasing Islamic e-books and Arabic-learning materials, checking accurate prayer times, posting spiritual reflections, and tracking your personal progress and spiritual statistics.</p>
                   
                   <h3>2. Collection of Information</h3>
-                  <p>We may collect information about you in a variety of ways. The information we may collect on the Site includes:</p>
+                  <p>We may collect information about you in several ways to support and improve your journey. The categories of information we collect include:</p>
                   <ul>
-                    <li><strong>Personal Data:</strong> Personally identifiable information, such as your name, email address, and avatar selections that you voluntarily give to us when you register on our platform, participate in Dhikr circles, or post on our community reflections board.</li>
-                    <li><strong>Usage Data:</strong> Technical information automatically collected by our servers, such as your IP address, browser type, operating system, access times, pages viewed, and other usage patterns inside the platform.</li>
-                    <li><strong>Local Storage:</strong> To enrich your premium spiritual experience, we cache data (such as your personal Tasbih counts, saved bookmarks, and custom circles) locally on your device's browser using local storage.</li>
+                    <li><strong>Voluntary Personal Data:</strong> Personally identifiable information, such as your name, email address, profile avatar, and account credentials that you voluntarily share when you register an account, participate in Dhikr or Quran circles, purchase Arabic language learning e-books, or post reflections on our community boards.</li>
+                    <li><strong>Automated Technical Data:</strong> Server log information collected automatically, such as your IP address, browser type, operating system, access duration, and pages viewed, which helps us ensure platform security and calculate highly accurate prayer times based on your approximate location.</li>
+                    <li><strong>Secure Local Storage:</strong> To provide a seamless and fast experience, we use browser local storage on your device to cache your personal daily Tasbih counts, saved bookmarks, customized goals, and circles you have joined or created.</li>
                   </ul>
 
                   <div style={styles.adSenseNotice} className="glass-panel">
                     <h3>⚠️ 3. Google AdSense & Third-Party Advertising Disclosures</h3>
-                    <p>To support this free premium platform, we integrate Google AdSense to serve ads. Google requires publishers to make the following disclosures regarding data collection and tracking cookies:</p>
+                    <p>To keep this premium platform free for all Muslims globally, we serve advertisements through Google AdSense. In compliance with Google's strict publisher policies, please note the following disclosures:</p>
                     <ul>
-                      <li>Third-party vendors, including Google, use cookies to serve ads based on your prior visits to our website or other websites.</li>
-                      <li>Google's use of advertising cookies enables it and its partners to serve ads to our users based on their visit to our site and/or other sites on the Internet.</li>
-                      <li>Users may opt-out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" style={styles.legalLink}>Google Ads Settings <ExternalLink size={12} style={{ display: 'inline', marginLeft: '2px' }} /></a>. Alternatively, you can manage tracking consent using our integrated Google Certified Consent Management Platform (CMP).</li>
+                      <li>Third-party vendors, including Google, use cookies to serve ads based on your prior visits to our website or other websites on the internet.</li>
+                      <li>Google's use of advertising cookies enables it and its partners to serve personalized ads to our users based on their visits to our site and/or other sites across the web.</li>
+                      <li>You may opt-out of personalized advertising at any time by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" style={styles.legalLink}>Google Ads Settings <ExternalLink size={12} style={{ display: 'inline', marginLeft: '2px' }} /></a>, or manage your tracking preferences using our integrated Google-certified Consent Management Platform (CMP).</li>
                     </ul>
                   </div>
 
                   <h3>4. How We Use Your Information</h3>
-                  <p>Having accurate information about you allows us to provide you with a smooth, efficient, and customized experience. Specifically, we may use information collected about you via the Site to:</p>
+                  <p>We process your information to deliver a smooth, efficient, and customized spiritual experience. Specifically, we use your data to:</p>
                   <ul>
-                    <li>Create and manage your user account, profile, and achievements.</li>
-                    <li>Synchronize and display active collaborative Dhikr & Quran circles globally.</li>
-                    <li>Process reflections, likes, and comment replies on the community reflection boards.</li>
-                    <li>Deliver premium newsletters, spiritual insight posts, and platform updates.</li>
-                    <li>Analyze usage trends and technical performance to optimize loading times.</li>
+                    <li>Manage your user profile and track your daily Quran memorization statistics and spiritual achievements.</li>
+                    <li>Coordinate and update real-time collaborative recitation, memorization, or Tasbih circles, showing dynamic participant counts.</li>
+                    <li>Process purchases and manage access to your acquired Islamic e-books and Arabic learning resources.</li>
+                    <li>Render community reflections, comments, likes, and interactions on our social boards.</li>
+                    <li>Calculate and display precise prayer times and deliver spiritual newsletters and platform updates.</li>
                   </ul>
 
-                  <h3>5. Sharing of Information</h3>
-                  <p>We do not sell, rent, or trade your personal information with third parties. We will only share collected data when required by law or to protect our absolute legal safety.</p>
+                  <h3>5. Sharing and Safeguarding Your Data</h3>
+                  <p>We maintain a strict policy of never selling, renting, or trading your personal data with third parties for commercial or marketing purposes. Information is only shared when strictly required by law or to protect platform security.</p>
 
                   <h3>6. Contact Us</h3>
                   <p>If you have any questions, comments, or concerns regarding this Privacy Policy, please feel free to reach out to us at: <strong>support@arabicmuslim.com</strong></p>
@@ -171,36 +171,36 @@ export default function Legal({ initialTab = "privacy", setActivePage }) {
               {language === 'en' ? (
                 <>
                   <h3>1. Agreement to Terms</h3>
-                  <p>These Terms of Use constitute a legally binding agreement made between you, whether personally or on behalf of an entity ("you") and ArabicMuslim ("we," "us," or "our"), concerning your access to and use of our platform.</p>
-                  <p>By accessing the Site, you acknowledge that you have read, understood, and agreed to be bound by all of these Terms of Use. If you do not agree with all of these terms, then you are expressly prohibited from using the Site and must discontinue use immediately.</p>
+                  <p>Welcome to ArabicMuslim. These Terms of Use constitute a legally binding agreement made between you, whether personally or on behalf of an entity ("you") and ArabicMuslim ("we," "us," or "our"), concerning your access to and use of our platform.</p>
+                  <p>By accessing the Site, you acknowledge that you have read, understood, and agreed to be bound by all of these Terms of Use. If you do not agree with all of these terms, you are expressly prohibited from using our services and must discontinue use immediately.</p>
 
                   <h3>2. Intellectual Property Rights</h3>
-                  <p>Unless otherwise indicated, the Site is our proprietary property and all source code, databases, functionality, software, website designs, audio, video, text, photographs, and graphics on the Site (collectively, the "Content") and the trademarks, service marks, and logos contained therein (the "Marks") are owned or controlled by us or licensed to us, and are protected by copyright and trademark laws.</p>
-                  <p>The content is provided on the Site "AS IS" for your personal, spiritual, and educational use only. No part of the Site and no Content or Marks may be copied, reproduced, aggregated, republished, uploaded, posted, publicly displayed, encoded, translated, transmitted, distributed, sold, licensed, or otherwise exploited for any commercial purpose whatsoever, without our express prior written permission.</p>
+                  <p>All source code, user interface designs, databases, functionality, software, website designs, audio, text, articles, Arabic-learning e-books, and graphics on the Site (collectively, the "Content") are our proprietary property or licensed to us, and are protected by international copyright and trademark laws.</p>
+                  <p>The content is provided on the Site "AS IS" for your personal, spiritual, and educational use only. You may not copy, reproduce, republish, distribute, sell, or exploit any e-book, educational resource, or content for commercial purposes without our express prior written consent.</p>
 
                   <h3>3. User Representations</h3>
-                  <p>By using the Site, you represent and warrant that:</p>
+                  <p>By registering or using this platform, you represent and warrant that:</p>
                   <ul>
-                    <li>All registration information you submit will be true, accurate, current, and complete.</li>
-                    <li>You will maintain the accuracy of such information and promptly update such registration information as necessary.</li>
-                    <li>You have the legal capacity and you agree to comply with these Terms of Use.</li>
-                    <li>You will not use the Site for any illegal or unauthorized purpose, or violate any applicable local, national, or international laws.</li>
+                    <li>All registration information you submit is true, accurate, current, and complete.</li>
+                    <li>You will maintain the security of your credentials and update your profile information as necessary.</li>
+                    <li>You have the legal capacity and agree to comply with these Terms of Service.</li>
+                    <li>You will not use the platform for any unauthorized, harmful, or illegal activities.</li>
                   </ul>
 
                   <h3>4. Prohibited Activities</h3>
-                  <p>You may not access or use the Site for any purpose other than that for which we make the Site available. The Site may not be used in connection with any commercial endeavors except those that are specifically endorsed or approved by us. Prohibited activities include, but are not limited to:</p>
+                  <p>We strive to maintain a respectful, peaceful, and clean Islamic community space. You agree not to engage in any of the following prohibited behaviors:</p>
                   <ul>
-                    <li>Posting offensive, disrespectful, or inappropriate content on the community reflection boards. We maintain a zero-tolerance policy for sectarian, political, or aggressive rhetoric.</li>
-                    <li>Attempting to bypass any security measures of the platform designed to prevent or restrict access to the Site.</li>
-                    <li>Interfering with, disrupting, or creating an undue burden on the Site or the networks connected to the Site.</li>
-                    <li>Using automated systems, scripts, bots, or scrapers to harvest data or interact with our collaborative tasbih counters and Dhikr circles.</li>
+                    <li>Posting offensive, disrespectful, political, sectarian, or aggressive content on our community reflection boards. We operate a strict zero-tolerance policy for hate speech or harassment.</li>
+                    <li>Attempting to bypass security barriers, hack the website, or disrupt our servers and database connections.</li>
+                    <li>Using automated systems, scripts, bots, or scrapers to falsely manipulate Tasbih counts, scrape e-book products, or harvest user data.</li>
+                    <li>Attempting to acquire paid e-books or digital materials through fraudulent methods, or distributing them in violation of copyright laws.</li>
                   </ul>
 
-                  <h3>5. Termination</h3>
-                  <p>We reserve the right, in our sole discretion and without notice or liability, to deny access to and use of the site (including blocking certain IP addresses), to anyone for any reason or for no reason, including without limitation for breach of any representation, warranty, or covenant contained in these terms of use or of any applicable law or regulation.</p>
+                  <h3>5. Service Modification & Termination</h3>
+                  <p>We reserve the right, in our sole discretion and without notice or liability, to restrict or terminate access to the site (including blocking certain IP addresses) to any user who violates these Terms, disrupts our Dhikr circles, or threatens the safety of our spiritual community.</p>
 
                   <h3>6. Disclaimer of Warranties</h3>
-                  <p>The site is provided on an AS-IS and AS-AVAILABLE basis. You agree that your use of the site and our services will be at your sole risk. To the fullest extent permitted by law, we disclaim all warranties, express or implied, in connection with the site and your use thereof, including, without limitation, the implied warranties of merchantability, fitness for a particular purpose, and non-infringement.</p>
+                  <p>Our platform services, including prayer time calculations, counters, and educational assets, are provided on an "as-is" and "as-available" basis without warranties of any kind. While we strive for absolute accuracy and excellence, we are not liable for temporary technical interruptions or minor calculation variances.</p>
                 </>
               ) : (
                 <>
