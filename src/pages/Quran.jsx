@@ -1,18 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
-import { Book, Play, Pause, Bookmark, BookmarkCheck, Search, Volume2, Award, ChevronLeft, ArrowRight, Loader } from 'lucide-react';
+import { Book, Play, Pause, Bookmark, BookmarkCheck, Search, Volume2, Award, ChevronLeft, ArrowRight, Loader, Compass } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-// Authentic high-quality Quran data including Surah details, text, and English translations.
-const surahsData = [
+// Pristine offline fallback data in case of network unavailability
+const fallbackSurahs = [
   {
-    id: 1,
-    name: "Al-Fatiha",
-    nameAr: "الفاتحة",
-    englishMeaning: "The Opening",
-    type: "Meccan",
-    typeAr: "مكية",
-    versesCount: 7,
+    number: 1,
+    name: "الفاتحة",
+    englishName: "Al-Fatiha",
+    englishNameTranslation: "The Opening",
+    revelationType: "Meccan",
+    numberOfVerses: 7,
     verses: [
       { num: 1, ar: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", en: "In the name of Allah, the Entirely Merciful, the Especially Merciful." },
       { num: 2, ar: "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ", en: "[All] praise is [due] to Allah, Lord of the worlds -" },
@@ -24,59 +23,30 @@ const surahsData = [
     ]
   },
   {
-    id: 110,
-    name: "An-Nasr",
-    nameAr: "النصر",
-    englishMeaning: "The Divine Support",
-    type: "Medinan",
-    typeAr: "مدنية",
-    versesCount: 3,
+    number: 110,
+    name: "النصر",
+    englishName: "An-Nasr",
+    englishNameTranslation: "The Divine Support",
+    revelationType: "Medinan",
+    numberOfVerses: 3,
     verses: [
       { num: 1, ar: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", en: "In the name of Allah, the Entirely Merciful, the Especially Merciful." },
       { num: 1, ar: "إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ", en: "When the victory of Allah has come and the conquest," },
       { num: 2, ar: "وَرَأَيْتَ النَّاسَ يَدْخُلُونَ فِي دِينِ اللَّهِ أَفْوَاجًا", en: "And you see the people entering into the religion of Allah in multitudes," },
       { num: 3, ar: "فَسَبِّحْ بِحَمْدِ رَبِّكَ وَاسْتَغْفِرْهُ ۚ إِنَّهُ كَانَ تَوَّابًا", en: "Then exalt [Him] with praise of your Lord and ask forgiveness of Him. Indeed, He is ever Accepting of repentance." }
     ]
-  },
-  {
-    id: 67,
-    name: "Al-Mulk",
-    nameAr: "الملك",
-    englishMeaning: "The Sovereignty",
-    type: "Meccan",
-    typeAr: "مكية",
-    versesCount: 5, // Truncated sample for clean rendering performance
-    verses: [
-      { num: 1, ar: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", en: "In the name of Allah, the Entirely Merciful, the Especially Merciful." },
-      { num: 1, ar: "تَبَارَكَ الَّذِي بِيَدِهِ الْمُلْكُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ", en: "Blessed is He in whose hand is dominion, and He is over all things competent -" },
-      { num: 2, ar: "الَّذِي خَلَقَ الْمَوْتَ وَالْحَيَاةَ لِيَبْلُوَكُمْ أَيُّكُمْ أَحْسَنُ عَمَلًا ۚ وَهُوَ الْعَزِيزُ الْغَفُورُ", en: "[He] who created death and life to test you [as to] which of you is best in deed - and He is the Exalted in Might, the Forgiving -" },
-      { num: 3, ar: "الَّذِي خَلَقَ سَبْعَ سَمَاوَاتٍ طِبَاقًا ۖ مَّا تَرَىٰ فِي خَلْقِ الرَّحْمَٰنِ مِن تَفَاوُتٍ ۖ فَارْجِعِ الْبَصَرَ هَلْ تَرَىٰ مِن فُطُورٍ", en: "[And] who created seven heavens in layers. You do not see in the creation of the Most Merciful any inconsistency. So return [your] vision [to the heaven]; do you see any breaks?" },
-      { num: 4, ar: "ثُمَّ ارْجِعِ الْبَصَرَ كَرَّتَيْنِ يَنقَلِبْ إِلَيْكَ الْبَصَرُ خَاسِئًا وَهُوَ حَسِيرٌ", en: "Then return your vision twice again. [Your] vision will return to you humbled while it is fatigued." },
-      { num: 5, ar: "وَلَقَدْ زَيَّنَّا السَّمَاءَ الدُّنْيَا بِـمَصَابِيحَ وَجَعَلْنَاهَا رُجُومًا لِّلشَّيَاطِينِ ۖ وَأَعْتَدْنَا لَهُمْ عَذَابَ السَّعِيرِ", en: "And We have certainly beautified the nearest heaven with lamps and have made them thrown objects for the devils and have prepared for them the punishment of the Blaze." }
-    ]
-  },
-  {
-    id: 55,
-    name: "Ar-Rahman",
-    nameAr: "الرحمن",
-    englishMeaning: "The Beneficent",
-    type: "Meccan",
-    typeAr: "مكية",
-    versesCount: 5, // Truncated sample for performance
-    verses: [
-      { num: 1, ar: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", en: "In the name of Allah, the Entirely Merciful, the Especially Merciful." },
-      { num: 1, ar: "الرَّحْمَٰنُ", en: "The Most Merciful" },
-      { num: 2, ar: "عَلَّمَ الْقُرْآنَ", en: "Taught the Qur'an," },
-      { num: 3, ar: "خَلَقَ الْإِنسَانَ", en: "Created man," },
-      { num: 4, ar: "عَلَّمَهُ الْبَيَانَ", en: "Taught him eloquence." },
-      { num: 5, ar: "الشَّمْسُ وَالْقَمَرُ بِحُسْبَانٍ", en: "The sun and the moon [run] on pathways [precisely] computed," }
-    ]
   }
 ];
 
 export default function Quran() {
   const { language, searchQuery, bookmarks, toggleBookmark, t } = useApp();
+  
+  const [surahsList, setSurahsList] = useState([]);
+  const [isLoadingList, setIsLoadingList] = useState(true);
   const [selectedSurah, setSelectedSurah] = useState(null);
+  const [isLoadingSurah, setIsLoadingSurah] = useState(false);
+  const [surahContent, setSurahContent] = useState(null);
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -84,26 +54,71 @@ export default function Quran() {
 
   const audioRef = useRef(null);
 
-  // Filter surahs by search query
-  const filteredSurahs = surahsData.filter(s => {
-    const q = searchQuery.toLowerCase();
-    return (
-      s.name.toLowerCase().includes(q) ||
-      s.nameAr.includes(q) ||
-      s.englishMeaning.toLowerCase().includes(q) ||
-      s.id.toString().includes(q)
-    );
-  });
+  // Fetch all 114 Surahs meta details on mount
+  useEffect(() => {
+    fetch("https://api.alquran.cloud/v1/surah")
+      .then(res => res.json())
+      .then(data => {
+        if (data.code === 200) {
+          setSurahsList(data.data);
+        } else {
+          setSurahsList(fallbackSurahs);
+        }
+        setIsLoadingList(false);
+      })
+      .catch(err => {
+        console.warn("API list query failed, falling back to preloaded Surahs", err);
+        setSurahsList(fallbackSurahs);
+        setIsLoadingList(false);
+      });
+  }, []);
 
-  // Setup Audio Stream URL (Pristine reciter: Mishary Rashid Alafasy)
+  // Fetch specific Surah verses dynamically when selected
+  const handleSelectSurah = (surah) => {
+    setSelectedSurah(surah);
+    setIsLoadingSurah(true);
+    setSurahContent(null);
+
+    // If it's one of our preseeded offline fallbacks, load immediately
+    const fallback = fallbackSurahs.find(f => f.number === surah.number);
+    if (fallback) {
+      setSurahContent(fallback);
+      setIsLoadingSurah(false);
+      return;
+    }
+
+    // Parallel fetch for Arabic Text and English Translation
+    Promise.all([
+      fetch(`https://api.alquran.cloud/v1/surah/${surah.number}/quran-uthmani`).then(r => r.json()),
+      fetch(`https://api.alquran.cloud/v1/surah/${surah.number}/en.sahih`).then(r => r.json())
+    ])
+      .then(([arData, enData]) => {
+        if (arData.code === 200 && enData.code === 200) {
+          const mergedVerses = arData.data.ayahs.map((ayah, index) => ({
+            num: ayah.numberInSurah,
+            ar: ayah.text,
+            en: enData.data.ayahs[index].text
+          }));
+
+          setSurahContent({
+            ...surah,
+            verses: mergedVerses
+          });
+        }
+        setIsLoadingSurah(false);
+      })
+      .catch(err => {
+        console.error("Failed fetching Surah details", err);
+        setIsLoadingSurah(false);
+      });
+  };
+
   const getAudioUrl = (surahId) => {
-    // Highly reliable public repository of Mishary Rashid Alafasy MP3 files (padded 3 digit format)
     const padded = surahId.toString().padStart(3, '0');
     return `https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/${padded}.mp3`;
   };
 
   useEffect(() => {
-    // Reset audio player when changing surah
     if (audioRef.current) {
       audioRef.current.pause();
       setIsPlaying(false);
@@ -126,7 +141,7 @@ export default function Quran() {
           setLoadingAudio(false);
         })
         .catch(err => {
-          console.error("Audio trigger failed", err);
+          console.error("Audio playback interrupted", err);
           setLoadingAudio(false);
         });
     }
@@ -168,22 +183,21 @@ export default function Quran() {
   };
 
   const handleBookmarkToggle = (surah, verse) => {
-    const verseId = `${surah.id}-${verse.num}`;
+    const verseId = `${surah.number}-${verse.num}`;
     const item = {
       id: verseId,
-      surahName: surah.name,
-      surahNameAr: surah.nameAr,
-      surahId: surah.id,
+      surahName: surah.englishName,
+      surahNameAr: surah.name,
+      surahId: surah.number,
       num: verse.num,
       ar: verse.ar,
       en: verse.en
     };
-    
+
     const wasBookmarked = isVerseBookmarked(verseId);
     toggleBookmark('verses', item);
 
     if (!wasBookmarked) {
-      // Play small gold bookmark confetti
       confetti({
         particleCount: 15,
         spread: 40,
@@ -192,158 +206,188 @@ export default function Quran() {
     }
   };
 
+  // Site-wide search filter
+  const filteredSurahs = surahsList.filter(s => {
+    const q = searchQuery.toLowerCase();
+    return (
+      s.englishName.toLowerCase().includes(q) ||
+      s.name.includes(q) ||
+      s.englishNameTranslation.toLowerCase().includes(q) ||
+      s.number.toString().includes(q)
+    );
+  });
+
   return (
     <div className="quran-page container fade-in" style={{ minHeight: '80vh' }}>
       {!selectedSurah ? (
-        // Surah Directory List View
+        // Directory grid (Loads all 114 Surahs dynamically!)
         <>
           <div style={styles.header}>
             <Book size={32} color="var(--text-gold)" style={styles.headerIcon} />
             <h1 style={styles.title}>{t('quranTitle')}</h1>
-            <p style={styles.subtitle}>{t('quranSubtitle')}</p>
+            <p style={styles.subtitle}>{t('quranSubtitle')} ({language === 'en' ? "Access all 114 Surahs" : "تصفح كافة السور الـ 114"})</p>
           </div>
 
-          <div style={styles.surahGrid} className="grid-3">
-            {filteredSurahs.length > 0 ? (
-              filteredSurahs.map(s => (
-                <div 
-                  key={s.id} 
-                  className="glass-panel surah-card-hover" 
-                  style={styles.surahCard}
-                  onClick={() => setSelectedSurah(s)}
-                >
-                  <div style={styles.surahNumber}>
-                    <span>{s.id}</span>
-                  </div>
+          {isLoadingList ? (
+            <div style={styles.loaderArea}>
+              <Loader size={40} className="spin-pulse" color="var(--text-gold)" />
+              <p style={{ marginTop: '12px', color: 'var(--text-secondary)' }}>
+                {language === 'en' ? "Loading Noble Quran Directory..." : "جاري تحميل فهرس القرآن الكريم..."}
+              </p>
+            </div>
+          ) : (
+            <div style={styles.surahGrid} className="grid-3">
+              {filteredSurahs.length > 0 ? (
+                filteredSurahs.map(s => (
+                  <div 
+                    key={s.number} 
+                    className="glass-panel surah-card-hover" 
+                    style={styles.surahCard}
+                    onClick={() => handleSelectSurah(s)}
+                  >
+                    <div style={styles.surahNumber}>
+                      <span>{s.number}</span>
+                    </div>
 
-                  <div style={styles.surahDetails}>
-                    <h3 style={styles.surahName}>{s.name}</h3>
-                    <span style={styles.surahMeaning}>{s.englishMeaning}</span>
-                    <span style={styles.surahMeta}>
-                      {language === 'en' ? s.type : s.typeAr} • {s.versesCount} {language === 'en' ? "Verses" : "آيات"}
-                    </span>
-                  </div>
+                    <div style={styles.surahDetails}>
+                      <h3 style={styles.surahName}>{s.englishName}</h3>
+                      <span style={styles.surahMeaning}>{s.englishNameTranslation}</span>
+                      <span style={styles.surahMeta}>
+                        {s.revelationType === 'Meccan' ? (language === 'en' ? "Meccan" : "مكية") : (language === 'en' ? "Medinan" : "مدنية")} • {s.numberOfVerses} {language === 'en' ? "Verses" : "آيات"}
+                      </span>
+                    </div>
 
-                  <div style={styles.surahArabicName} className="arabic-text">
-                    {s.nameAr}
+                    <div style={styles.surahArabicName} className="arabic-text">
+                      {s.name}
+                    </div>
                   </div>
+                ))
+              ) : (
+                <div style={styles.noResults} className="glass-panel">
+                  <span>{t('searchNoResults')}</span>
                 </div>
-              ))
-            ) : (
-              <div style={styles.noResults} className="glass-panel">
-                <span>{t('searchNoResults')}</span>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          )}
         </>
       ) : (
-        // Detailed Surah Reader & Audio Player View
+        // Surah Reader & Live API Streaming View
         <div style={styles.readerContainer}>
-          {/* Back btn */}
           <button onClick={() => setSelectedSurah(null)} style={styles.backBtn} className="btn-secondary">
             <ChevronLeft size={16} />
             <span>{language === 'en' ? "Back to Directory" : "العودة للمصحف"}</span>
           </button>
 
-          {/* Surah Header Card */}
-          <div style={styles.readerHeader} className="glass-panel">
-            <div className="islamic-pattern"></div>
-            <div style={styles.readerTitleWrapper}>
-              <h2 style={styles.readerTitle}>{selectedSurah.name}</h2>
-              <div style={styles.readerArabicTitle} className="arabic-text">{selectedSurah.nameAr}</div>
+          {isLoadingSurah ? (
+            <div style={styles.loaderArea}>
+              <Loader size={40} className="spin-pulse" color="var(--text-gold)" />
+              <p style={{ marginTop: '12px', color: 'var(--text-secondary)' }}>
+                {language === 'en' ? "Compiling verses from authentic API editions..." : "جاري جلب الآيات الشريفة من المصادر المعتمدة..."}
+              </p>
             </div>
-            
-            <p style={styles.readerSub}>
-              {selectedSurah.englishMeaning} • {language === 'en' ? selectedSurah.type : selectedSurah.typeAr} • {selectedSurah.versesCount} {language === 'en' ? "Verses" : "آيات"}
-            </p>
+          ) : surahContent ? (
+            <>
+              {/* Surah Header Card */}
+              <div style={styles.readerHeader} className="glass-panel">
+                <div className="islamic-pattern"></div>
+                <div style={styles.readerTitleWrapper}>
+                  <h2 style={styles.readerTitle}>{surahContent.englishName}</h2>
+                  <div style={styles.readerArabicTitle} className="arabic-text">{surahContent.name}</div>
+                </div>
+                
+                <p style={styles.readerSub}>
+                  {surahContent.englishNameTranslation} • {surahContent.revelationType === 'Meccan' ? (language === 'en' ? "Meccan" : "مكية") : (language === 'en' ? "Medinan" : "مدنية")} • {surahContent.numberOfVerses} {language === 'en' ? "Verses" : "آيات"}
+                </p>
 
-            {/* Premium Integrated Audio Reciter Bar */}
-            <div style={styles.audioBar} className="glass-panel">
-              <audio 
-                ref={audioRef} 
-                src={getAudioUrl(selectedSurah.id)} 
-                onTimeUpdate={handleTimeUpdate}
-                onLoadedMetadata={handleLoadedMetadata}
-                onEnded={handleAudioEnded}
-              />
-              
-              <button 
-                onClick={handlePlayToggle} 
-                style={styles.playBtn} 
-                className="btn-primary"
-                disabled={loadingAudio}
-              >
-                {loadingAudio ? (
-                  <Loader size={18} className="spin-pulse" />
-                ) : isPlaying ? (
-                  <Pause size={18} />
-                ) : (
-                  <Play size={18} />
-                )}
-                <span>{isPlaying ? t('quranPause') : t('quranPlayAll')}</span>
-              </button>
+                {/* Premium Audio recitation bar */}
+                <div style={styles.audioBar} className="glass-panel">
+                  <audio 
+                    ref={audioRef} 
+                    src={getAudioUrl(surahContent.number)} 
+                    onTimeUpdate={handleTimeUpdate}
+                    onLoadedMetadata={handleLoadedMetadata}
+                    onEnded={handleAudioEnded}
+                  />
+                  
+                  <button 
+                    onClick={handlePlayToggle} 
+                    style={styles.playBtn} 
+                    className="btn-primary"
+                    disabled={loadingAudio}
+                  >
+                    {loadingAudio ? (
+                      <Loader size={18} className="spin-pulse" />
+                    ) : isPlaying ? (
+                      <Pause size={18} />
+                    ) : (
+                      <Play size={18} />
+                    )}
+                    <span>{isPlaying ? t('quranPause') : t('quranPlayAll')}</span>
+                  </button>
 
-              <div style={styles.audioTimeline}>
-                <span style={styles.timeLabel}>{formatTime(currentTime)}</span>
-                <input 
-                  type="range"
-                  min="0"
-                  max={duration || 100}
-                  value={currentTime}
-                  onChange={handleSeek}
-                  style={styles.progressBar}
-                />
-                <span style={styles.timeLabel}>{formatTime(duration)}</span>
-              </div>
-
-              <div style={styles.reciterBadge}>
-                <Volume2 size={14} color="var(--text-gold)" />
-                <span style={styles.reciterText}>Mishary Alafasy</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Verses Feed */}
-          <div style={styles.versesFeed}>
-            {selectedSurah.verses.map(v => {
-              const verseId = `${selectedSurah.id}-${v.num}`;
-              const bookmarked = isVerseBookmarked(verseId);
-
-              return (
-                <div key={v.num} style={styles.verseCard} className="glass-panel">
-                  {/* Verse Info & Actions */}
-                  <div style={styles.verseActionPanel}>
-                    <div style={styles.verseLabel} className="glass-panel">
-                      <Award size={12} color="var(--text-gold)" />
-                      <span>{language === 'en' ? `Verse ${v.num}` : `الآية ${v.num}`}</span>
-                    </div>
-
-                    <button 
-                      onClick={() => handleBookmarkToggle(selectedSurah, v)} 
-                      style={{
-                        ...styles.bookmarkBtn,
-                        color: bookmarked ? 'var(--text-gold)' : 'var(--text-secondary)'
-                      }}
-                      title={bookmarked ? t('quranBookmarkRemove') : t('quranBookmarkSuccess')}
-                    >
-                      {bookmarked ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}
-                    </button>
+                  <div style={styles.audioTimeline}>
+                    <span style={styles.timeLabel}>{formatTime(currentTime)}</span>
+                    <input 
+                      type="range"
+                      min="0"
+                      max={duration || 100}
+                      value={currentTime}
+                      onChange={handleSeek}
+                      style={styles.progressBar}
+                    />
+                    <span style={styles.timeLabel}>{formatTime(duration)}</span>
                   </div>
 
-                  {/* Calligraphy Verse text */}
-                  <div style={styles.verseAr} className="arabic-text">
-                    {v.ar} 
-                    <span style={styles.verseNumberCircle}>﴿{v.num}﴾</span>
-                  </div>
-
-                  {/* Translation Text */}
-                  <div style={styles.verseEn}>
-                    {v.en}
+                  <div style={styles.reciterBadge}>
+                    <Volume2 size={14} color="var(--text-gold)" />
+                    <span style={styles.reciterText}>Mishary Alafasy</span>
                   </div>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+
+              {/* Verses Feed */}
+              <div style={styles.versesFeed}>
+                {surahContent.verses.map(v => {
+                  const verseId = `${surahContent.number}-${v.num}`;
+                  const bookmarked = isVerseBookmarked(verseId);
+
+                  return (
+                    <div key={v.num} style={styles.verseCard} className="glass-panel">
+                      <div style={styles.verseActionPanel}>
+                        <div style={styles.verseLabel} className="glass-panel">
+                          <Award size={12} color="var(--text-gold)" />
+                          <span>{language === 'en' ? `Verse ${v.num}` : `الآية ${v.num}`}</span>
+                        </div>
+
+                        <button 
+                          onClick={() => handleBookmarkToggle(surahContent, v)} 
+                          style={{
+                            ...styles.bookmarkBtn,
+                            color: bookmarked ? 'var(--text-gold)' : 'var(--text-secondary)'
+                          }}
+                        >
+                          {bookmarked ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}
+                        </button>
+                      </div>
+
+                      <div style={styles.verseAr} className="arabic-text">
+                        {v.ar} 
+                        <span style={styles.verseNumberCircle}>﴿{v.num}﴾</span>
+                      </div>
+
+                      <div style={styles.verseEn}>
+                        {v.en}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </>
+          ) : (
+            <div style={styles.noResults} className="glass-panel">
+              <span>{language === 'en' ? "Unable to load Surah contents." : "فشل تحميل محتوى السورة."}</span>
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -372,6 +416,14 @@ const styles = {
     fontSize: '0.95rem',
     color: 'var(--text-secondary)',
     marginTop: '6px',
+  },
+  loaderArea: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '80px 0',
+    textAlign: 'center',
   },
   surahGrid: {
     marginTop: '20px',
@@ -586,6 +638,7 @@ if (typeof document !== 'undefined') {
     }
     .surah-card-hover:hover {
       transform: translateY(-3px);
+      border-color: var(--border-gold-hover) !important;
     }
     .spin-pulse {
       animation: spin 1s infinite linear;

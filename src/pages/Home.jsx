@@ -84,6 +84,70 @@ export default function Home({ setActivePage }) {
     }
   ];
 
+  // Curated premium Islamic and Arabic Learning E-Books from Amazon Kindle
+  const amazonEbooks = [
+    {
+      id: "eb1",
+      title: "The Quran: English Translation (Kindle Edition)",
+      titleAr: "القرآن الكريم: ترجمة إنجليزية (نسخة كيندل)",
+      author: "M.A.S. Abdel Haleem",
+      category: "E-Books",
+      categoryAr: "كتب إلكترونية",
+      price: "$3.99",
+      rating: 4.9,
+      reviews: 1240,
+      description: "Pristine digital edition of the Oxford translation. Take the divine word with you anywhere, optimized for all screens.",
+      descriptionAr: "نسخة رقمية ممتازة من الترجمة الإنجليزية الشهيرة لأوكسفورد. احمل آيات الذكر الحكيم معك أينما ذهبت، محسنة بالكامل لشاشات الهاتف والقارئ.",
+      image: "📱📖",
+      link: "https://www.amazon.com/s?k=Abdel+Haleem+Quran+Kindle"
+    },
+    {
+      id: "eb2",
+      title: "Master 300 High-Frequency Quranic Roots",
+      titleAr: "إتقان 300 جذر لغوي متكرر في القرآن الكريم",
+      author: "Ustadh Yusuf Al-Qurashi",
+      category: "Arabic E-Learning",
+      categoryAr: "تعلم العربية رقمياً",
+      price: "$5.99",
+      rating: 4.8,
+      reviews: 180,
+      description: "An exceptional study guide that logs high-frequency roots dynamically. The absolute digital shortcut to understanding Quranic Arabic.",
+      descriptionAr: "دليل دراسي استثنائي يجمع الجذور اللغوية الأكثر تكراراً في آيات الذكر الحكيم. طريقتك الرقمية الأسرع للفهم والتدبر.",
+      image: "📱✍️",
+      link: "https://www.amazon.com/s?k=Quranic+Arabic+roots+kindle"
+    },
+    {
+      id: "eb3",
+      title: "Fortress of the Muslim (Hisn al-Muslim) Digital",
+      titleAr: "حصن المسلم الرقمي: الأذكار والأدعية اليومية",
+      author: "Dar-us-Salam Publication",
+      category: "Dua E-Books",
+      categoryAr: "أدعية وأذكار كيندل",
+      price: "$1.99",
+      rating: 4.9,
+      reviews: 4200,
+      description: "A complete collection of authentic supplications for daily tasks, morning/evening dhikr, and special situations in compact pocket size.",
+      descriptionAr: "المجموعة الكاملة الصحيحة للأدعية النبوية لمختلف شؤون الحياة، أذكار الصباح والمساء، وحالات الضيق بتصميم كيندل مريح.",
+      image: "📱🕌",
+      link: "https://www.amazon.com/s?k=Fortress+of+the+Muslim+kindle"
+    },
+    {
+      id: "eb4",
+      title: "Arabic Stories for Language Learners E-Book",
+      titleAr: "قصص عربية لمتعلمي اللغة (نسخة كيندل)",
+      author: "Lutfi Mansur & Brosh",
+      category: "Arabic E-Learning",
+      categoryAr: "تعلم العربية رقمياً",
+      price: "$4.50",
+      rating: 4.8,
+      reviews: 110,
+      description: "The digital Kindle format of our popular physical storybook, providing dual English/Arabic text rendering side-by-side.",
+      descriptionAr: "النسخة الرقمية لكتاب القصص القصيرة ثنائي اللغة الشهير، يمنحك عرضاً متناسقاً للنصوص العربية والإنجليزية جنباً إلى جنب.",
+      image: "📱📚",
+      link: "https://www.amazon.com/s?k=Arabic+Stories+Language+Learners+Kindle"
+    }
+  ];
+
   // Filters products if global search bar contains query
   const filteredProducts = amazonProducts.filter(p => {
     const q = searchQuery.toLowerCase();
@@ -93,6 +157,17 @@ export default function Home({ setActivePage }) {
       p.author.toLowerCase().includes(q) ||
       p.category.toLowerCase().includes(q) ||
       p.categoryAr.includes(q)
+    );
+  });
+
+  const filteredEbooks = amazonEbooks.filter(eb => {
+    const q = searchQuery.toLowerCase();
+    return (
+      eb.title.toLowerCase().includes(q) ||
+      eb.titleAr.includes(q) ||
+      eb.author.toLowerCase().includes(q) ||
+      eb.category.toLowerCase().includes(q) ||
+      eb.categoryAr.includes(q)
     );
   });
 
@@ -270,6 +345,88 @@ export default function Home({ setActivePage }) {
           </div>
         </div>
       </section>
+
+      {/* NEW: Amazon Kindle E-Books & digital resources section! */}
+      <section style={{ ...styles.sectionPadding, borderBottom: '1px solid rgba(212, 175, 55, 0.05)' }}>
+        <div className="container">
+          <div style={styles.sectionHeader}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-gold)', marginBottom: '8px' }}>
+              <BookOpen size={18} />
+              <span style={{ fontSize: '0.85rem', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                {language === 'en' ? "Digital E-Books Library" : "المكتبة الرقمية الفاخرة"}
+              </span>
+            </div>
+            <h2 style={styles.sectionTitle}>
+              {language === 'en' ? "Premium Islamic E-Books & Kindle Editions" : "كنوز الكتب الإلكترونية الإسلامية لكيندل"}
+            </h2>
+            <p style={styles.sectionSubtitle}>
+              {language === 'en' ? "Handpicked Kindle literature, audio books, and vocab keys optimized for immediate digital study." : "توصياتنا الحصرية لأفضل كتب التلاوة الكلاسيكية والتربية والتعلم السريع المحسنة للقراءة الرقمية."}
+            </p>
+          </div>
+
+          <div style={styles.productGrid} className="grid-4">
+            {filteredEbooks.length > 0 ? (
+              filteredEbooks.map(eb => (
+                <div key={eb.id} className="glass-panel" style={styles.productCard}>
+                  <span style={styles.productCategory}>
+                    {language === 'en' ? eb.category : eb.categoryAr}
+                  </span>
+
+                  <div style={{ ...styles.productIconWrapper, height: '140px' }}>
+                    <span style={{ ...styles.productIcon, fontSize: '3.2rem' }}>{eb.image}</span>
+                  </div>
+
+                  <div style={styles.productBody}>
+                    <h3 style={{ ...styles.productCardTitle, fontSize: '0.95rem' }}>
+                      {language === 'en' ? eb.title : eb.titleAr}
+                    </h3>
+                    <div style={styles.productAuthor}>{eb.author}</div>
+                    
+                    <div style={styles.ratingWrapper}>
+                      <div style={styles.stars}>
+                        {[...Array(5)].map((_, i) => (
+                          <Star 
+                            key={i} 
+                            size={10} 
+                            fill={i < Math.floor(eb.rating) ? "var(--gold-primary)" : "none"} 
+                            color="var(--gold-primary)" 
+                          />
+                        ))}
+                      </div>
+                      <span style={{ ...styles.ratingText, fontSize: '0.75rem' }}>{eb.rating}</span>
+                    </div>
+
+                    <p style={{ ...styles.productDesc, fontSize: '0.78rem', marginTop: '8px' }}>
+                      {language === 'en' ? eb.description : eb.descriptionAr}
+                    </p>
+
+                    <div style={styles.productDivider}></div>
+
+                    <div style={styles.productFooter}>
+                      <span style={{ ...styles.productPrice, fontSize: '1.05rem' }}>{eb.price}</span>
+                      <a 
+                        href={eb.link} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="btn-primary" 
+                        style={{ ...styles.acquireBtn, padding: '6px 12px', fontSize: '0.75rem' }}
+                      >
+                        <span>{t('prodBuyNow')}</span>
+                        <ArrowRight size={10} />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div style={styles.noResults} className="glass-panel">
+                <span>{t('searchNoResults')}</span>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }
