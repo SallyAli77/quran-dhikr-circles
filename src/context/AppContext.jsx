@@ -78,6 +78,16 @@ const translations = {
     commTasbihTap: "TAP TASBIH",
     commTasbihReset: "Reset Counter",
     commMilestone: "Subhan Allah! You reached a milestone: ",
+    commTabCircles: "Online Circles",
+    circleJoin: "Join Circle",
+    circleLeave: "Leave Circle",
+    circleFull: "Complete",
+    circleCreate: "Create New Circle",
+    circleFormName: "Circle Name",
+    circleFormDesc: "Description / Goal",
+    circleFormCap: "Target Members",
+    circleFormType: "Circle Focus",
+    circleSuccessCreated: "Circle created successfully!",
 
     // Contact Section
     contactTitle: "Get in Touch",
@@ -179,6 +189,16 @@ const translations = {
     commTasbihTap: "اضغط للتسبيح",
     commTasbihReset: "إعادة ضبط العداد",
     commMilestone: "سبحان الله! لقد حققت إنجازاً: ",
+    commTabCircles: "الحلقات المباشرة",
+    circleJoin: "انضم للحلقة",
+    circleLeave: "غادر الحلقة",
+    circleFull: "مكتملة",
+    circleCreate: "إنشاء حلقة جديدة",
+    circleFormName: "اسم الحلقة",
+    circleFormDesc: "الوصف / الهدف",
+    circleFormCap: "العدد المستهدف للأعضاء",
+    circleFormType: "تركيز الحلقة",
+    circleSuccessCreated: "تم إنشاء الحلقة بنجاح!",
 
     // Contact Section
     contactTitle: "اتصل بنا",
@@ -249,6 +269,54 @@ export const AppProvider = ({ children }) => {
   // Tasmee Recordings
   const [tasmeeSubmissions, setTasmeeSubmissions] = useState(() => {
     const saved = localStorage.getItem('arabicmuslim_tasmee');
+    if (saved) return JSON.parse(saved);
+
+    // Default seeded community recitations for the Evaluation Feed
+    return [
+      {
+        id: "seed-1",
+        author: "فاطمة حسن",
+        avatar: "⭐",
+        date: "2026-05-27",
+        surahName: "Al-Fatiha",
+        surahNameAr: "الفاتحة",
+        surahId: 1,
+        juz: 1,
+        ayahFrom: 1,
+        ayahTo: 7,
+        audioData: "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/001.mp3",
+        rating: 5,
+        comments: "ما شاء الله تبارك الرحمن! تلاوة مرتلة خاشعة وصوت عذب ومخارج الحروف سليمة جداً. أحسنتِ يا فاطمة.",
+        teacherAudio: "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/001.mp3",
+        loves: 24,
+        lovedBy: [],
+        isUser: false
+      },
+      {
+        id: "seed-2",
+        author: "أحمد سليم",
+        avatar: "✨",
+        date: "2026-05-26",
+        surahName: "An-Nasr",
+        surahNameAr: "النصر",
+        surahId: 110,
+        juz: 30,
+        ayahFrom: 1,
+        ayahTo: 3,
+        audioData: "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/110.mp3",
+        rating: 4,
+        comments: "قراءة جيدة ومسترسلة يا أحمد. يرجى الانتباه للمدود الطبيعية في موضع (رأيت الناس)، والحرص على قلقلة الجيم في كلمة (أفواجاً).",
+        teacherAudio: "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/110.mp3",
+        loves: 15,
+        lovedBy: [],
+        isUser: false
+      }
+    ];
+  });
+
+  // Friends list synced with localStorage
+  const [friendsList, setFriendsList] = useState(() => {
+    const saved = localStorage.getItem('arabicmuslim_friends');
     return saved ? JSON.parse(saved) : [];
   });
 
@@ -285,6 +353,148 @@ export const AppProvider = ({ children }) => {
     ];
   });
 
+  // NEW: Online Circles state
+  const [onlineCircles, setOnlineCircles] = useState(() => {
+    const saved = localStorage.getItem('arabicmuslim_circles');
+    if (saved) return JSON.parse(saved);
+
+    return [
+      {
+        id: "c1",
+        name: "Morning Adhkar Circle",
+        nameAr: "حلقة أذكار الصباح",
+        description: "Starting the day with the remembrance of Allah. Daily morning prayers.",
+        descriptionAr: "نبدأ يومنا بذكر الله وطاعته. قراءة أذكار الصباح والتدبر اليومي.",
+        capacity: 10,
+        joinedUsers: [
+          { name: "Fatima Hassan", avatar: "⭐" },
+          { name: "Ahmed Selim", avatar: "✨" },
+          { name: "Omar Farooq", avatar: "🕌" },
+          { name: "Amina Yusuf", avatar: "🌸" },
+          { name: "Yusuf Al-Qurashi", avatar: "📚" },
+          { name: "Sara Ali", avatar: "🌙" },
+          { name: "Bilal Khan", avatar: "🕌" },
+          { name: "Zainab Ahmed", avatar: "⭐" },
+          { name: "Hamza Malik", avatar: "✨" },
+          { name: "Layla Hussein", avatar: "🌸" }
+        ], // 10/10 - Golden Completed Circle
+        creator: "System",
+        type: "adhkar"
+      },
+      {
+        id: "c2",
+        name: "Surah Al-Mulk Recitation",
+        nameAr: "تلاوة سورة الملك",
+        description: "Reciting Surah Al-Mulk together before sleep for protection and peace.",
+        descriptionAr: "قراءة جماعية لسورة الملك قبل النوم للوقاية والسكينة الروحية.",
+        capacity: 5,
+        joinedUsers: [
+          { name: "Fatima Hassan", avatar: "⭐" },
+          { name: "Ahmed Selim", avatar: "✨" },
+          { name: "Omar Farooq", avatar: "🕌" },
+          { name: "Amina Yusuf", avatar: "🌸" }
+        ], // 4/5
+        creator: "System",
+        type: "quran"
+      },
+      {
+        id: "c3",
+        name: "Global Istighfar 1000x",
+        nameAr: "حلقة الاستغفار الكبرى",
+        description: "Seeking forgiveness together in these blessed moments.",
+        descriptionAr: "الاستغفار الجماعي وطلب المغفرة لتطهير القلوب.",
+        capacity: 8,
+        joinedUsers: [
+          { name: "Yusuf Al-Qurashi", avatar: "📚" },
+          { name: "Sara Ali", avatar: "🌙" },
+          { name: "Bilal Khan", avatar: "🕌" },
+          { name: "Zainab Ahmed", avatar: "⭐" },
+          { name: "Hamza Malik", avatar: "✨" }
+        ], // 5/8
+        creator: "System",
+        type: "istighfar"
+      },
+      {
+        id: "c4",
+        name: "Salawat on the Prophet",
+        nameAr: "حلقة الصلاة على النبي ﷺ",
+        description: "Sending blessings and peace upon our beloved Prophet Muhammad (PBUH).",
+        descriptionAr: "الإكثار من الصلاة والسلام على نبينا محمد ﷺ لنيل شفاعته وقضاء الحوائج.",
+        capacity: 15,
+        joinedUsers: [
+          { name: "Omar Farooq", avatar: "🕌" },
+          { name: "Amina Yusuf", avatar: "🌸" },
+          { name: "Fatima Hassan", avatar: "⭐" },
+          { name: "Ahmed Selim", avatar: "✨" },
+          { name: "Yusuf Al-Qurashi", avatar: "📚" },
+          { name: "Zainab Ahmed", avatar: "⭐" },
+          { name: "Hamza Malik", avatar: "✨" },
+          { name: "Layla Hussein", avatar: "🌸" },
+          { name: "Sara Ali", avatar: "🌙" },
+          { name: "Bilal Khan", avatar: "🕌" },
+          { name: "Zayd bin Harith", avatar: "🕌" },
+          { name: "Mariam Salem", avatar: "⭐" },
+          { name: "Khaled Saeed", avatar: "✨" },
+          { name: "Hoda Mahmoud", avatar: "🌸" }
+        ], // 14/15
+        creator: "System",
+        type: "salawat"
+      }
+    ];
+  });
+
+  const joinCircle = (circleId) => {
+    let completed = false;
+    setOnlineCircles(prev => prev.map(c => {
+      if (c.id === circleId) {
+        const userIdentifier = isAuthenticated ? user.email : "guest_user";
+        const hasJoined = c.joinedUsers.some(u => u.email === userIdentifier || (userIdentifier === "guest_user" && u.name === "Guest Member"));
+        
+        let newUsers;
+        if (hasJoined) {
+          // Leave
+          newUsers = c.joinedUsers.filter(u => u.email !== userIdentifier && u.name !== "Guest Member");
+        } else {
+          // Join
+          const newUser = {
+            name: isAuthenticated ? user.name : "Guest Member",
+            email: isAuthenticated ? user.email : "guest_user",
+            avatar: isAuthenticated ? user.avatar : "🌙"
+          };
+          newUsers = [...c.joinedUsers, newUser];
+          if (newUsers.length === c.capacity) {
+            completed = true;
+          }
+        }
+        return { ...c, joinedUsers: newUsers };
+      }
+      return c;
+    }));
+    return completed;
+  };
+
+  const createCircle = (circleData) => {
+    const newCircle = {
+      id: "c-" + Date.now(),
+      name: circleData.name,
+      nameAr: circleData.nameAr || circleData.name,
+      description: circleData.description,
+      descriptionAr: circleData.descriptionAr || circleData.description,
+      capacity: parseInt(circleData.capacity, 10) || 5,
+      joinedUsers: [
+        {
+          name: isAuthenticated ? user.name : "Guest Member",
+          email: isAuthenticated ? user.email : "guest_user",
+          avatar: isAuthenticated ? user.avatar : "🕌"
+        }
+      ],
+      creator: isAuthenticated ? user.name : "Guest",
+      type: circleData.type || "adhkar"
+    };
+
+    setOnlineCircles(prev => [newCircle, ...prev]);
+  };
+
   // Sync state changes with document directions
   useEffect(() => {
     localStorage.setItem('arabicmuslim_lang', language);
@@ -307,10 +517,20 @@ export const AppProvider = ({ children }) => {
     localStorage.setItem('arabicmuslim_tasmee', JSON.stringify(tasmeeSubmissions));
   }, [tasmeeSubmissions]);
 
+  // Sync Friends List
+  useEffect(() => {
+    localStorage.setItem('arabicmuslim_friends', JSON.stringify(friendsList));
+  }, [friendsList]);
+
   // Sync Community Posts
   useEffect(() => {
     localStorage.setItem('arabicmuslim_posts', JSON.stringify(communityPosts));
   }, [communityPosts]);
+
+  // Sync Online Circles
+  useEffect(() => {
+    localStorage.setItem('arabicmuslim_circles', JSON.stringify(onlineCircles));
+  }, [onlineCircles]);
 
   // Translation function helper
   const t = (key) => {
@@ -387,14 +607,74 @@ export const AppProvider = ({ children }) => {
   const addTasmeeSubmission = (recording) => {
     const newSubmission = {
       id: Date.now().toString(),
-      date: new Date().toLocaleDateString(language === 'ar' ? 'ar-EG' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+      date: new Date().toLocaleDateString(language === 'ar' ? 'ar' : 'en', { year: 'numeric', month: 'short', day: 'numeric' }),
+      author: user.name,
+      avatar: user.avatar,
+      isUser: true,
+      loves: 0,
+      lovedBy: [],
+      rating: null, // Pending evaluation
+      comments: null,
+      teacherAudio: null,
       ...recording
     };
+    
     setTasmeeSubmissions(prev => [newSubmission, ...prev]);
+
+    // Simulate teacher evaluation after 7 seconds
+    setTimeout(() => {
+      setTasmeeSubmissions(prev => prev.map(sub => {
+        if (sub.id === newSubmission.id) {
+          return {
+            ...sub,
+            rating: 5,
+            comments: language === 'ar'
+              ? "أحسنتِ يا سالي! تلاوة خاشعة ممتازة ومخارج حروف صحيحة تماماً. استمري في التلاوة والحفظ."
+              : "Excellent recitation, Sally! Very humble tone, accurate pronunciation, and proper tajweed rule applications. Keep up the amazing spiritual work.",
+            teacherAudio: `https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/${sub.surahId.toString().padStart(3, '0')}.mp3`
+          };
+        }
+        return sub;
+      }));
+    }, 7000);
   };
 
   const deleteTasmeeSubmission = (id) => {
     setTasmeeSubmissions(prev => prev.filter(sub => sub.id !== id));
+  };
+
+  const loveTasmeeSubmission = (id) => {
+    setTasmeeSubmissions(prev => prev.map(sub => {
+      if (sub.id === id) {
+        const userId = isAuthenticated ? user.email : "anonymous";
+        const lovedByList = sub.lovedBy || [];
+        const hasLoved = lovedByList.includes(userId);
+
+        let newLovedBy = [...lovedByList];
+        let newLoves = sub.loves || 0;
+
+        if (hasLoved) {
+          newLovedBy = newLovedBy.filter(email => email !== userId);
+          newLoves = Math.max(0, newLoves - 1);
+        } else {
+          newLovedBy.push(userId);
+          newLoves += 1;
+        }
+
+        return { ...sub, loves: newLoves, lovedBy: newLovedBy };
+      }
+      return sub;
+    }));
+  };
+
+  const toggleFriend = (friendName) => {
+    setFriendsList(prev => {
+      if (prev.includes(friendName)) {
+        return prev.filter(name => name !== friendName);
+      } else {
+        return [...prev, friendName];
+      }
+    });
   };
 
   // Community Feed Actions
@@ -473,10 +753,16 @@ export const AppProvider = ({ children }) => {
       tasmeeSubmissions,
       addTasmeeSubmission,
       deleteTasmeeSubmission,
+      loveTasmeeSubmission,
+      friendsList,
+      toggleFriend,
       communityPosts,
       addPost,
       likePost,
       addComment,
+      onlineCircles,
+      joinCircle,
+      createCircle,
       t
     }}>
       {children}

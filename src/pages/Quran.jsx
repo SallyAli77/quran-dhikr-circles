@@ -38,9 +38,56 @@ const fallbackSurahs = [
   }
 ];
 
-export default function Quran() {
+// static mapping of Juz' to Surah numbers
+const juzSurahs = {
+  1: [1, 2],
+  2: [2],
+  3: [2, 3],
+  4: [3, 4],
+  5: [4],
+  6: [4, 5],
+  7: [5, 6],
+  8: [6, 7],
+  9: [7, 8],
+  10: [8, 9],
+  11: [9, 10, 11],
+  12: [11, 12],
+  13: [12, 13, 14],
+  14: [15, 16],
+  15: [17, 18],
+  16: [18, 19, 20],
+  17: [21, 22],
+  18: [23, 24, 25],
+  19: [25, 26, 27],
+  20: [27, 28, 29],
+  21: [29, 30, 31, 32, 33],
+  22: [33, 34, 35, 36],
+  23: [36, 37, 38, 39],
+  24: [39, 40, 41],
+  25: [41, 42, 43, 44, 45],
+  26: [46, 47, 48, 49, 50, 51],
+  27: [51, 52, 53, 54, 55, 56, 57],
+  28: [58, 59, 60, 61, 62, 63, 64, 65, 66],
+  29: [67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77],
+  30: Array.from({length: 37}, (_, i) => 78 + i) // 78 to 114
+};
+
+export default function Quran({ setActivePage }) {
   const { language, searchQuery, bookmarks, toggleBookmark, addTasmeeSubmission, t } = useApp();
   
+  // Custom Quran page flow state variables
+  const [quranMode, setQuranMode] = useState(null); // 'recitation', 'listening', or null
+  const [selectedJuz, setSelectedJuz] = useState("");
+  const [ayahFrom, setAyahFrom] = useState("");
+  const [ayahTo, setAyahTo] = useState("");
+  
+  const [recitationJuz, setRecitationJuz] = useState(null);
+  const [recitationAyahFrom, setRecitationAyahFrom] = useState(null);
+  const [recitationAyahTo, setRecitationAyahTo] = useState(null);
+  
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showOptionsModal, setShowOptionsModal] = useState(false);
+
   const [surahsList, setSurahsList] = useState([]);
   const [isLoadingList, setIsLoadingList] = useState(true);
   const [selectedSurah, setSelectedSurah] = useState(null);
@@ -211,15 +258,18 @@ export default function Quran() {
           surahName: selectedSurah.englishName,
           surahNameAr: selectedSurah.name,
           surahId: selectedSurah.number,
+          juz: recitationJuz || 30,
+          ayahFrom: recitationAyahFrom || 1,
+          ayahTo: recitationAyahTo || selectedSurah.numberOfVerses,
           audioData: reader.result
         });
         setTasmeeBlob(null);
         confetti({
-          particleCount: 40,
-          spread: 60,
-          colors: ['#d4af37', '#ffffff']
+          particleCount: 80,
+          spread: 80,
+          colors: ['#d4af37', '#ffffff', '#c5a059']
         });
-        alert(language === 'en' ? "Tasmee saved to your dashboard!" : "تم حفظ التسميع في لوحة التحكم!");
+        setShowSuccessModal(true);
       };
     }
   };
@@ -279,205 +329,518 @@ export default function Quran() {
 
   return (
     <div className="quran-page container fade-in" style={{ minHeight: '80vh' }}>
-      {!selectedSurah ? (
-        // Directory grid (Loads all 114 Surahs dynamically!)
-        <>
-          <div style={styles.header}>
-            <Book size={32} color="var(--text-gold)" style={styles.headerIcon} />
-            <h1 style={styles.title}>{t('quranTitle')}</h1>
-            <p style={styles.subtitle}>{t('quranSubtitle')} ({language === 'en' ? "Access all 114 Surahs" : "تصفح كافة السور الـ 114"})</p>
-          </div>
+      
+      {/* Success Modal Overlay */}
+      {showSuccessModal && (
+        <div style={styles.modalOverlay} className="fade-in">
+          <div style={styles.modalCard} className="glass-panel text-center">
+            <div style={styles.modalIconContainer}>
+              <Award size={48} color="var(--text-gold)" className="spin-pulse" />
+            </div>
+            
+            <h2 style={styles.modalTitle} className="gold-gradient-text">
+              {language === 'ar' ? "✨ تم رفع التلاوة بنجاح! ✨" : "✨ Recitation Uploaded Successfully! ✨"}
+            </h2>
+            
+            <p style={styles.modalText}>
+              {language === 'ar' 
+                ? "لقد تم رفع تلاوتك العذبة بنجاح إلى صفحة المعلمين للتقييم، وتم حفظها في صفحة التسميع الخاصة بك لتتمكن من مراجعتها." 
+                : "Your recitation has been successfully uploaded to the teachers' page for evaluation, and saved to your personal Tasmee' page for review."}
+            </p>
+            
+            <div style={styles.modalDetails} className="glass-panel">
+              <span style={{color: 'var(--text-gold)', fontWeight: 'bold'}}>
+                {language === 'ar' ? "تفاصيل التلاوة:" : "Recitation Details:"}
+              </span>
+              <div style={{marginTop: '6px', fontSize: '0.95rem'}}>
+                سورة {selectedSurah?.name} ({selectedSurah?.englishName})
+              </div>
+              <div style={{fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '4px'}}>
+                {language === 'ar' ? `الجزء ${recitationJuz} • الآيات من ${recitationAyahFrom} إلى ${recitationAyahTo}` : `Juz' ${recitationJuz} • Verses ${recitationAyahFrom} to ${recitationAyahTo}`}
+              </div>
+            </div>
 
-          {isLoadingList ? (
-            <div style={styles.loaderArea}>
-              <Loader size={40} className="spin-pulse" color="var(--text-gold)" />
-              <p style={{ marginTop: '12px', color: 'var(--text-secondary)' }}>
-                {language === 'en' ? "Loading Noble Quran Directory..." : "جاري تحميل فهرس القرآن الكريم..."}
+            <div style={styles.modalActionRow}>
+              <button 
+                onClick={() => {
+                  setShowSuccessModal(false);
+                  setSelectedSurah(null);
+                  setQuranMode(null);
+                }} 
+                className="btn-secondary"
+                style={{flex: 1, padding: '12px'}}
+              >
+                {language === 'ar' ? "العودة للمصحف" : "Back to Quran"}
+              </button>
+              
+              <button 
+                onClick={() => {
+                  setShowSuccessModal(false);
+                  setSelectedSurah(null);
+                  setQuranMode(null);
+                  setActivePage('login'); // Redirect to dashboard
+                }} 
+                className="btn-primary"
+                style={{flex: 1, padding: '12px'}}
+              >
+                {language === 'ar' ? "الذهاب للوحة التحكم" : "Go to Dashboard"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Tasmee' Options Pop-up Overlay Modal */}
+      {showOptionsModal && (
+        <div style={styles.modalOverlay} className="fade-in">
+          <div style={{...styles.modalCard, maxWidth: '600px', background: 'rgba(15, 17, 26, 0.98)'}} className="glass-panel text-center">
+            <div style={styles.formHeader}>
+              <Mic size={32} color="var(--text-gold)" style={styles.headerIcon} />
+              <h2 style={styles.formTitle}>{language === 'ar' ? "إعداد جلسة التسميع الخاصة بك" : "Set Up Your Recitation Session"}</h2>
+              <p style={styles.formSubtitle}>
+                {language === 'ar' 
+                  ? "اختر الجزء والسورة ونطاق الآيات لبدء التسجيل الفاخر" 
+                  : "Select the Juz', Surah, and optional verse range to start recording"}
               </p>
             </div>
-          ) : (
-            <div style={styles.surahGrid} className="grid-3">
-              {filteredSurahs.length > 0 ? (
-                filteredSurahs.map(s => (
-                  <div 
-                    key={s.number} 
-                    className="glass-panel surah-card-hover" 
-                    style={styles.surahCard}
-                    onClick={() => handleSelectSurah(s)}
+
+            <div style={{...styles.formBody, textAlign: language === 'ar' ? 'right' : 'left'}}>
+              {/* Step 1: Select Juz' */}
+              <div style={styles.formGroup}>
+                <label style={styles.formLabel}>{language === 'ar' ? "1. اختر الجزء الشريف" : "1. Select Noble Juz'"}</label>
+                <select 
+                  value={selectedJuz} 
+                  onChange={(e) => {
+                    setSelectedJuz(e.target.value);
+                    setSelectedSurah(null); // reset surah selection if juz changes
+                    setAyahFrom("");
+                    setAyahTo("");
+                  }} 
+                  style={styles.formSelect}
+                >
+                  <option value="">{language === 'ar' ? "-- اختر الجزء --" : "-- Select Juz' --"}</option>
+                  {Array.from({length: 30}, (_, i) => i + 1).map(j => (
+                    <option key={j} value={j}>{language === 'ar' ? `الجزء ${j}` : `Juz' ${j}`}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Step 2: Select Surah (filtered by Juz') */}
+              {selectedJuz && (
+                <div style={styles.formGroup} className="fade-in">
+                  <label style={styles.formLabel}>{language === 'ar' ? "2. اختر السورة الكريمة" : "2. Select Holy Surah"}</label>
+                  <select 
+                    value={selectedSurah ? selectedSurah.number : ""} 
+                    onChange={(e) => {
+                      const surahId = parseInt(e.target.value, 10);
+                      const surah = surahsList.find(s => s.number === surahId);
+                      if (surah) {
+                        setSelectedSurah(surah);
+                        setAyahFrom("");
+                        setAyahTo("");
+                      }
+                    }} 
+                    style={styles.formSelect}
                   >
-                    <div style={styles.surahNumber}>
-                      <span>{s.number}</span>
-                    </div>
+                    <option value="">{language === 'ar' ? "-- اختر السورة --" : "-- Select Surah --"}</option>
+                    {surahsList
+                      .filter(s => juzSurahs[selectedJuz]?.includes(s.number))
+                      .map(s => (
+                        <option key={s.number} value={s.number}>
+                          {s.number}. {s.englishName} ({s.name})
+                        </option>
+                      ))
+                    }
+                  </select>
+                </div>
+              )}
 
-                    <div style={styles.surahDetails}>
-                      <h3 style={styles.surahName}>{s.englishName}</h3>
-                      <span style={styles.surahMeaning}>{s.englishNameTranslation}</span>
-                      <span style={styles.surahMeta}>
-                        {s.revelationType === 'Meccan' ? (language === 'en' ? "Meccan" : "مكية") : (language === 'en' ? "Medinan" : "مدنية")} • {s.numberOfVerses} {language === 'en' ? "Verses" : "آيات"}
-                      </span>
-                    </div>
-
-                    <div style={styles.surahArabicName} className="arabic-text">
-                      {s.name}
-                    </div>
+              {/* Step 3: Optional Ayah Range selection */}
+              {selectedSurah && (
+                <div style={styles.ayahRangeRow} className="grid-2 fade-in">
+                  <div style={styles.formGroup}>
+                    <label style={styles.formLabel}>{language === 'ar' ? "من الآية" : "From Ayah"}</label>
+                    <select 
+                      value={ayahFrom} 
+                      onChange={(e) => {
+                        setAyahFrom(e.target.value);
+                        if (ayahTo && parseInt(e.target.value, 10) > parseInt(ayahTo, 10)) {
+                          setAyahTo("");
+                        }
+                      }} 
+                      style={styles.formSelect}
+                    >
+                      <option value="">1</option>
+                      {Array.from({length: selectedSurah.numberOfVerses}, (_, i) => i + 1).map(a => (
+                        <option key={a} value={a}>{a}</option>
+                      ))}
+                    </select>
                   </div>
-                ))
+
+                  <div style={styles.formGroup}>
+                    <label style={styles.formLabel}>{language === 'ar' ? "إلى الآية" : "To Ayah"}</label>
+                    <select 
+                      value={ayahTo} 
+                      onChange={(e) => setAyahTo(e.target.value)} 
+                      style={styles.formSelect}
+                      disabled={!ayahFrom}
+                    >
+                      <option value="">{selectedSurah.numberOfVerses}</option>
+                      {Array.from({length: selectedSurah.numberOfVerses}, (_, i) => i + 1)
+                        .filter(a => !ayahFrom || a >= parseInt(ayahFrom, 10))
+                        .map(a => (
+                          <option key={a} value={a}>{a}</option>
+                        ))
+                      }
+                    </select>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div style={styles.modalActionRow}>
+              <button 
+                onClick={() => {
+                  setShowOptionsModal(false);
+                  setSelectedSurah(null);
+                  setSelectedJuz("");
+                  setAyahFrom("");
+                  setAyahTo("");
+                }} 
+                className="btn-secondary"
+                style={{flex: 1, padding: '12px'}}
+              >
+                {language === 'ar' ? "إلغاء" : "Cancel"}
+              </button>
+              
+              <button 
+                onClick={() => {
+                  if (selectedSurah) {
+                    setRecitationJuz(selectedJuz);
+                    setRecitationAyahFrom(ayahFrom ? parseInt(ayahFrom, 10) : 1);
+                    setRecitationAyahTo(ayahTo ? parseInt(ayahTo, 10) : selectedSurah.numberOfVerses);
+                    handleSelectSurah(selectedSurah);
+                    setQuranMode('recitation');
+                    setShowOptionsModal(false);
+                  }
+                }} 
+                className="btn-primary"
+                style={{flex: 1, padding: '12px'}}
+                disabled={!selectedSurah}
+              >
+                {language === 'ar' ? "ابدأ التسميع والتسجيل" : "Start Recitation"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Main content based on quranMode and selectedSurah */}
+      {quranMode === null ? (
+        // Land Choice Screen
+        <div style={styles.choiceContainer}>
+          <div style={styles.choiceHeader}>
+            <Book size={40} color="var(--text-gold)" style={styles.headerIcon} />
+            <h1 style={styles.choiceTitle}>{language === 'ar' ? "خدمات القرآن الكريم الفاخرة" : "Noble Quran Premium Services"}</h1>
+            <p style={styles.choiceSubtitle}>
+              {language === 'ar' 
+                ? "اختر طريقتك للتفاعل مع كتاب الله عز وجل اليوم" 
+                : "Select your preferred way to interact with the Holy Quran today"}
+            </p>
+          </div>
+
+          <div style={styles.choiceGrid}>
+            {/* Recitation Card (تسميع) */}
+            <div 
+              className="glass-panel choice-card-hover" 
+              style={styles.choiceCard}
+              onClick={() => setShowOptionsModal(true)}
+            >
+              <div style={{...styles.choiceCardIcon, background: 'rgba(255, 107, 107, 0.1)', border: '1px solid rgba(255, 107, 107, 0.3)'}}>
+                <Mic size={32} color="#ff6b6b" />
+              </div>
+              <h2 style={styles.choiceCardTitle}>{language === 'ar' ? "تسميع القرآن الكريم" : "Quranic Recitation (Tasmee')"}</h2>
+              <p style={styles.choiceCardDesc}>
+                {language === 'ar' 
+                  ? "سجل تلاوتك العذبة من الجزء والسور المختارة، وأرسلها للمعلمين والقرّاء المعتمدين لتصحيح تلاوتك والحصول على تقييم وتوجيه دقيق." 
+                  : "Record your beautiful voice for selected Juz' and Surahs, send it to certified teachers for evaluation, and get detailed correction audio feedback."}
+              </p>
+              <span style={styles.choiceCardBadge} className="gold-gradient-text">
+                {language === 'ar' ? "تسميع وتصحيح ✧" : "Recitation & Feedback ✧"}
+              </span>
+            </div>
+
+            {/* Listening Card (تلاوة) */}
+            <div 
+              className="glass-panel choice-card-hover" 
+              style={styles.choiceCard}
+              onClick={() => setQuranMode('listening')}
+            >
+              <div style={{...styles.choiceCardIcon, background: 'rgba(212, 175, 55, 0.1)', border: '1px solid var(--border-gold)'}}>
+                <Volume2 size={32} color="var(--text-gold)" />
+              </div>
+              <h2 style={styles.choiceCardTitle}>{language === 'ar' ? "تلاوة القرآن الكريم" : "Quranic Tilawah & Listening"}</h2>
+              <p style={styles.choiceCardDesc}>
+                {language === 'ar' 
+                  ? "تصفح كافة السور الـ 114 بالرسم العثماني الفاخر مع تراجم شريفة متعددة، واستمع لتلاوة عطرة بأصوات مشاهير القرّاء بجودة عالية." 
+                  : "Browse all 114 Surahs with premium Uthmani scripts and multi-language translations, and listen to high-quality recitations by famous reciters."}
+              </p>
+              <span style={{...styles.choiceCardBadge, color: 'var(--text-secondary)'}}>
+                {language === 'ar' ? "تلاوة وقراءة ✧" : "Tilawah & Listening ✧"}
+              </span>
+            </div>
+          </div>
+        </div>
+      ) : (
+        // Render either Quran Directory grid (Istima') OR the Reader page (both Istima' and active Reciting)
+        <>
+          {!selectedSurah ? (
+            // Directory grid (Loads all 114 Surahs dynamically!)
+            <>
+              <button onClick={() => setQuranMode(null)} style={styles.backBtn} className="btn-secondary">
+                <ChevronLeft size={16} />
+                <span>{language === 'ar' ? "العودة للخيارات" : "Back to Services"}</span>
+              </button>
+
+              <div style={styles.header}>
+                <Book size={32} color="var(--text-gold)" style={styles.headerIcon} />
+                <h1 style={styles.title}>{t('quranTitle')}</h1>
+                <p style={styles.subtitle}>{t('quranSubtitle')} ({language === 'en' ? "Access all 114 Surahs" : "تصفح كافة السور الـ 114"})</p>
+              </div>
+
+              {isLoadingList ? (
+                <div style={styles.loaderArea}>
+                  <Loader size={40} className="spin-pulse" color="var(--text-gold)" />
+                  <p style={{ marginTop: '12px', color: 'var(--text-secondary)' }}>
+                    {language === 'en' ? "Loading Noble Quran Directory..." : "جاري تحميل فهرس القرآن الكريم..."}
+                  </p>
+                </div>
+              ) : (
+                <div style={styles.surahGrid} className="grid-3">
+                  {filteredSurahs.length > 0 ? (
+                    filteredSurahs.map(s => (
+                      <div 
+                        key={s.number} 
+                        className="glass-panel surah-card-hover" 
+                        style={styles.surahCard}
+                        onClick={() => {
+                          setRecitationJuz(null);
+                          setRecitationAyahFrom(null);
+                          setRecitationAyahTo(null);
+                          handleSelectSurah(s);
+                        }}
+                      >
+                        <div style={styles.surahNumber}>
+                          <span>{s.number}</span>
+                        </div>
+
+                        <div style={styles.surahDetails}>
+                          <h3 style={styles.surahName}>{s.englishName}</h3>
+                          <span style={styles.surahMeaning}>{s.englishNameTranslation}</span>
+                          <span style={styles.surahMeta}>
+                            {s.revelationType === 'Meccan' ? (language === 'en' ? "Meccan" : "مكية") : (language === 'en' ? "Medinan" : "مدنية")} • {s.numberOfVerses} {language === 'en' ? "Verses" : "آيات"}
+                          </span>
+                        </div>
+
+                        <div style={styles.surahArabicName} className="arabic-text">
+                          {s.name}
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div style={styles.noResults} className="glass-panel">
+                      <span>{t('searchNoResults')}</span>
+                    </div>
+                  )}
+                </div>
+              )}
+            </>
+          ) : (
+            // Surah Reader & Live API Streaming View
+            <div style={styles.readerContainer}>
+              <button 
+                onClick={() => {
+                  setSelectedSurah(null);
+                  if (quranMode === 'recitation') {
+                    // reset recitation parameters
+                    setSelectedJuz("");
+                    setAyahFrom("");
+                    setAyahTo("");
+                  }
+                }} 
+                style={styles.backBtn} 
+                className="btn-secondary"
+              >
+                <ChevronLeft size={16} />
+                <span>{quranMode === 'recitation' ? (language === 'ar' ? "العودة لإعداد التسميع" : "Back to Recitation Setup") : (language === 'en' ? "Back to Directory" : "العودة للمصحف")}</span>
+              </button>
+
+              {isLoadingSurah ? (
+                <div style={styles.loaderArea}>
+                  <Loader size={40} className="spin-pulse" color="var(--text-gold)" />
+                  <p style={{ marginTop: '12px', color: 'var(--text-secondary)' }}>
+                    {language === 'en' ? "Compiling verses from authentic API editions..." : "جاري جلب الآيات الشريفة من المصادر المعتمدة..."}
+                  </p>
+                </div>
+              ) : surahContent ? (
+                <>
+                  {/* Surah Header Card */}
+                  <div style={styles.readerHeader} className="glass-panel">
+                    <div className="islamic-pattern"></div>
+                    <div style={styles.readerTitleWrapper}>
+                      <h2 style={styles.readerTitle}>{surahContent.englishName}</h2>
+                      <div style={styles.readerArabicTitle} className="arabic-text">{surahContent.name}</div>
+                    </div>
+                    
+                    <p style={styles.readerSub}>
+                      {surahContent.englishNameTranslation} • {surahContent.revelationType === 'Meccan' ? (language === 'en' ? "Meccan" : "مكية") : (language === 'en' ? "Medinan" : "مدنية")} • {surahContent.numberOfVerses} {language === 'en' ? "Verses" : "آيات"}
+                      {quranMode === 'recitation' && recitationJuz && ` • ${language === 'ar' ? "الجزء" : "Juz'"} ${recitationJuz}`}
+                    </p>
+
+                    {/* For Recitation mode, show recitation details if loaded */}
+                    {quranMode === 'recitation' && (
+                      <div style={styles.recitationBanner} className="glass-panel">
+                        <Mic size={14} color="#ff6b6b" />
+                        <span>
+                          {language === 'ar' 
+                            ? `أنت في وضع التسميع للآيات من ${recitationAyahFrom} إلى ${recitationAyahTo}` 
+                            : `You are in Recitation mode for verses ${recitationAyahFrom} to ${recitationAyahTo}`}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Listening Mode Premium Audio recitation bar (ONLY show if NOT in Recitation mode) */}
+                    {quranMode === 'listening' && (
+                      <div style={styles.audioBar} className="glass-panel">
+                        <audio 
+                          ref={audioRef} 
+                          src={getAudioUrl(surahContent.number)} 
+                          onTimeUpdate={handleTimeUpdate}
+                          onLoadedMetadata={handleLoadedMetadata}
+                          onEnded={handleAudioEnded}
+                        />
+                        
+                        <button 
+                          onClick={handlePlayToggle} 
+                          style={styles.playBtn} 
+                          className="btn-primary"
+                          disabled={loadingAudio}
+                        >
+                          {loadingAudio ? (
+                            <Loader size={18} className="spin-pulse" />
+                          ) : isPlaying ? (
+                            <Pause size={18} />
+                          ) : (
+                            <Play size={18} />
+                          )}
+                          <span>{isPlaying ? t('quranPause') : t('quranPlayAll')}</span>
+                        </button>
+
+                        <div style={styles.audioTimeline}>
+                          <span style={styles.timeLabel}>{formatTime(currentTime)}</span>
+                          <input 
+                            type="range"
+                            min="0"
+                            max={duration || 100}
+                            value={currentTime}
+                            onChange={handleSeek}
+                            style={styles.progressBar}
+                          />
+                          <span style={styles.timeLabel}>{formatTime(duration)}</span>
+                        </div>
+
+                        <div style={styles.reciterBadge}>
+                          <Volume2 size={14} color="var(--text-gold)" />
+                          <span style={styles.reciterText}>Mishary Alafasy</span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Recitation Mode Audio Recorder Section (ONLY show if in Recitation mode) */}
+                    {quranMode === 'recitation' && (
+                      <div style={{...styles.audioBar, marginTop: '16px', background: isRecording ? 'rgba(255, 107, 107, 0.1)' : 'rgba(212, 175, 55, 0.05)'}} className="glass-panel">
+                        <div style={styles.reciterBadge}>
+                          <Mic size={16} color={isRecording ? "#ff6b6b" : "var(--text-gold)"} className={isRecording ? "spin-pulse" : ""} />
+                          <span style={styles.reciterText}>{language === 'en' ? "Tasmee' (Recitation Recorder)" : "تسميع (مسجل التلاوة)"}</span>
+                        </div>
+                        
+                        <div style={{display: 'flex', gap: '10px', alignItems: 'center'}}>
+                          {!isRecording ? (
+                            <button onClick={startTasmeeRecording} style={{...styles.playBtn, background: 'rgba(255,255,255,0.05)'}} className="btn-secondary">
+                              <Mic size={14} color="#ff6b6b" />
+                              <span>{language === 'en' ? "Record" : "تسجيل"}</span>
+                            </button>
+                          ) : (
+                            <button onClick={stopTasmeeRecording} style={{...styles.playBtn, background: 'rgba(255, 107, 107, 0.2)', borderColor: '#ff6b6b'}} className="btn-secondary">
+                              <Square size={14} color="#ff6b6b" />
+                              <span>{language === 'en' ? "Stop" : "إيقاف"}</span>
+                            </button>
+                          )}
+                          
+                          {tasmeeBlob && !isRecording && (
+                            <button onClick={handleSaveTasmee} style={styles.playBtn} className="btn-primary">
+                              <Save size={14} />
+                              <span>{language === 'ar' ? "نشر التلاوة للتصحيح" : "Post Recitation"}</span>
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Verses Feed */}
+                  <div style={styles.versesFeed}>
+                    {surahContent.verses
+                      .filter(v => {
+                        if (quranMode !== 'recitation') return true;
+                        const from = recitationAyahFrom || 1;
+                        const to = recitationAyahTo || surahContent.numberOfVerses;
+                        return v.num >= from && v.num <= to;
+                      })
+                      .map(v => {
+                        const verseId = `${surahContent.number}-${v.num}`;
+                        const bookmarked = isVerseBookmarked(verseId);
+
+                        return (
+                          <div key={v.num} style={styles.verseCard} className="glass-panel">
+                            <div style={styles.verseActionPanel}>
+                              <div style={styles.verseLabel} className="glass-panel">
+                                <Award size={12} color="var(--text-gold)" />
+                                <span>{language === 'en' ? `Verse ${v.num}` : `الآية ${v.num}`}</span>
+                              </div>
+
+                              <button 
+                                onClick={() => handleBookmarkToggle(surahContent, v)} 
+                                style={{
+                                  ...styles.bookmarkBtn,
+                                  color: bookmarked ? 'var(--text-gold)' : 'var(--text-secondary)'
+                                }}
+                              >
+                                {bookmarked ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}
+                              </button>
+                            </div>
+
+                            <div style={styles.verseAr} className="arabic-text">
+                              {v.ar} 
+                              <span style={styles.verseNumberCircle}>﴿{v.num}﴾</span>
+                            </div>
+
+                            <div style={styles.verseEn}>
+                              {v.en}
+                            </div>
+                          </div>
+                        );
+                      })}
+                  </div>
+                </>
               ) : (
                 <div style={styles.noResults} className="glass-panel">
-                  <span>{t('searchNoResults')}</span>
+                  <span>{language === 'en' ? "Unable to load Surah contents." : "فشل تحميل محتوى السورة."}</span>
                 </div>
               )}
             </div>
           )}
         </>
-      ) : (
-        // Surah Reader & Live API Streaming View
-        <div style={styles.readerContainer}>
-          <button onClick={() => setSelectedSurah(null)} style={styles.backBtn} className="btn-secondary">
-            <ChevronLeft size={16} />
-            <span>{language === 'en' ? "Back to Directory" : "العودة للمصحف"}</span>
-          </button>
-
-          {isLoadingSurah ? (
-            <div style={styles.loaderArea}>
-              <Loader size={40} className="spin-pulse" color="var(--text-gold)" />
-              <p style={{ marginTop: '12px', color: 'var(--text-secondary)' }}>
-                {language === 'en' ? "Compiling verses from authentic API editions..." : "جاري جلب الآيات الشريفة من المصادر المعتمدة..."}
-              </p>
-            </div>
-          ) : surahContent ? (
-            <>
-              {/* Surah Header Card */}
-              <div style={styles.readerHeader} className="glass-panel">
-                <div className="islamic-pattern"></div>
-                <div style={styles.readerTitleWrapper}>
-                  <h2 style={styles.readerTitle}>{surahContent.englishName}</h2>
-                  <div style={styles.readerArabicTitle} className="arabic-text">{surahContent.name}</div>
-                </div>
-                
-                <p style={styles.readerSub}>
-                  {surahContent.englishNameTranslation} • {surahContent.revelationType === 'Meccan' ? (language === 'en' ? "Meccan" : "مكية") : (language === 'en' ? "Medinan" : "مدنية")} • {surahContent.numberOfVerses} {language === 'en' ? "Verses" : "آيات"}
-                </p>
-
-                {/* Premium Audio recitation bar */}
-                <div style={styles.audioBar} className="glass-panel">
-                  <audio 
-                    ref={audioRef} 
-                    src={getAudioUrl(surahContent.number)} 
-                    onTimeUpdate={handleTimeUpdate}
-                    onLoadedMetadata={handleLoadedMetadata}
-                    onEnded={handleAudioEnded}
-                  />
-                  
-                  <button 
-                    onClick={handlePlayToggle} 
-                    style={styles.playBtn} 
-                    className="btn-primary"
-                    disabled={loadingAudio}
-                  >
-                    {loadingAudio ? (
-                      <Loader size={18} className="spin-pulse" />
-                    ) : isPlaying ? (
-                      <Pause size={18} />
-                    ) : (
-                      <Play size={18} />
-                    )}
-                    <span>{isPlaying ? t('quranPause') : t('quranPlayAll')}</span>
-                  </button>
-
-                  <div style={styles.audioTimeline}>
-                    <span style={styles.timeLabel}>{formatTime(currentTime)}</span>
-                    <input 
-                      type="range"
-                      min="0"
-                      max={duration || 100}
-                      value={currentTime}
-                      onChange={handleSeek}
-                      style={styles.progressBar}
-                    />
-                    <span style={styles.timeLabel}>{formatTime(duration)}</span>
-                  </div>
-
-                  <div style={styles.reciterBadge}>
-                    <Volume2 size={14} color="var(--text-gold)" />
-                    <span style={styles.reciterText}>Mishary Alafasy</span>
-                  </div>
-                </div>
-
-                {/* Tasmee Recorder Section */}
-                <div style={{...styles.audioBar, marginTop: '16px', background: isRecording ? 'rgba(255, 107, 107, 0.1)' : 'rgba(212, 175, 55, 0.05)'}} className="glass-panel">
-                  <div style={styles.reciterBadge}>
-                    <Mic size={16} color={isRecording ? "#ff6b6b" : "var(--text-gold)"} className={isRecording ? "spin-pulse" : ""} />
-                    <span style={styles.reciterText}>{language === 'en' ? "Tasmee' (Recitation Recorder)" : "تسميع (مسجل التلاوة)"}</span>
-                  </div>
-                  
-                  <div style={{display: 'flex', gap: '10px'}}>
-                    {!isRecording ? (
-                      <button onClick={startTasmeeRecording} style={{...styles.playBtn, background: 'rgba(255,255,255,0.05)'}} className="btn-secondary">
-                        <Mic size={14} color="#ff6b6b" />
-                        <span>{language === 'en' ? "Record" : "تسجيل"}</span>
-                      </button>
-                    ) : (
-                      <button onClick={stopTasmeeRecording} style={{...styles.playBtn, background: 'rgba(255, 107, 107, 0.2)', borderColor: '#ff6b6b'}} className="btn-secondary">
-                        <Square size={14} color="#ff6b6b" />
-                        <span>{language === 'en' ? "Stop" : "إيقاف"}</span>
-                      </button>
-                    )}
-                    
-                    {tasmeeBlob && !isRecording && (
-                      <button onClick={handleSaveTasmee} style={styles.playBtn} className="btn-primary">
-                        <Save size={14} />
-                        <span>{language === 'en' ? "Save" : "حفظ"}</span>
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {/* Verses Feed */}
-              <div style={styles.versesFeed}>
-                {surahContent.verses.map(v => {
-                  const verseId = `${surahContent.number}-${v.num}`;
-                  const bookmarked = isVerseBookmarked(verseId);
-
-                  return (
-                    <div key={v.num} style={styles.verseCard} className="glass-panel">
-                      <div style={styles.verseActionPanel}>
-                        <div style={styles.verseLabel} className="glass-panel">
-                          <Award size={12} color="var(--text-gold)" />
-                          <span>{language === 'en' ? `Verse ${v.num}` : `الآية ${v.num}`}</span>
-                        </div>
-
-                        <button 
-                          onClick={() => handleBookmarkToggle(surahContent, v)} 
-                          style={{
-                            ...styles.bookmarkBtn,
-                            color: bookmarked ? 'var(--text-gold)' : 'var(--text-secondary)'
-                          }}
-                        >
-                          {bookmarked ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}
-                        </button>
-                      </div>
-
-                      <div style={styles.verseAr} className="arabic-text">
-                        {v.ar} 
-                        <span style={styles.verseNumberCircle}>﴿{v.num}﴾</span>
-                      </div>
-
-                      <div style={styles.verseEn}>
-                        {v.en}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </>
-          ) : (
-            <div style={styles.noResults} className="glass-panel">
-              <span>{language === 'en' ? "Unable to load Surah contents." : "فشل تحميل محتوى السورة."}</span>
-            </div>
-          )}
-        </div>
       )}
     </div>
   );
@@ -496,7 +859,7 @@ const styles = {
     filter: 'drop-shadow(0 0 8px rgba(212, 175, 55, 0.4))',
   },
   title: {
-    fontFamily: "'Playfair Display', serif",
+    fontFamily: "'IBM Plex Sans Arabic', sans-serif",
     fontSize: '2.2rem',
     color: 'var(--text-primary)',
     fontWeight: '600',
@@ -690,7 +1053,7 @@ const styles = {
     justifyContent: 'center',
   },
   verseAr: {
-    fontSize: '2rem',
+    fontSize: '2.1rem',
     textAlign: 'right',
     color: 'var(--text-primary)',
     fontWeight: '700',
@@ -716,7 +1079,213 @@ const styles = {
     padding: '40px',
     textAlign: 'center',
     color: 'var(--text-secondary)',
-  }
+  },
+  // Recitation & Choices Screen Styles
+  modalOverlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(5, 7, 12, 0.85)',
+    backdropFilter: 'blur(12px)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 1000,
+  },
+  modalCard: {
+    maxWidth: '480px',
+    width: '90%',
+    padding: '36px 30px',
+    borderRadius: '24px',
+    border: '1px solid var(--border-gold)',
+    boxShadow: '0 20px 40px rgba(0,0,0,0.5), var(--shadow-gold-intense)',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '20px',
+    position: 'relative',
+    background: 'rgba(15, 17, 26, 0.95)',
+  },
+  modalIconContainer: {
+    width: '80px',
+    height: '80px',
+    borderRadius: '50%',
+    background: 'radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, rgba(255,255,255,0.02) 80%)',
+    border: '2px solid var(--gold-primary)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    boxShadow: 'var(--shadow-gold-intense)',
+  },
+  modalTitle: {
+    fontSize: '1.6rem',
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+  modalText: {
+    fontSize: '0.9rem',
+    color: 'var(--text-secondary)',
+    lineHeight: '1.6',
+    textAlign: 'center',
+  },
+  modalDetails: {
+    padding: '16px',
+    background: 'rgba(255, 255, 255, 0.02)',
+    borderRadius: '12px',
+    border: '1px solid rgba(255,255,255,0.05)',
+    textAlign: 'center',
+  },
+  modalActionRow: {
+    display: 'flex',
+    gap: '12px',
+    marginTop: '10px',
+  },
+  choiceContainer: {
+    padding: '40px 0',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '30px',
+  },
+  choiceHeader: {
+    textAlign: 'center',
+    marginBottom: '20px',
+  },
+  choiceTitle: {
+    fontFamily: "'IBM Plex Sans Arabic', sans-serif",
+    fontSize: '2.4rem',
+    color: 'var(--text-primary)',
+    fontWeight: '700',
+  },
+  choiceSubtitle: {
+    fontSize: '1rem',
+    color: 'var(--text-secondary)',
+    marginTop: '8px',
+  },
+  choiceGrid: {
+    display: 'flex',
+    gap: '30px',
+    width: '100%',
+    maxWidth: '1000px',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+  },
+  choiceCard: {
+    flex: '1 1 350px',
+    maxWidth: '450px',
+    padding: '40px 30px',
+    borderRadius: '24px',
+    cursor: 'pointer',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    textAlign: 'center',
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  choiceCardIcon: {
+    width: '70px',
+    height: '70px',
+    borderRadius: '20px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: '24px',
+  },
+  choiceCardTitle: {
+    fontFamily: "'IBM Plex Sans Arabic', sans-serif",
+    fontSize: '1.4rem',
+    color: 'var(--text-primary)',
+    fontWeight: '600',
+    marginBottom: '12px',
+  },
+  choiceCardDesc: {
+    fontSize: '0.88rem',
+    color: 'var(--text-secondary)',
+    lineHeight: '1.6',
+    marginBottom: '24px',
+    flexGrow: 1,
+  },
+  choiceCardBadge: {
+    fontSize: '0.8rem',
+    fontWeight: '600',
+  },
+  recitationFormContainer: {
+    maxWidth: '600px',
+    margin: '40px auto',
+    padding: '40px 30px',
+    borderRadius: '24px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '24px',
+  },
+  formHeader: {
+    textAlign: 'center',
+    marginBottom: '10px',
+  },
+  formTitle: {
+    fontFamily: "'IBM Plex Sans Arabic', sans-serif",
+    fontSize: '1.6rem',
+    fontWeight: '600',
+    color: 'var(--text-primary)',
+  },
+  formSubtitle: {
+    fontSize: '0.88rem',
+    color: 'var(--text-secondary)',
+    marginTop: '6px',
+  },
+  formBody: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '20px',
+  },
+  formGroup: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px',
+  },
+  formLabel: {
+    fontSize: '0.85rem',
+    color: 'var(--text-gold)',
+    fontWeight: '600',
+  },
+  formSelect: {
+    background: 'rgba(255, 255, 255, 0.02)',
+    border: '1px solid var(--border-gold)',
+    borderRadius: '10px',
+    padding: '12px 16px',
+    color: 'var(--text-primary)',
+    fontSize: '0.9rem',
+    outline: 'none',
+    cursor: 'pointer',
+    width: '100%',
+  },
+  ayahRangeRow: {
+    gap: '16px',
+  },
+  startRecBtn: {
+    marginTop: '10px',
+    justifyContent: 'center',
+    padding: '14px',
+    fontSize: '0.95rem',
+  },
+  recitationBanner: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '8px',
+    padding: '10px 18px',
+    borderRadius: '30px',
+    background: 'rgba(255, 107, 107, 0.08)',
+    border: '1px solid rgba(255, 107, 107, 0.2)',
+    color: '#ff6b6b',
+    fontSize: '0.85rem',
+    fontWeight: '500',
+    maxWidth: 'fit-content',
+    margin: '16px auto 0 auto',
+  },
 };
 
 if (typeof document !== 'undefined') {
@@ -728,6 +1297,14 @@ if (typeof document !== 'undefined') {
     .surah-card-hover:hover {
       transform: translateY(-3px);
       border-color: var(--border-gold-hover) !important;
+    }
+    .choice-card-hover {
+      transition: var(--transition-smooth);
+    }
+    .choice-card-hover:hover {
+      transform: translateY(-5px);
+      border-color: var(--border-gold-hover) !important;
+      box-shadow: 0 10px 30px rgba(212, 175, 55, 0.08);
     }
     .spin-pulse {
       animation: spin 1s infinite linear;

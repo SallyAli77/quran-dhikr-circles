@@ -22,7 +22,7 @@ function AppContent() {
       case 'home':
         return <Home setActivePage={setActivePage} />;
       case 'quran':
-        return <Quran />;
+        return <Quran setActivePage={setActivePage} />;
       case 'prayer':
         return <PrayerTimes />;
       case 'articles':
