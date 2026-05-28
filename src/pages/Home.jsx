@@ -178,14 +178,14 @@ export default function Home({ setActivePage }) {
         <div className="islamic-pattern"></div>
         <div className="container" style={styles.heroContainer}>
           <div style={styles.heroBadge} className="glass-panel">
-            <Award size={14} color="var(--text-gold)" />
-            <span>{language === 'en' ? "Welcome to Premium ArabicMuslim Portal" : "مرحباً بك في بوابة أرابيك مسلم الفاخرة"}</span>
+            <Compass size={14} color="var(--text-gold)" style={{ marginRight: '6px', marginLeft: '6px' }} />
+            <span>{language === 'en' ? "Your Daily Islamic Companion" : "رفيقك اليومي للعبادة والتعلم"}</span>
           </div>
           
           <h1 style={styles.heroTitle} className="slide-up">
-            {language === 'en' ? "Embark on a Premium" : "ابدأ رحلة"} <br />
+            {language === 'en' ? "Memorize Quran &" : "حفظ القرآن الكريم"} <br />
             <span className="gold-gradient-text gold-glow-text" style={{ fontFamily: "'Playfair Display', serif", fontWeight: '800' }}>
-              {language === 'en' ? "Spiritual Journey" : "روحانية فاخرة"}
+              {language === 'en' ? "Cultivate Daily Dhikr" : "والأذكار والتسبيح اليومي"}
             </span>
           </h1>
 
@@ -211,13 +211,13 @@ export default function Home({ setActivePage }) {
         <div className="container">
           <div style={styles.sectionHeader}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-gold)', marginBottom: '8px' }}>
-              <Flame size={18} />
+              <Flame size={18} style={{ marginRight: '4px', marginLeft: '4px' }} />
               <span style={{ fontSize: '0.85rem', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase' }}>
-                {language === 'en' ? "Essential Utilities" : "الخدمات الأساسية"}
+                {language === 'en' ? "Core Features" : "مميزات المنصة"}
               </span>
             </div>
             <h2 style={styles.sectionTitle}>
-              {language === 'en' ? "Align Your Daily Life with Ease" : "نظم حياتك اليومية بكل يسر وسهولة"}
+              {language === 'en' ? "Everything You Need for Your Daily Worship" : "كل ما تحتاجه في عباداتك ودراستك اليومية"}
             </h2>
           </div>
 
@@ -351,16 +351,16 @@ export default function Home({ setActivePage }) {
         <div className="container">
           <div style={styles.sectionHeader}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-gold)', marginBottom: '8px' }}>
-              <BookOpen size={18} />
+              <BookOpen size={18} style={{ marginRight: '4px', marginLeft: '4px' }} />
               <span style={{ fontSize: '0.85rem', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase' }}>
-                {language === 'en' ? "Digital E-Books Library" : "المكتبة الرقمية الفاخرة"}
+                {language === 'en' ? "E-Books & Learning Resources" : "الكتب الإلكترونية ومصادر التعلم"}
               </span>
             </div>
             <h2 style={styles.sectionTitle}>
-              {language === 'en' ? "Premium Islamic E-Books & Kindle Editions" : "كنوز الكتب الإلكترونية الإسلامية لكيندل"}
+              {language === 'en' ? "Islamic E-Books & Arabic Learning Materials" : "كتب إلكترونية إسلامية ومناهج تعليم العربية"}
             </h2>
             <p style={styles.sectionSubtitle}>
-              {language === 'en' ? "Handpicked Kindle literature, audio books, and vocab keys optimized for immediate digital study." : "توصياتنا الحصرية لأفضل كتب التلاوة الكلاسيكية والتربية والتعلم السريع المحسنة للقراءة الرقمية."}
+              {language === 'en' ? "Carefully selected digital books, Hisn al-Muslim guides, and language root exercises for quick study." : "كتب ومراجع إلكترونية قيمة لتعليم اللغة العربية وتدبر معاني كلمات القرآن الكريم وقراءة الأذكار اليومية."}
             </p>
           </div>
 

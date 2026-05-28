@@ -18,25 +18,25 @@ const translations = {
     navLogout: "Sign Out",
 
     // Hero
-    heroTitle: "Embark on a Premium Spiritual Journey",
-    heroSubtitle: "Cultivate daily devotion, read the Quran with pristine audio, align your schedule with real-time prayer calculations, and grow in a modern Islamic community.",
+    heroTitle: "Your Comprehensive Guide to Quran Memorization & Daily Dhikr",
+    heroSubtitle: "Access an interactive Quran with clear audio recitations, plan your worship with precise prayer times, join live study circles, find Arabic learning books, and connect with a supportive Muslim community.",
     heroExplore: "Explore Noble Quran",
     heroCommunity: "Join the Circle",
 
     // Features Section
-    featQuranTitle: "Noble Quran",
-    featQuranDesc: "Read pristine digital translations side-by-side with high quality audio recitations.",
-    featPrayerTitle: "Prayer Precision",
-    featPrayerDesc: "Real-time coordinates-based calculator with custom local Athan alerts and countdowns.",
-    featCommunityTitle: "Global Circle",
-    featCommunityDesc: "Engage in collective reflection, share Quranic insights, and count daily Tasbih.",
-    featArticlesTitle: "Deep Wisdom",
-    featArticlesDesc: "Read carefully curated articles covering Arabic learning, spirituality, and history.",
+    featQuranTitle: "Quran Memorization & Audio",
+    featQuranDesc: "Listen to clear audio recitations and read translations side-by-side to assist in your Quran memorization journey.",
+    featPrayerTitle: "Accurate Prayer Times",
+    featPrayerDesc: "Get precise prayer calculation methods based on your location with soft Athan notification countdowns.",
+    featCommunityTitle: "Dhikr & Quran Circles",
+    featCommunityDesc: "Create or join live circles to recite Quran, memorize together, count group Tasbih, and share spiritual reflections.",
+    featArticlesTitle: "Islamic Articles & Arabic Learning",
+    featArticlesDesc: "Explore well-researched guides on Islamic history, daily du'as, spiritual goals, and learning the Arabic language.",
 
     // Products Section
-    prodSectionTitle: "Curated Islamic Treasures",
-    prodSectionSubtitle: "Handpicked premium resources on Amazon to elevate your study and daily practice.",
-    prodBuyNow: "Acquire on Amazon",
+    prodSectionTitle: "Islamic Books & E-Books",
+    prodSectionSubtitle: "Browse top-rated physical and electronic books for learning Arabic, prayer journals, and digital copies of Hisn al-Muslim.",
+    prodBuyNow: "Get on Amazon",
     prodReviewSingular: "review",
     prodReviewsPlural: "reviews",
 
@@ -129,25 +129,25 @@ const translations = {
     navLogout: "تسجيل الخروج",
 
     // Hero
-    heroTitle: "ابدأ رحلة روحانية فاخرة",
-    heroSubtitle: "حافظ على الأذكار اليومية، اقرأ القرآن بتلاوة عذبة، نسق جدولك مع حسابات الصلاة الفورية، وتطور في مجتمع إسلامي حديث وراقي.",
+    heroTitle: "بوابتك الشاملة لحفظ القرآن الكريم والأذكار اليومية",
+    heroSubtitle: "احفظ القرآن بتلاوات صوتية واضحة، تابع أهدافك اليومية مع مواقيت الصلاة الدقيقة، شارك في حلقات التلاوة والحفظ الجماعية، وتصفح كتب تعليم اللغة العربية والمنتجات الإسلامية القيمة.",
     heroExplore: "تصفح القرآن الكريم",
     heroCommunity: "انضم للحلقة",
 
     // Features Section
-    featQuranTitle: "القرآن الكريم",
-    featQuranDesc: "اقرأ التراجم الرقمية الفاخرة جنباً إلى جنب مع تلاوات صوتية عالية الجودة.",
-    featPrayerTitle: "دقة الصلاة",
-    featPrayerDesc: "حاسبة متطورة تعتمد على الإحداثيات مع تنبيهات الأذان والعد التنازلي.",
-    featCommunityTitle: "الحلقة العالمية",
-    featCommunityDesc: "شارك في التأملات الجماعية، انشر الحكم القرآنية، واحصِ أذكارك اليومية.",
-    featArticlesTitle: "حكمة عميقة",
-    featArticlesDesc: "اقرأ مقالات منتقاة بعناية تغطي تعلم اللغة العربية والروحانيات والتاريخ.",
+    featQuranTitle: "حفظ القرآن الكريم وتلاوته",
+    featQuranDesc: "استمع إلى تلاوات واضحة عذبة وتابع التراجم لتسهيل وتسريع حفظك ومراجعتك للقرآن الكريم.",
+    featPrayerTitle: "مواقيت الصلاة الدقيقة",
+    featPrayerDesc: "حساب أوقات الصلاة بدقة بناءً على موقعك مع مؤقت تنازلي وتنبيهات أذان مرنة.",
+    featCommunityTitle: "حلقات الذكر والتسبيح",
+    featCommunityDesc: "أنشئ حلقات تفاعلية للتلاوة أو الحفظ أو التسبيح الجماعي المباشر، وتفاعل ببوستات وخواطر في مجتمع متكامل.",
+    featArticlesTitle: "تعلم العربية والمقالات الإسلامية",
+    featArticlesDesc: "اقرأ مقالات تعليمية تغطي اللغة العربية، الأذكار، التفسير، وتاريخنا الإسلامي بطريقة مبسطة.",
 
     // Products Section
-    prodSectionTitle: "كنوز إسلامية منتقاة",
-    prodSectionSubtitle: "مصادر فاخرة اخترناها لك على أمازون لترقية دراستك وممارستك اليومية.",
-    prodBuyNow: "اقتنِ الآن من أمازون",
+    prodSectionTitle: "الكتب الإسلامية وكتب تعليم العربية",
+    prodSectionSubtitle: "تصفح واقتنِ كتباً إلكترونية إسلامية، روايات، دفاتر يوميات للصلاة، ومناهج ممتازة لتعلم لغة القرآن.",
+    prodBuyNow: "احصل عليه من أمازون",
     prodReviewSingular: "تقييم",
     prodReviewsPlural: "تقييمات",
 
