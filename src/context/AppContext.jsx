@@ -244,6 +244,12 @@ export const AppProvider = ({ children }) => {
     return saved ? parseInt(saved, 10) : 0;
   });
 
+  // Tasmee Recordings
+  const [tasmeeSubmissions, setTasmeeSubmissions] = useState(() => {
+    const saved = localStorage.getItem('arabicmuslim_tasmee');
+    return saved ? JSON.parse(saved) : [];
+  });
+
   // Pre-seeded community posts reflecting real insights and spiritual sharing
   const [communityPosts, setCommunityPosts] = useState(() => {
     const saved = localStorage.getItem('arabicmuslim_posts');
@@ -293,6 +299,11 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem('arabicmuslim_tasbih', tasbihCount.toString());
   }, [tasbihCount]);
+
+  // Sync Tasmee
+  useEffect(() => {
+    localStorage.setItem('arabicmuslim_tasmee', JSON.stringify(tasmeeSubmissions));
+  }, [tasmeeSubmissions]);
 
   // Sync Community Posts
   useEffect(() => {
@@ -370,6 +381,20 @@ export const AppProvider = ({ children }) => {
     });
   };
 
+  // Tasmee Actions
+  const addTasmeeSubmission = (recording) => {
+    const newSubmission = {
+      id: Date.now().toString(),
+      date: new Date().toLocaleDateString(language === 'ar' ? 'ar-EG' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+      ...recording
+    };
+    setTasmeeSubmissions(prev => [newSubmission, ...prev]);
+  };
+
+  const deleteTasmeeSubmission = (id) => {
+    setTasmeeSubmissions(prev => prev.filter(sub => sub.id !== id));
+  };
+
   // Community Feed Actions
   const addPost = (content) => {
     const newPost = {
@@ -443,6 +468,9 @@ export const AppProvider = ({ children }) => {
       toggleBookmark,
       tasbihCount,
       setTasbihCount,
+      tasmeeSubmissions,
+      addTasmeeSubmission,
+      deleteTasmeeSubmission,
       communityPosts,
       addPost,
       likePost,

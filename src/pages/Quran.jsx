@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
-import { Book, Play, Pause, Bookmark, BookmarkCheck, Search, Volume2, Award, ChevronLeft, ArrowRight, Loader, Compass } from 'lucide-react';
+import { Book, Play, Pause, Bookmark, BookmarkCheck, Search, Volume2, Award, ChevronLeft, ArrowRight, Loader, Compass, Mic, Square, Save } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 // Pristine offline fallback data in case of network unavailability
@@ -39,7 +39,7 @@ const fallbackSurahs = [
 ];
 
 export default function Quran() {
-  const { language, searchQuery, bookmarks, toggleBookmark, t } = useApp();
+  const { language, searchQuery, bookmarks, toggleBookmark, addTasmeeSubmission, t } = useApp();
   
   const [surahsList, setSurahsList] = useState([]);
   const [isLoadingList, setIsLoadingList] = useState(true);
@@ -51,6 +51,11 @@ export default function Quran() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [loadingAudio, setLoadingAudio] = useState(false);
+
+  const [isRecording, setIsRecording] = useState(false);
+  const [tasmeeBlob, setTasmeeBlob] = useState(null);
+  const mediaRecorderRef = useRef(null);
+  const audioChunksRef = useRef([]);
 
   const audioRef = useRef(null);
 
@@ -162,6 +167,61 @@ export default function Quran() {
   const handleAudioEnded = () => {
     setIsPlaying(false);
     setCurrentTime(0);
+  };
+
+  // Tasmee Recorder Logic
+  const startTasmeeRecording = async () => {
+    try {
+      setTasmeeBlob(null);
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorderRef.current = new MediaRecorder(stream);
+      audioChunksRef.current = [];
+
+      mediaRecorderRef.current.ondataavailable = (e) => {
+        if (e.data.size > 0) audioChunksRef.current.push(e.data);
+      };
+
+      mediaRecorderRef.current.onstop = () => {
+        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+        setTasmeeBlob(audioBlob);
+      };
+
+      mediaRecorderRef.current.start();
+      setIsRecording(true);
+    } catch (err) {
+      console.error("Microphone access denied or error:", err);
+      alert(language === 'en' ? "Microphone access is required for Tasmee." : "يلزم الوصول إلى الميكروفون للتسميع.");
+    }
+  };
+
+  const stopTasmeeRecording = () => {
+    if (mediaRecorderRef.current && isRecording) {
+      mediaRecorderRef.current.stop();
+      mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
+      setIsRecording(false);
+    }
+  };
+
+  const handleSaveTasmee = () => {
+    if (tasmeeBlob && selectedSurah) {
+      const reader = new FileReader();
+      reader.readAsDataURL(tasmeeBlob);
+      reader.onloadend = () => {
+        addTasmeeSubmission({
+          surahName: selectedSurah.englishName,
+          surahNameAr: selectedSurah.name,
+          surahId: selectedSurah.number,
+          audioData: reader.result
+        });
+        setTasmeeBlob(null);
+        confetti({
+          particleCount: 40,
+          spread: 60,
+          colors: ['#d4af37', '#ffffff']
+        });
+        alert(language === 'en' ? "Tasmee saved to your dashboard!" : "تم حفظ التسميع في لوحة التحكم!");
+      };
+    }
   };
 
   const formatTime = (timeInSecs) => {
@@ -341,6 +401,35 @@ export default function Quran() {
                   <div style={styles.reciterBadge}>
                     <Volume2 size={14} color="var(--text-gold)" />
                     <span style={styles.reciterText}>Mishary Alafasy</span>
+                  </div>
+                </div>
+
+                {/* Tasmee Recorder Section */}
+                <div style={{...styles.audioBar, marginTop: '16px', background: isRecording ? 'rgba(255, 107, 107, 0.1)' : 'rgba(212, 175, 55, 0.05)'}} className="glass-panel">
+                  <div style={styles.reciterBadge}>
+                    <Mic size={16} color={isRecording ? "#ff6b6b" : "var(--text-gold)"} className={isRecording ? "spin-pulse" : ""} />
+                    <span style={styles.reciterText}>{language === 'en' ? "Tasmee' (Recitation Recorder)" : "تسميع (مسجل التلاوة)"}</span>
+                  </div>
+                  
+                  <div style={{display: 'flex', gap: '10px'}}>
+                    {!isRecording ? (
+                      <button onClick={startTasmeeRecording} style={{...styles.playBtn, background: 'rgba(255,255,255,0.05)'}} className="btn-secondary">
+                        <Mic size={14} color="#ff6b6b" />
+                        <span>{language === 'en' ? "Record" : "تسجيل"}</span>
+                      </button>
+                    ) : (
+                      <button onClick={stopTasmeeRecording} style={{...styles.playBtn, background: 'rgba(255, 107, 107, 0.2)', borderColor: '#ff6b6b'}} className="btn-secondary">
+                        <Square size={14} color="#ff6b6b" />
+                        <span>{language === 'en' ? "Stop" : "إيقاف"}</span>
+                      </button>
+                    )}
+                    
+                    {tasmeeBlob && !isRecording && (
+                      <button onClick={handleSaveTasmee} style={styles.playBtn} className="btn-primary">
+                        <Save size={14} />
+                        <span>{language === 'en' ? "Save" : "حفظ"}</span>
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>

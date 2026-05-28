@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { ShieldAlert, LogIn, UserPlus, Key, Award, Bookmark, Edit2, Check, ArrowRight, User } from 'lucide-react';
+import { ShieldAlert, LogIn, UserPlus, Key, Award, Bookmark, Edit2, Check, ArrowRight, User, Mic } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function Login({ setActivePage }) {
-  const { isAuthenticated, user, login, logout, bookmarks, toggleBookmark, tasbihCount, t, language } = useApp();
+  const { isAuthenticated, user, login, logout, bookmarks, toggleBookmark, tasbihCount, t, language, tasmeeSubmissions, deleteTasmeeSubmission } = useApp();
 
   // Screen selection inside Auth
   const [isSignUpMode, setIsSignUpMode] = useState(false);
@@ -304,6 +304,41 @@ export default function Login({ setActivePage }) {
                   )}
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Tasmee Recordings Section */}
+          <div style={styles.bookmarksSection}>
+            <div style={styles.sectionHeader}>
+              <Mic size={20} color="var(--text-gold)" />
+              <h3 style={styles.sectionTitle}>{language === 'en' ? "My Tasmee' Recordings" : "تسجيلات التسميع الخاصة بي"}</h3>
+            </div>
+
+            <div className="grid-2" style={{ marginTop: '20px' }}>
+              {tasmeeSubmissions.length > 0 ? (
+                tasmeeSubmissions.map(sub => (
+                  <div key={sub.id} style={{...styles.bookmarkPanel, padding: '16px'}} className="glass-panel">
+                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px'}}>
+                      <div>
+                        <strong style={{ color: 'var(--text-gold)', fontSize: '1.1rem' }}>{language === 'en' ? sub.surahName : sub.surahNameAr}</strong>
+                        <div style={{fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '4px'}}>{sub.date}</div>
+                      </div>
+                      <button 
+                        onClick={() => deleteTasmeeSubmission(sub.id)} 
+                        style={styles.removeBookmarkBtn}
+                        title={language === 'en' ? "Delete Recording" : "حذف التسجيل"}
+                      >
+                        ×
+                      </button>
+                    </div>
+                    <audio src={sub.audioData} controls style={{width: '100%', height: '40px'}} />
+                  </div>
+                ))
+              ) : (
+                <div style={{...styles.emptyNotice, gridColumn: '1 / -1'}} className="glass-panel">
+                  <span>{language === 'en' ? "No Tasmee recordings yet. Go to the Quran page to record your recitation!" : "لا توجد تسجيلات تسميع بعد. اذهب إلى صفحة القرآن الكريم لتسجيل تلاوتك!"}</span>
+                </div>
+              )}
             </div>
           </div>
 
