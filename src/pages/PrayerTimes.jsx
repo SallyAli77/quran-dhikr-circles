@@ -15,7 +15,7 @@ const citiesData = {
     name: "Cairo",
     nameAr: "القاهرة",
     timezone: "Africa/Cairo",
-    timings: { Fajr: "04:15", Sunrise: "05:54", Dhuhr: "12:52", Asr: "16:28", Maghrib: "19:48", Isha: "21:20" }
+    timings: { Fajr: "04:12", Sunrise: "05:55", Dhuhr: "12:52", Asr: "16:29", Maghrib: "19:50", Isha: "21:22" }
   },
   london: {
     name: "London",
