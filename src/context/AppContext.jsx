@@ -88,6 +88,18 @@ const translations = {
     circleFormCap: "Target Members",
     circleFormType: "Circle Focus",
     circleSuccessCreated: "Circle created successfully!",
+    circleEnterSession: "Enter Live Session",
+    circleSessionDuration: "Worship Duration",
+    circleMinutes: "minutes",
+    circleCreator: "Organizer",
+    circleTurnReciter: "Active Worship Turn",
+    circleYourTurn: "It's Your Turn! Tap Below to Recite",
+    circleWaitingTurn: "Listen & Send Blessings",
+    circleConfirmBtn: "Confirm Recitation & Pass Turn",
+    circleSendReaction: "Send Blessings",
+    circleSessionEnded: "Session Completed",
+    circleCongratulations: "May Allah accept your worship and good deeds!",
+    circleSharedProgress: "Completed Shared Worships",
 
     // Contact Section
     contactTitle: "Get in Touch",
@@ -191,7 +203,7 @@ const translations = {
     commMilestone: "سبحان الله! لقد حققت إنجازاً: ",
     commTabCircles: "الحلقات المباشرة",
     circleJoin: "انضم للحلقة",
-    circleLeave: "غادر الحلقة",
+    circleLeave: "مغادرة الحلقة",
     circleFull: "مكتملة",
     circleCreate: "إنشاء حلقة جديدة",
     circleFormName: "اسم الحلقة",
@@ -199,6 +211,18 @@ const translations = {
     circleFormCap: "العدد المستهدف للأعضاء",
     circleFormType: "تركيز الحلقة",
     circleSuccessCreated: "تم إنشاء الحلقة بنجاح!",
+    circleEnterSession: "دخول حلقة التفاعل",
+    circleSessionDuration: "مدة العبادة",
+    circleMinutes: "دقائق",
+    circleCreator: "منظم الحلقة / المعلم",
+    circleTurnReciter: "الدور الحالي في القراءة",
+    circleYourTurn: "لقد جاء دورك! اضغط لتأكيد القراءة",
+    circleWaitingTurn: "استمع وتفاعل بقلوب ودعوات",
+    circleConfirmBtn: "تأكيد القراءة والذكر",
+    circleSendReaction: "أرسل تفاعل",
+    circleSessionEnded: "اكتمل وقت الحلقة!",
+    circleCongratulations: "تقبل الله منكم صالح الأعمال والطاعات وغفر ذنوبكم!",
+    circleSharedProgress: "إجمالي الأذكار المنجزة جماعياً",
 
     // Contact Section
     contactTitle: "اتصل بنا",
@@ -366,17 +390,22 @@ export const AppProvider = ({ children }) => {
         description: "Starting the day with the remembrance of Allah. Daily morning prayers.",
         descriptionAr: "نبدأ يومنا بذكر الله وطاعته. قراءة أذكار الصباح والتدبر اليومي.",
         capacity: 10,
+        duration: 10,
+        currentTurnIndex: 0,
+        sessionProgress: 12,
+        dhikrTarget: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ ، سُبْحَانَ اللَّهِ الْعَظِيمِ",
+        dhikrTargetAr: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ ، سُبْحَانَ اللَّهِ الْعَظِيمِ",
         joinedUsers: [
-          { name: "Fatima Hassan", avatar: "⭐" },
-          { name: "Ahmed Selim", avatar: "✨" },
-          { name: "Omar Farooq", avatar: "🕌" },
-          { name: "Amina Yusuf", avatar: "🌸" },
-          { name: "Yusuf Al-Qurashi", avatar: "📚" },
-          { name: "Sara Ali", avatar: "🌙" },
-          { name: "Bilal Khan", avatar: "🕌" },
-          { name: "Zainab Ahmed", avatar: "⭐" },
-          { name: "Hamza Malik", avatar: "✨" },
-          { name: "Layla Hussein", avatar: "🌸" }
+          { name: "Fatima Hassan", avatar: "🧕", email: "fatima@arabicmuslim.com" },
+          { name: "Ahmed Selim", avatar: "👳", email: "ahmed@arabicmuslim.com" },
+          { name: "Omar Farooq", avatar: "🧔", email: "omar@arabicmuslim.com" },
+          { name: "Amina Yusuf", avatar: "🧕", email: "amina@arabicmuslim.com" },
+          { name: "Yusuf Al-Qurashi", avatar: "👳", email: "yusuf@arabicmuslim.com" },
+          { name: "Sara Ali", avatar: "🧕", email: "sara@arabicmuslim.com" },
+          { name: "Bilal Khan", avatar: "🧔", email: "bilal@arabicmuslim.com" },
+          { name: "Zainab Ahmed", avatar: "🧕", email: "zainab@arabicmuslim.com" },
+          { name: "Hamza Malik", avatar: "👳", email: "hamza@arabicmuslim.com" },
+          { name: "Layla Hussein", avatar: "🧕", email: "layla@arabicmuslim.com" }
         ], // 10/10 - Golden Completed Circle
         creator: "System",
         type: "adhkar"
@@ -388,11 +417,16 @@ export const AppProvider = ({ children }) => {
         description: "Reciting Surah Al-Mulk together before sleep for protection and peace.",
         descriptionAr: "قراءة جماعية لسورة الملك قبل النوم للوقاية والسكينة الروحية.",
         capacity: 5,
+        duration: 60,
+        currentTurnIndex: 0,
+        sessionProgress: 8,
+        dhikrTarget: "تَبَارَكَ الَّذِي بِيَدِهِ الْمُلْكُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",
+        dhikrTargetAr: "تَبَارَكَ الَّذِي بِيَدِهِ الْمُلْكُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",
         joinedUsers: [
-          { name: "Fatima Hassan", avatar: "⭐" },
-          { name: "Ahmed Selim", avatar: "✨" },
-          { name: "Omar Farooq", avatar: "🕌" },
-          { name: "Amina Yusuf", avatar: "🌸" }
+          { name: "Fatima Hassan", avatar: "🧕", email: "fatima@arabicmuslim.com" },
+          { name: "Ahmed Selim", avatar: "👳", email: "ahmed@arabicmuslim.com" },
+          { name: "Omar Farooq", avatar: "🧔", email: "omar@arabicmuslim.com" },
+          { name: "Amina Yusuf", avatar: "🧕", email: "amina@arabicmuslim.com" }
         ], // 4/5
         creator: "System",
         type: "quran"
@@ -404,12 +438,17 @@ export const AppProvider = ({ children }) => {
         description: "Seeking forgiveness together in these blessed moments.",
         descriptionAr: "الاستغفار الجماعي وطلب المغفرة لتطهير القلوب.",
         capacity: 8,
+        duration: 15,
+        currentTurnIndex: 0,
+        sessionProgress: 4,
+        dhikrTarget: "أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ الَّذِي لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ وَأَتُوبُ إِلَيْهِ",
+        dhikrTargetAr: "أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ الَّذِي لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ وَأَتُوبُ إِلَيْهِ",
         joinedUsers: [
-          { name: "Yusuf Al-Qurashi", avatar: "📚" },
-          { name: "Sara Ali", avatar: "🌙" },
-          { name: "Bilal Khan", avatar: "🕌" },
-          { name: "Zainab Ahmed", avatar: "⭐" },
-          { name: "Hamza Malik", avatar: "✨" }
+          { name: "Yusuf Al-Qurashi", avatar: "👳", email: "yusuf@arabicmuslim.com" },
+          { name: "Sara Ali", avatar: "🧕", email: "sara@arabicmuslim.com" },
+          { name: "Bilal Khan", avatar: "🧔", email: "bilal@arabicmuslim.com" },
+          { name: "Zainab Ahmed", avatar: "🧕", email: "zainab@arabicmuslim.com" },
+          { name: "Hamza Malik", avatar: "👳", email: "hamza@arabicmuslim.com" }
         ], // 5/8
         creator: "System",
         type: "istighfar"
@@ -421,21 +460,26 @@ export const AppProvider = ({ children }) => {
         description: "Sending blessings and peace upon our beloved Prophet Muhammad (PBUH).",
         descriptionAr: "الإكثار من الصلاة والسلام على نبينا محمد ﷺ لنيل شفاعته وقضاء الحوائج.",
         capacity: 15,
+        duration: 15,
+        currentTurnIndex: 0,
+        sessionProgress: 24,
+        dhikrTarget: "اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَى نَبِينَا مُحَمَّدٍ ﷺ",
+        dhikrTargetAr: "اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَى نَبِينَا مُحَمَّدٍ ﷺ",
         joinedUsers: [
-          { name: "Omar Farooq", avatar: "🕌" },
-          { name: "Amina Yusuf", avatar: "🌸" },
-          { name: "Fatima Hassan", avatar: "⭐" },
-          { name: "Ahmed Selim", avatar: "✨" },
-          { name: "Yusuf Al-Qurashi", avatar: "📚" },
-          { name: "Zainab Ahmed", avatar: "⭐" },
-          { name: "Hamza Malik", avatar: "✨" },
-          { name: "Layla Hussein", avatar: "🌸" },
-          { name: "Sara Ali", avatar: "🌙" },
-          { name: "Bilal Khan", avatar: "🕌" },
-          { name: "Zayd bin Harith", avatar: "🕌" },
-          { name: "Mariam Salem", avatar: "⭐" },
-          { name: "Khaled Saeed", avatar: "✨" },
-          { name: "Hoda Mahmoud", avatar: "🌸" }
+          { name: "Omar Farooq", avatar: "🧔", email: "omar@arabicmuslim.com" },
+          { name: "Amina Yusuf", avatar: "🧕", email: "amina@arabicmuslim.com" },
+          { name: "Fatima Hassan", avatar: "🧕", email: "fatima@arabicmuslim.com" },
+          { name: "Ahmed Selim", avatar: "👳", email: "ahmed@arabicmuslim.com" },
+          { name: "Yusuf Al-Qurashi", avatar: "👳", email: "yusuf@arabicmuslim.com" },
+          { name: "Zainab Ahmed", avatar: "🧕", email: "zainab@arabicmuslim.com" },
+          { name: "Hamza Malik", avatar: "👳", email: "hamza@arabicmuslim.com" },
+          { name: "Layla Hussein", avatar: "🧕", email: "layla@arabicmuslim.com" },
+          { name: "Sara Ali", avatar: "🧕", email: "sara@arabicmuslim.com" },
+          { name: "Bilal Khan", avatar: "🧔", email: "bilal@arabicmuslim.com" },
+          { name: "Zayd bin Harith", avatar: "🧔", email: "zayd@arabicmuslim.com" },
+          { name: "Mariam Salem", avatar: "🧕", email: "mariam@arabicmuslim.com" },
+          { name: "Khaled Saeed", avatar: "👳", email: "khaled@arabicmuslim.com" },
+          { name: "Hoda Mahmoud", avatar: "🧕", email: "hoda@arabicmuslim.com" }
         ], // 14/15
         creator: "System",
         type: "salawat"
@@ -456,10 +500,13 @@ export const AppProvider = ({ children }) => {
           newUsers = c.joinedUsers.filter(u => u.email !== userIdentifier && u.name !== "Guest Member");
         } else {
           // Join
+          const muslimAvatars = ["🧕", "👳", "🧔"];
+          const randomAvatar = muslimAvatars[Math.floor(Math.random() * muslimAvatars.length)];
+          const userAvatar = isAuthenticated ? (user.avatar === "🌙" ? randomAvatar : user.avatar) : randomAvatar;
           const newUser = {
             name: isAuthenticated ? user.name : "Guest Member",
             email: isAuthenticated ? user.email : "guest_user",
-            avatar: isAuthenticated ? user.avatar : "🌙"
+            avatar: userAvatar
           };
           newUsers = [...c.joinedUsers, newUser];
           if (newUsers.length === c.capacity) {
@@ -474,6 +521,18 @@ export const AppProvider = ({ children }) => {
   };
 
   const createCircle = (circleData) => {
+    const muslimAvatars = ["🧕", "👳", "🧔"];
+    const randomAvatar = muslimAvatars[Math.floor(Math.random() * muslimAvatars.length)];
+    const userAvatar = isAuthenticated ? (user.avatar === "🌙" ? randomAvatar : user.avatar) : randomAvatar;
+
+    const defaultDhikr = circleData.type === 'quran' 
+      ? "تَبَارَكَ الَّذِي بِيَدِهِ الْمُلْكُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ"
+      : (circleData.type === 'salawat' 
+          ? "اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَى نَبِينَا مُحَمَّدٍ ﷺ" 
+          : (circleData.type === 'istighfar' 
+              ? "أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ وَأَتُوبُ إِلَيْهِ"
+              : "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ ، سُبْحَانَ اللَّهِ الْعَظِيمِ"));
+
     const newCircle = {
       id: "c-" + Date.now(),
       name: circleData.name,
@@ -481,11 +540,16 @@ export const AppProvider = ({ children }) => {
       description: circleData.description,
       descriptionAr: circleData.descriptionAr || circleData.description,
       capacity: parseInt(circleData.capacity, 10) || 5,
+      duration: circleData.duration ? parseInt(circleData.duration, 10) : (circleData.type === 'quran' ? 60 : 10),
+      currentTurnIndex: 0,
+      sessionProgress: 0,
+      dhikrTarget: defaultDhikr,
+      dhikrTargetAr: defaultDhikr,
       joinedUsers: [
         {
           name: isAuthenticated ? user.name : "Guest Member",
           email: isAuthenticated ? user.email : "guest_user",
-          avatar: isAuthenticated ? user.avatar : "🕌"
+          avatar: userAvatar
         }
       ],
       creator: isAuthenticated ? user.name : "Guest",
@@ -493,6 +557,34 @@ export const AppProvider = ({ children }) => {
     };
 
     setOnlineCircles(prev => [newCircle, ...prev]);
+  };
+
+  const updateCircleTurn = (circleId, newIndex) => {
+    setOnlineCircles(prev => prev.map(c => {
+      if (c.id === circleId) {
+        return { ...c, currentTurnIndex: newIndex };
+      }
+      return c;
+    }));
+  };
+
+  const updateCircleDhikr = (circleId, text, textAr) => {
+    setOnlineCircles(prev => prev.map(c => {
+      if (c.id === circleId) {
+        return { ...c, dhikrTarget: text, dhikrTargetAr: textAr || text };
+      }
+      return c;
+    }));
+  };
+
+  const incrementCircleProgress = (circleId) => {
+    setOnlineCircles(prev => prev.map(c => {
+      if (c.id === circleId) {
+        const currentProgress = c.sessionProgress || 0;
+        return { ...c, sessionProgress: currentProgress + 1 };
+      }
+      return c;
+    }));
   };
 
   // Sync state changes with document directions
@@ -763,6 +855,9 @@ export const AppProvider = ({ children }) => {
       onlineCircles,
       joinCircle,
       createCircle,
+      updateCircleTurn,
+      updateCircleDhikr,
+      incrementCircleProgress,
       t
     }}>
       {children}

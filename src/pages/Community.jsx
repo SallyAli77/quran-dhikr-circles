@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
-import { Users, Send, Heart, MessageSquare, Award, AlertCircle, PlusCircle, RotateCcw, HeartHandshake, BookOpen, Sparkles, Crown, UserPlus, UserMinus, Plus, Compass } from 'lucide-react';
+import { Users, Send, Heart, MessageSquare, Award, AlertCircle, PlusCircle, RotateCcw, HeartHandshake, BookOpen, Sparkles, Crown, UserPlus, UserMinus, Plus, Compass, X, Clock } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function Community() {
@@ -17,6 +17,9 @@ export default function Community() {
     onlineCircles,
     joinCircle,
     createCircle,
+    updateCircleTurn,
+    updateCircleDhikr,
+    incrementCircleProgress,
     t 
   } = useApp();
 
@@ -31,11 +34,111 @@ export default function Community() {
   const [newCircleDesc, setNewCircleDesc] = useState("");
   const [newCircleCap, setNewCircleCap] = useState(5);
   const [newCircleType, setNewCircleType] = useState("adhkar");
+  const [newCircleDuration, setNewCircleDuration] = useState(10);
   const [formSuccess, setFormSuccess] = useState(false);
 
   // Simulated global click counters
   const [globalDhikr, setGlobalDhikr] = useState(48293);
   const [activeUsers, setActiveUsers] = useState(1280);
+
+  // Interactive Live Session States
+  const [activeSessionCircleId, setActiveSessionCircleId] = useState(null);
+  const [sessionTimeLeft, setSessionTimeLeft] = useState(0);
+  const [sessionEnded, setSessionEnded] = useState(false);
+  const [floatingReactions, setFloatingReactions] = useState([]);
+
+  // Session timer countdown effect
+  useEffect(() => {
+    if (!activeSessionCircleId) {
+      setSessionTimeLeft(0);
+      setSessionEnded(false);
+      return;
+    }
+
+    const circle = onlineCircles.find(c => c.id === activeSessionCircleId);
+    if (!circle) return;
+
+    // Start countdown timer
+    setSessionTimeLeft(circle.duration * 60);
+    setSessionEnded(false);
+
+    const timer = setInterval(() => {
+      setSessionTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          setSessionEnded(true);
+          // Play success fanfare!
+          triggerGoldMilestoneConfetti();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [activeSessionCircleId]);
+
+  // Simulated real-time turns & reactions from other participants
+  useEffect(() => {
+    if (!activeSessionCircleId || sessionEnded) return;
+
+    const interval = setInterval(() => {
+      const circle = onlineCircles.find(c => c.id === activeSessionCircleId);
+      if (!circle || !circle.joinedUsers || circle.joinedUsers.length === 0) return;
+
+      const userIdentifier = isAuthenticated ? user.email : "guest_user";
+      const userIndex = circle.joinedUsers.findIndex(u => u.email === userIdentifier || (userIdentifier === "guest_user" && u.name === "Guest Member"));
+      const currentTurn = circle.currentTurnIndex % circle.joinedUsers.length;
+
+      // If it's NOT the user's turn, let the current AI member complete their turn
+      if (currentTurn !== userIndex && circle.joinedUsers.length > 0) {
+        incrementCircleProgress(circle.id);
+        const nextTurn = (currentTurn + 1) % circle.joinedUsers.length;
+        updateCircleTurn(circle.id, nextTurn);
+
+        // Visual feedback
+        confetti({
+          particleCount: 5,
+          spread: 20,
+          origin: { y: 0.6 },
+          colors: ['#d4af37', '#ffffff']
+        });
+      }
+
+      // Randomly spawn floating emojis from other members
+      const randomEmojis = ['🤲', '❤️', '✨', '⭐', '🌸'];
+      const randomEmoji = randomEmojis[Math.floor(Math.random() * randomEmojis.length)];
+      spawnReaction(randomEmoji);
+
+    }, 8000); // Ticks every 8 seconds for high-fidelity interactive feel
+
+    return () => clearInterval(interval);
+  }, [activeSessionCircleId, sessionEnded, onlineCircles]);
+
+  const spawnReaction = (emoji) => {
+    const id = Date.now() + Math.random();
+    const x = 10 + Math.random() * 80; 
+    setFloatingReactions(prev => [...prev, { id, emoji, x }]);
+
+    setTimeout(() => {
+      setFloatingReactions(prev => prev.filter(r => r.id !== id));
+    }, 2500);
+  };
+
+  const handleEnterSession = (circleId) => {
+    setActiveSessionCircleId(circleId);
+  };
+
+  const handleExitSession = () => {
+    setActiveSessionCircleId(null);
+  };
+
+  const handleAssignTurn = (idx) => {
+    updateCircleTurn(activeSessionCircleId, idx);
+    if (typeof navigator !== 'undefined' && navigator.vibrate) {
+      navigator.vibrate(30);
+    }
+  };
 
   const handleJoinCircleClick = (circleId) => {
     const isCompleted = joinCircle(circleId);
@@ -78,13 +181,15 @@ export default function Community() {
       name: newCircleName,
       description: newCircleDesc,
       capacity: newCircleCap,
-      type: newCircleType
+      type: newCircleType,
+      duration: newCircleDuration
     });
 
     setNewCircleName("");
     setNewCircleDesc("");
     setNewCircleCap(5);
     setNewCircleType("adhkar");
+    setNewCircleDuration(10);
     
     setFormSuccess(true);
     setTimeout(() => setFormSuccess(false), 3000);
@@ -418,6 +523,26 @@ export default function Community() {
                 </div>
 
                 <div style={styles.formGroup}>
+                  <label style={styles.formLabel}>{t('circleSessionDuration')}</label>
+                  <select
+                    value={newCircleDuration}
+                    onChange={(e) => setNewCircleDuration(parseInt(e.target.value, 10))}
+                    style={styles.circleInput}
+                  >
+                    <option value={5}>5 {t('circleMinutes')}</option>
+                    <option value={10}>10 {t('circleMinutes')}</option>
+                    <option value={15}>15 {t('circleMinutes')}</option>
+                    {newCircleType === 'quran' && (
+                      <>
+                        <option value={30}>30 {t('circleMinutes')}</option>
+                        <option value={45}>45 {t('circleMinutes')}</option>
+                        <option value={60}>60 {t('circleMinutes')} (1 {language === 'en' ? "hour" : "ساعة"})</option>
+                      </>
+                    )}
+                  </select>
+                </div>
+
+                <div style={styles.formGroup}>
                   <label style={styles.formLabel}>{t('circleFormCap')} ({newCircleCap})</label>
                   <input 
                     type="range" 
@@ -435,7 +560,7 @@ export default function Community() {
                 </div>
               </div>
 
-              <div style={styles.formGroup} style={{ marginTop: '12px' }}>
+              <div style={{ ...styles.formGroup, marginTop: '12px' }}>
                 <label style={styles.formLabel}>{t('circleFormDesc')}</label>
                 <textarea 
                   required 
@@ -447,14 +572,21 @@ export default function Community() {
                 />
               </div>
 
-              <div style={styles.formGroup} style={{ marginTop: '12px' }}>
+              <div style={{ ...styles.formGroup, marginTop: '12px' }}>
                 <label style={styles.formLabel}>{t('circleFormType')}</label>
                 <div style={styles.typePresetContainer}>
                   {['adhkar', 'quran', 'istighfar', 'salawat'].map(tType => (
                     <button
                       key={tType}
                       type="button"
-                      onClick={() => setNewCircleType(tType)}
+                      onClick={() => {
+                        setNewCircleType(tType);
+                        if (tType === 'quran') {
+                          setNewCircleDuration(60);
+                        } else {
+                          setNewCircleDuration(10);
+                        }
+                      }}
                       style={{
                         ...styles.typePresetBtn,
                         background: newCircleType === tType ? 'var(--gold-gradient)' : 'rgba(255,255,255,0.02)',
@@ -622,7 +754,8 @@ export default function Community() {
                           style={{
                             ...styles.memberAvatarCircle,
                             zIndex: 10 - idx,
-                            transform: `translateX(${language === 'ar' ? idx * 8 : -idx * 8}px)`
+                            marginRight: language === 'ar' ? 0 : (idx === 0 ? 0 : '-8px'),
+                            marginLeft: language === 'ar' ? (idx === 0 ? 0 : '-8px') : 0
                           }}
                           title={memberUser.name}
                         >
@@ -633,7 +766,9 @@ export default function Community() {
                         <span 
                           style={{
                             ...styles.avatarOverflowCount,
-                            transform: `translateX(${language === 'ar' ? 5 * 8 : -5 * 8}px)`
+                            zIndex: 4,
+                            marginRight: language === 'ar' ? 0 : '-8px',
+                            marginLeft: language === 'ar' ? '-8px' : 0
                           }}
                         >
                           +{totalJoined - 5}
@@ -642,35 +777,43 @@ export default function Community() {
                     </div>
                   </div>
 
-                  {/* Join Action button */}
-                  <button 
-                    onClick={() => handleJoinCircleClick(circle.id)} 
-                    style={{
-                      ...styles.joinButtonAction,
-                      background: isJoined 
-                        ? 'rgba(255,107,107,0.08)' 
-                        : (isFull ? 'var(--gold-gradient)' : 'rgba(255, 255, 255, 0.02)'),
-                      color: isJoined 
-                        ? '#ff6b6b' 
-                        : (isFull ? '#000' : 'var(--text-gold)'),
-                      borderColor: isJoined 
-                        ? 'rgba(255,107,107,0.25)' 
-                        : (isFull ? 'var(--gold-primary)' : 'var(--border-gold)')
-                    }}
-                    className="circle-join-btn-hover"
-                  >
+                  {/* Actions for joined/unjoined */}
+                  <div style={styles.cardActionsRow}>
                     {isJoined ? (
                       <>
-                        <UserMinus size={14} />
-                        <span>{t('circleLeave')}</span>
+                        <button
+                          onClick={() => handleEnterSession(circle.id)}
+                          style={styles.enterSessionBtn}
+                          className="circle-join-btn-hover confirm-recitation-glow"
+                        >
+                          <Sparkles size={14} style={{ marginRight: '4px', marginLeft: '4px' }} />
+                          <span>{t('circleEnterSession')}</span>
+                        </button>
+                        <button 
+                          onClick={() => handleJoinCircleClick(circle.id)} 
+                          style={styles.leaveButtonAction}
+                          className="circle-join-btn-hover"
+                          title={t('circleLeave')}
+                        >
+                          <UserMinus size={14} />
+                        </button>
                       </>
                     ) : (
-                      <>
+                      <button 
+                        onClick={() => handleJoinCircleClick(circle.id)} 
+                        style={{
+                          ...styles.joinButtonAction,
+                          background: isFull ? 'var(--gold-gradient)' : 'rgba(255, 255, 255, 0.02)',
+                          color: isFull ? '#000' : 'var(--text-gold)',
+                          borderColor: isFull ? 'var(--gold-primary)' : 'var(--border-gold)'
+                        }}
+                        className="circle-join-btn-hover"
+                      >
                         <UserPlus size={14} />
                         <span>{isFull ? (language === 'en' ? "Keep Participating" : "استمر بالمشاركة") : t('circleJoin')}</span>
-                      </>
+                      </button>
                     )}
-                  </button>
+                  </div>
                 </div>
               );
             })}
@@ -724,6 +867,264 @@ export default function Community() {
           </button>
         </div>
       )}
+
+      {/* Floating Reactions Layer */}
+      <div className="floating-reactions-container">
+        {floatingReactions.map(r => (
+          <span 
+            key={r.id} 
+            className="floating-reaction"
+            style={{ 
+              left: `${r.x}%`,
+            }}
+          >
+            {r.emoji}
+          </span>
+        ))}
+      </div>
+
+      {/* Fullscreen Live Session Overlay */}
+      {activeSessionCircleId && (() => {
+        const circle = onlineCircles.find(c => c.id === activeSessionCircleId);
+        if (!circle || !circle.joinedUsers || circle.joinedUsers.length === 0) return null;
+
+        const userIdentifier = isAuthenticated ? user.email : "guest_user";
+        const userIndex = circle.joinedUsers.findIndex(u => u.email === userIdentifier || (userIdentifier === "guest_user" && u.name === "Guest Member"));
+        const isOrganizer = circle.creator === (isAuthenticated ? user.name : "Guest") || circle.creator === "System";
+
+        const currentTurn = circle.currentTurnIndex % circle.joinedUsers.length;
+        const activeReciter = circle.joinedUsers[currentTurn];
+        const isMyTurn = currentTurn === userIndex;
+
+        const formatTime = (secs) => {
+          const m = Math.floor(secs / 60);
+          const s = secs % 60;
+          return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        };
+
+        return (
+          <div style={styles.sessionOverlay} className="fade-in">
+            {/* Header Block */}
+            <div style={styles.sessionHeader}>
+              <div style={styles.sessionHeaderLeft}>
+                <div style={styles.sessionTypeIcon}>
+                  {getCircleIcon(circle.type)}
+                </div>
+                <div style={{ textAlign: language === 'ar' ? 'right' : 'left' }}>
+                  <h2 style={styles.sessionCircleName}>{language === 'en' ? circle.name : circle.nameAr}</h2>
+                  <span style={styles.sessionOrganizerBadge}>
+                    <Crown size={12} style={{ marginRight: '4px', marginLeft: '4px' }} />
+                    {t('circleCreator')}: {circle.creator}
+                  </span>
+                </div>
+              </div>
+
+              {/* Countdown badge */}
+              <div style={styles.sessionTimerBadge}>
+                <span style={styles.sessionTimerDot}></span>
+                <span style={styles.sessionTimerVal}>{formatTime(sessionTimeLeft)}</span>
+              </div>
+
+              {/* Exit button */}
+              <button onClick={handleExitSession} style={styles.sessionCloseBtn} className="circle-join-btn-hover">
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Grid Layout */}
+            <div style={styles.sessionBodyGrid}>
+              {/* Column 1: Main Worship Card */}
+              <div style={styles.sessionMainColumn}>
+                {sessionEnded ? (
+                  <div style={styles.sessionCompletedCard} className="glass-panel text-center fade-in">
+                    <div style={styles.completionSparkles}>✨🏆✨</div>
+                    <h2 style={styles.completionTitle}>{t('circleSessionEnded')}</h2>
+                    <p style={styles.completionSubtitle}>{t('circleCongratulations')}</p>
+                    
+                    <div style={styles.completionStatsGrid}>
+                      <div style={styles.compStatCard}>
+                        <span style={styles.compStatLabel}>{t('circleSharedProgress')}</span>
+                        <span style={styles.compStatValue}>{circle.sessionProgress}</span>
+                      </div>
+                      <div style={styles.compStatCard}>
+                        <span style={styles.compStatLabel}>{t('circleSessionDuration')}</span>
+                        <span style={styles.compStatValue}>{circle.duration} {t('circleMinutes')}</span>
+                      </div>
+                    </div>
+
+                    <button onClick={handleExitSession} className="btn-primary" style={{ marginTop: '24px', padding: '12px 32px' }}>
+                      {language === 'en' ? "Return to Circles" : "العودة إلى الحلقات"}
+                    </button>
+                  </div>
+                ) : (
+                  <div style={styles.activeWorshipCard} className="glass-panel">
+                    <span style={styles.targetDhikrLabel}>
+                      {circle.type === 'quran' 
+                        ? (language === 'en' ? "Noble Quran Verse to Recite:" : "آية القرآن الكريم للتلاوة:")
+                        : (language === 'en' ? "Active Supplication Focus:" : "الذكر الجماعي المستهدف:")}
+                    </span>
+                    
+                    {/* Centered large Arabic typography text box */}
+                    <div style={styles.dhikrTextBox}>
+                      <p style={styles.arabicTextQuran}>
+                        {language === 'en' ? circle.dhikrTarget : circle.dhikrTargetAr}
+                      </p>
+                    </div>
+
+                    {/* Active Reciter Info */}
+                    <div style={styles.activeReciterProfileBanner}>
+                      <div style={styles.reciterDetails}>
+                        <span style={styles.reciterAvatarBouncing}>
+                          {activeReciter ? activeReciter.avatar : "🧕"}
+                        </span>
+                        <div style={{ textAlign: language === 'ar' ? 'right' : 'left' }}>
+                          <span style={styles.activeReciterStatusLabel}>
+                            {isMyTurn ? t('circleYourTurn') : t('circleTurnReciter')}
+                          </span>
+                          <h4 style={styles.activeReciterName}>
+                            {activeReciter ? activeReciter.name : "..."} 
+                            {isMyTurn && ` (${language === 'en' ? "You" : "أنت"})`}
+                          </h4>
+                        </div>
+                      </div>
+
+                      {/* Soundwave animation */}
+                      {!isMyTurn && (
+                        <div style={styles.audioWaveform}>
+                          <span style={styles.waveBar} className="wave-bar-anim-1"></span>
+                          <span style={styles.waveBar} className="wave-bar-anim-2"></span>
+                          <span style={styles.waveBar} className="wave-bar-anim-3"></span>
+                          <span style={styles.waveBar} className="wave-bar-anim-4"></span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Recitation Turn Action */}
+                    <div style={styles.recitationActions}>
+                      {isMyTurn ? (
+                        <button 
+                          onClick={() => {
+                            incrementCircleProgress(circle.id);
+                            const nextTurn = (circle.currentTurnIndex + 1) % circle.joinedUsers.length;
+                            updateCircleTurn(circle.id, nextTurn);
+                            triggerGoldMilestoneConfetti();
+                          }}
+                          style={styles.confirmRecitationBtn}
+                          className="confirm-recitation-glow"
+                        >
+                          <Sparkles size={20} style={{ marginRight: '6px', marginLeft: '6px' }} />
+                          <span>{t('circleConfirmBtn')}</span>
+                        </button>
+                      ) : (
+                        <div style={styles.waitingStateContainer}>
+                          <p style={styles.waitingStateText}>{t('circleWaitingTurn')}</p>
+                          
+                          {/* Reactions Dock */}
+                          <div style={styles.reactionBarDock}>
+                            {['🤲', '❤️', '✨', '⭐', '🌸'].map(emoji => (
+                              <button 
+                                key={emoji}
+                                onClick={() => spawnReaction(emoji)}
+                                style={styles.reactionDockBtn}
+                                className="circle-join-btn-hover"
+                              >
+                                {emoji}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Column 2: Side Panels */}
+              <div style={styles.sessionSidebarColumn}>
+                {/* Stats Panel */}
+                <div style={{ ...styles.sharedProgressPanel, textAlign: language === 'ar' ? 'right' : 'left' }} className="glass-panel">
+                  <h4 style={styles.progressPanelTitle}>
+                    <Award size={16} color="var(--text-gold)" style={{ marginRight: '6px', marginLeft: '6px' }} />
+                    {t('circleSharedProgress')}
+                  </h4>
+                  <div style={styles.progressCounterValue}>
+                    <span className="gold-gradient-text" style={{ fontSize: '2.5rem', fontWeight: '800' }}>
+                      {circle.sessionProgress}
+                    </span>
+                    <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginLeft: '8px', marginRight: '8px' }}>
+                      {language === 'en' ? "completed recitations" : "ذكر وتلاوة جماعية"}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Participant list */}
+                <div style={{ ...styles.participantsPanel, textAlign: language === 'ar' ? 'right' : 'left' }} className="glass-panel">
+                  <h4 style={styles.progressPanelTitle}>
+                    <Users size={16} color="var(--text-gold)" style={{ marginRight: '6px', marginLeft: '6px' }} />
+                    {language === 'en' ? `Circle Members (${circle.joinedUsers.length})` : `أعضاء الحلقة (${circle.joinedUsers.length})`}
+                  </h4>
+
+                  <div style={styles.participantsScrollList}>
+                    {circle.joinedUsers.map((member, idx) => {
+                      const isMemberMyTurn = idx === currentTurn;
+                      const isMe = member.email === userIdentifier || (userIdentifier === "guest_user" && member.name === "Guest Member");
+                      const isMemberOrganizer = member.name === circle.creator || (circle.creator === "System" && idx === 0);
+
+                      return (
+                        <div 
+                          key={idx} 
+                          style={{
+                            ...styles.participantItem,
+                            borderColor: isMemberMyTurn ? 'var(--gold-primary)' : 'rgba(255,255,255,0.03)',
+                            background: isMemberMyTurn ? 'rgba(212, 175, 55, 0.08)' : 'rgba(255,255,255,0.01)',
+                            flexDirection: language === 'ar' ? 'row-reverse' : 'row'
+                          }}
+                        >
+                          <div style={{
+                            ...styles.participantLeft,
+                            flexDirection: language === 'ar' ? 'row-reverse' : 'row'
+                          }}>
+                            <span style={styles.participantAvatarIcon}>{member.avatar}</span>
+                            <div style={{ textAlign: language === 'ar' ? 'right' : 'left' }}>
+                              <div style={styles.participantName}>
+                                {member.name} {isMe && `(${language === 'en' ? "You" : "أنت"})`}
+                              </div>
+                              <div style={{ display: 'flex', gap: '4px', alignItems: 'center', justifyContent: language === 'ar' ? 'flex-end' : 'flex-start', marginTop: '2px' }}>
+                                {isMemberOrganizer && (
+                                  <span style={styles.organizerMiniBadge}>
+                                    <Crown size={8} />
+                                    <span>{language === 'en' ? "Teacher" : "المعلم"}</span>
+                                  </span>
+                                )}
+                                {isMemberMyTurn && (
+                                  <span style={styles.recitingMiniBadge}>
+                                    <span>{language === 'en' ? "Active Turn" : "دوره الآن"}</span>
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Teacher Action */}
+                          {isOrganizer && !isMemberMyTurn && (
+                            <button 
+                              onClick={() => handleAssignTurn(idx)}
+                              style={styles.assignTurnBtn}
+                              className="circle-join-btn-hover"
+                            >
+                              {language === 'en' ? "Assign Turn" : "تعيين الدور"}
+                            </button>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }
@@ -1316,6 +1717,412 @@ const styles = {
   },
   resetBtn: {
     alignSelf: 'center',
+  },
+  cardActionsRow: {
+    display: 'flex',
+    gap: '8px',
+    width: '100%',
+    marginTop: 'auto',
+  },
+  enterSessionBtn: {
+    flexGrow: 2,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '6px',
+    padding: '10px 12px',
+    borderRadius: '12px',
+    border: '1px solid var(--gold-primary)',
+    background: 'var(--gold-gradient)',
+    color: '#000',
+    fontWeight: '700',
+    fontSize: '0.85rem',
+    cursor: 'pointer',
+    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+  },
+  leaveButtonAction: {
+    width: '40px',
+    height: '40px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '12px',
+    border: '1px solid rgba(255,107,107,0.2)',
+    background: 'rgba(255,107,107,0.05)',
+    color: '#ff6b6b',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+  },
+  sessionOverlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100vw',
+    height: '100vh',
+    background: 'radial-gradient(circle at center, rgba(12, 14, 22, 0.98) 0%, rgba(5, 6, 8, 0.99) 100%)',
+    backdropFilter: 'blur(30px)',
+    zIndex: 9999,
+    display: 'flex',
+    flexDirection: 'column',
+    overflowY: 'auto',
+    padding: '24px',
+  },
+  sessionHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingBottom: '20px',
+    borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+    marginBottom: '24px',
+  },
+  sessionHeaderLeft: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+  },
+  sessionTypeIcon: {
+    width: '44px',
+    height: '44px',
+    borderRadius: '12px',
+    background: 'rgba(212, 175, 55, 0.08)',
+    border: '1px solid rgba(212, 175, 55, 0.2)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  sessionCircleName: {
+    fontSize: '1.4rem',
+    fontFamily: "'Playfair Display', serif",
+    fontWeight: '600',
+    color: '#fff',
+    margin: 0,
+  },
+  sessionOrganizerBadge: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    fontSize: '0.75rem',
+    color: 'var(--text-muted)',
+    marginTop: '2px',
+  },
+  sessionTimerBadge: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    padding: '8px 16px',
+    borderRadius: '20px',
+    background: 'rgba(255, 255, 255, 0.03)',
+    border: '1px solid rgba(255, 255, 255, 0.08)',
+  },
+  sessionTimerDot: {
+    width: '8px',
+    height: '8px',
+    borderRadius: '50%',
+    background: '#ff4d4d',
+    boxShadow: '0 0 10px #ff4d4d',
+  },
+  sessionTimerVal: {
+    fontFamily: 'monospace',
+    fontSize: '1.25rem',
+    fontWeight: '700',
+    color: '#fff',
+  },
+  sessionCloseBtn: {
+    background: 'none',
+    border: 'none',
+    color: 'var(--text-secondary)',
+    cursor: 'pointer',
+    padding: '8px',
+    borderRadius: '50%',
+    transition: 'var(--transition-fast)',
+  },
+  sessionBodyGrid: {
+    display: 'grid',
+    gridTemplateColumns: '2fr 1fr',
+    gap: '24px',
+    flexGrow: 1,
+    alignItems: 'start',
+  },
+  sessionMainColumn: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '24px',
+  },
+  sessionSidebarColumn: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '24px',
+  },
+  activeWorshipCard: {
+    padding: '32px',
+    borderRadius: '24px',
+    background: 'rgba(255, 255, 255, 0.01)',
+    border: '1px solid rgba(212, 175, 55, 0.15)',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    textAlign: 'center',
+    gap: '20px',
+  },
+  targetDhikrLabel: {
+    fontSize: '0.85rem',
+    color: 'var(--text-gold)',
+    letterSpacing: '1px',
+    fontWeight: '600',
+    textTransform: 'uppercase',
+  },
+  dhikrTextBox: {
+    width: '100%',
+    padding: '24px',
+    borderRadius: '16px',
+    background: 'radial-gradient(circle, rgba(212, 175, 55, 0.04) 0%, rgba(0,0,0,0.2) 100%)',
+    border: '1px dashed rgba(212, 175, 55, 0.3)',
+    margin: '10px 0',
+  },
+  arabicTextQuran: {
+    fontFamily: "'Amiri', 'Georgia', serif",
+    fontSize: '1.8rem',
+    lineHeight: '2.0',
+    color: '#fff',
+    margin: 0,
+    textShadow: '0 0 15px rgba(255, 255, 255, 0.2)',
+  },
+  activeReciterProfileBanner: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    padding: '16px 20px',
+    borderRadius: '16px',
+    background: 'rgba(255, 255, 255, 0.02)',
+    border: '1px solid rgba(255, 255, 255, 0.04)',
+  },
+  reciterDetails: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    textAlign: 'left',
+  },
+  reciterAvatarBouncing: {
+    width: '44px',
+    height: '44px',
+    borderRadius: '50%',
+    background: 'rgba(212, 175, 55, 0.1)',
+    border: '1px solid var(--border-gold)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '1.6rem',
+  },
+  activeReciterStatusLabel: {
+    fontSize: '0.75rem',
+    color: 'var(--text-gold)',
+    fontWeight: '600',
+  },
+  activeReciterName: {
+    fontSize: '1.05rem',
+    fontWeight: '700',
+    color: '#fff',
+    margin: '2px 0 0 0',
+  },
+  audioWaveform: {
+    display: 'flex',
+    alignItems: 'flex-end',
+    gap: '3px',
+    height: '24px',
+  },
+  waveBar: {
+    width: '3px',
+    height: '100%',
+    background: 'var(--gold-primary)',
+    borderRadius: '2px',
+    transformOrigin: 'bottom',
+  },
+  recitationActions: {
+    width: '100%',
+    marginTop: '10px',
+  },
+  confirmRecitationBtn: {
+    width: '100%',
+    padding: '16px',
+    borderRadius: '16px',
+    background: 'var(--gold-gradient)',
+    border: 'none',
+    color: '#000',
+    fontWeight: '800',
+    fontSize: '1.1rem',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '8px',
+    cursor: 'pointer',
+    transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+  },
+  waitingStateContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '12px',
+  },
+  waitingStateText: {
+    fontSize: '0.9rem',
+    color: 'var(--text-secondary)',
+    margin: 0,
+  },
+  reactionBarDock: {
+    display: 'flex',
+    gap: '12px',
+    padding: '10px 20px',
+    borderRadius: '30px',
+    background: 'rgba(255, 255, 255, 0.03)',
+    border: '1px solid rgba(255, 255, 255, 0.08)',
+  },
+  reactionDockBtn: {
+    background: 'none',
+    border: 'none',
+    fontSize: '1.6rem',
+    cursor: 'pointer',
+    transition: 'transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+  },
+  sharedProgressPanel: {
+    padding: '20px',
+    borderRadius: '16px',
+  },
+  progressPanelTitle: {
+    fontSize: '0.9rem',
+    fontWeight: '600',
+    color: 'var(--text-gold)',
+    margin: '0 0 14px 0',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  progressCounterValue: {
+    display: 'flex',
+    alignItems: 'baseline',
+  },
+  participantsPanel: {
+    padding: '20px',
+    borderRadius: '16px',
+    display: 'flex',
+    flexDirection: 'column',
+    maxHeight: '400px',
+  },
+  participantsScrollList: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px',
+    overflowY: 'auto',
+    flexGrow: 1,
+    paddingRight: '4px',
+  },
+  participantItem: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '10px 14px',
+    borderRadius: '10px',
+    border: '1px solid',
+    transition: 'all 0.3s ease',
+  },
+  participantLeft: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+  },
+  participantAvatarIcon: {
+    fontSize: '1.25rem',
+  },
+  participantName: {
+    fontSize: '0.9rem',
+    fontWeight: '600',
+    color: 'var(--text-primary)',
+  },
+  organizerMiniBadge: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '3px',
+    fontSize: '0.65rem',
+    background: 'rgba(212, 175, 55, 0.15)',
+    color: 'var(--text-gold)',
+    padding: '1px 5px',
+    borderRadius: '4px',
+    fontWeight: '600',
+  },
+  recitingMiniBadge: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    fontSize: '0.65rem',
+    background: 'rgba(16, 185, 129, 0.15)',
+    color: '#10b981',
+    padding: '1px 5px',
+    borderRadius: '4px',
+    fontWeight: '600',
+  },
+  assignTurnBtn: {
+    background: 'none',
+    border: '1px solid rgba(212, 175, 55, 0.3)',
+    borderRadius: '6px',
+    color: 'var(--text-gold)',
+    fontSize: '0.75rem',
+    padding: '4px 8px',
+    cursor: 'pointer',
+    transition: 'all 0.2s ease',
+  },
+  sessionCompletedCard: {
+    padding: '40px',
+    borderRadius: '24px',
+    background: 'radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, rgba(0,0,0,0.3) 100%)',
+    border: '2px solid var(--gold-primary)',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '16px',
+    width: '100%',
+  },
+  completionSparkles: {
+    fontSize: '3rem',
+  },
+  completionTitle: {
+    fontSize: '1.8rem',
+    fontFamily: "'Playfair Display', serif",
+    fontWeight: '700',
+    color: 'var(--text-gold)',
+    margin: 0,
+    textShadow: '0 0 15px rgba(212, 175, 55, 0.4)',
+  },
+  completionSubtitle: {
+    fontSize: '1.05rem',
+    color: 'var(--text-secondary)',
+    maxWidth: '500px',
+    margin: '0 auto',
+    lineHeight: '1.6',
+  },
+  completionStatsGrid: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: '20px',
+    width: '100%',
+    maxWidth: '400px',
+    marginTop: '20px',
+  },
+  compStatCard: {
+    padding: '16px',
+    borderRadius: '12px',
+    background: 'rgba(255, 255, 255, 0.02)',
+    border: '1px solid rgba(255, 255, 255, 0.05)',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '4px',
+  },
+  compStatLabel: {
+    fontSize: '0.75rem',
+    color: 'var(--text-muted)',
+    textTransform: 'uppercase',
+  },
+  compStatValue: {
+    fontSize: '1.6rem',
+    fontWeight: '700',
+    color: '#fff',
   }
 };
 
@@ -1368,6 +2175,83 @@ if (typeof document !== 'undefined') {
     .gold-glow-text {
       text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
     }
+
+    /* Floating emoji reactions layer */
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh) scale(0.6) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(-20vh) scale(1.5) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    .floating-reactions-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10000;
+      overflow: hidden;
+    }
+    .floating-reaction {
+      position: absolute;
+      bottom: 0;
+      font-size: 2.5rem;
+      text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      filter: drop-shadow(0 0 10px rgba(255,255,255,0.4));
+      animation: floatUp 2.5s ease-out forwards;
+    }
+
+    /* Voice and speaker animations */
+    @keyframes bounce-wave {
+      0%, 100% { transform: scaleY(0.3); }
+      50% { transform: scaleY(1.0); }
+    }
+    .wave-bar-anim-1 {
+      animation: bounce-wave 0.8s ease-in-out infinite;
+    }
+    .wave-bar-anim-2 {
+      animation: bounce-wave 0.5s ease-in-out infinite 0.15s;
+    }
+    .wave-bar-anim-3 {
+      animation: bounce-wave 0.7s ease-in-out infinite 0.3s;
+    }
+    .wave-bar-anim-4 {
+      animation: bounce-wave 0.6s ease-in-out infinite 0.45s;
+    }
+    @keyframes pulse-glow-timer {
+      0% { opacity: 0.4; }
+      100% { opacity: 1; }
+    }
+    @keyframes bounce-speaker {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    .confirm-recitation-glow {
+      animation: button-pulse-glow 2.0s infinite alternate;
+    }
+    @keyframes button-pulse-glow {
+      0% {
+        box-shadow: 0 8px 30px rgba(212, 175, 55, 0.25);
+        transform: scale(1);
+      }
+      100% {
+        box-shadow: 0 12px 45px rgba(212, 175, 55, 0.5);
+        transform: scale(1.02);
+      }
+    }
+
+    /* RTL translations for board elements */
     [dir="rtl"] .community-page [style*="commentInput"] {
       text-align: right !important;
     }
@@ -1414,15 +2298,24 @@ if (typeof document !== 'undefined') {
     [dir="rtl"] .community-page [style*="avatarStack"] {
       flex-direction: row-reverse !important;
     }
-    [dir="rtl"] .community-page [style*="memberAvatarCircle"] {
-      left: auto !important;
-      right: 0 !important;
-    }
-    [dir="rtl"] .community-page [style*="avatarOverflowCount"] {
-      left: auto !important;
-      right: 0 !important;
-    }
     [dir="rtl"] .community-page [style*="circleCardHeader"] {
+      flex-direction: row-reverse !important;
+    }
+
+    /* Live Session RTL alignment overrides */
+    [dir="rtl"] .community-page [style*="sessionHeader"] {
+      flex-direction: row-reverse !important;
+    }
+    [dir="rtl"] .community-page [style*="sessionHeaderLeft"] {
+      flex-direction: row-reverse !important;
+    }
+    [dir="rtl"] .community-page [style*="reciterDetails"] {
+      flex-direction: row-reverse !important;
+    }
+    [dir="rtl"] .community-page [style*="participantItem"] {
+      flex-direction: row-reverse !important;
+    }
+    [dir="rtl"] .community-page [style*="participantLeft"] {
       flex-direction: row-reverse !important;
     }
   `;
