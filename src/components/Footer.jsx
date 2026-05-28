@@ -140,8 +140,17 @@ export default function Footer({ setActivePage }) {
             <span>© {new Date().getFullYear()} ArabicMuslim.</span>
             <span> {language === 'en' ? "All rights reserved." : "جميع الحقوق محفوظة."}</span>
           </div>
+          <div style={styles.legalLinks}>
+            <button onClick={() => { setActivePage('privacy'); window.scrollTo({top:0, behavior:'smooth'}); }} style={styles.bottomLegalBtn}>
+              {language === 'en' ? "Privacy Policy" : "سياسة الخصوصية"}
+            </button>
+            <span style={{ color: 'var(--text-muted)', margin: '0 8px' }}>•</span>
+            <button onClick={() => { setActivePage('terms'); window.scrollTo({top:0, behavior:'smooth'}); }} style={styles.bottomLegalBtn}>
+              {language === 'en' ? "Terms of Use" : "شروط الاستخدام"}
+            </button>
+          </div>
           <div style={styles.poweredBy}>
-            <Shield size={12} color="var(--text-gold)" />
+            <Shield size={12} color="var(--text-gold)" style={{ marginRight: '4px', marginLeft: '4px' }} />
             <span>arabicmuslim.com</span>
           </div>
         </div>
@@ -291,10 +300,26 @@ const styles = {
     justifyContent: 'space-between',
     fontSize: '0.8rem',
     color: 'var(--text-muted)',
+    flexWrap: 'wrap',
+    gap: '16px',
   },
   copyright: {
     display: 'flex',
     gap: '4px',
+    flexWrap: 'wrap',
+  },
+  legalLinks: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  bottomLegalBtn: {
+    background: 'none',
+    border: 'none',
+    color: 'var(--text-muted)',
+    fontSize: '0.8rem',
+    cursor: 'pointer',
+    padding: 0,
+    transition: 'var(--transition-fast)',
   },
   poweredBy: {
     display: 'flex',
@@ -319,12 +344,22 @@ if (typeof document !== 'undefined') {
         text-align: center !important;
       }
     }
+    footer [style*="bottomLegalBtn"] {
+      text-decoration: none;
+    }
+    footer [style*="bottomLegalBtn"]:hover {
+      color: var(--text-gold) !important;
+      text-decoration: underline !important;
+    }
     [dir="rtl"] footer [style*="footerBtn"] {
       text-align: right !important;
     }
     [dir="rtl"] footer [style*="subInput"] {
       padding-right: 0 !important;
       padding-left: 10px !important;
+    }
+    [dir="rtl"] footer [style*="legalLinks"] {
+      flex-direction: row-reverse !important;
     }
   `;
   document.head.appendChild(footerStyle);

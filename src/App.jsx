@@ -11,6 +11,7 @@ import Articles from './pages/Articles';
 import Community from './pages/Community';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
+import Legal from './pages/Legal';
 
 function AppContent() {
   const [activePage, setActivePage] = useState("home");
@@ -33,6 +34,10 @@ function AppContent() {
         return <Contact />;
       case 'login':
         return <Login setActivePage={setActivePage} />;
+      case 'privacy':
+        return <Legal initialTab="privacy" setActivePage={setActivePage} />;
+      case 'terms':
+        return <Legal initialTab="terms" setActivePage={setActivePage} />;
       default:
         return <Home setActivePage={setActivePage} />;
     }
