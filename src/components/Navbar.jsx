@@ -234,8 +234,8 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'space-between',
     height: '76px',
-    padding: '0 24px',
-    maxWidth: '1440px',
+    padding: '0 32px',
+    maxWidth: '1600px',
   },
   logo: {
     display: 'flex',
@@ -243,7 +243,7 @@ const styles = {
     gap: '10px',
     cursor: 'pointer',
     userSelect: 'none',
-    marginRight: '30px', /* Healthy margin separating logo from navigation and search */
+    marginRight: '50px', /* Generous distance from left in LTR */
     flexShrink: 0,
   },
   logoCrescent: {
@@ -259,10 +259,10 @@ const styles = {
   desktopNav: {
     display: 'flex',
     alignItems: 'center',
-    gap: '24px',
+    gap: '28px', /* Generous gap for premium look and feel */
     flexGrow: 1,
     justifyContent: 'center',
-    margin: '0 20px',
+    margin: '0 40px', /* Increased margin to guarantee distance between logo and search bar controls */
     overflow: 'hidden',
   },
   navLink: {
@@ -304,7 +304,7 @@ const styles = {
     padding: '7px 14px',
     width: '180px', /* Elegant compact width */
     transition: 'var(--transition-smooth)',
-    marginLeft: '10px', /* Spacing to distance search bar from center nav */
+    marginLeft: '30px', /* Increased spacing to distance search bar from center nav */
   },
   searchIcon: {
     marginRight: '6px',
@@ -337,6 +337,7 @@ const styles = {
     padding: '8px 18px',
     borderRadius: '10px',
     boxShadow: '0 4px 12px rgba(212, 175, 55, 0.2)',
+    whiteSpace: 'nowrap', /* Guarantee single line */
   },
   profileBadge: {
     display: 'flex',
@@ -346,12 +347,14 @@ const styles = {
     background: 'rgba(212, 175, 55, 0.05)',
     borderRadius: '30px',
     border: '1.5px solid rgba(212, 175, 55, 0.3)',
+    whiteSpace: 'nowrap', /* Guarantee single line */
   },
   profileTrigger: {
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
     cursor: 'pointer',
+    whiteSpace: 'nowrap', /* Guarantee single line */
   },
   avatarEmoji: {
     fontSize: '1.25rem',
@@ -505,6 +508,7 @@ if (typeof document !== 'undefined') {
     .premium-nav-item {
       position: relative;
       padding-bottom: 6px !important;
+      white-space: nowrap !important; /* Forces link text strictly into a single line */
     }
     .premium-nav-item::after {
       content: '';
@@ -539,15 +543,20 @@ if (typeof document !== 'undefined') {
     }
     
     /* Responsive Media Queries fixing spacing and wrapping */
-    @media (max-width: 1200px) {
+    @media (max-width: 1280px) {
       .navbar-premium [style*="desktopNav"] {
         gap: 16px !important;
+        margin: 0 20px !important;
+      }
+      .navbar-premium [style*="logo"] {
+        margin-right: 30px !important;
       }
       .navbar-premium [style*="searchWrapper"] {
-        width: 140px !important;
+        width: 145px !important;
+        margin-left: 15px !important;
       }
     }
-    @media (max-width: 1040px) {
+    @media (max-width: 1180px) {
       .navbar-premium [style*="desktopNav"] {
         display: none !important;
       }
@@ -574,11 +583,21 @@ if (typeof document !== 'undefined') {
     }
     [dir="rtl"] .navbar-premium [style*="logo"] {
       margin-right: 0 !important;
-      margin-left: 30px !important;
+      margin-left: 50px !important;
     }
     [dir="rtl"] .navbar-premium [style*="searchWrapper"] {
       margin-left: 0 !important;
-      margin-right: 10px !important;
+      margin-right: 30px !important;
+    }
+    @media (max-width: 1280px) {
+      [dir="rtl"] .navbar-premium [style*="logo"] {
+        margin-left: 30px !important;
+        margin-right: 0 !important;
+      }
+      [dir="rtl"] .navbar-premium [style*="searchWrapper"] {
+        margin-right: 15px !important;
+        margin-left: 0 !important;
+      }
     }
   `;
   document.head.appendChild(customStyles);
