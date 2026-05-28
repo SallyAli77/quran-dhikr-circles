@@ -15,7 +15,7 @@ const citiesData = {
     name: "Cairo",
     nameAr: "القاهرة",
     timezone: "Africa/Cairo",
-    timings: { Fajr: "03:15", Sunrise: "04:54", Dhuhr: "11:52", Asr: "15:28", Maghrib: "18:48", Isha: "20:20" }
+    timings: { Fajr: "04:15", Sunrise: "05:54", Dhuhr: "12:52", Asr: "16:28", Maghrib: "19:48", Isha: "21:20" }
   },
   london: {
     name: "London",
@@ -46,8 +46,8 @@ const calculationMethods = {
 
 export default function PrayerTimes() {
   const { language, t } = useApp();
-  const [selectedCityKey, setSelectedCityKey] = useState("makkah");
-  const [method, setMethod] = useState("makkah");
+  const [selectedCityKey, setSelectedCityKey] = useState("cairo");
+  const [method, setMethod] = useState("egypt");
   const [athanEnabled, setAthanEnabled] = useState(true);
   const [currentTime, setCurrentTime] = useState(new Date());
   
@@ -500,7 +500,7 @@ const styles = {
     background: 'none',
     border: 'none',
     outline: 'none',
-    color: 'var(--text-primary)',
+    color: 'var(--text-gold)',
     fontSize: '0.85rem',
     fontWeight: '600',
     cursor: 'pointer',
@@ -572,6 +572,16 @@ if (typeof document !== 'undefined') {
     }
     .width-full {
       width: 100% !important;
+    }
+    .prayer-page select {
+      background-color: transparent !important;
+      color: var(--text-gold) !important;
+    }
+    .prayer-page select option {
+      background-color: #0f111a !important;
+      color: #f5f6f8 !important;
+      font-size: 0.85rem;
+      padding: 8px;
     }
     @media (max-width: 768px) {
       .prayer-page [style*="countdownClock"] {
