@@ -262,7 +262,7 @@ export default function Home({ setActivePage }) {
       </section>
 
       {/* Amazon Products Section */}
-      <section style={{ ...styles.sectionPadding, background: 'rgba(212, 175, 55, 0.01)', borderTop: '1px solid rgba(212, 175, 55, 0.05)', borderBottom: '1px solid rgba(212, 175, 55, 0.05)' }}>
+      <section id="products-section" style={{ ...styles.sectionPadding, background: 'rgba(212, 175, 55, 0.01)', borderTop: '1px solid rgba(212, 175, 55, 0.05)', borderBottom: '1px solid rgba(212, 175, 55, 0.05)' }}>
         <div className="container">
           <div style={styles.sectionHeader}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-gold)', marginBottom: '8px' }}>

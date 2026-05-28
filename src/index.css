@@ -66,7 +66,7 @@ body {
 
 /* RTL Helper & Base Arabic Font Styles */
 [dir="rtl"] {
-  font-family: 'Amiri', 'Outfit', serif;
+  font-family: 'IBM Plex Sans Arabic', 'Outfit', sans-serif;
 }
 [dir="rtl"] .arabic-text {
   font-family: 'Amiri', serif;

@@ -7,11 +7,12 @@ const translations = {
   en: {
     // Navigation
     navHome: "Home",
-    navQuran: "Noble Quran",
+    navQuran: "Quran",
     navPrayer: "Prayer Times",
     navArticles: "Articles",
-    navCommunity: "Community Circle",
+    navCommunity: "Circles",
     navContact: "Contact Us",
+    navProducts: "Products",
     navLogin: "Sign In",
     navDashboard: "My Dashboard",
     navLogout: "Sign Out",
@@ -107,11 +108,12 @@ const translations = {
   ar: {
     // Navigation
     navHome: "الرئيسية",
-    navQuran: "القرآن الكريم",
+    navQuran: "قرءان",
     navPrayer: "مواقيت الصلاة",
     navArticles: "المقالات",
-    navCommunity: "حلقة المجتمع",
+    navCommunity: "حلقات",
     navContact: "اتصل بنا",
+    navProducts: "منتجات",
     navLogin: "تسجيل الدخول",
     navDashboard: "لوحة التحكم",
     navLogout: "تسجيل الخروج",

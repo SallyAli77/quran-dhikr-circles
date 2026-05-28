@@ -15,15 +15,27 @@ export default function Navbar({ activePage, setActivePage }) {
     { id: 'home', label: 'navHome' },
     { id: 'quran', label: 'navQuran' },
     { id: 'prayer', label: 'navPrayer' },
-    { id: 'articles', label: 'navArticles' },
     { id: 'community', label: 'navCommunity' },
-    { id: 'contact', label: 'navContact' }
+    { id: 'products', label: 'navProducts' }
   ];
 
   const handleNavClick = (pageId) => {
-    setActivePage(pageId);
-    setMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (pageId === 'products') {
+      setActivePage('home');
+      setMobileMenuOpen(false);
+      setTimeout(() => {
+        const el = document.getElementById('products-section');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      setActivePage(pageId);
+      setMobileMenuOpen(false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   return (
@@ -259,10 +271,10 @@ const styles = {
   desktopNav: {
     display: 'flex',
     alignItems: 'center',
-    gap: '28px', /* Generous gap for premium look and feel */
+    gap: '28px', /* Premium layout spacing */
     flexGrow: 1,
     justifyContent: 'center',
-    margin: '0 40px', /* Increased margin to guarantee distance between logo and search bar controls */
+    margin: '0 40px', /* Increased margin for logo/search isolation */
     overflow: 'hidden',
   },
   navLink: {
