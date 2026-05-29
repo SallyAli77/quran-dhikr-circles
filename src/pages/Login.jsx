@@ -76,6 +76,9 @@ export default function Login({ setActivePage }) {
 
   // Auth modes
   const [isSignUpMode, setIsSignUpMode] = useState(false);
+  const [isForgotPasswordMode, setIsForgotPasswordMode] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [isResetSuccess, setIsResetSuccess] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -382,209 +385,278 @@ export default function Login({ setActivePage }) {
     <div className="login-page container fade-in" style={{ minHeight: '80vh', paddingBottom: '80px' }}>
       
       {!isAuthenticated ? (
-        // ================= AUTHENTICATION FORM =================
-        <div style={styles.authContainer} className="glass-panel">
-          <div className="islamic-pattern"></div>
-          
-          <div style={styles.authHeader}>
-            <LogIn size={32} color="var(--text-gold)" style={styles.authIcon} />
-            <h2 style={styles.authTitle}>{isSignUpMode ? t('authSignUpSubmit') : t('authTitle')}</h2>
-            <p style={styles.authSubtitle}>{t('authSubtitle')}</p>
-          </div>
-
-          {authError && (
-            <div style={styles.errorBanner} className="glass-panel fade-in">
-              <ShieldAlert size={16} color="#ff6b6b" />
-              <span>{authError}</span>
+        isForgotPasswordMode ? (
+          // ================= FORGOT PASSWORD FORM =================
+          <div style={styles.authContainer} className="glass-panel">
+            <div className="islamic-pattern"></div>
+            
+            <div style={styles.authHeader}>
+              <Key size={32} color="var(--text-gold)" style={styles.authIcon} />
+              <h2 style={styles.authTitle}>
+                {isResetSuccess 
+                  ? (language === 'en' ? "Check Your Email" : "تحقق من بريدك") 
+                  : (language === 'en' ? "Reset Password" : "إعادة تعيين كلمة المرور")}
+              </h2>
+              <p style={styles.authSubtitle}>
+                {isResetSuccess
+                  ? (language === 'en' ? "We have sent a secure password reset link to your email address." : "لقد أرسلنا رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.")
+                  : (language === 'en' ? "Enter your email address to receive a secure recovery link." : "أدخل بريدك الإلكتروني لتلقي رابط آمن لاستعادة كلمة المرور.")}
+              </p>
             </div>
-          )}
 
-          <form onSubmit={isSignUpMode ? handleSignUpSubmit : handleLoginSubmit} style={styles.authForm}>
-            {isSignUpMode && (
-              <div style={styles.formField}>
-                <label style={styles.fieldLabel}>{language === 'en' ? "Full Name" : "الاسم الكامل"}</label>
-                <input
-                  type="text"
-                  required
-                  placeholder={language === 'en' ? "e.g. Ahmad Abdullah" : "مثال: أحمد عبدالله"}
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="premium-input"
-                  autoComplete="name"
-                />
+            {isResetSuccess ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginTop: '20px' }}>
+                <div style={{ display: 'flex', justifyContent: 'center', margin: '10px 0' }}>
+                  <CheckCircle2 size={64} color="var(--text-gold)" style={{ filter: 'drop-shadow(0 0 10px rgba(212, 175, 55, 0.3))' }} />
+                </div>
+                <button 
+                  onClick={() => { setIsForgotPasswordMode(false); setIsResetSuccess(false); setResetEmail(""); }}
+                  className="btn-primary"
+                  style={{ ...styles.submitBtn, width: '100%', justifyContent: 'center' }}
+                >
+                  <span>{language === 'en' ? "Back to Login" : "العودة لتسجيل الدخول"}</span>
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={(e) => { e.preventDefault(); setIsResetSuccess(true); }} style={styles.authForm}>
+                <div style={styles.formField}>
+                  <label style={styles.fieldLabel}>{t('authEmail')}</label>
+                  <input
+                    type="email"
+                    required
+                    placeholder={language === 'en' ? "your@email.com" : "بريدك@الإلكتروني.com"}
+                    value={resetEmail}
+                    onChange={(e) => setResetEmail(e.target.value)}
+                    className="premium-input"
+                    autoComplete="email"
+                  />
+                </div>
+
+                <button type="submit" className="btn-primary" style={styles.submitBtn}>
+                  <Send size={14} />
+                  <span>{language === 'en' ? "Send Reset Link" : "إرسال رابط استعادة المرور"}</span>
+                </button>
+
+                <button 
+                  type="button"
+                  onClick={() => { setIsForgotPasswordMode(false); setAuthError(""); }}
+                  style={styles.toggleBtn}
+                >
+                  {language === 'en' ? "Back to Login" : "العودة لتسجيل الدخول"}
+                </button>
+              </form>
+            )}
+          </div>
+        ) : (
+          // ================= AUTHENTICATION FORM =================
+          <div style={styles.authContainer} className="glass-panel">
+            <div className="islamic-pattern"></div>
+            
+            <div style={styles.authHeader}>
+              <LogIn size={32} color="var(--text-gold)" style={styles.authIcon} />
+              <h2 style={styles.authTitle}>{isSignUpMode ? t('authSignUpSubmit') : t('authTitle')}</h2>
+              <p style={styles.authSubtitle}>{t('authSubtitle')}</p>
+            </div>
+
+            {authError && (
+              <div style={styles.errorBanner} className="glass-panel fade-in">
+                <ShieldAlert size={16} color="#ff6b6b" />
+                <span>{authError}</span>
               </div>
             )}
 
-            <div style={styles.formField}>
-              <label style={styles.fieldLabel}>{t('authEmail')}</label>
-              <input
-                type="email"
-                required
-                placeholder={language === 'en' ? "your@email.com" : "بريدك@الإلكتروني.com"}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="premium-input"
-                autoComplete={isSignUpMode ? "email" : "username"}
-              />
-            </div>
-
-            <div style={styles.formField}>
-              <label style={styles.fieldLabel}>{t('authPass')}</label>
-              <div style={{ position: 'relative', width: '100%' }}>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  required
-                  placeholder={isSignUpMode ? (language === 'en' ? "Min 8 chars, A-Z, 0-9, symbol" : "8+ حروف، كبيرة، أرقام، رمز") : "••••••••"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="premium-input"
-                  style={{ 
-                    paddingRight: language === 'ar' ? '16px' : '44px',
-                    paddingLeft: language === 'ar' ? '44px' : '16px'
-                  }}
-                  autoComplete={isSignUpMode ? "new-password" : "current-password"}
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(p => !p)}
-                  style={{
-                    position: 'absolute',
-                    right: language === 'ar' ? 'auto' : '16px',
-                    left: language === 'ar' ? '16px' : 'auto',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    color: 'var(--text-gold)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: 0,
-                    opacity: 0.8,
-                    transition: 'all 0.2s ease',
-                  }}
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
-              </div>
-
-              {/* Password strength meter - only on signup */}
-              {isSignUpMode && password.length > 0 && (
-                <div style={{ marginTop: '8px' }}>
-                  <div style={{ display: 'flex', gap: '4px', marginBottom: '4px' }}>
-                    {[1, 2, 3, 4, 5].map(i => (
-                      <div key={i} style={{ flex: 1, height: '3px', borderRadius: '2px', background: i <= pwdStrength.score ? pwdStrength.color : 'rgba(255,255,255,0.08)', transition: 'all 0.3s ease' }} />
-                    ))}
-                  </div>
-                  <span style={{ fontSize: '0.72rem', color: pwdStrength.color, fontWeight: '600' }}>{pwdStrength.label}</span>
-                  {isSignUpMode && (
-                    <ul style={{ margin: '6px 0 0 0', padding: '0 0 0 16px', fontSize: '0.7rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
-                      <li style={{ color: password.length >= 8 ? '#22c55e' : 'inherit' }}>{language === 'ar' ? '8 أحرف على الأقل' : 'At least 8 characters'}</li>
-                      <li style={{ color: /[A-Z]/.test(password) ? '#22c55e' : 'inherit' }}>{language === 'ar' ? 'حرف كبير واحد (A-Z)' : 'One uppercase letter (A-Z)'}</li>
-                      <li style={{ color: /[0-9]/.test(password) ? '#22c55e' : 'inherit' }}>{language === 'ar' ? 'رقم واحد على الأقل (0-9)' : 'One number (0-9)'}</li>
-                      <li style={{ color: /[^A-Za-z0-9]/.test(password) ? '#22c55e' : 'inherit' }}>{language === 'ar' ? 'رمز خاص مثل @#!' : 'Special character e.g. @#!'}</li>
-                    </ul>
-                  )}
+            <form onSubmit={isSignUpMode ? handleSignUpSubmit : handleLoginSubmit} style={styles.authForm}>
+              {isSignUpMode && (
+                <div style={styles.formField}>
+                  <label style={styles.fieldLabel}>{language === 'en' ? "Full Name" : "الاسم الكامل"}</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder={language === 'en' ? "e.g. Ahmad Abdullah" : "مثال: أحمد عبدالله"}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="premium-input"
+                    autoComplete="name"
+                  />
                 </div>
               )}
 
-              {!isSignUpMode && (
-                <span style={styles.passHint}>
-                  {language === 'en' ? "Demo Admin: sally@arabicmuslim.com / Bismillah1!" : "دخول المسؤول: sally@arabicmuslim.com / Bismillah1!"}
-                </span>
-              )}
-            </div>
-
-            {/* Confirm password field - only on signup */}
-            {isSignUpMode && (
               <div style={styles.formField}>
-                <label style={styles.fieldLabel}>{language === 'en' ? "Confirm Password" : "تأكيد كلمة المرور"}</label>
+                <label style={styles.fieldLabel}>{t('authEmail')}</label>
+                <input
+                  type="email"
+                  required
+                  placeholder={language === 'en' ? "your@email.com" : "بريدك@الإلكتروني.com"}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="premium-input"
+                  autoComplete={isSignUpMode ? "email" : "username"}
+                />
+              </div>
+
+              <div style={styles.formField}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                  <label style={styles.fieldLabel}>{t('authPass')}</label>
+                  {!isSignUpMode && (
+                    <button
+                      type="button"
+                      onClick={() => { setIsForgotPasswordMode(true); setAuthError(""); }}
+                      style={{ background: 'none', border: 'none', color: 'var(--text-gold)', fontSize: '0.8rem', cursor: 'pointer', textDecoration: 'underline', padding: 0 }}
+                    >
+                      {language === 'en' ? "Forgot Password?" : "هل نسيت كلمة المرور؟"}
+                    </button>
+                  )}
+                </div>
                 <div style={{ position: 'relative', width: '100%' }}>
                   <input
                     type={showPassword ? "text" : "password"}
                     required
-                    placeholder="••••••••"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder={isSignUpMode ? (language === 'en' ? "Min 8 chars, A-Z, 0-9, symbol" : "8+ حروف، كبيرة، أرقام، رمز") : "••••••••"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     className="premium-input"
                     style={{ 
-                      borderColor: confirmPassword && confirmPassword !== password ? '#ef4444' : confirmPassword && confirmPassword === password ? '#22c55e' : undefined,
                       paddingRight: language === 'ar' ? '16px' : '44px',
                       paddingLeft: language === 'ar' ? '44px' : '16px'
                     }}
-                    autoComplete="new-password"
+                    autoComplete={isSignUpMode ? "new-password" : "current-password"}
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(p => !p)}
+                    style={{
+                      position: 'absolute',
+                      right: language === 'ar' ? 'auto' : '16px',
+                      left: language === 'ar' ? '16px' : 'auto',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      color: 'var(--text-gold)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: 0,
+                      opacity: 0.8,
+                      transition: 'all 0.2s ease',
+                    }}
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
                 </div>
-                {confirmPassword.length > 0 && (
-                  <span style={{ fontSize: '0.72rem', marginTop: '4px', color: confirmPassword === password ? '#22c55e' : '#ef4444', fontWeight: '600', display: 'block' }}>
-                    {confirmPassword === password
-                      ? (language === 'ar' ? '✓ كلمتا المرور متطابقتان' : '✓ Passwords match')
-                      : (language === 'ar' ? '✗ كلمتا المرور غير متطابقتين' : '✗ Passwords do not match')}
-                  </span>
+
+                {/* Password strength meter - only on signup */}
+                {isSignUpMode && password.length > 0 && (
+                  <div style={{ marginTop: '8px' }}>
+                    <div style={{ display: 'flex', gap: '4px', marginBottom: '4px' }}>
+                      {[1, 2, 3, 4, 5].map(i => (
+                        <div key={i} style={{ flex: 1, height: '3px', borderRadius: '2px', background: i <= pwdStrength.score ? pwdStrength.color : 'rgba(255,255,255,0.08)', transition: 'all 0.3s ease' }} />
+                      ))}
+                    </div>
+                    <span style={{ fontSize: '0.72rem', color: pwdStrength.color, fontWeight: '600' }}>{pwdStrength.label}</span>
+                    {isSignUpMode && (
+                      <ul style={{ margin: '6px 0 0 0', padding: '0 0 0 16px', fontSize: '0.7rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                        <li style={{ color: password.length >= 8 ? '#22c55e' : 'inherit' }}>{language === 'ar' ? '8 أحرف على الأقل' : 'At least 8 characters'}</li>
+                        <li style={{ color: /[A-Z]/.test(password) ? '#22c55e' : 'inherit' }}>{language === 'ar' ? 'حرف كبير واحد (A-Z)' : 'One uppercase letter (A-Z)'}</li>
+                        <li style={{ color: /[0-9]/.test(password) ? '#22c55e' : 'inherit' }}>{language === 'ar' ? 'رقم واحد على الأقل (0-9)' : 'One number (0-9)'}</li>
+                        <li style={{ color: /[^A-Za-z0-9]/.test(password) ? '#22c55e' : 'inherit' }}>{language === 'ar' ? 'رمز خاص مثل @#!' : 'Special character e.g. @#!'}</li>
+                      </ul>
+                    )}
+                  </div>
                 )}
               </div>
-            )}
 
-            {/* Age + Privacy consent - required for Google AdSense */}
-            {isSignUpMode && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', padding: '14px', background: 'rgba(212,175,55,0.04)', border: '1px solid rgba(212,175,55,0.15)', borderRadius: '10px' }}>
-                <label style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', cursor: 'pointer', fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
-                  <input
-                    type="checkbox"
-                    checked={ageConsent}
-                    onChange={(e) => setAgeConsent(e.target.checked)}
-                    style={{ marginTop: '2px', accentColor: 'var(--gold-primary)', width: '14px', height: '14px', flexShrink: 0 }}
-                  />
-                  <span>
-                    {language === 'ar'
-                      ? 'أؤكد أنني أتجاوز 13 عاماً من العمر وأوافق على استخدام خدمات الموقع'
-                      : 'I confirm I am 13 years of age or older and agree to use this service'}
-                  </span>
-                </label>
+              {/* Confirm password field - only on signup */}
+              {isSignUpMode && (
+                <div style={styles.formField}>
+                  <label style={styles.fieldLabel}>{language === 'en' ? "Confirm Password" : "تأكيد كلمة المرور"}</label>
+                  <div style={{ position: 'relative', width: '100%' }}>
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      required
+                      placeholder="••••••••"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      className="premium-input"
+                      style={{ 
+                        borderColor: confirmPassword && confirmPassword !== password ? '#ef4444' : confirmPassword && confirmPassword === password ? '#22c55e' : undefined,
+                        paddingRight: language === 'ar' ? '16px' : '44px',
+                        paddingLeft: language === 'ar' ? '44px' : '16px'
+                      }}
+                      autoComplete="new-password"
+                    />
+                  </div>
+                  {confirmPassword.length > 0 && (
+                    <span style={{ fontSize: '0.72rem', marginTop: '4px', color: confirmPassword === password ? '#22c55e' : '#ef4444', fontWeight: '600', display: 'block' }}>
+                      {confirmPassword === password
+                        ? (language === 'ar' ? '✓ كلمتا المرور متطابقتان' : '✓ Passwords match')
+                        : (language === 'ar' ? '✗ كلمتا المرور غير متطابقتين' : '✗ Passwords do not match')}
+                    </span>
+                  )}
+                </div>
+              )}
 
-                <label style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', cursor: 'pointer', fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
-                  <input
-                    type="checkbox"
-                    checked={privacyConsent}
-                    onChange={(e) => setPrivacyConsent(e.target.checked)}
-                    style={{ marginTop: '2px', accentColor: 'var(--gold-primary)', width: '14px', height: '14px', flexShrink: 0 }}
-                  />
-                  <span>
-                    {language === 'ar' ? (
-                      <>
-                        أوافق على{' '}
-                        <button type="button" onClick={() => setActivePage && setActivePage('legal')} style={{ background: 'none', border: 'none', color: 'var(--text-gold)', cursor: 'pointer', textDecoration: 'underline', fontSize: '0.8rem', padding: 0 }}>سياسة الخصوصية</button>
-                        {' '}و{' '}
-                        <button type="button" onClick={() => setActivePage && setActivePage('legal')} style={{ background: 'none', border: 'none', color: 'var(--text-gold)', cursor: 'pointer', textDecoration: 'underline', fontSize: '0.8rem', padding: 0 }}>شروط الخدمة</button>
-                      </>
-                    ) : (
-                      <>
-                        I agree to the{' '}
-                        <button type="button" onClick={() => setActivePage && setActivePage('legal')} style={{ background: 'none', border: 'none', color: 'var(--text-gold)', cursor: 'pointer', textDecoration: 'underline', fontSize: '0.8rem', padding: 0 }}>Privacy Policy</button>
-                        {' '}and{' '}
-                        <button type="button" onClick={() => setActivePage && setActivePage('legal')} style={{ background: 'none', border: 'none', color: 'var(--text-gold)', cursor: 'pointer', textDecoration: 'underline', fontSize: '0.8rem', padding: 0 }}>Terms of Service</button>
-                      </>
-                    )}
-                  </span>
-                </label>
-              </div>
-            )}
+              {/* Age + Privacy consent - required for Google AdSense */}
+              {isSignUpMode && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', padding: '14px', background: 'rgba(212,175,55,0.04)', border: '1px solid rgba(212,175,55,0.15)', borderRadius: '10px' }}>
+                  <label style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', cursor: 'pointer', fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                    <input
+                      type="checkbox"
+                      checked={ageConsent}
+                      onChange={(e) => setAgeConsent(e.target.checked)}
+                      style={{ marginTop: '2px', accentColor: 'var(--gold-primary)', width: '14px', height: '14px', flexShrink: 0 }}
+                    />
+                    <span>
+                      {language === 'ar'
+                        ? 'أؤكد أنني أتجاوز 13 عاماً من العمر وأوافق على استخدام خدمات الموقع'
+                        : 'I confirm I am 13 years of age or older and agree to use this service'}
+                    </span>
+                  </label>
 
-            <button type="submit" className="btn-primary" style={styles.submitBtn}>
-              <Key size={14} />
-              <span>{isSignUpMode ? t('authSignUpSubmit') : t('authSubmit')}</span>
+                  <label style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', cursor: 'pointer', fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                    <input
+                      type="checkbox"
+                      checked={privacyConsent}
+                      onChange={(e) => setPrivacyConsent(e.target.checked)}
+                      style={{ marginTop: '2px', accentColor: 'var(--gold-primary)', width: '14px', height: '14px', flexShrink: 0 }}
+                    />
+                    <span>
+                      {language === 'ar' ? (
+                        <>
+                          أوافق على{' '}
+                          <button type="button" onClick={() => setActivePage && setActivePage('legal')} style={{ background: 'none', border: 'none', color: 'var(--text-gold)', cursor: 'pointer', textDecoration: 'underline', fontSize: '0.8rem', padding: 0 }}>سياسة الخصوصية</button>
+                          {' '}و{' '}
+                          <button type="button" onClick={() => setActivePage && setActivePage('legal')} style={{ background: 'none', border: 'none', color: 'var(--text-gold)', cursor: 'pointer', textDecoration: 'underline', fontSize: '0.8rem', padding: 0 }}>شروط الخدمة</button>
+                        </>
+                      ) : (
+                        <>
+                          I agree to the{' '}
+                          <button type="button" onClick={() => setActivePage && setActivePage('legal')} style={{ background: 'none', border: 'none', color: 'var(--text-gold)', cursor: 'pointer', textDecoration: 'underline', fontSize: '0.8rem', padding: 0 }}>Privacy Policy</button>
+                          {' '}and{' '}
+                          <button type="button" onClick={() => setActivePage && setActivePage('legal')} style={{ background: 'none', border: 'none', color: 'var(--text-gold)', cursor: 'pointer', textDecoration: 'underline', fontSize: '0.8rem', padding: 0 }}>Terms of Service</button>
+                        </>
+                      )}
+                    </span>
+                  </label>
+                </div>
+              )}
+
+              <button type="submit" className="btn-primary" style={styles.submitBtn}>
+                <Key size={14} />
+                <span>{isSignUpMode ? t('authSignUpSubmit') : t('authSubmit')}</span>
+              </button>
+            </form>
+
+            <button 
+              onClick={() => { setIsSignUpMode(!isSignUpMode); setAuthError(""); setPassword(""); setConfirmPassword(""); setAgeConsent(false); setPrivacyConsent(false); }} 
+              style={styles.toggleBtn}
+            >
+              {isSignUpMode ? t('authToggleToLogin') : t('authToggleToSignUp')}
             </button>
-          </form>
-
-          <button 
-            onClick={() => { setIsSignUpMode(!isSignUpMode); setAuthError(""); setPassword(""); setConfirmPassword(""); setAgeConsent(false); setPrivacyConsent(false); }} 
-            style={styles.toggleBtn}
-          >
-            {isSignUpMode ? t('authToggleToLogin') : t('authToggleToSignUp')}
-          </button>
-        </div>
+          </div>
+        )
       ) : (
         // ================= PREMIUM MEMBERS / TEACHERS / ADMINS DASHBOARD =================
         <div style={styles.dashboardContainer} className="fade-in">

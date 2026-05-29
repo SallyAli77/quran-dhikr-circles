@@ -403,7 +403,7 @@ select:focus {
 .premium-input {
   width: 100%;
   box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.02) !important;
+  background: #0d0f16 !important; /* solid premium dark background to cover any patterns behind it */
   border: 1px solid var(--border-gold) !important;
   border-radius: 12px !important;
   padding: 14px 16px !important;
@@ -415,7 +415,7 @@ select:focus {
 }
 
 .premium-input:focus {
-  background: rgba(255, 255, 255, 0.04) !important;
+  background: #11141e !important;
   border-color: var(--gold-primary) !important;
   box-shadow: 0 0 15px rgba(212, 175, 55, 0.3), inset 0 0 8px rgba(212, 175, 55, 0.05) !important;
   transform: translateY(-1px);
@@ -428,5 +428,15 @@ select:focus {
 
 [dir="rtl"] .premium-input {
   text-align: right;
+}
+
+/* Custom Autofill Styling to prevent ugly white/yellow browser default backgrounds */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--text-primary) !important;
+  -webkit-box-shadow: 0 0 0px 1000px #0d0f16 inset !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
