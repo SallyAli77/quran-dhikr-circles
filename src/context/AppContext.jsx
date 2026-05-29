@@ -765,7 +765,7 @@ const translations = {
     contactSubmit: "إرسال الطلب",
     contactSuccess: "تم إرسال استفسارك بسلام وبركات وسنتواصل معك قريباً.",
     contactFAQTitle: "الأسئلة الشائعة والأجوبة",
-    authTitle: "بوابة أرابيك مسلم",
+    authTitle: "بوابة Arabic Muslim",
     authSubtitle: "سجل حسابك الخاص لتتبع سكورك اليومي وإنجازاتك الشخصية.",
     authEmail: "البريد الإلكتروني",
     authPass: "كلمة المرور",
