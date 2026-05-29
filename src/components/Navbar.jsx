@@ -20,22 +20,9 @@ export default function Navbar({ activePage, setActivePage }) {
   ];
 
   const handleNavClick = (pageId) => {
-    if (pageId === 'products') {
-      setActivePage('home');
-      setMobileMenuOpen(false);
-      setTimeout(() => {
-        const el = document.getElementById('products-section');
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      }, 100);
-    } else {
-      setActivePage(pageId);
-      setMobileMenuOpen(false);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    setActivePage(pageId);
+    setMobileMenuOpen(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -45,14 +32,14 @@ export default function Navbar({ activePage, setActivePage }) {
         <div 
           onClick={() => handleNavClick('home')} 
           style={styles.logo} 
-          className="logo-gold-glow"
+          className="logo-gold-glow navbar-logo"
         >
           <span style={styles.logoCrescent}>🌙</span>
           <span style={styles.logoText} className="gold-gradient-text">ArabicMuslim</span>
         </div>
 
         {/* Center: Desktop Nav Links (Forces single-line, zero wrap!) */}
-        <div style={styles.desktopNav}>
+        <div style={styles.desktopNav} className="navbar-desktop-nav">
           {navItems.map(item => (
             <button
               key={item.id}
@@ -78,7 +65,7 @@ export default function Navbar({ activePage, setActivePage }) {
             borderColor: searchFocused ? 'var(--gold-primary)' : 'rgba(212, 175, 55, 0.25)',
             boxShadow: searchFocused ? '0 0 15px rgba(212, 175, 55, 0.2)' : 'none',
             background: searchFocused ? 'rgba(8, 9, 13, 0.95)' : 'rgba(255, 255, 255, 0.02)'
-          }}>
+          }} className="navbar-search-wrapper">
             <Search size={15} color="var(--text-gold)" style={styles.searchIcon} />
             <input
               type="text"
@@ -103,7 +90,7 @@ export default function Navbar({ activePage, setActivePage }) {
           <button 
             onClick={toggleLanguage} 
             style={styles.langBtn}
-            className="lang-btn-premium"
+            className="lang-btn-premium navbar-lang-btn"
           >
             <Globe size={15} color="var(--text-gold)" />
             <span style={styles.langBtnText}>{language === 'en' ? "AR" : "EN"}</span>
@@ -111,7 +98,7 @@ export default function Navbar({ activePage, setActivePage }) {
 
           {/* User Auth Badge */}
           {isAuthenticated ? (
-            <div style={styles.profileBadge} className="glass-panel profile-badge-glow">
+            <div style={styles.profileBadge} className="glass-panel profile-badge-glow navbar-profile-badge">
               <span 
                 onClick={() => handleNavClick('login')} 
                 style={styles.profileTrigger}
@@ -131,7 +118,7 @@ export default function Navbar({ activePage, setActivePage }) {
           ) : (
             <button 
               onClick={() => handleNavClick('login')} 
-              className="btn-primary" 
+              className="btn-primary navbar-login-btn" 
               style={styles.loginBtn}
             >
               <User size={13} />
@@ -143,6 +130,7 @@ export default function Navbar({ activePage, setActivePage }) {
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)} 
             style={styles.mobileToggle}
+            className="navbar-mobile-toggle"
           >
             {mobileMenuOpen ? <X size={24} color="var(--text-gold)" /> : <Menu size={24} color="var(--text-gold)" />}
           </button>
@@ -176,6 +164,7 @@ export default function Navbar({ activePage, setActivePage }) {
                   color: activePage === item.id ? 'var(--text-gold)' : 'var(--text-primary)',
                   borderLeft: activePage === item.id ? '3px solid var(--gold-primary)' : '3px solid transparent'
                 }}
+                className="navbar-mobile-nav-link"
               >
                 {t(item.label)}
               </button>
@@ -556,57 +545,57 @@ if (typeof document !== 'undefined') {
     
     /* Responsive Media Queries fixing spacing and wrapping */
     @media (max-width: 1280px) {
-      .navbar-premium [style*="desktopNav"] {
+      .navbar-premium .navbar-desktop-nav {
         gap: 16px !important;
         margin: 0 20px !important;
       }
-      .navbar-premium [style*="logo"] {
+      .navbar-premium .navbar-logo {
         margin-right: 30px !important;
       }
-      .navbar-premium [style*="searchWrapper"] {
+      .navbar-premium .navbar-search-wrapper {
         width: 145px !important;
         margin-left: 15px !important;
       }
     }
     @media (max-width: 1180px) {
-      .navbar-premium [style*="desktopNav"] {
+      .navbar-premium .navbar-desktop-nav {
         display: none !important;
       }
-      .navbar-premium [style*="searchWrapper"] {
+      .navbar-premium .navbar-search-wrapper {
         display: none !important;
       }
-      .navbar-premium [style*="mobileToggle"] {
+      .navbar-premium .navbar-mobile-toggle {
         display: block !important;
       }
-      .navbar-premium [style*="langBtn"] {
+      .navbar-premium .navbar-lang-btn {
         display: none !important;
       }
-      .navbar-premium [style*="profileBadge"] {
+      .navbar-premium .navbar-profile-badge {
         display: none !important;
       }
-      .navbar-premium [style*="loginBtn"] {
+      .navbar-premium .navbar-login-btn {
         display: none !important;
       }
     }
-    [dir="rtl"] .navbar-premium [style*="mobileNavLink"] {
+    [dir="rtl"] .navbar-premium .navbar-mobile-nav-link {
       text-align: right !important;
       border-left: none !important;
       border-right: 3px solid var(--gold-primary) !important;
     }
-    [dir="rtl"] .navbar-premium [style*="logo"] {
+    [dir="rtl"] .navbar-premium .navbar-logo {
       margin-right: 0 !important;
       margin-left: 50px !important;
     }
-    [dir="rtl"] .navbar-premium [style*="searchWrapper"] {
+    [dir="rtl"] .navbar-premium .navbar-search-wrapper {
       margin-left: 0 !important;
       margin-right: 30px !important;
     }
     @media (max-width: 1280px) {
-      [dir="rtl"] .navbar-premium [style*="logo"] {
+      [dir="rtl"] .navbar-premium .navbar-logo {
         margin-left: 30px !important;
         margin-right: 0 !important;
       }
-      [dir="rtl"] .navbar-premium [style*="searchWrapper"] {
+      [dir="rtl"] .navbar-premium .navbar-search-wrapper {
         margin-right: 15px !important;
         margin-left: 0 !important;
       }

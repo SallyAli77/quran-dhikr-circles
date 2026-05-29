@@ -107,7 +107,8 @@ export default function Community() {
     const circle = onlineCircles.find(c => c.id === activeSessionCircleId);
     if (!circle) return;
 
-    setSessionTimeLeft(circle.duration * 60);
+    const duration = circle.duration || (circle.type === 'quran' ? 60 : 10);
+    setSessionTimeLeft(duration * 60);
     setSessionEnded(false);
     setSessionScoreAwarded(false);
 
@@ -605,6 +606,9 @@ export default function Community() {
         const isMyTurn = currentTurn === userIndex;
 
         const formatTime = (secs) => {
+          if (isNaN(secs) || secs === undefined || secs === null || secs < 0) {
+            return "10:00";
+          }
           const m = Math.floor(secs / 60);
           const s = secs % 60;
           return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
@@ -921,8 +925,8 @@ const styles = {
     width: '100%',
   },
   circularCircleCard: {
-    width: '260px',
-    height: '260px',
+    width: '290px',
+    height: '290px',
     borderRadius: '50%',
     padding: '6px',
     display: 'flex',

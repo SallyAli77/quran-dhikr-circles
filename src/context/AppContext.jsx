@@ -137,8 +137,191 @@ const categoriesTemplate = [
   { cat: "History", catAr: "التاريخ الإسلامي" }
 ];
 
-// Dynamically generate exactly 120 high-quality articles
-const generate120Articles = () => {
+// Dynamically generate exactly 120 high-quality articles with extensive paragraphs
+const getExtendedContent = (index, titleEn, titleAr) => {
+  const topics = [
+    {
+      en: `The concept of Ihsan (excellence/perfection) represents the pinnacle of a Muslim's faith journey. In the famous Hadith of Jibril, the Prophet Muhammad (pbuh) defined Ihsan as "to worship Allah as if you see Him, and if you cannot see Him, know that He sees you." This dual-layered consciousness reshapes all aspects of human behavior.
+      
+      When a believer acts with Ihsan:
+      1. Their worship becomes deeply focused (Khushu'), freeing them from worldly distractions.
+      2. Their ethics shine in public and private dealings, treating neighbors, family, and strangers with honor.
+      3. Their daily work is elevated to a form of active devotion, executing every task to the highest possible standard.
+      
+      To cultivate Ihsan in your daily life, start by practicing complete presence in your five daily prayers. Before raising your hands for Takbir, take a deep breath, remind yourself that the Creator of the Heavens and the Earth is witnessing you, and recite slowly. Practice this and watch your life transform!`,
+      ar: `يمثل مفهوم الإحسان قمة الهرم الإيماني في مسيرة المؤمن. وفي حديث جبريل المشهور، عرّف النبي صلى الله عليه وسلم الإحسان بأنه: "أن تعبد الله كأنك تراه، فإن لم تكن تراه فإنه يراك". هذا الوعي العميق يوجه السلوك الإنساني نحو الكمال.
+
+      عندما يتحلى المؤمن بالإحسان:
+      1. تصبح عبادته أكثر خشوعاً وتركيزاً، متحررة من الشواغل الدنيوية المشتتة.
+      2. تشرق أخلاقه في معاملاته العامة والخاصة، معاملاً أهله وجيرانه والناس بالرفق والإكرام.
+      3. يرتقي عمله اليومي والمهني ليصبح عبادة مقبولة، مؤدياً كل واجب بأعلى درجات الاتقان والمسؤولية.
+
+      لتنمية خلق الإحسان في حياتك، ابدأ بممارسة الحضور الذهني الكامل في صلواتك الخمس المفروضة. قبل أن تكبر، تنفس بعمق وتذكر أن خالق السماوات والأرض يرقبك، ورتل آياتك بتؤدة وتدبر.`
+    },
+    {
+      en: `Patience (Sabr) is described in the Quran as a beautiful trait ("Sabrun Jameel") that brings immense rewards without limit. Trials are an inevitable part of human existence, designed to test the sincerity of our faith. Allah says: "And We will surely test you with something of fear and hunger and a loss of wealth and lives and fruits, but give good tidings to the patient." (Surah Al-Baqarah 2:155).
+      
+      True patience is defined by three main aspects:
+      1. Sabr in obeying Allah's commands consistently even when it feels heavy.
+      2. Sabr in refraining from prohibited matters despite temptations.
+      3. Sabr in accepting the divine decree (Qadr) during sudden hardships without despair.
+      
+      Patience does not mean passive acceptance; it is a dynamic state of perseverance accompanied by active trust in Allah (Tawakkul). When facing difficulties, remember that the night is always followed by dawn, and that after every hardship, there is ease.`,
+      ar: `يصف القرآن الكريم الصبر الجميل بأنه صفة تجلب أجراً عظيماً غير محدود. إن الابتلاءات والخطوب جزء لا يتجزأ من الوجود الإنساني لاختبار صدق إيماننا وثبات قلوبنا. يقول الله تعالى: "وَلَنَبْلُوَنَّكُمْ بِشَيْءٍ مِنَ الْخَوْفِ وَالْجُوعِ وَنَقْصٍ مِنَ الْأَمْوالِ وَالْأَنْفُسِ وَالثَّمَراتِ وَبَشِّرِ الصَّابِرِينَ" (البقرة: 155).
+
+      يتكون الصبر الحقيقي من ثلاثة محاور رئيسية:
+      1. الصبر على الطاعات والعبادات اليومية بانتظام وثبات.
+      2. الصبر عن المعاصي والمحرمات ومقاومة المغريات العارضة.
+      3. الصبر على أقدار الله المؤلمة والرضا بها دون سخط أو يأس.
+
+      الصبر ليس استسلاماً سلبياً؛ بل هو سعي حثيث مصحوب بالتوكل التام والعمل الدؤوب. تذكر دائماً أن مع العسر يسراً، وأن فجر الفرج يولد من رحم ظلام الأزمة.`
+    },
+    {
+      en: `Islamic architecture is renowned globally for its stunning geometric precision, intricate arabesque motifs, and majestic structural stability. It is a visual representation of the concept of Tawhid (the oneness of Allah), reflecting order, unity, and infinite cosmic beauty.
+      
+      Key elements that define this aesthetic:
+      1. The active dome (Qubbah) symbolizing the celestial vault and spiritual ascent.
+      2. Intricate geometric patterns repeating infinitely, showing the infinite nature of creation.
+      3. The courtyard (Sahn) providing natural light, air circulation, and a tranquil sanctuary from the noisy world.
+      
+      From the Alhambra in Spain to the Southern corridors of Al-Aqsa, these architectural marvels serve to elevate the human mind, turning dry brick and stone into a visual symphony of mathematical and spiritual harmony.`,
+      ar: `تشتهر العمارة الإسلامية عالمياً بدقتها الهندسية المذهلة، وزخارفها المتشابكة البديعة، ومتانتها المعمارية المهيبة. إنها تجسيد بصري لمفهوم التوحيد، يعكس النظام والوحدة والجمال الكوني اللامتناهي.
+
+      أبرز العناصر الجمالية في العمارة الإسلامية:
+      1. القبة الشامخة التي ترمز للقبة السماوية والارتقاء الروحي للمؤمن.
+      2. الزخارف الهندسية المعقدة المتكررة بشكل لا نهائي تعبيراً عن دقة الصنع الإلهي.
+      3. الصحن الداخلي المفتوح لتوفير النور الطبيعي وملاذاً هادئاً للنفس بعيداً عن صخب الخارج.
+
+      من قصر الحمراء في الأندلس إلى أروقة المسجد الأقصى الشريف، تهدف هذه الروائع المعمارية للارتقاء بالعقل البشري، محولة الحجر الجاف إلى سيمفونية بصرية تتناغم فيها الهندسة والإيمان.`
+    },
+    {
+      en: `Mastering the rules of Tajweed (the science of correct Quranic pronunciation) is a duty for every Muslim seeking to read the Quran as it was revealed to the Prophet Muhammad (pbuh). Tajweed ensures that every letter is given its proper articulation point (Makhraj) and characteristic (Sifah).
+      
+      Crucial foundational rules include:
+      1. Rules of Noon Sakinah and Tanween (Izhar, Idgham, Iqlab, Ikhfa).
+      2. Rules of Qalqalah (echoing sound on the letters in the phrase Qutb Jad).
+      3. Length guidelines for different types of Madd (lengthening of vowels).
+      
+      To excel in Tajweed, we recommend studying under a certified teacher (like the masters certified via our Teacher Center). Practice reading slowly, record your voice, listen to standard reciters like Mahmoud Khalil Al-Husary, and commit to daily vocal exercises.`,
+      ar: `يعد إتقان قواعد التجويد أمراً ضرورياً لكل مسلم يسعى لتلاوة كتاب الله الكريم كما نزل على النبي محمد صلى الله عليه وسلم. يضمن التجويد إعطاء كل حرف حقه ومستحقه من حيث المخرج والصفة الصوتية المحددة.
+
+      من أهم القواعد الأساسية للمبتدئين:
+      1. أحكام النون الساكنة والتنوين (الإظهار، الإدغام، الإقلاب، الإخفاء).
+      2. أحكام القلقلة (نبرة الحرف الساكن في حروف قطب جد).
+      3. مقادير المدود المتنوعة (المد المتصل، المنفصل، اللازم، والعارض).
+
+      للتميز في التلاوة، ننصح بالدراسة التفاعلية على يد معلمين معتمدين (مثل الحاصلين على الشارات في منصتنا)، مع الاستماع الدائم للمصاحف المرتلة المعتمدة كالمصحف المعلم للشيخ الحصري، وتكرار القراءة اليومية.`
+    },
+    {
+      en: `Dedicating regular moments to Dhikr (the remembrance of Allah) is the ultimate spiritual therapy for modern anxiety and mental exhaust. Allah says: "Unquestionably, by the remembrance of Allah hearts are assured." (Surah Ar-Ra'd 13:28).
+      
+      A healthy daily Dhikr routine:
+      1. Resets the amygdala and lowers cortical stress indicators in the body.
+      2. Fosters continuous mindfulness, connecting you to the divine presence throughout your busy workday.
+      3. Enhances memory and focus by training the brain in sustained gratitude.
+      
+      Use our interactive Subha Counter to track your morning and evening litanies. Selecting beautiful colors like Emerald Green or Deep Sapphire makes this ritual tactile, engaging, and highly satisfying.`,
+      ar: `يعد تخصيص أوقات منتظمة للأذكار اليومية العلاج الإيماني والوقائي الأفضل لمواجهة القلق وضغوط الحياة العصرية. يقول الله تعالى: "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ" (الرعد: 28).
+
+      فوائد المداومة على أوراد الأذكار:
+      1. تهدئة الجهاز العصبي وتقليل مستويات التوتر والقلق في الجسم.
+      2. تعزيز الحضور الذهني الدائم، وربط قلبك بالخالق خلال ساعات العمل والانشغال.
+      3. تقوية الذاكرة والتركيز وتدريب العقل على ثقافة الامتنان والحمد اليومية.
+
+      استخدم سبحتنا التفاعلية المطورة لتتبع أذكارك اليومية بسهولة. اختيارك لألوان السبحة المتميزة مثل الزمردي أو السافير يضفي لمسة جمالية تزيد من ارتباطك بالأذكار.`
+    },
+    {
+      en: `During the Golden Age of Islam, Muslim scholars made groundbreaking contributions to mathematics, astronomy, chemistry, and medicine. Far from seeing a conflict between faith and science, these pioneers viewed scientific exploration as an act of worship to understand the intricate patterns of Allah's creation.
+      
+      Key milestones of Islamic scholarship:
+      1. Muhammad ibn Musa al-Khwarizmi inventing Algebra (Al-Jabr) and introducing algorithms.
+      2. Ibn al-Haytham founding modern optics and the scientific method.
+      3. Ibn Sina (Avicenna) authoring 'The Canon of Medicine', which remained the standard European medical textbook for centuries.
+      
+      Studying this rich history inspires modern Muslims to excel academically, combining spiritual grounding with cutting-edge intellectual achievements to benefit all of humanity.`,
+      ar: `خلال العصر الذهبي للإسلام، قدم العلماء المسلمون مساهمات رائدة غيرت وجه الرياضيات والفلك والكيمياء والطب. ولم يجد هؤلاء الرواد أي تعارض بين العلم والإيمان، بل اعتبروا البحث العلمي عبادة لفهم سنن الله في الكون.
+
+      من أبرز إنجازات العلماء المسلمين:
+      1. الخوارزمي الذي أسس علم الجبر وقدم خوارزميات الحساب الأساسية.
+      2. الحسن بن الهيثم مؤسس علم البصريات الحديث والمنهج العلمي التجريبي.
+      3. ابن سينا صاحب كتاب (القانون في الطب) الذي ظل المرجع الرئيسي في أوروبا لقرون.
+
+      إن دراسة هذا التاريخ الحافل تلهم الأجيال الصاعدة للتميز العلمي والأكاديمي، دامجين بين الأصالة الدينية والإنجازات الفكرية الحديثة لنفع المجتمع.`
+    },
+    {
+      en: `The character (Akhlaq) of the Prophet Muhammad (pbuh) represents the ideal moral standard for humanity. Known even before his prophethood as 'Al-Amin' (the Trustworthy), his daily actions were characterized by unparalleled kindness, diplomacy, and profound emotional intelligence.
+      
+      Examples of his diplomatic wisdom:
+      1. Navigating complex tribal rivalries with fairness and balance.
+      2. Treating enemies and captives with dignity, showing the high ethics of Islam.
+      3. Showing immense patience and gentleness to children, women, and the marginalized.
+      
+      Emulating the Prophet's character is a core part of faith. By practicing active listening, speaking gently, and resolving conflicts with justice, we bring his beautiful sunnah to life in our modern workplaces and families.`,
+      ar: `تمثل أخلاق النبي محمد صلى الله عليه وسلم النموذج الأكمل للقيم الإنسانية الراقية. فقد عُرف قبل نبوته بالصادق الأمين، واتسمت تعاملاته اليومية بالرحمة والدبلوماسية والذكاء العاطفي الرفيع.
+
+      من شواهد حكمته الأخلاقية:
+      1. إنهاء النزاعات القبلية المعقدة بالعدل والمساواة بين الجميع.
+      2. معاملة الخصوم والأسرى بإنسانية تامة تعكس الوجه الحقيقي للإسلام.
+      3. التواضع اللامتناهي والرفق بالأطفال والنساء والفئات الضعيفة في المجتمع.
+
+      إن الاقتداء بأخلاق المصطفى صلى الله عليه وسلم ركيزة أساسية في الإيمان. من خلال ممارسة حسن الاستماع، والكلمة الطيبة، والعدل في القول والعمل، ننشر هديه العظيم.`
+    },
+    {
+      en: `The famous Hadith, "Actions are judged by intentions (Niyyah)," narrated by Umar ibn al-Khattab, is considered one of the absolute pillars of Islamic jurisprudence. It highlights that the spiritual value of any action is determined entirely by the secret motivation of the heart.
+      
+      Critical lessons of Hadith al-Niyyah:
+      1. Routine habits can be turned into rewarded acts of worship by renewing your intention.
+      2. External correctness of an action must match internal sincerity (Ikhlas) to be accepted.
+      3. Constant self-monitoring helps purify the heart from showing off (Riya') or pride.
+      
+      Before starting any task—be it studying Arabic, reciting Quran, or working—pause for 5 seconds to align your heart with the intention of pleasing Allah, and watch your efforts yield abundant blessings.`,
+      ar: `يعتبر الحديث الشريف المشهور: "إنما الأعمال بالنيات" الذي رواه عمر بن الخطاب رضي الله عنه، أحد الأركان والدعائم الكبرى للفقه والسلوك الإسلامي. فهو يؤكد أن القيمة الإيمانية لكل عمل يحددها قصد القلب الداخلي.
+
+      أبرز الدروس المستفادة من حديث النية:
+      1. إمكانية تحويل العادات اليومية البسيطة إلى عبادات مأجورة بمجرد تجديد النية الصالحة.
+      2. ضرورة اقتران صحة العمل الظاهرة بالإخلاص الباطن لله وحده.
+      3. المراقبة الدائمة للذات لتنقية سريرة القلب من الرياء أو العجب.
+
+      قبل البدء بأي عمل - سواء كان دراسة، تلاوة، أو عملاً مهنياً - توقف لثوانٍ معدودة لتوجيه نيتك نحو رضا الله الخالق، لتشهد كيف تبارك جهودك وتثمر.`
+    },
+    {
+      en: `Gratitude (Shukr) is a powerful spiritual amplifier and a key to increasing blessings in your life. Allah has promised: "If you are grateful, I will surely increase you [in favor]." (Surah Ibrahim 14:7).
+      
+      Three levels of expressing gratitude:
+      1. Shukr of the Heart: Feeling genuine appreciation for Allah's countless gifts, visible and hidden.
+      2. Shukr of the Tongue: Constantly praising Allah and speaking of His blessings with humility.
+      3. Shukr of the Limbs: Using your health, time, and resources in acts of service and goodness.
+      
+      Cultivating Shukr guards against comparison and greed. Keep a daily gratitude journal to list three specific blessings every night, reminding yourself of the abundant favor surrounding you.`,
+      ar: `يعد شكر النعم معززاً إيمانياً قوياً ومفتاحاً لزيادة البركات والخيرات في حياتك اليومية. وقد وعدنا الله سبحانه وتعالى في محكم التنزيل: "لَئِنْ شَكَرْتُمْ لَأَزِيدَنَّكُمْ" (إبراهيم: 7).
+
+      مستويات التعبير عن الشكر والامتنان:
+      1. شكر القلب: بالاستشعار والتقدير الحقيقي لنعم الخالق الظاهرة والباطنة.
+      2. شكر اللسان: بالمداومة على الحمد والثناء وذكر جميل نعم الله بتواضع.
+      3. شكر الجوارح: بتسخير الصحة والوقت والمال في وجوه الخير والعمل النافع للناس.
+
+      يحمي الشكر الدائم صاحبه من آفة الجحود والمقارنة المقلقة. احرص على تدوين ثلاث نعم يومية تشكر الله عليها قبل نومك لتعزز سكينة قلبك.`
+    },
+    {
+      en: `Learning a language is most effective when done through engaging, contextual narratives rather than dry vocabulary lists. For students of classical Arabic, bilingual short stories provide a natural bridge to understanding rich syntax and semantic shifts.
+      
+      Why bilingual stories are effective:
+      1. Parallel texts allow you to compare grammar structures instantly without constant dictionary lookups.
+      2. Immersive cultural narratives introduce idiomatic expressions in their native context.
+      3. Reading short stories builds comprehension confidence and accelerates vocabulary recall.
+      
+      Try reading stories aloud to practice pronunciation, underline active root verbs, and consult premium bilingual collections (like the books available in our shop) to master Arabic organically.`,
+      ar: `تكون دراسة اللغات أكثر فعالية ومتعة عند الاعتماد على القصص والسياق الروائي بدلاً من الحفظ الجاف لقوائم الكلمات. ويمثل كتاب القصص ثنائية اللغة جسراً مثالياً لمتعلمي العربية.
+
+      أهمية الاعتماد على القصص ثنائية اللغة:
+      1. تتيح النصوص المتوازية مقارنة التراكيب النحوية واللغوية فوراً دون تشتت.
+      2. تقدم الروايات سياقاً ثقافياً حياً يعبر عن التعبيرات الاصطلاحية الأصيلة.
+      3. قراءة القصص تعزز الثقة بالاستيعاب وتسرع عملية استدعاء المفردات المخزنة.
+
+      جرب قراءة القصص بصوت مرتفع لتمرين جهاز النطق، وحدد الجذور الثلاثية للأفعال، واستعن بالمجموعات ثنائية اللغة المتوفرة في معرضنا لإتقان اللغة بسلاسة.`
+    }
+  ];
+
   const list = [...baseArticles];
   for (let i = 4; i <= 120; i++) {
     const titleTemplate = titlesTemplate[i % titlesTemplate.length];
@@ -151,22 +334,13 @@ const generate120Articles = () => {
     const title = `${titleTemplate.en} - Vol. ${Math.floor(i / 10) + 1}`;
     const titleAr = `${titleTemplate.ar} - الجزء ${Math.floor(i / 10) + 1}`;
 
-    const summary = `Unlocking pristine dimensional aspects of ${titleTemplate.en.toLowerCase()} to enrich your study. Discover historical contexts and structural guides.`;
-    const summaryAr = `الكشف عن الدروس الدينية واللغوية حول ${titleTemplate.ar} لإثراء تدبرك ودراستك اليومية في هذا المجال الهام.`;
+    const topic = topics[i % topics.length];
+    
+    const summary = `Detailed study and professional reflections on ${title}.`;
+    const summaryAr = `دراسة تفصيلية وخواطر علمية وإيمانية حول ${titleAr} لزيادة الفهم والتدبر.`;
 
-    const content = `Assalamu Alaikum dear seeker of wisdom. This article (Volume ${Math.floor(i / 10) + 1}) addresses critical aspects of ${titleTemplate.en.toLowerCase()}. Understanding this concept requires constant daily reflection, patient study, and aligning actions with pure intentions (Ikhlas). 
-
-    To grasp these dimensions:
-    1. Study the Uthmanic roots of related terms in the Quran.
-    2. Commit to 10 minutes of silent meditation / dhikr daily.
-    3. Practice high-frequency vocabulary learning through bilingual texts (such as the textbooks listed on our Home page).`;
-
-    const contentAr = `السلام عليكم ورحمة الله وبركاته. يتناول هذا المقال الهام (الجزء ${Math.floor(i / 10) + 1}) محاور جوهرية حول ${titleTemplate.ar}. إن فهم وتدبر هذا الجانب يتطلب إخلاص المقاصد لله سبحانه وتعالى والدافعية المستمرة للتعلم والتطبيق.
-
-    لتحقيق الاستفادة القصوى:
-    1. تتبع الجذور اللغوية الأصلية للألفاظ القرآنية في التفاسير المعتمدة.
-    2. حافظ على ورد يومي لا يقل عن 10 دقائق للتسبيح والاستغفار والتدبر.
-    3. استعن بالقصص والكتب ثنائية اللغة لتطوير ثروتك اللغوية بشكل متدرج.`;
+    const content = `Assalamu Alaikum dear reader. ${topic.en}\n\nUnderstanding this topic in depth helps us develop a stronger relationship with the Quran and Arabic Muslim heritage. May Allah grant us beneficial knowledge and sincere intentions.`;
+    const contentAr = `السلام عليكم ورحمة الله وبركاته. ${topic.ar}\n\nإن الفهم العميق والتدبر الدقيق لهذا المحور الهام يقربنا أكثر من كتاب الله وتراثنا الإسلامي العريق. نسأل الله أن يرزقنا العلم النافع والإخلاص في القول والعمل.`;
 
     list.push({
       id: i,
@@ -521,8 +695,13 @@ export const AppProvider = ({ children }) => {
   // Dynamic articles state (Migrated from Articles page)
   const [articlesList, setArticlesList] = useState(() => {
     const saved = localStorage.getItem('arabicmuslim_articles');
-    if (saved) return JSON.parse(saved);
-    return generate120Articles();
+    const version = localStorage.getItem('arabicmuslim_articles_ver');
+    if (saved && version === '2.0') return JSON.parse(saved);
+    
+    const fresh = generate120Articles();
+    localStorage.setItem('arabicmuslim_articles', JSON.stringify(fresh));
+    localStorage.setItem('arabicmuslim_articles_ver', '2.0');
+    return fresh;
   });
 
   // Tasmee audio submissions state

@@ -260,7 +260,7 @@ export default function Quran({ setActivePage }) {
           surahId: selectedSurah.number,
           juz: recitationJuz || 30,
           ayahFrom: recitationAyahFrom || 1,
-          ayahTo: recitationAyahTo || selectedSurah.numberOfVerses,
+          ayahTo: recitationAyahTo || selectedSurah.numberOfAyahs || selectedSurah.numberOfVerses || 7,
           audioData: reader.result
         });
         setTasmeeBlob(null);
@@ -471,7 +471,7 @@ export default function Quran({ setActivePage }) {
                       style={styles.formSelect}
                     >
                       <option value="" style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>1</option>
-                      {Array.from({length: selectedSurah.numberOfVerses}, (_, i) => i + 1).map(a => (
+                      {Array.from({length: selectedSurah.numberOfAyahs || selectedSurah.numberOfVerses || 7}, (_, i) => i + 1).map(a => (
                         <option key={a} value={a} style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>{a}</option>
                       ))}
                     </select>
@@ -485,8 +485,8 @@ export default function Quran({ setActivePage }) {
                       style={styles.formSelect}
                       disabled={!ayahFrom}
                     >
-                      <option value="" style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>{selectedSurah.numberOfVerses}</option>
-                      {Array.from({length: selectedSurah.numberOfVerses}, (_, i) => i + 1)
+                      <option value="" style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>{selectedSurah.numberOfAyahs || selectedSurah.numberOfVerses || 7}</option>
+                      {Array.from({length: selectedSurah.numberOfAyahs || selectedSurah.numberOfVerses || 7}, (_, i) => i + 1)
                         .filter(a => !ayahFrom || a >= parseInt(ayahFrom, 10))
                         .map(a => (
                           <option key={a} value={a} style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>{a}</option>
@@ -518,7 +518,7 @@ export default function Quran({ setActivePage }) {
                   if (selectedSurah) {
                     setRecitationJuz(selectedJuz);
                     setRecitationAyahFrom(ayahFrom ? parseInt(ayahFrom, 10) : 1);
-                    setRecitationAyahTo(ayahTo ? parseInt(ayahTo, 10) : selectedSurah.numberOfVerses);
+                    setRecitationAyahTo(ayahTo ? parseInt(ayahTo, 10) : (selectedSurah.numberOfAyahs || selectedSurah.numberOfVerses || 7));
                     handleSelectSurah(selectedSurah);
                     setQuranMode('recitation');
                     setShowOptionsModal(false);
@@ -638,7 +638,7 @@ export default function Quran({ setActivePage }) {
                           <h3 style={styles.surahName}>{s.englishName}</h3>
                           <span style={styles.surahMeaning}>{s.englishNameTranslation}</span>
                           <span style={styles.surahMeta}>
-                            {s.revelationType === 'Meccan' ? (language === 'en' ? "Meccan" : "مكية") : (language === 'en' ? "Medinan" : "مدنية")} • {s.numberOfVerses} {language === 'en' ? "Verses" : "آيات"}
+                            {s.revelationType === 'Meccan' ? (language === 'en' ? "Meccan" : "مكية") : (language === 'en' ? "Medinan" : "مدنية")} • {s.numberOfAyahs || s.numberOfVerses} {language === 'en' ? "Verses" : "آيات"}
                           </span>
                         </div>
 
@@ -693,7 +693,7 @@ export default function Quran({ setActivePage }) {
                     </div>
                     
                     <p style={styles.readerSub}>
-                      {surahContent.englishNameTranslation} • {surahContent.revelationType === 'Meccan' ? (language === 'en' ? "Meccan" : "مكية") : (language === 'en' ? "Medinan" : "مدنية")} • {surahContent.numberOfVerses} {language === 'en' ? "Verses" : "آيات"}
+                      {surahContent.englishNameTranslation} • {surahContent.revelationType === 'Meccan' ? (language === 'en' ? "Meccan" : "مكية") : (language === 'en' ? "Medinan" : "مدنية")} • {surahContent.numberOfAyahs || surahContent.numberOfVerses} {language === 'en' ? "Verses" : "آيات"}
                       {quranMode === 'recitation' && recitationJuz && ` • ${language === 'ar' ? "الجزء" : "Juz'"} ${recitationJuz}`}
                     </p>
 
@@ -794,7 +794,7 @@ export default function Quran({ setActivePage }) {
                       .filter(v => {
                         if (quranMode !== 'recitation') return true;
                         const from = recitationAyahFrom || 1;
-                        const to = recitationAyahTo || surahContent.numberOfVerses;
+                        const to = recitationAyahTo || surahContent.numberOfAyahs || surahContent.numberOfVerses;
                         return v.num >= from && v.num <= to;
                       })
                       .map(v => {

@@ -12,6 +12,7 @@ import Community from './pages/Community';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Legal from './pages/Legal';
+import Products from './pages/Products';
 
 function AppContent() {
   const [activePage, setActivePage] = useState("home");
@@ -30,6 +31,8 @@ function AppContent() {
         return <Articles />;
       case 'community':
         return <Community />;
+      case 'products':
+        return <Products />;
       case 'contact':
         return <Contact />;
       case 'login':
