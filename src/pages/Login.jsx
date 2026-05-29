@@ -217,6 +217,8 @@ const certificationQuestions = [
     q: "What is the verse that comes immediately after: 'About what are they asking one another?'?", 
     qAr: "ما هي الآية التالية للآية الكريمة: (عم يتساءلون)؟", 
     options: ["(الذي هم فيه مختلفون)", "(كلا سيعلمون)", "(ثم كلا سيعلمون)", "(عن النبأ العظيم)"], 
+    correctIndex: 3,
+    juz: 30
   }
 ];
 
