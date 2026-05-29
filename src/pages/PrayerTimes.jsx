@@ -285,11 +285,11 @@ export default function PrayerTimes() {
                 onChange={(e) => setSelectedCityKey(e.target.value)}
                 style={styles.selectInput}
               >
-                <option value="makkah">{language === 'en' ? "Makkah" : "مكة المكرمة"}</option>
-                <option value="cairo">{language === 'en' ? "Cairo" : "القاهرة"}</option>
-                <option value="london">{language === 'en' ? "London" : "لندن"}</option>
-                <option value="newyork">{language === 'en' ? "New York" : "نيويورك"}</option>
-                <option value="dubai">{language === 'en' ? "Dubai" : "دبي"}</option>
+                <option value="makkah" style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>{language === 'en' ? "Makkah" : "مكة المكرمة"}</option>
+                <option value="cairo" style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>{language === 'en' ? "Cairo" : "القاهرة"}</option>
+                <option value="london" style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>{language === 'en' ? "London" : "لندن"}</option>
+                <option value="newyork" style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>{language === 'en' ? "New York" : "نيويورك"}</option>
+                <option value="dubai" style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>{language === 'en' ? "Dubai" : "دبي"}</option>
               </select>
             </div>
           </div>
@@ -337,7 +337,7 @@ export default function PrayerTimes() {
                 style={{ ...styles.selectInput, width: '100%' }}
               >
                 {Object.entries(calculationMethods).map(([k, m]) => (
-                  <option key={k} value={k}>{m.name} ({m.angle})</option>
+                  <option key={k} value={k} style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>{m.name} ({m.angle})</option>
                 ))}
               </select>
             </div>

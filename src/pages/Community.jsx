@@ -565,14 +565,14 @@ export default function Community() {
                     onChange={(e) => setNewCircleDuration(parseInt(e.target.value, 10))}
                     style={styles.circleInput}
                   >
-                    <option value={5}>5 {t('circleMinutes')}</option>
-                    <option value={10}>10 {t('circleMinutes')}</option>
-                    <option value={15}>15 {t('circleMinutes')}</option>
+                    <option value={5} style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>5 {t('circleMinutes')}</option>
+                    <option value={10} style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>10 {t('circleMinutes')}</option>
+                    <option value={15} style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>15 {t('circleMinutes')}</option>
                     {newCircleType === 'quran' && (
                       <>
-                        <option value={30}>30 {t('circleMinutes')}</option>
-                        <option value={45}>45 {t('circleMinutes')}</option>
-                        <option value={60}>60 {t('circleMinutes')} (1 {language === 'en' ? "hour" : "ساعة"})</option>
+                        <option value={30} style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>30 {t('circleMinutes')}</option>
+                        <option value={45} style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>45 {t('circleMinutes')}</option>
+                        <option value={60} style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>60 {t('circleMinutes')} (1 {language === 'en' ? "hour" : "ساعة"})</option>
                       </>
                     )}
                   </select>
@@ -1765,7 +1765,7 @@ const styles = {
     fontWeight: '500',
   },
   circleInput: {
-    background: 'rgba(255, 255, 255, 0.02)',
+    background: '#0f111a',
     border: '1px solid rgba(212, 175, 55, 0.2)',
     borderRadius: '10px',
     padding: '10px 14px',
@@ -2647,6 +2647,16 @@ const styles = {
 if (typeof document !== 'undefined') {
   const commStyle = document.createElement('style');
   commStyle.innerHTML = `
+    .community-page select {
+      background-color: #0f111a !important;
+      color: #f5f6f8 !important;
+    }
+    .community-page select option {
+      background-color: #0f111a !important;
+      color: #f5f6f8 !important;
+      font-size: 0.9rem;
+      padding: 10px;
+    }
     .achievement-glow-pulse {
       animation: achievement-glow-pulse-anim 2s infinite alternate;
     }

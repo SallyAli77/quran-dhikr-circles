@@ -418,9 +418,9 @@ export default function Quran({ setActivePage }) {
                   }} 
                   style={styles.formSelect}
                 >
-                  <option value="">{language === 'ar' ? "-- اختر الجزء --" : "-- Select Juz' --"}</option>
+                  <option value="" style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>{language === 'ar' ? "-- اختر الجزء --" : "-- Select Juz' --"}</option>
                   {Array.from({length: 30}, (_, i) => i + 1).map(j => (
-                    <option key={j} value={j}>{language === 'ar' ? `الجزء ${j}` : `Juz' ${j}`}</option>
+                    <option key={j} value={j} style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>{language === 'ar' ? `الجزء ${j}` : `Juz' ${j}`}</option>
                   ))}
                 </select>
               </div>
@@ -442,11 +442,11 @@ export default function Quran({ setActivePage }) {
                     }} 
                     style={styles.formSelect}
                   >
-                    <option value="">{language === 'ar' ? "-- اختر السورة --" : "-- Select Surah --"}</option>
+                    <option value="" style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>{language === 'ar' ? "-- اختر السورة --" : "-- Select Surah --"}</option>
                     {surahsList
                       .filter(s => juzSurahs[selectedJuz]?.includes(s.number))
                       .map(s => (
-                        <option key={s.number} value={s.number}>
+                        <option key={s.number} value={s.number} style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>
                           {s.number}. {s.englishName} ({s.name})
                         </option>
                       ))
@@ -470,9 +470,9 @@ export default function Quran({ setActivePage }) {
                       }} 
                       style={styles.formSelect}
                     >
-                      <option value="">1</option>
+                      <option value="" style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>1</option>
                       {Array.from({length: selectedSurah.numberOfVerses}, (_, i) => i + 1).map(a => (
-                        <option key={a} value={a}>{a}</option>
+                        <option key={a} value={a} style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>{a}</option>
                       ))}
                     </select>
                   </div>
@@ -485,11 +485,11 @@ export default function Quran({ setActivePage }) {
                       style={styles.formSelect}
                       disabled={!ayahFrom}
                     >
-                      <option value="">{selectedSurah.numberOfVerses}</option>
+                      <option value="" style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>{selectedSurah.numberOfVerses}</option>
                       {Array.from({length: selectedSurah.numberOfVerses}, (_, i) => i + 1)
                         .filter(a => !ayahFrom || a >= parseInt(ayahFrom, 10))
                         .map(a => (
-                          <option key={a} value={a}>{a}</option>
+                          <option key={a} value={a} style={{ backgroundColor: '#0f111a', color: '#f5f6f8' }}>{a}</option>
                         ))
                       }
                     </select>
@@ -1252,7 +1252,7 @@ const styles = {
     fontWeight: '600',
   },
   formSelect: {
-    background: 'rgba(255, 255, 255, 0.02)',
+    background: '#0f111a',
     border: '1px solid var(--border-gold)',
     borderRadius: '10px',
     padding: '12px 16px',
@@ -1291,6 +1291,16 @@ const styles = {
 if (typeof document !== 'undefined') {
   const quranStyle = document.createElement('style');
   quranStyle.innerHTML = `
+    .quran-page select {
+      background-color: #0f111a !important;
+      color: #f5f6f8 !important;
+    }
+    .quran-page select option {
+      background-color: #0f111a !important;
+      color: #f5f6f8 !important;
+      font-size: 0.9rem;
+      padding: 12px;
+    }
     .surah-card-hover {
       transition: var(--transition-smooth);
     }
