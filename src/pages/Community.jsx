@@ -45,6 +45,9 @@ export default function Community() {
   });
   const [subhaActiveIndex, setSubhaActiveIndex] = useState(0);
   const [selectedDhikrIndex, setSelectedDhikrIndex] = useState(0);
+  const [sessionDhikrIndex, setSessionDhikrIndex] = useState(0); // active dhikr inside live session
+  const [sessionChatInput, setSessionChatInput] = useState(""); // text chat inside session
+  const [sessionChatMessages, setSessionChatMessages] = useState([]); // chat log
   const [tasbihGoalTarget, setTasbihGoalTarget] = useState(100);
 
   // Reaction states
@@ -393,21 +396,55 @@ export default function Community() {
               </div>
             )}
 
-            {/* Recitation rules filter */}
-            <div style={styles.filterGroup}>
-              <label style={styles.filterLabel}>{language === 'ar' ? "تصفية برواية/تلاوة" : "Filter by Style"}</label>
-              <select 
-                value={recitationRuleFilter} 
-                onChange={(e) => setRecitationRuleFilter(e.target.value)}
-                style={styles.filterSelect}
-              >
-                <option value="all">{language === 'ar' ? "كافة الروايات" : "All Styles"}</option>
-                <option value="Tajweed">{language === 'ar' ? "تجويد" : "Tajweed"}</option>
-                <option value="Hafs">{language === 'ar' ? "حفص عن عاصم" : "Hafs"}</option>
-                <option value="Warsh">{language === 'ar' ? "ورش عن نافع" : "Warsh"}</option>
-                <option value="General">{language === 'ar' ? "عام" : "General"}</option>
-              </select>
-            </div>
+            {/* Recitation rules filter - ONLY for Quran circles */}
+            {(circlesActiveTab === "quran" || circlesActiveTab === "all") && (
+              <div style={styles.filterGroup}>
+                <label style={styles.filterLabel}>{language === 'ar' ? "تصفية برواية/تلاوة" : "Filter by Style"}</label>
+                <select 
+                  value={recitationRuleFilter} 
+                  onChange={(e) => setRecitationRuleFilter(e.target.value)}
+                  style={styles.filterSelect}
+                >
+                  <option value="all">{language === 'ar' ? "كافة الروايات" : "All Styles"}</option>
+                  <option value="Tajweed">{language === 'ar' ? "تجويد" : "Tajweed"}</option>
+                  <option value="Hafs">{language === 'ar' ? "حفص عن عاصم" : "Hafs"}</option>
+                  <option value="Warsh">{language === 'ar' ? "ورش عن نافع" : "Warsh"}</option>
+                  <option value="General">{language === 'ar' ? "عام" : "General"}</option>
+                </select>
+              </div>
+            )}
+
+            {/* Dhikr type selector – Only for Adhkar circles */}
+            {(circlesActiveTab === "adhkar") && (
+              <div style={styles.filterGroup}>
+                <label style={styles.filterLabel}>{language === 'ar' ? "اختر نوع الذكر" : "Select Dhikr Type"}</label>
+                <select 
+                  value={selectedDhikrIndex}
+                  onChange={(e) => setSelectedDhikrIndex(parseInt(e.target.value, 10))}
+                  style={styles.filterSelect}
+                >
+                  {presetDhikrs.map((d, i) => (
+                    <option key={i} value={i}>{d.labelEn} — {d.text.slice(0, 28)}…</option>
+                  ))}
+                </select>
+              </div>
+            )}
+
+            {/* Tasbih type selector – Only for Tasbih tab */}
+            {(circlesActiveTab === "tasbih") && (
+              <div style={styles.filterGroup}>
+                <label style={styles.filterLabel}>{language === 'ar' ? "اختر نوع التسبيح" : "Select Tasbih"}</label>
+                <select 
+                  value={selectedDhikrIndex}
+                  onChange={(e) => setSelectedDhikrIndex(parseInt(e.target.value, 10))}
+                  style={styles.filterSelect}
+                >
+                  {presetDhikrs.map((d, i) => (
+                    <option key={i} value={i}>{d.labelEn} — {d.text.slice(0, 28)}…</option>
+                  ))}
+                </select>
+              </div>
+            )}
 
             {/* Create Ring Trigger button */}
             <button onClick={() => setShowCreateModal(true)} className="btn-primary" style={styles.createTriggerBtn}>
@@ -777,11 +814,45 @@ export default function Community() {
                         </p>
                       </div>
 
+                      {/* Dhikr/Tasbih selector inside session for non-quran circles */}
+                      {circle.type !== 'quran' && (
+                        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                          <label style={{ fontSize: '0.75rem', color: 'var(--text-gold)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                            {language === 'ar' ? "اختر نوع التسبيح / الذكر" : "Choose Dhikr / Tasbih"}
+                          </label>
+                          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', justifyContent: 'center' }}>
+                            {presetDhikrs.map((d, i) => (
+                              <button
+                                key={i}
+                                onClick={() => setSessionDhikrIndex(i)}
+                                style={{
+                                  background: sessionDhikrIndex === i ? 'rgba(212,175,55,0.15)' : 'rgba(255,255,255,0.03)',
+                                  border: `1px solid ${sessionDhikrIndex === i ? 'var(--gold-primary)' : 'rgba(212,175,55,0.2)'}`,
+                                  borderRadius: '20px',
+                                  padding: '5px 12px',
+                                  fontSize: '0.72rem',
+                                  fontWeight: '600',
+                                  color: sessionDhikrIndex === i ? 'var(--text-gold)' : 'var(--text-secondary)',
+                                  cursor: 'pointer',
+                                  transition: 'all 0.2s ease',
+                                  whiteSpace: 'nowrap'
+                                }}
+                              >
+                                {d.labelEn}
+                              </button>
+                            ))}
+                          </div>
+                          <p style={{ fontSize: '0.9rem', color: 'var(--text-primary)', textAlign: 'center', direction: 'rtl', lineHeight: '1.8', fontFamily: "'Cairo', serif", padding: '10px', background: 'rgba(212,175,55,0.04)', borderRadius: '10px', border: '1px solid rgba(212,175,55,0.1)' }}>
+                            {presetDhikrs[sessionDhikrIndex].text}
+                          </p>
+                        </div>
+                      )}
+
                       {isMyTurn ? (
                         <div style={styles.myTurnActionBox} className="glass-panel fade-in">
                           <span style={styles.myTurnTitle}>{t('circleYourTurn')}</span>
                           <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
-                            {language === 'ar' ? "يرجى قراءة الذكر بصوت مسموع ثم اضغط لتأكيد إتمام القراءة ودفع الدور للتالي" : "Read the supplication clearly and click to submit your turn progress."}
+                            {language === 'ar' ? "يمكنك تأكيد بالضغط أو الكتابة في المربع أدناه لإرسال رد فعل للمجموعة" : "Confirm your turn or type a message to the group below."}
                           </p>
 
                           <button 
@@ -817,6 +888,61 @@ export default function Community() {
                           </span>
                         </div>
                       )}
+
+                      {/* Text Chat Box - visible to all participants regardless of turn */}
+                      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        <label style={{ fontSize: '0.75rem', color: 'var(--text-gold)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                          {language === 'ar' ? "💬 الدردشة النصية (بدلاً من المايك)" : "💬 Text Chat (type instead of mic)"}
+                        </label>
+
+                        {/* Chat messages display */}
+                        {sessionChatMessages.length > 0 && (
+                          <div style={{ maxHeight: '120px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '6px', padding: '8px', background: 'rgba(255,255,255,0.02)', borderRadius: '10px', border: '1px solid rgba(212,175,55,0.1)' }}>
+                            {sessionChatMessages.slice(-5).map((msg, i) => (
+                              <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                                <span style={{ fontSize: '1rem' }}>{msg.avatar}</span>
+                                <div>
+                                  <span style={{ fontSize: '0.68rem', color: 'var(--text-gold)', fontWeight: '700' }}>{msg.name}</span>
+                                  <p style={{ fontSize: '0.8rem', color: 'var(--text-primary)', margin: '2px 0 0 0' }}>{msg.text}</p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                        <div style={{ display: 'flex', gap: '8px', width: '100%' }}>
+                          <input
+                            type="text"
+                            value={sessionChatInput}
+                            onChange={(e) => setSessionChatInput(e.target.value)}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' && sessionChatInput.trim()) {
+                                const senderName = isAuthenticated ? user.name : 'Guest';
+                                const senderAvatar = isAuthenticated ? user.avatar : '🧕';
+                                setSessionChatMessages(prev => [...prev, { name: senderName, avatar: senderAvatar, text: sessionChatInput.trim() }]);
+                                setSessionChatInput("");
+                                spawnReaction('💬');
+                              }
+                            }}
+                            placeholder={language === 'ar' ? "اكتب هنا... (Enter للإرسال)" : "Type a message... (Enter to send)"}
+                            style={{ flex: 1, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(212,175,55,0.2)', borderRadius: '10px', padding: '10px 14px', color: 'var(--text-primary)', fontSize: '0.85rem', outline: 'none' }}
+                          />
+                          <button
+                            onClick={() => {
+                              if (!sessionChatInput.trim()) return;
+                              const senderName = isAuthenticated ? user.name : 'Guest';
+                              const senderAvatar = isAuthenticated ? user.avatar : '🧕';
+                              setSessionChatMessages(prev => [...prev, { name: senderName, avatar: senderAvatar, text: sessionChatInput.trim() }]);
+                              setSessionChatInput("");
+                              spawnReaction('💬');
+                            }}
+                            className="btn-primary"
+                            style={{ padding: '10px 14px', borderRadius: '10px', flexShrink: 0 }}
+                          >
+                            <Send size={14} />
+                          </button>
+                        </div>
+                      </div>
 
                     </div>
                   )}

@@ -3,7 +3,7 @@ import { useApp, mockBots } from '../context/AppContext';
 import { 
   ShieldAlert, LogIn, UserPlus, Key, Award, Bookmark, Edit2, Check, 
   ArrowRight, User, Mic, Star, Heart, UserMinus, Volume2, Loader, 
-  Clock, Plus, Shield, Settings, AlertCircle, BookOpen, Trash2, Send, CheckCircle2 
+  Clock, Plus, Shield, Settings, AlertCircle, BookOpen, Trash2, Send, CheckCircle2, Play
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
