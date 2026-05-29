@@ -8,38 +8,38 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-// Rigorous 30 Tajweed and Quran Memorization Questions
+// Rigorous 30 Quran Memorization (Hifz) Questions
 const certificationQuestions = [
-  { q: "What rule applies when Noon Sakinah is followed by the letter Ba (ب)?", qAr: "ما هو الحكم التجويدي عند وقوع حرف الباء (ب) بعد النون الساكنة أو التنوين؟", options: ["Izhar (إظهار)", "Idgham (إدغام)", "Iqlab (إقلاب)", "Ikhfa (إخفاء)"], correctIndex: 2 },
-  { q: "How many throat letters are there in the rules of Izhar Halqi?", qAr: "كم عدد حروف الحلق الخاصة بحكم الإظهار الحلقي؟", options: ["4", "6", "8", "5"], correctIndex: 1 },
-  { q: "Which of the following is NOT a letter of Qalqalah?", qAr: "أي من الحروف التالية ليس من حروف القلقلة (قطب جد)؟", options: ["ق", "ط", "ب", "س"], correctIndex: 3 },
-  { q: "What is the length of Madd Muttasil (Connected Lengthening) by Hafs standard?", qAr: "ما هو مقدار مد المد المتصل عند حفص عن عاصم من طريق الشاطبية؟", options: ["2 counts (حركتان)", "4 or 5 counts (4 أو 5 حركات)", "6 counts (6 حركات)", "No Madd (لا يوجد مد)"], correctIndex: 1 },
-  { q: "What rule applies when Meem Sakinah is followed by another Meem (م)?", qAr: "ما هو الحكم عند وقوع حرف الميم (م) بعد الميم الساكنة؟", options: ["Ikhfa Shafawi (إخفاء شفوي)", "Idgham Shafawi / Mithlayn (إدغام متماثلين)", "Izhar Shafawi (إظهار شفوي)", "Iqlab (إقلاب)"], correctIndex: 1 },
-  { q: "What is the makhraj (articulation point) of the letter Jeem (ج)?", qAr: "ما هو مخرج حرف الجيم (ج) الرئيسي؟", options: ["Throat (الحلق)", "Lips (الشفتان)", "Middle of Tongue (وسط اللسان)", "Tip of Tongue (طرف اللسان)"], correctIndex: 2 },
-  { q: "Which letters are characterized by Hams (Whispering)?", qAr: "أي من الحروف التالية تتصف بصفة الهمس (فحثه شخص سكت)؟", options: ["ف، ح، ث", "أ، ب، ج", "ط، ق، د", "م، ن، ل"], correctIndex: 0 },
-  { q: "What is the rule of Madd Lazim (Compulsory Madd) length?", qAr: "ما هو مقدار مد المد اللازم كلمي أو حرفي في القرآن؟", options: ["2 counts (حركتان)", "4 counts (4 حركات)", "6 counts (6 حركات)", "8 counts (8 حركات)"], correctIndex: 2 },
-  { q: "What rule applies to Noon Sakinah in the word 'Yanyaoon' (يَنْأَوْنَ)?", qAr: "ما هو حكم النون الساكنة في كلمة (يَنْأَوْنَ)؟", options: ["Idgham (إدغام)", "Izhar (إظهار)", "Ikhfa (إخفاء)", "Iqlab (إقلاب)"], correctIndex: 1 },
-  { q: "How many counts are there in Madd Arid Lissukoon (Temporary Madd)?", qAr: "ما هي الحركات الجائزة في المد العارض للسكون؟", options: ["2, 4, or 6 counts (حركتان أو 4 أو 6)", "Only 2 counts (حركتان فقط)", "Only 6 counts (6 حركات فقط)", "Only 5 counts (5 حركات)"], correctIndex: 0 },
-  { q: "What letters are pronounced with Tafkheem (Heavy/Fat voice)?", qAr: "ما هي الحروف التي تفخم دائماً في التلاوة (خص ضغط قظ)؟", options: ["خ، ص، ض، غ، ط، ق، ظ", "أ، ب، ت، ث، ج، ح، خ", "ك، ل، م، ن، هـ، و، ي", "ر، ز، س، ش، ع، ف، ق"], correctIndex: 0 },
-  { q: "What is the makhraj of the letter Daad (ض)?", qAr: "ما هو المخرج الدقيق لحرف الضاد (ض)؟", options: ["Sides of the Tongue (إحدى حافتي اللسان)", "Throat (أقصى الحلق)", "Lips (بين الشفتين)", "Tip of Tongue (رأس اللسان)"], correctIndex: 0 },
-  { q: "What rule applies when Meem Sakinah is followed by the letter Ba (ب)?", qAr: "ما هو الحكم التجويدي عند وقوع حرف الباء (ب) بعد الميم الساكنة؟", options: ["Ikhfa Shafawi (إخفاء شفوي)", "Idgham Shafawi (إدغام شفوي)", "Izhar Shafawi (إظهار شفوي)", "Iqlab (إقلاب)"], correctIndex: 0 },
-  { q: "What is the rule of the letter Ra (ر) when it has a Kasrah (رِ)?", qAr: "ما هو حكم حرف الراء (ر) إذا كانت مكسورة (رِ)؟", options: ["Tafkheem (تفخيم)", "Tarqeeq (ترقيق)", "Both allowed (جواز الوجهين)", "Depends on previous letter"], correctIndex: 1 },
-  { q: "Which Surah is also known as the Mother of the Book (Umm al-Kitab)?", qAr: "أي سورة في القرآن الكريم تلقب بأم الكتاب؟", options: ["Al-Baqarah (البقرة)", "Al-Ikhlas (الإخلاص)", "Al-Fatiha (الفاتحة)", "Yaseen (يس)"], correctIndex: 2 },
-  { q: "What rule applies when Noon Sakinah is followed by the letters of 'Yarmaloon' (يرملون)?", qAr: "ما هو حكم النون الساكنة أو التنوين إذا وقع بعدها أحد حروف (يرملون)؟", options: ["Idgham (إدغام)", "Izhar (إظهار)", "Ikhfa (إخفاء)", "Iqlab (إقلاب)"], correctIndex: 0 },
-  { q: "What is the definition of Ikhfa in Tajweed standards?", qAr: "ما هو التعريف الدقيق لحكم الإخفاء في التجويد؟", options: ["Pronouncing without Ghunnah", "Blending letters fully", "Pronunciation between Izhar and Idgham with Ghunnah (النطق بصفة بين الإظهار والإدغام مع الغنة)", "Changing Meem to Ba"], correctIndex: 2 },
-  { q: "How many verses are there in Surah Al-Mulk?", qAr: "كم عدد آيات سورة الملك الكريمة؟", options: ["25", "30", "35", "40"], correctIndex: 1 },
-  { q: "What is the rule of Ghunnah length for Noon and Meem Mushaddadah (نّ، مّ)?", qAr: "ما هو مقدار غنة النون والميم المشددتين (نّ ، مّ)؟", options: ["1 count (حركة واحدة)", "2 counts (حركتان)", "3 counts (3 حركات)", "4 counts (4 حركات)"], correctIndex: 1 },
-  { q: "Which Madd applies to 'Ha-Meem' (حم) at the beginning of Surah Ghafir?", qAr: "ما هو نوع المد في فواتح السور الكريمة مثل (حم)؟", options: ["Madd Lazim Harfi (مد لازم حرفي مخفف/مثقل)", "Madd Muttasil", "Madd Munfasil", "Madd Tamkeen"], correctIndex: 0 },
-  { q: "What is the rule of Ra (ر) when it is Sakinah preceded by a Fathah?", qAr: "ما هو حكم الراء (ر) الساكنة إذا سبقت بفتح؟", options: ["Tafkheem (تفخيم)", "Tarqeeq (ترقيق)", "Depends on the following letter", "No rule"], correctIndex: 0 },
-  { q: "What is the makhraj of the letter Qaaf (ق)?", qAr: "ما هو مخرج حرف القاف (ق)؟", options: ["Deep throat", "Back of the Tongue (أقصى اللسان فوق)", "Middle of Tongue", "Lips"], correctIndex: 1 },
-  { q: "Which characteristic is the opposite of Jahr (Vocal Loudness)?", qAr: "ما هي الصفة المقابلة لصفة الجهر في تجويد الحروف؟", options: ["Hams (الهمس)", "Shiddah (الشدة)", "Rikhawah", "Qalqalah"], correctIndex: 0 },
-  { q: "What type of Madd is 'Madd Leen' (Soft Madd)?", qAr: "ما هو المد الذي ينشأ عند وقف الكلمة ويكون ما قبل آخرها واو أو ياء ساكنة مفتوح ما قبلهما؟", options: ["Madd Leen (مد اللين)", "Madd Muttasil", "Madd Munfasil", "Madd Lazim"], correctIndex: 0 },
-  { q: "What rule applies to Meem Sakinah when followed by the letter Fa (ف)?", qAr: "ما هو الحكم التجويدي للميم الساكنة عند وقوع حرف الفاء (ف) بعدها مباشرة؟", options: ["Severe Izhar Shafawi (إظهار شفوي شديد الحذر)", "Ikhfa Shafawi", "Idgham Shafawi", "Iqlab"], correctIndex: 0 },
-  { q: "What is the main makhraj of the letters Ba, Meem, and Waw (ب، م، و)?", qAr: "ما هو المخرج الرئيسي الجامع لحروف الباء والميم والواو غير المدية؟", options: ["Lips (الشفتان)", "Tongue", "Throat", "Nose"], correctIndex: 0 },
-  { q: "What is the rule of Madd Tamkeen (Madd of Empowerment)?", qAr: "ما هو المد المطبق في تلاوة الحروف عند التقاء ياء مشددة مكسورة مع ياء ساكنة؟", options: ["Madd Tamkeen (مد التمكين)", "Madd Muttasil", "Madd Munfasil", "Madd Leen"], correctIndex: 0 },
-  { q: "How many letters are in the Ikhfa category?", qAr: "كم عدد حروف حكم الإخفاء الحقيقي للنون الساكنة والتنوين؟", options: ["10", "15", "20", "6"], correctIndex: 1 },
-  { q: "Which Surah does NOT start with Basmalah?", qAr: "ما هي السورة الكريمة الوحيدة في القرآن التي لا تبدأ بالبسملة؟", options: ["Surah At-Tawbah (سورة التوبة)", "Surah Al-Kahf", "Surah Yaseen", "Surah Al-Mulk"], correctIndex: 0 },
-  { q: "What is the rule of Noon Sakinah in the word 'Dunya' (دُنْيَا)?", qAr: "ما هو الحكم الاستثنائي التجويدي للنون الساكنة في كلمة (دُنْيَا)؟", options: ["Mutlaq Izhar (إظهار مطلق لتجنب توهم الاشتقاق)", "Idgham", "Ikhfa", "Iqlab"], correctIndex: 0 }
+  { q: "What is the verse that comes immediately after: 'And the stupor of death will bring the truth...'?", qAr: "ما هي الآية التالية للآية الكريمة: (وجاءت سكرة الموت بالحق...)؟", options: ["ذلك ما كنت منه تحيد (Kaf: 19)", "ونفخ في الصور ذلك يوم الوعيد", "وجاءت كل نفس معها سائق وشهيد", "لقد كنت في غفلة من هذا"], correctIndex: 0 },
+  { q: "In which Surah is this verse located: 'Indeed, this Qur'an guides to that which is most suitable...'?", qAr: "في أي سورة وردت الآية الكريمة: (إن هذا القرآن يهدي للتي هي أقوم...)؟", options: ["سورة الكهف (Al-Kahf)", "سورة الإسراء (Al-Isra)", "سورة مريم (Maryam)", "سورة يونس (Yunus)"], correctIndex: 1 },
+  { q: "What is the verse that comes immediately after: 'Allah is the Light of the heavens and the earth...'?", qAr: "ما هي الآية التالية للآية الكريمة: (الله نور السموات والأرض...)؟", options: ["مثل نوره كمشكاة فيها مصباح (An-Nur: 35)", "في بيوت أذن الله أن ترفع ويذكر فيها اسمه", "رجال لا تلهيهم تجارة ولا بيع عن ذكر الله", "يسبح له فيها بالغدو والآصال"], correctIndex: 0 },
+  { q: "In which Surah is this verse located: 'Approached for the people their account, while they are in heedlessness...'?", qAr: "في أي سورة وردت الآية الكريمة: (اقترب للناس حسابهم وهم في غفلة معرضون...)؟", options: ["سورة الأنبياء (Al-Anbiya)", "سورة الحج (Al-Hajj)", "سورة المؤمنون (Al-Muminun)", "سورة طه (Ta-Ha)"], correctIndex: 0 },
+  { q: "What is the verse that comes immediately after: 'The Most Merciful • Taught the Qur'an...'?", qAr: "ما هي الآية التالية للآية الكريمة: (الرحمن • علم القرآن...)؟", options: ["خلق الإنسان (Ar-Rahman: 3)", "علمه البيان", "الشمس والقمر بحسبان", "والنجم والشجر يسجدان"], correctIndex: 0 },
+  { q: "In which Surah is this verse located: 'O you who have believed, decreed upon you is fasting as it was decreed upon those before you...'?", qAr: "في أي سورة وردت الآية الكريمة: (يا أيها الذين آمنوا كتب عليكم الصيام كما كتب على الذين من قبلكم...)؟", options: ["سورة آل عمران (Ali 'Imran)", "سورة البقرة (Al-Baqarah)", "سورة النساء (An-Nisa)", "سورة المائدة (Al-Ma'idah)"], correctIndex: 1 },
+  { q: "What is the verse that comes immediately after: 'Every soul will taste death, and you will only be given your full compensation on the Day of Resurrection...'?", qAr: "ما هي الآية التالية للآية الكريمة: (كل نفس ذائقة الموت وإنما توفون أجوركم يوم القيامة...)؟", options: ["فمن زحزح عن النار وأدخل الجنة فقد فاز (Ali 'Imran: 185)", "وما الحياة الدنيا إلا متاع الغرور", "لتبلون في أموالكم وأنفسكم", "ولتسمعن من الذين أوتوا الكتاب"], correctIndex: 0 },
+  { q: "In which Surah is this verse located: 'And your Lord has decreed that you not worship except Him, and to parents, good treatment...'?", qAr: "في أي سورة وردت الآية الكريمة: (وقضى ربك ألا تعبدوا إلا إياه وبالوالدين إحساناً...)؟", options: ["سورة الإسراء (Al-Isra)", "سورة النحل (An-Nahl)", "سورة القصص (Al-Qasas)", "سورة لقمان (Luqman)"], correctIndex: 0 },
+  { q: "What is the verse that comes immediately after: 'O reassured soul...'?", qAr: "ما هي الآية التالية للآية الكريمة: (يا أيها النفس المطمئنة...)؟", options: ["ارجعي إلى ربك راضية مرضية (Al-Fajr: 28)", "فادخلي في عبادي", "وادخلي جنتي", "يومئذ يتذكر الإنسان وأنى له الذكرى"], correctIndex: 0 },
+  { q: "In which Surah is this verse located: 'Successful are the believers • Those who are humble in their prayers...'?", qAr: "في أي سورة وردت الآية الكريمة: (قد أفلح المؤمنون • الذين هم في صلاتهم خاشعون...)؟", options: ["سورة المؤمنون (Al-Muminun)", "سورة النور (An-Nur)", "سورة الفرقان (Al-Furqan)", "سورة السجدة (As-Sajdah)"], correctIndex: 0 },
+  { q: "What is the verse that comes immediately after: 'Blessed is He in whose hand is the dominion, and He is over all things competent...'?", qAr: "ما هي الآية التالية للآية الكريمة: (تبارك الذي بيده الملك وهو على كل شيء قدير...)؟", options: ["الذي خلق الموت والحياة ليبلوكم أيكم أحسن عملاً (Al-Mulk: 2)", "الذي خلق سبع سموات طباقاً", "ما ترى في خلق الرحمن من تفاوت", "ثم ارجع البصر كرتين ينقلب إليك البصر خاسئاً"], correctIndex: 0 },
+  { q: "In which Surah is this verse located: 'Say, O My servants who have transgressed against themselves, do not despair of the mercy of Allah...'?", qAr: "في أي سورة وردت الآية الكريمة: (قل يا عبادي الذين أسرفوا على أنفسهم لا تقنطوا من رحمة الله...)؟", options: ["سورة الزمر (Az-Zumar)", "سورة غافر (Ghafir)", "سورة فصلت (Fussilat)", "سورة الشورى (Ash-Shura)"], correctIndex: 0 },
+  { q: "What is the verse that comes immediately after: 'When the victory of Allah has come and the conquest...'?", qAr: "ما هي الآية التالية للآية الكريمة: (إذا جاء نصر الله والفتح...)؟", options: ["ورأيت الناس يدخلون في دين الله أفواجاً (An-Nasr: 2)", "فسبح بحمد ربك واستغفره", "إنه كان تواباً", "تبت يدا أبي لهب وتب"], correctIndex: 0 },
+  { q: "In which Surah is this verse located: 'And recite to them the news of Noah, when he said to his people: O my people, if my residence has become burdensome to you...'?", qAr: "في أي سورة وردت الآية الكريمة: (واتل عليهم نبأ نوح إذ قال لقومه يا قوم إن كان كبر عليكم مقامي...)؟", options: ["سورة يونس (Yunus)", "سورة هود (Hud)", "سورة يوسف (Yusuf)", "سورة الأعراف (Al-A'raf)"], correctIndex: 0 },
+  { q: "What is the verse that comes immediately after: 'About what are they asking one another? • About the great news...'?", qAr: "ما هي الآية التالية للآية الكريمة: (عم يتساءلون • عن النبأ العظيم...)؟", options: ["الذي هم فيه مختلفون (An-Naba: 3)", "كلا سيعلمون", "ثم كلا سيعلمون", "ألم نجعل الأرض مهاداً"], correctIndex: 0 },
+  { q: "In which Surah is this verse located: 'We will show them Our signs in the horizons and within themselves until it becomes clear to them that it is the truth...'?", qAr: "في أي سورة وردت الآية الكريمة: (سنريهم آياتنا في الآفاق وفي أنفسهم حتى يتبين لهم أنه الحق...)؟", options: ["سورة فصلت (Fussilat)", "سورة غافر (Ghafir)", "سورة السجدة (As-Sajdah)", "سورة يس (Ya-Sin)"], correctIndex: 0 },
+  { q: "What is the verse that comes immediately after: 'Say, He is Allah, [who is] One • Allah, the Eternal Refuge...'?", qAr: "ما هي الآية التالية للآية الكريمة: (قل هو الله أحد • الله الصمد...)؟", options: ["لم يلد ولم يولد (Al-Ikhlas: 3)", "ولم يكن له كفواً أحد", "من شر ما خلق", "ومن شر غاسق إذا وقب"], correctIndex: 0 },
+  { q: "In which Surah is this verse located: 'O you who have believed, avoid much [negative] assumption; indeed, some assumption is sin...'?", qAr: "في أي سورة وردت الآية الكريمة: (يا أيها الذين آمنوا اجتنبوا كثيراً من الظن إن بعض الظن إثم...)؟", options: ["سورة الحجرات (Al-Hujurat)", "سورة المجادلة (Al-Mujadilah)", "سورة الممتحنة (Al-Mumtahanah)", "سورة الفتح (Al-Fath)"], correctIndex: 0 },
+  { q: "What is the verse that comes immediately after: 'Indeed, the righteous will be among gardens and springs...'?", qAr: "ما هي الآية التالية للآية الكريمة: (إن المتقين في جنات وعيون...)؟", options: ["آخذين ما آتاهم ربهم إنهم كانوا قبل ذلك محسنين (Adh-Dhariyat: 16)", "كانوا قليلاً من الليل ما يهجعون", "وبالأسحار هم يستغفرون", "وفي أموالهم حق للسائل والمحروم"], correctIndex: 0 },
+  { q: "In which Surah is this verse located: 'O mankind, fear your Lord. Indeed, the convulsion of the [final] Hour is a grave thing...'?", qAr: "في أي سورة وردت الآية الكريمة: (يا أيها الناس اتقوا ربكم إن زلزلة الساعة شيء عظيم...)؟", options: ["سورة الحج (Al-Hajj)", "سورة الأنبياء (Al-Anbiya)", "سورة المؤمنون (Al-Muminun)", "سورة الزمر (Az-Zumar)"], correctIndex: 0 },
+  { q: "What is the verse that comes immediately after: 'Ya, Seen • By the wise Qur'an...'?", qAr: "ما هي الآية التالية للآية الكريمة: (يس • والقرآن الحكيم...)؟", options: ["إنك لمن المرسلين (Ya-Sin: 3)", "على صراط مستقيم", "تنزيل العزيز الرحيم", "لتنذر قوماً ما أنذر آباؤهم"], correctIndex: 0 },
+  { q: "In which Surah is this verse located: 'And of His signs is the creation of the heavens and the earth and the diversity of your languages and your colors...'?", qAr: "في أي سورة وردت الآية الكريمة: (ومن آياته خلق السموات والأرض واختلاف ألسنتكم وألوانكم...)؟", options: ["سورة الروم (Ar-Rum)", "سورة لقمان (Luqman)", "سورة السجدة (As-Sajdah)", "سورة فاطر (Fatir)"], correctIndex: 0 },
+  { q: "What is the verse that comes immediately after: 'Indeed, Allah and His angels confer blessing upon the Prophet...'?", qAr: "ما هي الآية التالية للآية الكريمة: (إن الله وملائكته يصلون على النبي...)؟", options: ["يا أيها الذين آمنوا صلوا عليه وسلموا تسليماً (Al-Ahzab: 56)", "إن الذين يؤذون الله ورسوله لعنهم الله", "والذين يؤذون المؤمنين والمؤمنات بغير ما اكتسبوا", "يا أيها النبي قل لأزواجك وبناتك"], correctIndex: 0 },
+  { q: "In which Surah is this verse located: 'And We made from water every living thing. Then will they not believe...'?", qAr: "في أي سورة وردت الآية الكريمة: (وجعلنا من الماء كل شيء حي أفلا يؤمنون...)؟", options: ["سورة الأنبياء (Al-Anbiya)", "سورة الحجر (Al-Hijr)", "سورة الرعد (Ar-Rad)", "سورة النمل (An-Naml)"], correctIndex: 0 },
+  { q: "What is the verse that comes immediately after: 'Then which of the favors of your Lord will you deny? • He created man from clay like [that of] pottery...'?", qAr: "ما هي الآية التالية للآية الكريمة: (فبأي آلاء ربكما تكذبان • خلق الإنسان من صلصال كالفخار...)؟", options: ["وخلق الجان من مارج من نار (Ar-Rahman: 15)", "رب المشرقين ورب المغربين", "مرج البحرين يلتقيان", "بينهما برزخ لا يبغيان"], correctIndex: 0 },
+  { q: "In which Surah is this verse located: 'Allah will raise those who have believed among you and those who were given knowledge, by degrees...'?", qAr: "في أي سورة وردت الآية الكريمة: (يرفع الله الذين آمنوا منكم والذين أوتوا العلم درجات...)؟", options: ["سورة المجادلة (Al-Mujadilah)", "سورة الحشر (Al-Hashr)", "سورة الجمعة (Al-Jumu'ah)", "سورة الصف (As-Saff)"], correctIndex: 0 },
+  { q: "What is the verse that comes immediately after: 'He is the One who has sent His Messenger with guidance and the religion of truth to manifest it over all religion...'?", qAr: "ما هي الآية التالية للآية الكريمة: (هو الذي أرسل رسوله بالهدى ودين الحق ليظهره على الدين كله...)؟", options: ["ولو كره المشركون (As-Saff: 9)", "وكفى بالله شهيداً", "محمد رسول الله", "والذين معه أشداء على الكفار"], correctIndex: 0 },
+  { q: "In which Surah is this verse located: 'And if whatever trees on earth were pens and the ocean were ink, replenished thereafter by seven more oceans...'?", qAr: "في أي سورة وردت الآية الكريمة: (ولو أنما في الأرض من شجرة أقلام والبحر يمده من بعده سبعة أبحر...)؟", options: ["سورة لقمان (Luqman)", "سورة النمل (An-Naml)", "سورة العنكبوت (Al-Ankabut)", "سورة الروم (Ar-Rum)"], correctIndex: 0 },
+  { q: "What is the verse that comes immediately after: 'And We have sent down blessed rain from the sky and made grow thereby gardens...'?", qAr: "ما هي الآية التالية للآية الكريمة: (ونزلنا من السماء ماء مباركاً فأنبتنا به جنات...)؟", options: ["وحب الحصيد (Qaf: 9)", "والنخل باسقات لها طلع نضيد", "رزقاً للعباد وأحيينا به بلدة ميتاً", "كذلك الخروج"], correctIndex: 0 },
+  { q: "In which Surah is this verse located: 'And have you seen the water that you drink? • Is it you who brought it down from the rain clouds, or is it We who bring it down...'?", qAr: "في أي سورة وردت الآية الكريمة: (أفرأيتم الماء الذي تشربون • أأنتم أنزلتموه من المزن أم نحن المنزلون...)؟", options: ["سورة الواقعة (Al-Waqi'ah)", "سورة الطور (At-Tur)", "سورة النجم (An-Najm)", "سورة الرحمن (Ar-Rahman)"], correctIndex: 0 }
 ];
 
 export default function Login({ setActivePage }) {
@@ -129,7 +129,7 @@ export default function Login({ setActivePage }) {
   const [artPublishSuccess, setArtPublishSuccess] = useState(false);
 
   // Teacher registration & Quiz states
-  const [memorizedJuzCount, setMemorizedJuzCount] = useState(5);
+  const [selectedJuzList, setSelectedJuzList] = useState([]);
   const [isExamActive, setIsExamActive] = useState(false);
   const [examCurrentQuestionIdx, setExamCurrentQuestionIdx] = useState(0);
   const [examAnswers, setExamAnswers] = useState({});
@@ -208,13 +208,9 @@ export default function Login({ setActivePage }) {
 
     const passed = score >= 24; // 80% passing standard
     if (passed) {
-      // Award badges dynamically depending on parts memorized
-      let levelBadge = "Bronze";
-      if (memorizedJuzCount >= 30) levelBadge = "Platinum";
-      else if (memorizedJuzCount >= 21) levelBadge = "Gold";
-      else if (memorizedJuzCount >= 11) levelBadge = "Silver";
-
-      updateUserRole("Certified Teacher", levelBadge);
+      // Award badges based on the exact number of selected memorized Juz'
+      const juzCount = selectedJuzList.length;
+      updateUserRole("Certified Teacher", juzCount.toString());
       unlockBadgeAction("teacher_qualified");
       completeDailyGoal("read_article", 100);
 
@@ -711,7 +707,9 @@ export default function Login({ setActivePage }) {
                     <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '4px' }}>
                       <span style={styles.userRoleBadge}>{user.role}</span>
                       {user.teacherLevel && (
-                        <span style={styles.teacherLevelBadge}>🎓 {user.teacherLevel} Teacher</span>
+                        <span style={styles.teacherLevelBadge}>
+                          🎓 {language === 'ar' ? `حافظ لـ ${user.teacherLevel} أجزاء` : `${user.teacherLevel} Juz' Memorizer`}
+                        </span>
                       )}
                     </div>
 
@@ -961,24 +959,67 @@ export default function Login({ setActivePage }) {
                       : "Apply for 'Certified Teacher' status to review and correct student recitations. Requirements: Memorized 5+ Juz' and passing the 30-question interactive Tajweed exam in 30 minutes (80% score required)."}
                   </p>
 
-                  <div style={styles.memorizeSelectorBox} className="glass-panel">
-                    <label style={{ fontSize: '0.9rem', color: 'var(--text-gold)', fontWeight: 'bold' }}>
-                      {language === 'ar' ? "ما هو عدد أجزاء القرآن التي تحفظها حالياً؟" : "How many Juz' have you memorized?"}
+                  <div style={{ ...styles.memorizeSelectorBox, maxWidth: '100%' }} className="glass-panel">
+                    <label style={{ fontSize: '0.95rem', color: 'var(--text-gold)', fontWeight: 'bold', marginBottom: '10px', display: 'block' }}>
+                      {language === 'ar' ? "حدد أجزاء القرآن الكريم التي تحفظها بالضغط عليها (5 أجزاء كحد أدنى):" : "Select the Juz' you have memorized by tapping them (min 5 Juz'):"}
                     </label>
-                    <select 
-                      value={memorizedJuzCount} 
-                      onChange={(e) => setMemorizedJuzCount(parseInt(e.target.value, 10))}
-                      style={styles.memorizeSelect}
-                    >
-                      <option value={2}>{language === 'ar' ? "جزءان (2)" : "2 Juz'"}</option>
-                      <option value={5}>{language === 'ar' ? "خمسة أجزاء (5)" : "5 Juz'"}</option>
-                      <option value={10}>{language === 'ar' ? "عشرة أجزاء (10)" : "10 Juz'"}</option>
-                      <option value={20}>{language === 'ar' ? "عشرون جزءاً (20)" : "20 Juz'"}</option>
-                      <option value={30}>{language === 'ar' ? "القرآن كاملاً (30)" : "Whole Quran (30)"}</option>
-                    </select>
+                    
+                    <div style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(auto-fill, minmax(75px, 1fr))',
+                      gap: '8px',
+                      marginTop: '12px',
+                      padding: '10px',
+                      maxHeight: '260px',
+                      overflowY: 'auto',
+                      background: 'rgba(0,0,0,0.15)',
+                      borderRadius: '12px',
+                      border: '1px solid var(--border-gold)'
+                    }}>
+                      {Array.from({ length: 30 }).map((_, idx) => {
+                        const juzNum = idx + 1;
+                        const isSelected = selectedJuzList.includes(juzNum);
+                        return (
+                          <button
+                            key={juzNum}
+                            type="button"
+                            onClick={() => {
+                              setSelectedJuzList(prev => 
+                                prev.includes(juzNum) 
+                                  ? prev.filter(n => n !== juzNum) 
+                                  : [...prev, juzNum]
+                              );
+                            }}
+                            style={{
+                              padding: '10px 4px',
+                              borderRadius: '8px',
+                              border: isSelected ? '1.5px solid var(--gold-primary)' : '1px solid rgba(255,255,255,0.06)',
+                              background: isSelected ? 'rgba(212,175,55,0.18)' : 'rgba(255,255,255,0.02)',
+                              color: isSelected ? 'var(--text-gold)' : 'var(--text-secondary)',
+                              fontWeight: '700',
+                              fontSize: '0.85rem',
+                              cursor: 'pointer',
+                              transition: 'all 0.2s ease',
+                              textAlign: 'center',
+                            }}
+                          >
+                            {language === 'ar' ? `جزء ${juzNum}` : `Juz' ${juzNum}`}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    
+                    <div style={{ marginTop: '12px', fontSize: '0.88rem', color: selectedJuzList.length >= 5 ? '#22c55e' : '#ff6b6b', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'center' }}>
+                      {selectedJuzList.length >= 5 ? <Check size={16} /> : <AlertCircle size={16} />}
+                      <span>
+                        {language === 'ar' 
+                          ? `عدد الأجزاء المحددة: ${selectedJuzList.length} (مستوفٍ للشروط)`
+                          : `Selected Parts: ${selectedJuzList.length} Juz' (Qualified)`}
+                      </span>
+                    </div>
                   </div>
 
-                  {memorizedJuzCount >= 5 ? (
+                  {selectedJuzList.length >= 5 ? (
                     <button onClick={handleStartExam} className="btn-primary" style={styles.startExamBtn}>
                       <Play size={14} />
                       <span>{language === 'ar' ? "بدء الاختبار المعتمد (30 دقيقة)" : "Start Certification Exam"}</span>
@@ -988,8 +1029,8 @@ export default function Login({ setActivePage }) {
                       <AlertCircle size={16} />
                       <span>
                         {language === 'ar' 
-                          ? "عذراً، يجب أن تكون حافظاً لـ 5 أجزاء أو أكثر لتتمكن من خوض اختبار الأحقية." 
-                          : "You must memorize at least 5 Juz' to qualify for the certification test."}
+                          ? "عذراً، يجب اختيار 5 أجزاء أو أكثر لتتمكن من بدء اختبار المعلم المعتمد." 
+                          : "Please select at least 5 Juz' to enable the certified teacher exam."}
                       </span>
                     </div>
                   )}
@@ -1027,12 +1068,14 @@ export default function Login({ setActivePage }) {
                           style={{
                             ...styles.answerBtn,
                             borderColor: isSelected ? 'var(--gold-primary)' : 'rgba(255,255,255,0.05)',
-                            background: isSelected ? 'rgba(212,175,55,0.08)' : 'transparent'
+                            background: isSelected ? 'rgba(212,175,55,0.08)' : 'transparent',
+                            flexDirection: language === 'ar' ? 'row-reverse' : 'row',
+                            justifyContent: language === 'ar' ? 'flex-end' : 'flex-start',
                           }}
                           className="glass-panel"
                         >
                           <span style={styles.answerDot}>{oIdx + 1}.</span>
-                          <span>{opt}</span>
+                          <span style={{ flexGrow: 1, textAlign: language === 'ar' ? 'right' : 'left' }}>{opt}</span>
                         </button>
                       );
                     })}
@@ -1136,7 +1179,7 @@ export default function Login({ setActivePage }) {
                     Admin
                   </button>
                   <button 
-                    onClick={() => { updateUserRole("Certified Teacher", "Gold"); setActiveAdminRole("Certified Teacher"); }}
+                    onClick={() => { updateUserRole("Certified Teacher", "15"); setActiveAdminRole("Certified Teacher"); }}
                     style={{
                       ...styles.roleSwitchBtn,
                       background: activeAdminRole === "Certified Teacher" ? 'var(--gold-gradient)' : 'transparent',
@@ -1496,13 +1539,14 @@ const styles = {
   },
   teacherLevelBadge: {
     alignSelf: 'flex-start',
-    background: 'rgba(255, 107, 107, 0.1)',
-    border: '1px solid rgba(255, 107, 107, 0.2)',
-    color: '#ff6b6b',
-    fontSize: '0.75rem',
-    padding: '3px 10px',
+    background: 'linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.05) 100%)',
+    border: '1px solid var(--gold-primary)',
+    color: 'var(--text-gold)',
+    boxShadow: '0 0 10px rgba(212, 175, 55, 0.15)',
+    fontSize: '0.78rem',
+    padding: '4px 12px',
     borderRadius: '20px',
-    fontWeight: '600',
+    fontWeight: '700',
   },
   userEmail: {
     fontSize: '0.9rem',
@@ -1861,13 +1905,14 @@ const styles = {
     padding: '16px 20px',
     borderRadius: '12px',
     border: '1.5px solid',
-    textAlign: 'right',
     cursor: 'pointer',
     display: 'flex',
     gap: '12px',
     fontSize: '0.95rem',
     transition: 'all 0.2s ease',
     width: '100%',
+    color: 'var(--text-primary)',
+    alignItems: 'center',
   },
   answerDot: {
     color: 'var(--text-gold)',
