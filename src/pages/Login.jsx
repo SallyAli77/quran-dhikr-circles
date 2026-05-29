@@ -77,8 +77,29 @@ export default function Login({ setActivePage }) {
   const [isSignUpMode, setIsSignUpMode] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
   const [authError, setAuthError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [ageConsent, setAgeConsent] = useState(false);
+  const [privacyConsent, setPrivacyConsent] = useState(false);
+
+  // Password strength calculator
+  const getPasswordStrength = (pwd) => {
+    if (!pwd) return { score: 0, label: '', color: 'transparent' };
+    let score = 0;
+    if (pwd.length >= 8) score++;
+    if (pwd.length >= 12) score++;
+    if (/[A-Z]/.test(pwd)) score++;
+    if (/[0-9]/.test(pwd)) score++;
+    if (/[^A-Za-z0-9]/.test(pwd)) score++;
+    if (score <= 1) return { score, label: language === 'ar' ? 'ضعيف جداً' : 'Very Weak', color: '#ef4444' };
+    if (score === 2) return { score, label: language === 'ar' ? 'ضعيف' : 'Weak', color: '#f97316' };
+    if (score === 3) return { score, label: language === 'ar' ? 'متوسط' : 'Fair', color: '#eab308' };
+    if (score === 4) return { score, label: language === 'ar' ? 'قوي' : 'Strong', color: '#22c55e' };
+    return { score, label: language === 'ar' ? 'قوي جداً' : 'Very Strong', color: '#10b981' };
+  };
+  const pwdStrength = getPasswordStrength(password);
 
   // Tab navigation inside dashboard
   const [activeTab, setActiveTab] = useState("my_recordings"); // "my_recordings", "saved_bookmarks", "friend_requests", "teacher_center", "admin_portal"
@@ -221,26 +242,71 @@ export default function Login({ setActivePage }) {
     e.preventDefault();
     setAuthError("");
 
-    if (!name.trim()) {
-      setAuthError(language === 'en' ? "Please provide a valid name." : "يرجى تقديم اسم صالح.");
+    // 1. Name validation
+    if (!name.trim() || name.trim().length < 3) {
+      setAuthError(language === 'en' ? "Full name must be at least 3 characters." : "يجب أن يحتوي الاسم الكامل على 3 أحرف أو أكثر.");
       return;
     }
-    if (password.length < 6) {
-      setAuthError(language === 'en' ? "Password must contain at least 6 characters." : "يجب أن تحتوي كلمة المرور على 6 أحرف على الأقل.");
+    if (!/^[a-zA-Z\u0600-\u06FF\s]+$/.test(name.trim())) {
+      setAuthError(language === 'en' ? "Name may only contain letters and spaces." : "الاسم يجب أن يحتوي على حروف ومسافات فقط.");
       return;
     }
 
-    const success = login(email || `${name.toLowerCase()}@arabicmuslim.com`, password);
+    // 2. Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (!emailRegex.test(email.trim())) {
+      setAuthError(language === 'en' ? "Please enter a valid email address." : "يرجى إدخال بريد إلكتروني صحيح.");
+      return;
+    }
+
+    // 3. Strong password policy (AdSense / GDPR standard)
+    if (password.length < 8) {
+      setAuthError(language === 'en' ? "Password must be at least 8 characters." : "كلمة المرور يجب أن تكون 8 أحرف على الأقل.");
+      return;
+    }
+    if (!/[A-Z]/.test(password)) {
+      setAuthError(language === 'en' ? "Password must include at least one uppercase letter (A-Z)." : "كلمة المرور يجب أن تحتوي على حرف كبير واحد على الأقل.");
+      return;
+    }
+    if (!/[0-9]/.test(password)) {
+      setAuthError(language === 'en' ? "Password must include at least one number (0-9)." : "كلمة المرور يجب أن تحتوي على رقم واحد على الأقل.");
+      return;
+    }
+    if (!/[^A-Za-z0-9]/.test(password)) {
+      setAuthError(language === 'en' ? "Password must include at least one special character (e.g. @, #, !)." : "كلمة المرور يجب أن تحتوي على رمز خاص واحد (مثل @ # !).");
+      return;
+    }
+
+    // 4. Confirm password match
+    if (password !== confirmPassword) {
+      setAuthError(language === 'en' ? "Passwords do not match. Please try again." : "كلمتا المرور غير متطابقتين. يرجى المحاولة مجدداً.");
+      return;
+    }
+
+    // 5. Age and privacy consent (required for AdSense)
+    if (!ageConsent) {
+      setAuthError(language === 'en' ? "You must confirm you are 13 years or older to register." : "يجب أن تؤكد أنك تجاوزت 13 عاماً للتسجيل.");
+      return;
+    }
+    if (!privacyConsent) {
+      setAuthError(language === 'en' ? "You must accept our Privacy Policy and Terms of Service." : "يجب قبول سياسة الخصوصية وشروط الخدمة للمتابعة.");
+      return;
+    }
+
+    const success = login(email.trim().toLowerCase(), password);
     if (success) {
-      user.name = name;
-      localStorage.setItem('arabicmuslim_user', JSON.stringify(user));
-      setEditName(name);
+      // Reset all form fields
+      setConfirmPassword("");
+      setAgeConsent(false);
+      setPrivacyConsent(false);
 
       confetti({
         particleCount: 100,
         spread: 80,
         colors: ['#d4af37', '#ffffff']
       });
+    } else {
+      setAuthError(language === 'en' ? "Registration failed. Please try a different email." : "فشل التسجيل. يرجى تجربة بريد إلكتروني مختلف.");
     }
   };
 
@@ -339,10 +405,11 @@ export default function Login({ setActivePage }) {
                 <input
                   type="text"
                   required
-                  placeholder="Sally Ali"
+                  placeholder={language === 'en' ? "e.g. Ahmad Abdullah" : "مثال: أحمد عبدالله"}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   style={styles.formInput}
+                  autoComplete="name"
                 />
               </div>
             )}
@@ -352,29 +419,129 @@ export default function Login({ setActivePage }) {
               <input
                 type="email"
                 required
-                placeholder="sally@arabicmuslim.com"
+                placeholder={language === 'en' ? "your@email.com" : "بريدك@الإلكتروني.com"}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 style={styles.formInput}
+                autoComplete={isSignUpMode ? "email" : "username"}
               />
             </div>
 
             <div style={styles.formField}>
               <label style={styles.fieldLabel}>{t('authPass')}</label>
-              <input
-                type="password"
-                required
-                placeholder="••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                style={styles.formInput}
-              />
+              <div style={{ position: 'relative' }}>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  required
+                  placeholder={isSignUpMode ? (language === 'en' ? "Min 8 chars, A-Z, 0-9, symbol" : "8+ حروف، كبيرة، أرقام، رمز") : "••••••••"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  style={{ ...styles.formInput, paddingRight: '44px' }}
+                  autoComplete={isSignUpMode ? "new-password" : "current-password"}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(p => !p)}
+                  style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', fontSize: '0.75rem', fontWeight: '600' }}
+                >
+                  {showPassword ? (language === 'ar' ? 'إخفاء' : 'Hide') : (language === 'ar' ? 'إظهار' : 'Show')}
+                </button>
+              </div>
+
+              {/* Password strength meter - only on signup */}
+              {isSignUpMode && password.length > 0 && (
+                <div style={{ marginTop: '8px' }}>
+                  <div style={{ display: 'flex', gap: '4px', marginBottom: '4px' }}>
+                    {[1, 2, 3, 4, 5].map(i => (
+                      <div key={i} style={{ flex: 1, height: '3px', borderRadius: '2px', background: i <= pwdStrength.score ? pwdStrength.color : 'rgba(255,255,255,0.08)', transition: 'all 0.3s ease' }} />
+                    ))}
+                  </div>
+                  <span style={{ fontSize: '0.72rem', color: pwdStrength.color, fontWeight: '600' }}>{pwdStrength.label}</span>
+                  {isSignUpMode && (
+                    <ul style={{ margin: '6px 0 0 0', padding: '0 0 0 16px', fontSize: '0.7rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                      <li style={{ color: password.length >= 8 ? '#22c55e' : 'inherit' }}>{language === 'ar' ? '8 أحرف على الأقل' : 'At least 8 characters'}</li>
+                      <li style={{ color: /[A-Z]/.test(password) ? '#22c55e' : 'inherit' }}>{language === 'ar' ? 'حرف كبير واحد (A-Z)' : 'One uppercase letter (A-Z)'}</li>
+                      <li style={{ color: /[0-9]/.test(password) ? '#22c55e' : 'inherit' }}>{language === 'ar' ? 'رقم واحد على الأقل (0-9)' : 'One number (0-9)'}</li>
+                      <li style={{ color: /[^A-Za-z0-9]/.test(password) ? '#22c55e' : 'inherit' }}>{language === 'ar' ? 'رمز خاص مثل @#!' : 'Special character e.g. @#!'}</li>
+                    </ul>
+                  )}
+                </div>
+              )}
+
               {!isSignUpMode && (
                 <span style={styles.passHint}>
-                  {language === 'en' ? "Demo Admin: sally@arabicmuslim.com / bismillah" : "دخول المسؤول: sally@arabicmuslim.com / bismillah"}
+                  {language === 'en' ? "Demo Admin: sally@arabicmuslim.com / Bismillah1!" : "دخول المسؤول: sally@arabicmuslim.com / Bismillah1!"}
                 </span>
               )}
             </div>
+
+            {/* Confirm password field - only on signup */}
+            {isSignUpMode && (
+              <div style={styles.formField}>
+                <label style={styles.fieldLabel}>{language === 'en' ? "Confirm Password" : "تأكيد كلمة المرور"}</label>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  required
+                  placeholder="••••••••"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  style={{ ...styles.formInput, borderColor: confirmPassword && confirmPassword !== password ? '#ef4444' : confirmPassword && confirmPassword === password ? '#22c55e' : undefined }}
+                  autoComplete="new-password"
+                />
+                {confirmPassword.length > 0 && (
+                  <span style={{ fontSize: '0.72rem', marginTop: '4px', color: confirmPassword === password ? '#22c55e' : '#ef4444', fontWeight: '600', display: 'block' }}>
+                    {confirmPassword === password
+                      ? (language === 'ar' ? '✓ كلمتا المرور متطابقتان' : '✓ Passwords match')
+                      : (language === 'ar' ? '✗ كلمتا المرور غير متطابقتين' : '✗ Passwords do not match')}
+                  </span>
+                )}
+              </div>
+            )}
+
+            {/* Age + Privacy consent - required for Google AdSense */}
+            {isSignUpMode && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', padding: '14px', background: 'rgba(212,175,55,0.04)', border: '1px solid rgba(212,175,55,0.15)', borderRadius: '10px' }}>
+                <label style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', cursor: 'pointer', fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                  <input
+                    type="checkbox"
+                    checked={ageConsent}
+                    onChange={(e) => setAgeConsent(e.target.checked)}
+                    style={{ marginTop: '2px', accentColor: 'var(--gold-primary)', width: '14px', height: '14px', flexShrink: 0 }}
+                  />
+                  <span>
+                    {language === 'ar'
+                      ? 'أؤكد أنني أتجاوز 13 عاماً من العمر وأوافق على استخدام خدمات الموقع'
+                      : 'I confirm I am 13 years of age or older and agree to use this service'}
+                  </span>
+                </label>
+
+                <label style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', cursor: 'pointer', fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                  <input
+                    type="checkbox"
+                    checked={privacyConsent}
+                    onChange={(e) => setPrivacyConsent(e.target.checked)}
+                    style={{ marginTop: '2px', accentColor: 'var(--gold-primary)', width: '14px', height: '14px', flexShrink: 0 }}
+                  />
+                  <span>
+                    {language === 'ar' ? (
+                      <>
+                        أوافق على{' '}
+                        <button type="button" onClick={() => setActivePage && setActivePage('legal')} style={{ background: 'none', border: 'none', color: 'var(--text-gold)', cursor: 'pointer', textDecoration: 'underline', fontSize: '0.8rem', padding: 0 }}>سياسة الخصوصية</button>
+                        {' '}و{' '}
+                        <button type="button" onClick={() => setActivePage && setActivePage('legal')} style={{ background: 'none', border: 'none', color: 'var(--text-gold)', cursor: 'pointer', textDecoration: 'underline', fontSize: '0.8rem', padding: 0 }}>شروط الخدمة</button>
+                      </>
+                    ) : (
+                      <>
+                        I agree to the{' '}
+                        <button type="button" onClick={() => setActivePage && setActivePage('legal')} style={{ background: 'none', border: 'none', color: 'var(--text-gold)', cursor: 'pointer', textDecoration: 'underline', fontSize: '0.8rem', padding: 0 }}>Privacy Policy</button>
+                        {' '}and{' '}
+                        <button type="button" onClick={() => setActivePage && setActivePage('legal')} style={{ background: 'none', border: 'none', color: 'var(--text-gold)', cursor: 'pointer', textDecoration: 'underline', fontSize: '0.8rem', padding: 0 }}>Terms of Service</button>
+                      </>
+                    )}
+                  </span>
+                </label>
+              </div>
+            )}
 
             <button type="submit" className="btn-primary" style={styles.submitBtn}>
               <Key size={14} />
@@ -383,7 +550,7 @@ export default function Login({ setActivePage }) {
           </form>
 
           <button 
-            onClick={() => { setIsSignUpMode(!isSignUpMode); setAuthError(""); }} 
+            onClick={() => { setIsSignUpMode(!isSignUpMode); setAuthError(""); setPassword(""); setConfirmPassword(""); setAgeConsent(false); setPrivacyConsent(false); }} 
             style={styles.toggleBtn}
           >
             {isSignUpMode ? t('authToggleToLogin') : t('authToggleToSignUp')}

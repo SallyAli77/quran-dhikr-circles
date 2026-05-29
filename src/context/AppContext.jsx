@@ -1224,7 +1224,7 @@ export const AppProvider = ({ children }) => {
   };
 
   const login = (email, password) => {
-    if (email === "sally@arabicmuslim.com" && password === "bismillah") {
+    if (email === "sally@arabicmuslim.com" && (password === "Bismillah1!" || password === "bismillah")) {
       const loggedUser = {
         name: "Sally Ali",
         email: "sally@arabicmuslim.com",
@@ -1240,15 +1240,21 @@ export const AppProvider = ({ children }) => {
       return true;
     }
     
-    if (email && password.length >= 6) {
-      const name = email.split('@')[0];
+    // Standard login: accept any valid email + password (8+ chars, has uppercase, number, special char)
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecial = /[^A-Za-z0-9]/.test(password);
+    const isStrongEnough = password.length >= 8 && hasUppercase && hasNumber && hasSpecial;
+
+    if (email && isStrongEnough) {
+      const namePart = email.split('@')[0];
       const loggedUser = {
-        name: name.charAt(0).toUpperCase() + name.slice(1),
+        name: namePart.charAt(0).toUpperCase() + namePart.slice(1).replace(/[._-]/g, ' '),
         email: email,
         avatar: "🕌",
         dailyTasbih: tasbihCount,
         role: "Premium Member",
-        memberSince: "May 2026"
+        memberSince: new Date().toLocaleDateString('en', { year: 'numeric', month: 'long' })
       };
       setUser(loggedUser);
       setIsAuthenticated(true);
