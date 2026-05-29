@@ -671,7 +671,7 @@ const translations = {
     authSignUpSubmit: "Create Profile",
     authToggleToSignUp: "Need a profile? Sign Up here",
     authToggleToLogin: "Have a profile? Sign In here",
-    authError: "Credentials failed. Try 'sally@arabicmuslim.com' / 'Bismillah1!'",
+    authError: "Login failed. Please check your email or password and try again.",
     authWelcome: "Assalamu Alaikum",
     searchTitle: "Search Results for",
     searchNoResults: "No items matched your search query."
@@ -773,7 +773,7 @@ const translations = {
     authSignUpSubmit: "إنشاء حساب جديد",
     authToggleToSignUp: "ليس لديك حساب؟ أنشئ حساباً مجانياً",
     authToggleToLogin: "لديك حساب بالفعل؟ سجل دخولك الآن",
-    authError: "خطأ في تسجيل الدخول. التجربة: 'sally@arabicmuslim.com' / 'Bismillah1!'",
+    authError: "خطأ في تسجيل الدخول. يرجى التحقق من البريد الإلكتروني أو كلمة المرور وإعادة المحاولة.",
     authWelcome: "السلام عليكم ورحمة الله",
     searchTitle: "نتائج البحث عن",
     searchNoResults: "لم يتم العثور على أي نتائج تطابق عملية البحث."
