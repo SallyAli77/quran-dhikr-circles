@@ -1,11 +1,40 @@
-import React from 'react';
-import { useApp } from '../context/AppContext';
-import { BookOpen, Compass, Users, FileText, ShoppingBag, Star, ArrowRight, Award, Flame } from 'lucide-react';
+import React, { useState } from 'react';
+import { useApp, mockBots, globalMuslimNews } from '../context/AppContext';
+import { 
+  BookOpen, Compass, Users, FileText, ShoppingBag, Star, ArrowRight, Award, 
+  Flame, Heart, MessageCircle, Send, CheckCircle2, ChevronRight, Share2, AlertCircle 
+} from 'lucide-react';
+import confetti from 'canvas-confetti';
 
 export default function Home({ setActivePage }) {
-  const { language, searchQuery, t } = useApp();
+  const { 
+    language, 
+    searchQuery, 
+    t, 
+    isAuthenticated, 
+    user, 
+    communityPosts, 
+    addPost, 
+    likePost, 
+    addComment, 
+    dailyScore, 
+    completedGoals, 
+    completeDailyGoal, 
+    unlockedBadges, 
+    unlockBadgeAction,
+    articlesList,
+    tasbihCount,
+    friendsList,
+    sendFriendRequest,
+    friendRequestsSent
+  } = useApp();
 
-  // Handpicked high-end Islamic products from Amazon with affiliate styling
+  // Social feed states
+  const [reflectionText, setReflectionText] = useState("");
+  const [activeCommentsPostId, setActiveCommentsPostId] = useState(null);
+  const [commentText, setCommentText] = useState({});
+
+  // Handpicked high-end Islamic products from Amazon
   const amazonProducts = [
     {
       id: "p1",
@@ -13,12 +42,12 @@ export default function Home({ setActivePage }) {
       titleAr: "القرآن الكريم: ترجمة إنجليزية بواسطة عبد الحليم",
       author: "M.A.S. Abdel Haleem (Oxford)",
       category: "Books",
-      categoryAr: "كتب",
+      categoryAr: "كتب ورقية",
       price: "$14.95",
       rating: 4.9,
       reviews: 5840,
       description: "The most readable, contemporary English translation of the Quran, capturing its spiritual essence and literary eloquence perfectly.",
-      descriptionAr: "الترجمة الإنجليزية الأكثر وضوحاً وبلاغة لآيات القرآن الكريم مع الحفاظ على المقاصد الدينية والجمالية الأدبية.",
+      descriptionAr: "الترجمة الإنجليزية الأكثر وضوحاً وبلاغة لآيات القرآن الكريم مع الحفاظ على المقاصد البلاغية والجمالية الأدبية.",
       image: "📖",
       link: "https://www.amazon.com/s?k=M.A.S.+Abdel+Haleem+Quran+Oxford"
     },
@@ -39,7 +68,7 @@ export default function Home({ setActivePage }) {
     },
     {
       id: "p3",
-      title: "Luxury Gold-Bordered Prayer Rug",
+      title: "Luxury Gold velvet Rug",
       titleAr: "سجادة صلاة مخملية فاخرة مطرزة بالذهب",
       author: "Al-Mihrab Collection",
       category: "Islamic Decor",
@@ -63,608 +92,1072 @@ export default function Home({ setActivePage }) {
       rating: 4.7,
       reviews: 890,
       description: "A premium alloy smart ring that logs dhikr counts, syncs with application, and vibrates softly at milestones (33, 66, 99).",
-      descriptionAr: "خاتم ذكي من السبائك الفاخرة لتسجيل الأذكار، يتزامن مع التطبيقات ويهتز بلطف عند التذكير والوصول للعدد المطلوب.",
+      descriptionAr: "خاتم ذكي لتسجيل الأذكار، يتزامن مع التطبيقات ويهتز بلطف لتنبيهك عند الوصول للعدد المطلوب والورد المكتوب.",
       image: "💍",
       link: "https://www.amazon.com/s?k=Smart+digital+tasbih+ring+iqibla"
-    },
-    {
-      id: "p5",
-      title: "Gold Suede Spiritual Journal",
-      titleAr: "دفتر يوميات إسلامي فاخر من الشامواه المذهب",
-      author: "ArabicMuslim Premium",
-      category: "Stationery",
-      categoryAr: "قرطاسية",
-      price: "$16.50",
-      rating: 4.9,
-      reviews: 210,
-      description: "Premium suede cover notebook featuring gold gilded edges. Perfect for daily reflections, du'as, and Quranic vocab tracking.",
-      descriptionAr: "دفتر يوميات بغلاف فاخر مع حواف ذهبية مذهبة. مثالي لكتابة الخواطر النفسية اليومية والأدعية وتدبر الآيات.",
-      image: "✍️",
-      link: "https://www.amazon.com/s?k=Islamic+prayer+journal+gold"
     }
   ];
 
-  // Curated premium Islamic and Arabic Learning E-Books from Amazon Kindle
-  const amazonEbooks = [
-    {
-      id: "eb1",
-      title: "The Quran: English Translation (Kindle Edition)",
-      titleAr: "القرآن الكريم: ترجمة إنجليزية (نسخة كيندل)",
-      author: "M.A.S. Abdel Haleem",
-      category: "E-Books",
-      categoryAr: "كتب إلكترونية",
-      price: "$3.99",
-      rating: 4.9,
-      reviews: 1240,
-      description: "Pristine digital edition of the Oxford translation. Take the divine word with you anywhere, optimized for all screens.",
-      descriptionAr: "نسخة رقمية ممتازة من الترجمة الإنجليزية الشهيرة لأوكسفورد. احمل آيات الذكر الحكيم معك أينما ذهبت، محسنة بالكامل لشاشات الهاتف والقارئ.",
-      image: "📱📖",
-      link: "https://www.amazon.com/s?k=Abdel+Haleem+Quran+Kindle"
-    },
-    {
-      id: "eb2",
-      title: "Master 300 High-Frequency Quranic Roots",
-      titleAr: "إتقان 300 جذر لغوي متكرر في القرآن الكريم",
-      author: "Ustadh Yusuf Al-Qurashi",
-      category: "Arabic E-Learning",
-      categoryAr: "تعلم العربية رقمياً",
-      price: "$5.99",
-      rating: 4.8,
-      reviews: 180,
-      description: "An exceptional study guide that logs high-frequency roots dynamically. The absolute digital shortcut to understanding Quranic Arabic.",
-      descriptionAr: "دليل دراسي استثنائي يجمع الجذور اللغوية الأكثر تكراراً في آيات الذكر الحكيم. طريقتك الرقمية الأسرع للفهم والتدبر.",
-      image: "📱✍️",
-      link: "https://www.amazon.com/s?k=Quranic+Arabic+roots+kindle"
-    },
-    {
-      id: "eb3",
-      title: "Fortress of the Muslim (Hisn al-Muslim) Digital",
-      titleAr: "حصن المسلم الرقمي: الأذكار والأدعية اليومية",
-      author: "Dar-us-Salam Publication",
-      category: "Dua E-Books",
-      categoryAr: "أدعية وأذكار كيندل",
-      price: "$1.99",
-      rating: 4.9,
-      reviews: 4200,
-      description: "A complete collection of authentic supplications for daily tasks, morning/evening dhikr, and special situations in compact pocket size.",
-      descriptionAr: "المجموعة الكاملة الصحيحة للأدعية النبوية لمختلف شؤون الحياة، أذكار الصباح والمساء، وحالات الضيق بتصميم كيندل مريح.",
-      image: "📱🕌",
-      link: "https://www.amazon.com/s?k=Fortress+of+the+Muslim+kindle"
-    },
-    {
-      id: "eb4",
-      title: "Arabic Stories for Language Learners E-Book",
-      titleAr: "قصص عربية لمتعلمي اللغة (نسخة كيندل)",
-      author: "Lutfi Mansur & Brosh",
-      category: "Arabic E-Learning",
-      categoryAr: "تعلم العربية رقمياً",
-      price: "$4.50",
-      rating: 4.8,
-      reviews: 110,
-      description: "The digital Kindle format of our popular physical storybook, providing dual English/Arabic text rendering side-by-side.",
-      descriptionAr: "النسخة الرقمية لكتاب القصص القصيرة ثنائي اللغة الشهير، يمنحك عرضاً متناسقاً للنصوص العربية والإنجليزية جنباً إلى جنب.",
-      image: "📱📚",
-      link: "https://www.amazon.com/s?k=Arabic+Stories+Language+Learners+Kindle"
-    }
+  // Daily gamified goals definition
+  const dailyGoalsList = [
+    { id: "tap_subha", labelEn: "Tap Subha beads 100 times", labelAr: "التسبيح بالسبحة 100 مرة", points: 50, current: tasbihCount, target: 100 },
+    { id: "share_reflection", labelEn: "Publish a faith reflection", labelAr: "نشر خاطرة إيمانية مفيدة", points: 50, current: completedGoals.includes("share_reflection") ? 1 : 0, target: 1 },
+    { id: "read_article", labelEn: "Read an educational article", labelAr: "قراءة مقال لغوي أو ديني", points: 50, current: completedGoals.includes("read_article") ? 1 : 0, target: 1 },
+    { id: "recite_quran", labelEn: "Bookmark a Noble Quran verse", labelAr: "تصفح وحفظ علامة لآية قرآنية", points: 50, current: completedGoals.includes("recite_quran") ? 1 : 0, target: 1 }
   ];
 
-  // Filters products if global search bar contains query
-  const filteredProducts = amazonProducts.filter(p => {
-    const q = searchQuery.toLowerCase();
-    return (
-      p.title.toLowerCase().includes(q) ||
-      p.titleAr.includes(q) ||
-      p.author.toLowerCase().includes(q) ||
-      p.category.toLowerCase().includes(q) ||
-      p.categoryAr.includes(q)
-    );
-  });
+  // Badges catalog
+  const badgesCatalog = [
+    { id: "dhikr_pioneer", labelEn: "Remembrance Pioneer", labelAr: "رائد الأذكار", icon: "✨", descEn: "Initial registration bonus.", descAr: "وسام الانضمام الفاخر" },
+    { id: "tasbih_master", labelEn: "Tasbih Devotee", labelAr: "المسبح الدائم", icon: "📿", descEn: "Reaching 100 daily tasbih taps.", descAr: "إتمام 100 تسبيحة بالسبحة" },
+    { id: "knowledge_seeker", labelEn: "Knowledge Seeker", labelAr: "طالب العلم", icon: "📖", descEn: "Unlocks by reading articles.", descAr: "قراءة المقالات الإسلامية" },
+    { id: "teacher_qualified", labelEn: "Tajweed Master", labelAr: "المعلم المرتل", icon: "🎓", descEn: "Passing the certified teacher test.", descAr: "اجتياز اختبار التجويد الشريف" }
+  ];
 
-  const filteredEbooks = amazonEbooks.filter(eb => {
-    const q = searchQuery.toLowerCase();
-    return (
-      eb.title.toLowerCase().includes(q) ||
-      eb.titleAr.includes(q) ||
-      eb.author.toLowerCase().includes(q) ||
-      eb.category.toLowerCase().includes(q) ||
-      eb.categoryAr.includes(q)
-    );
+  // Handle post submit
+  const handlePublishReflection = (e) => {
+    e.preventDefault();
+    if (!reflectionText.trim()) return;
+
+    addPost(reflectionText);
+    setReflectionText("");
+    
+    // Complete Daily Goal
+    completeDailyGoal("share_reflection", 50);
+
+    // Play confetti
+    confetti({
+      particleCount: 40,
+      spread: 55,
+      colors: ['#d4af37', '#ffffff']
+    });
+  };
+
+  // Handle comment submit
+  const handleCommentSubmit = (postId, text) => {
+    if (!text || !text.trim()) return;
+    addComment(postId, text);
+    setCommentText(prev => ({ ...prev, [postId]: "" }));
+  };
+
+  // Check and unlock dynamic badges based on actions
+  React.useEffect(() => {
+    if (tasbihCount >= 100) {
+      unlockBadgeAction("tasbih_master");
+    }
+  }, [tasbihCount]);
+
+  // Combine feed: Community Posts + Global Muslim News + Select Premium Articles
+  const feedItems = [
+    ...communityPosts.map(p => ({ ...p, type: 'post' })),
+    ...globalMuslimNews.map(n => ({ ...n, type: 'news' })),
+    ...articlesList.slice(0, 3).map(a => ({ ...a, type: 'article' }))
+  ].sort((a, b) => {
+    // Keep seed/new posts near top, alternate cleanly
+    if (a.timestamp === "Just now") return -1;
+    if (b.timestamp === "Just now") return 1;
+    return 0;
   });
 
   return (
-    <div className="home-page fade-in">
-      {/* Hero Banner */}
-      <section style={styles.heroSection}>
-        <div className="islamic-pattern"></div>
-        <div className="container" style={styles.heroContainer}>
-          <div style={styles.heroBadge} className="glass-panel">
-            <Compass size={14} color="var(--text-gold)" style={{ marginRight: '6px', marginLeft: '6px' }} />
-            <span>{language === 'en' ? "Your Daily Islamic Companion" : "رفيقك اليومي للعبادة والتعلم"}</span>
-          </div>
+    <div className="home-page container fade-in" style={{ paddingBottom: '80px', paddingTop: '30px' }}>
+      
+      {/* 3-Column Facebook-style Framework */}
+      <div style={styles.fbLayout}>
+        
+        {/* ================= LEFT COLUMN: Quick Stats & Gamification ================= */}
+        <aside style={styles.leftCol} className="glass-panel">
+          <div className="islamic-pattern"></div>
           
-          <h1 style={styles.heroTitle} className="slide-up">
-            {language === 'en' ? "Memorize Quran &" : "حفظ القرآن الكريم"} <br />
-            <span className="gold-gradient-text gold-glow-text" style={{ fontFamily: "'Playfair Display', serif", fontWeight: '800' }}>
-              {language === 'en' ? "Cultivate Daily Dhikr" : "والأذكار والتسبيح اليومي"}
-            </span>
-          </h1>
+          {/* User profile brief card */}
+          <div style={styles.briefProfileRow}>
+            <span style={styles.briefAvatar}>{isAuthenticated ? user.avatar : "🕌"}</span>
+            <div>
+              <h3 style={styles.briefName} className="gold-gradient-text">
+                {isAuthenticated ? user.name : "Zair Muslim"}
+              </h3>
+              <span style={styles.briefRole}>
+                {isAuthenticated ? user.role : t('navLogin')}
+                {user.teacherLevel && ` (${user.teacherLevel})`}
+              </span>
+            </div>
+          </div>
 
-          <p style={styles.heroSubtitle} className="slide-up">
-            {t('heroSubtitle')}
+          <div style={styles.pointsWidget}>
+            <Award size={20} color="var(--text-gold)" />
+            <div>
+              <span style={styles.widgetScoreText}>{dailyScore}</span>
+              <span style={styles.widgetLabel}> {language === 'ar' ? "نقاط السكور اليومي" : "Daily Score Points"}</span>
+            </div>
+          </div>
+
+          {/* Daily Goals Progress Tracker */}
+          <div style={styles.goalsContainer}>
+            <h4 style={styles.sidebarSectionTitle}>
+              <Flame size={16} color="var(--text-gold)" />
+              <span>{language === 'ar' ? "الأهداف اليومية" : "Daily goals tracker"}</span>
+            </h4>
+            
+            <div style={styles.goalsList}>
+              {dailyGoalsList.map(g => {
+                const isDone = completedGoals.includes(g.id) || (g.id === "tap_subha" && tasbihCount >= 100);
+                const progressPct = Math.min(100, (g.current / g.target) * 100);
+                
+                return (
+                  <div key={g.id} style={styles.goalItem} onClick={() => {
+                    if (g.id === "read_article") {
+                      setActivePage('articles');
+                    } else if (g.id === "recite_quran") {
+                      setActivePage('quran');
+                    }
+                  }}>
+                    <div style={styles.goalMetaRow}>
+                      <span style={{
+                        ...styles.goalLabel,
+                        textDecoration: isDone ? 'line-through' : 'none',
+                        color: isDone ? 'var(--text-muted)' : 'var(--text-primary)'
+                      }}>
+                        {language === 'ar' ? g.labelAr : g.labelEn}
+                      </span>
+                      <span style={styles.goalPoints}>+{g.points} XP</span>
+                    </div>
+                    
+                    <div style={styles.progressBarBg}>
+                      <div style={{
+                        ...styles.progressBarFill,
+                        width: `${progressPct}%`,
+                        background: isDone ? 'var(--gold-gradient)' : 'linear-gradient(90deg, #b38728 0%, #daae48 100%)'
+                      }}></div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* User Badges gallery brief */}
+          <div style={styles.badgesWidget}>
+            <h4 style={styles.sidebarSectionTitle}>
+              <Award size={16} color="var(--text-gold)" />
+              <span>{language === 'ar' ? "شارات إنجازاتك" : "My Badges Gallery"}</span>
+            </h4>
+            
+            <div style={styles.badgeEmojisRow}>
+              {badgesCatalog.map(b => {
+                const isUnlocked = unlockedBadges.includes(b.id) || (b.id === "teacher_qualified" && user.role === "Certified Teacher");
+                return (
+                  <div 
+                    key={b.id} 
+                    style={{
+                      ...styles.badgeBubble,
+                      opacity: isUnlocked ? 1 : 0.25,
+                      filter: isUnlocked ? 'grayscale(0)' : 'grayscale(1)',
+                      borderColor: isUnlocked ? 'var(--gold-primary)' : 'rgba(255,255,255,0.05)'
+                    }}
+                    title={language === 'ar' ? `${b.labelAr} - ${b.descAr}` : `${b.labelEn} - ${b.descEn}`}
+                  >
+                    <span>{b.icon}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Quick Active Bots recommendation list */}
+          <div style={styles.botsContainer}>
+            <h4 style={styles.sidebarSectionTitle}>
+              <Users size={16} color="var(--text-gold)" />
+              <span>{language === 'ar' ? "مقترحات أصدقاء" : "Simulated Active Muslims"}</span>
+            </h4>
+            
+            <div style={styles.botsList}>
+              {mockBots.slice(0, 3).map(bot => {
+                const isFriend = friendsList.includes(bot.name);
+                const isSent = friendRequestsSent.some(r => r.email === bot.email);
+
+                return (
+                  <div key={bot.email} style={styles.botRow}>
+                    <span style={styles.botAvatar}>{bot.avatar}</span>
+                    <div style={{ flexGrow: 1, minWidth: 0 }}>
+                      <div style={styles.botName}>{bot.name}</div>
+                      <span style={styles.botSub}>{bot.role || "Worshipper"}</span>
+                    </div>
+                    
+                    {!isFriend ? (
+                      <button 
+                        onClick={() => sendFriendRequest({ name: bot.name, email: bot.email, avatar: bot.avatar })}
+                        style={{
+                          ...styles.botAddBtn,
+                          backgroundColor: isSent ? 'rgba(212,175,55,0.05)' : 'rgba(212,175,55,0.1)',
+                          color: isSent ? 'var(--text-muted)' : 'var(--text-gold)',
+                          borderColor: isSent ? 'transparent' : 'var(--border-gold)'
+                        }}
+                        disabled={isSent}
+                      >
+                        {isSent ? (language === 'ar' ? "معلق" : "Sent") : "+"}
+                      </button>
+                    ) : (
+                      <span style={styles.friendCheck}>✓</span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </aside>
+
+        {/* ================= CENTER COLUMN: Social News Feed ================= */}
+        <section style={styles.centerCol}>
+          
+          {/* Facebook-style Publisher Box */}
+          {isAuthenticated && (
+            <div style={styles.publishBox} className="glass-panel">
+              <h4 style={styles.publishTitle}>{t('commCreatePost')}</h4>
+              <form onSubmit={handlePublishReflection} style={styles.publishForm}>
+                <textarea
+                  value={reflectionText}
+                  onChange={(e) => setReflectionText(e.target.value)}
+                  placeholder={t('commPostPlaceholder')}
+                  style={styles.publishArea}
+                  rows={3}
+                />
+                
+                <div style={styles.publishFooter}>
+                  <span style={styles.publishWordCount}>{reflectionText.length} / 300</span>
+                  <button type="submit" className="btn-primary" style={styles.publishSubmitBtn}>
+                    <Send size={14} />
+                    <span>{t('commPostButton')}</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+
+          {/* Dynamic Mixed Feed list */}
+          <div style={styles.feedList}>
+            {feedItems.map((item, idx) => {
+              if (item.type === 'post') {
+                const userLiked = item.likedBy && item.likedBy.includes(user.email);
+                const isTeacher = mockBots.some(b => b.name === item.author && b.role === "Certified Teacher");
+                const botMatch = mockBots.find(b => b.name === item.author);
+                
+                return (
+                  <article key={item.id || idx} style={styles.feedCard} className="glass-panel">
+                    <header style={styles.feedCardHeader}>
+                      <span style={styles.feedCardAvatar}>{item.avatar}</span>
+                      <div style={{ flexGrow: 1 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          <span style={styles.feedCardAuthor}>{item.author}</span>
+                          {isTeacher && (
+                            <span style={styles.teacherBadge} title={language === 'ar' ? "معلم معتمد" : "Certified Quran & Tajweed Teacher"}>
+                              🎓 {botMatch?.level || "Teacher"}
+                            </span>
+                          )}
+                        </div>
+                        <span style={styles.feedCardTime}>{item.timestamp}</span>
+                      </div>
+                    </header>
+
+                    <p style={styles.feedCardText}>
+                      {language === 'ar' ? item.contentAr : item.content}
+                    </p>
+
+                    <div style={styles.feedCardDivider}></div>
+
+                    <footer style={styles.feedActions}>
+                      <button 
+                        onClick={() => likePost(item.id)} 
+                        style={{
+                          ...styles.feedActionBtn,
+                          color: userLiked ? '#ff6b6b' : 'var(--text-secondary)'
+                        }}
+                      >
+                        <Heart size={16} fill={userLiked ? '#ff6b6b' : 'none'} />
+                        <span>{item.likes} {language === 'ar' ? "أعجبني" : "Likes"}</span>
+                      </button>
+
+                      <button 
+                        onClick={() => setActiveCommentsPostId(activeCommentsPostId === item.id ? null : item.id)} 
+                        style={styles.feedActionBtn}
+                      >
+                        <MessageCircle size={16} />
+                        <span>{item.comments ? item.comments.length : 0} {language === 'ar' ? "تعليق" : "Comments"}</span>
+                      </button>
+                    </footer>
+
+                    {/* Expandable Comment Section */}
+                    {activeCommentsPostId === item.id && (
+                      <div style={styles.commentSectionBg} className="glass-panel fade-in">
+                        <div style={styles.commentsList}>
+                          {item.comments && item.comments.map(c => (
+                            <div key={c.id} style={styles.commentBubbleRow}>
+                              <span style={styles.commentAvatar}>{c.avatar}</span>
+                              <div style={styles.commentTextCard}>
+                                <div style={styles.commentAuthorName}>{c.author}</div>
+                                <p style={styles.commentBubbleText}>{c.text}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Direct input box */}
+                        <div style={styles.commentInputRow}>
+                          <input 
+                            type="text" 
+                            placeholder={language === 'ar' ? "اكتب تعليقك الطاهر هنا..." : "Write your comment here..."}
+                            value={commentText[item.id] || ""}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              setCommentText(prev => ({ ...prev, [item.id]: val }));
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter') {
+                                handleCommentSubmit(item.id, commentText[item.id]);
+                              }
+                            }}
+                            style={styles.commentInputBox}
+                          />
+                          <button 
+                            onClick={() => handleCommentSubmit(item.id, commentText[item.id])} 
+                            style={styles.commentSendBtn}
+                          >
+                            <Send size={14} color="var(--text-gold)" />
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </article>
+                );
+              } else if (item.type === 'news') {
+                return (
+                  <article key={item.id || idx} style={styles.newsCard} className="glass-panel">
+                    <div style={styles.newsBadge}>
+                      <AlertCircle size={12} color="var(--text-gold)" />
+                      <span>{language === 'ar' ? "أخبار العالم الإسلامي" : "Global Muslim News"}</span>
+                    </div>
+
+                    <h3 style={styles.newsCardTitle}>
+                      {language === 'ar' ? item.titleAr : item.title}
+                    </h3>
+
+                    <p style={styles.newsCardText}>
+                      {language === 'ar' ? item.summaryAr : item.summary}
+                    </p>
+
+                    <div style={styles.newsCardFooter}>
+                      <span style={styles.newsSource}>
+                        {language === 'ar' ? item.sourceAr : item.source} • {item.date}
+                      </span>
+                      
+                      <div style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
+                        <span style={styles.newsReactText}>❤️ {item.likes}</span>
+                        <span style={styles.newsReactText}>💬 {item.commentsCount}</span>
+                      </div>
+                    </div>
+                  </article>
+                );
+              } else if (item.type === 'article') {
+                return (
+                  <article key={item.id || idx} style={styles.articleCard} className="glass-panel" onClick={() => setActivePage('articles')}>
+                    <span style={styles.articleCardCategory}>
+                      {language === 'ar' ? item.categoryAr : item.category}
+                    </span>
+
+                    <h3 style={styles.articleCardTitle} className="gold-gradient-text">
+                      {language === 'ar' ? item.titleAr : item.title}
+                    </h3>
+
+                    <p style={styles.articleCardDesc}>
+                      {language === 'ar' ? item.summaryAr : item.summary}
+                    </p>
+
+                    <div style={styles.articleFooter}>
+                      <div style={styles.articleAuthorRow}>
+                        <span style={styles.articleAvatar}>{item.avatar}</span>
+                        <span style={styles.articleAuthor}>{language === 'ar' ? item.authorAr : item.author}</span>
+                      </div>
+
+                      <div style={styles.articleTimeBadge}>
+                        <span>{item.readTime} {language === 'ar' ? "دقائق" : "min read"}</span>
+                        <ChevronRight size={14} />
+                      </div>
+                    </div>
+                  </article>
+                );
+              }
+              return null;
+            })}
+          </div>
+        </section>
+
+        {/* ================= RIGHT COLUMN: Sponsored Bookstore (Amazon Showcase) ================= */}
+        <aside style={styles.rightCol} className="glass-panel">
+          <div style={styles.storeHeader}>
+            <ShoppingBag size={18} color="var(--text-gold)" />
+            <h3 style={styles.rightColTitle}>{language === 'ar' ? "المتجر الإسلامي الموصى به" : "Recommended Literature"}</h3>
+          </div>
+          <p style={styles.storeSubtitle}>
+            {language === 'ar' ? "كتب ومنتجات حائزة على أعلى التقييمات في موقع أمازون" : "Affiliate handpicked publications on Amazon."}
           </p>
 
-          <div style={styles.heroActions} className="slide-up">
-            <button onClick={() => setActivePage('quran')} className="btn-primary" style={{ padding: '14px 30px', fontSize: '1rem' }}>
-              <span>{t('heroExplore')}</span>
-              <ArrowRight size={18} />
-            </button>
-            <button onClick={() => setActivePage('community')} className="btn-secondary" style={{ padding: '14px 30px', fontSize: '1rem' }}>
-              <Users size={18} />
-              <span>{t('heroCommunity')}</span>
-            </button>
-          </div>
-        </div>
-      </section>
+          <div style={styles.amazonList}>
+            {amazonProducts.map(p => (
+              <div key={p.id} style={styles.amazonCard} className="glass-panel">
+                {/* Fixed centered icon/illustration */}
+                <div style={styles.amazonImageWrapper}>
+                  <span style={styles.amazonEmoji}>{p.image}</span>
+                </div>
 
-      {/* Feature Grid */}
-      <section style={styles.sectionPadding}>
-        <div className="container">
-          <div style={styles.sectionHeader}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-gold)', marginBottom: '8px' }}>
-              <Flame size={18} style={{ marginRight: '4px', marginLeft: '4px' }} />
-              <span style={{ fontSize: '0.85rem', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase' }}>
-                {language === 'en' ? "Core Features" : "مميزات المنصة"}
-              </span>
-            </div>
-            <h2 style={styles.sectionTitle}>
-              {language === 'en' ? "Everything You Need for Your Daily Worship" : "كل ما تحتاجه في عباداتك ودراستك اليومية"}
-            </h2>
-          </div>
-
-          <div className="grid-4" style={{ marginTop: '40px' }}>
-            {/* Feature 1 */}
-            <div className="glass-panel text-center-hover" style={styles.featCard} onClick={() => setActivePage('quran')}>
-              <div style={styles.featIconWrapper}>
-                <BookOpen size={24} color="var(--text-gold)" />
-              </div>
-              <h3 style={styles.featCardTitle}>{t('featQuranTitle')}</h3>
-              <p style={styles.featCardDesc}>{t('featQuranDesc')}</p>
-            </div>
-
-            {/* Feature 2 */}
-            <div className="glass-panel text-center-hover" style={styles.featCard} onClick={() => setActivePage('prayer')}>
-              <div style={styles.featIconWrapper}>
-                <Compass size={24} color="var(--text-gold)" />
-              </div>
-              <h3 style={styles.featCardTitle}>{t('featPrayerTitle')}</h3>
-              <p style={styles.featCardDesc}>{t('featPrayerDesc')}</p>
-            </div>
-
-            {/* Feature 3 */}
-            <div className="glass-panel text-center-hover" style={styles.featCard} onClick={() => setActivePage('community')}>
-              <div style={styles.featIconWrapper}>
-                <Users size={24} color="var(--text-gold)" />
-              </div>
-              <h3 style={styles.featCardTitle}>{t('featCommunityTitle')}</h3>
-              <p style={styles.featCardDesc}>{t('featCommunityDesc')}</p>
-            </div>
-
-            {/* Feature 4 */}
-            <div className="glass-panel text-center-hover" style={styles.featCard} onClick={() => setActivePage('articles')}>
-              <div style={styles.featIconWrapper}>
-                <FileText size={24} color="var(--text-gold)" />
-              </div>
-              <h3 style={styles.featCardTitle}>{t('featArticlesTitle')}</h3>
-              <p style={styles.featCardDesc}>{t('featArticlesDesc')}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Amazon Products Section */}
-      <section id="products-section" style={{ ...styles.sectionPadding, background: 'rgba(212, 175, 55, 0.01)', borderTop: '1px solid rgba(212, 175, 55, 0.05)', borderBottom: '1px solid rgba(212, 175, 55, 0.05)' }}>
-        <div className="container">
-          <div style={styles.sectionHeader}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-gold)', marginBottom: '8px' }}>
-              <ShoppingBag size={18} />
-              <span style={{ fontSize: '0.85rem', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase' }}>
-                {language === 'en' ? "Premium Recommendations" : "توصياتنا الحصرية"}
-              </span>
-            </div>
-            <h2 style={styles.sectionTitle}>{t('prodSectionTitle')}</h2>
-            <p style={styles.sectionSubtitle}>{t('prodSectionSubtitle')}</p>
-          </div>
-
-          <div style={styles.productGrid} className="grid-3">
-            {filteredProducts.length > 0 ? (
-              filteredProducts.map(p => (
-                <div key={p.id} className="glass-panel" style={styles.productCard}>
-                  {/* Category Badge */}
-                  <span style={styles.productCategory}>
-                    {language === 'en' ? p.category : p.categoryAr}
-                  </span>
-
-                  {/* Icon illustration */}
-                  <div style={styles.productIconWrapper}>
-                    <span style={styles.productIcon}>{p.image}</span>
+                <div style={styles.amazonCardBody}>
+                  <span style={styles.amazonCategory}>{language === 'ar' ? p.categoryAr : p.category}</span>
+                  <h4 style={styles.amazonProductTitle}>{language === 'ar' ? p.titleAr : p.title}</h4>
+                  
+                  {/* Rating Stars Grid */}
+                  <div style={styles.ratingRow}>
+                    <div style={styles.stars}>
+                      {[...Array(5)].map((_, i) => (
+                        <Star 
+                          key={i} 
+                          size={10} 
+                          fill={i < Math.floor(p.rating) ? "var(--gold-primary)" : "none"} 
+                          color="var(--gold-primary)" 
+                        />
+                      ))}
+                    </div>
+                    <span style={styles.starsLabel}>{p.rating}</span>
                   </div>
 
-                  {/* Body details */}
-                  <div style={styles.productBody}>
-                    <h3 style={styles.productCardTitle}>
-                      {language === 'en' ? p.title : p.titleAr}
-                    </h3>
-                    <div style={styles.productAuthor}>{p.author}</div>
-                    
-                    {/* Stars */}
-                    <div style={styles.ratingWrapper}>
-                      <div style={styles.stars}>
-                        {[...Array(5)].map((_, i) => (
-                          <Star 
-                            key={i} 
-                            size={12} 
-                            fill={i < Math.floor(p.rating) ? "var(--gold-primary)" : "none"} 
-                            color="var(--gold-primary)" 
-                          />
-                        ))}
-                      </div>
-                      <span style={styles.ratingText}>{p.rating}</span>
-                      <span style={styles.reviewsText}>
-                        ({p.reviews} {p.reviews > 1 ? t('prodReviewsPlural') : t('prodReviewSingular')})
-                      </span>
-                    </div>
+                  <p style={styles.amazonDesc}>
+                    {language === 'ar' ? p.descriptionAr : p.description}
+                  </p>
 
-                    <p style={styles.productDesc}>
-                      {language === 'en' ? p.description : p.descriptionAr}
-                    </p>
+                  <div style={styles.amazonCardDivider}></div>
 
-                    <div style={styles.productDivider}></div>
-
-                    {/* Price and Action */}
-                    <div style={styles.productFooter}>
-                      <span style={styles.productPrice}>{p.price}</span>
-                      <a 
-                        href={p.link} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="btn-primary" 
-                        style={styles.acquireBtn}
-                      >
-                        <span>{t('prodBuyNow')}</span>
-                        <ArrowRight size={12} />
-                      </a>
-                    </div>
+                  <div style={styles.amazonFooter}>
+                    <span style={styles.amazonPrice}>{p.price}</span>
+                    <a 
+                      href={p.link} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="btn-primary" 
+                      style={styles.amazonBuyBtn}
+                    >
+                      <span>{language === 'ar' ? "أمازون" : "View"}</span>
+                      <ArrowRight size={10} />
+                    </a>
                   </div>
                 </div>
-              ))
-            ) : (
-              <div style={styles.noResults} className="glass-panel">
-                <span>{t('searchNoResults')}</span>
               </div>
-            )}
+            ))}
           </div>
-        </div>
-      </section>
+        </aside>
 
-      {/* NEW: Amazon Kindle E-Books & digital resources section! */}
-      <section style={{ ...styles.sectionPadding, borderBottom: '1px solid rgba(212, 175, 55, 0.05)' }}>
-        <div className="container">
-          <div style={styles.sectionHeader}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-gold)', marginBottom: '8px' }}>
-              <BookOpen size={18} style={{ marginRight: '4px', marginLeft: '4px' }} />
-              <span style={{ fontSize: '0.85rem', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase' }}>
-                {language === 'en' ? "E-Books & Learning Resources" : "الكتب الإلكترونية ومصادر التعلم"}
-              </span>
-            </div>
-            <h2 style={styles.sectionTitle}>
-              {language === 'en' ? "Islamic E-Books & Arabic Learning Materials" : "كتب إلكترونية إسلامية ومناهج تعليم العربية"}
-            </h2>
-            <p style={styles.sectionSubtitle}>
-              {language === 'en' ? "Carefully selected digital books, Hisn al-Muslim guides, and language root exercises for quick study." : "كتب ومراجع إلكترونية قيمة لتعليم اللغة العربية وتدبر معاني كلمات القرآن الكريم وقراءة الأذكار اليومية."}
-            </p>
-          </div>
-
-          <div style={styles.productGrid} className="grid-4">
-            {filteredEbooks.length > 0 ? (
-              filteredEbooks.map(eb => (
-                <div key={eb.id} className="glass-panel" style={styles.productCard}>
-                  <span style={styles.productCategory}>
-                    {language === 'en' ? eb.category : eb.categoryAr}
-                  </span>
-
-                  <div style={{ ...styles.productIconWrapper, height: '140px' }}>
-                    <span style={{ ...styles.productIcon, fontSize: '3.2rem' }}>{eb.image}</span>
-                  </div>
-
-                  <div style={styles.productBody}>
-                    <h3 style={{ ...styles.productCardTitle, fontSize: '0.95rem' }}>
-                      {language === 'en' ? eb.title : eb.titleAr}
-                    </h3>
-                    <div style={styles.productAuthor}>{eb.author}</div>
-                    
-                    <div style={styles.ratingWrapper}>
-                      <div style={styles.stars}>
-                        {[...Array(5)].map((_, i) => (
-                          <Star 
-                            key={i} 
-                            size={10} 
-                            fill={i < Math.floor(eb.rating) ? "var(--gold-primary)" : "none"} 
-                            color="var(--gold-primary)" 
-                          />
-                        ))}
-                      </div>
-                      <span style={{ ...styles.ratingText, fontSize: '0.75rem' }}>{eb.rating}</span>
-                    </div>
-
-                    <p style={{ ...styles.productDesc, fontSize: '0.78rem', marginTop: '8px' }}>
-                      {language === 'en' ? eb.description : eb.descriptionAr}
-                    </p>
-
-                    <div style={styles.productDivider}></div>
-
-                    <div style={styles.productFooter}>
-                      <span style={{ ...styles.productPrice, fontSize: '1.05rem' }}>{eb.price}</span>
-                      <a 
-                        href={eb.link} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="btn-primary" 
-                        style={{ ...styles.acquireBtn, padding: '6px 12px', fontSize: '0.75rem' }}
-                      >
-                        <span>{t('prodBuyNow')}</span>
-                        <ArrowRight size={10} />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div style={styles.noResults} className="glass-panel">
-                <span>{t('searchNoResults')}</span>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
+      </div>
 
     </div>
   );
 }
 
 const styles = {
-  heroSection: {
+  fbLayout: {
+    display: 'flex',
+    gap: '24px',
+    alignItems: 'flex-start',
+    width: '100%',
+    maxWidth: '1280px',
+    margin: '0 auto',
+    flexWrap: 'wrap',
+  },
+  leftCol: {
+    flex: '1 1 280px',
+    maxWidth: '320px',
+    padding: '24px 20px',
+    borderRadius: '20px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '20px',
     position: 'relative',
-    minHeight: '80vh',
+    overflow: 'hidden',
+  },
+  centerCol: {
+    flex: '2 1 600px',
+    maxWidth: '650px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '20px',
+  },
+  rightCol: {
+    flex: '1 1 280px',
+    maxWidth: '320px',
+    padding: '24px 20px',
+    borderRadius: '20px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '16px',
+  },
+  briefProfileRow: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '14px',
+    borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+    paddingBottom: '14px',
+    zIndex: 1,
+  },
+  briefAvatar: {
+    fontSize: '2.4rem',
+    background: 'rgba(212, 175, 55, 0.1)',
+    borderRadius: '50%',
+    width: '56px',
+    height: '56px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '80px 0',
-    background: 'radial-gradient(circle at 50% 30%, rgba(212, 175, 55, 0.05) 0%, var(--bg-primary) 70%)',
-    overflow: 'hidden',
+    border: '2px solid var(--gold-primary)',
   },
-  heroContainer: {
+  briefName: {
+    fontSize: '1.1rem',
+    fontWeight: '700',
+  },
+  briefRole: {
+    fontSize: '0.75rem',
+    color: 'var(--text-secondary)',
+    display: 'block',
+    marginTop: '2px',
+  },
+  pointsWidget: {
     display: 'flex',
-    flexDirection: 'column',
     alignItems: 'center',
-    textAlign: 'center',
+    gap: '12px',
+    padding: '12px 16px',
+    background: 'rgba(212, 175, 55, 0.05)',
+    border: '1px solid var(--border-gold)',
+    borderRadius: '12px',
     zIndex: 1,
-    maxWidth: '900px',
   },
-  heroBadge: {
+  widgetScoreText: {
+    fontSize: '1.4rem',
+    fontWeight: '800',
+    color: 'var(--text-gold)',
+    lineHeight: '1.1',
+  },
+  widgetLabel: {
+    fontSize: '0.78rem',
+    color: 'var(--text-secondary)',
+  },
+  sidebarSectionTitle: {
+    fontSize: '0.85rem',
+    fontWeight: '700',
+    color: 'var(--text-gold)',
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-    padding: '8px 16px',
-    background: 'rgba(212, 175, 55, 0.04)',
-    border: '1px solid var(--border-gold)',
-    borderRadius: '30px',
-    fontSize: '0.8rem',
-    color: 'var(--text-gold)',
-    marginBottom: '28px',
+    textTransform: 'uppercase',
     letterSpacing: '0.5px',
+    marginBottom: '10px',
   },
-  heroTitle: {
-    fontFamily: "'Playfair Display', serif",
-    fontSize: '3.6rem',
-    lineHeight: '1.25',
+  goalsContainer: {
+    borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+    paddingBottom: '16px',
+    zIndex: 1,
+  },
+  goalsList: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '14px',
+  },
+  goalItem: {
+    cursor: 'pointer',
+  },
+  goalMetaRow: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    fontSize: '0.8rem',
+    marginBottom: '6px',
+  },
+  goalLabel: {
+    fontWeight: '500',
+    fontSize: '0.78rem',
+  },
+  goalPoints: {
+    color: 'var(--text-gold)',
+    fontWeight: '600',
+    fontSize: '0.75rem',
+  },
+  progressBarBg: {
+    background: 'rgba(255, 255, 255, 0.03)',
+    borderRadius: '4px',
+    height: '6px',
+    width: '100%',
+    overflow: 'hidden',
+  },
+  progressBarFill: {
+    height: '100%',
+    borderRadius: '4px',
+    transition: 'width 0.5s ease',
+  },
+  badgesWidget: {
+    borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+    paddingBottom: '16px',
+    zIndex: 1,
+  },
+  badgeEmojisRow: {
+    display: 'flex',
+    gap: '10px',
+    flexWrap: 'wrap',
+  },
+  badgeBubble: {
+    width: '42px',
+    height: '42px',
+    borderRadius: '50%',
+    background: 'rgba(255,255,255,0.01)',
+    border: '1px solid',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '1.25rem',
+    cursor: 'help',
+    transition: 'all 0.3s ease',
+  },
+  botsContainer: {
+    zIndex: 1,
+  },
+  botsList: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px',
+  },
+  botRow: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+  },
+  botAvatar: {
+    fontSize: '1.4rem',
+    width: '32px',
+    height: '32px',
+    background: 'rgba(255,255,255,0.02)',
+    borderRadius: '50%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  botName: {
+    fontSize: '0.82rem',
+    fontWeight: '600',
     color: 'var(--text-primary)',
-    fontWeight: '400',
-    marginBottom: '20px',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
-  heroSubtitle: {
-    fontSize: '1.1rem',
-    color: 'var(--text-secondary)',
-    maxWidth: '700px',
-    lineHeight: '1.7',
-    marginBottom: '36px',
+  botSub: {
+    fontSize: '0.7rem',
+    color: 'var(--text-muted)',
+    display: 'block',
   },
-  heroActions: {
+  botAddBtn: {
+    border: '1px solid',
+    borderRadius: '6px',
+    width: '24px',
+    height: '24px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+    fontSize: '0.78rem',
+    fontWeight: 'bold',
+    transition: 'all 0.2s ease',
+  },
+  friendCheck: {
+    color: 'var(--text-gold)',
+    fontWeight: 'bold',
+    fontSize: '0.8rem',
+    paddingRight: '6px',
+  },
+  publishBox: {
+    padding: '20px',
+    borderRadius: '16px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px',
+  },
+  publishTitle: {
+    fontSize: '0.95rem',
+    fontWeight: '600',
+    color: 'var(--text-gold)',
+  },
+  publishForm: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px',
+  },
+  publishArea: {
+    background: 'rgba(255,255,255,0.01)',
+    border: '1px solid var(--border-gold)',
+    borderRadius: '10px',
+    padding: '12px',
+    color: 'var(--text-primary)',
+    fontSize: '0.9rem',
+    outline: 'none',
+    resize: 'none',
+    width: '100%',
+    fontFamily: 'inherit',
+  },
+  publishFooter: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  publishWordCount: {
+    fontSize: '0.75rem',
+    color: 'var(--text-muted)',
+  },
+  publishSubmitBtn: {
+    padding: '8px 18px',
+    fontSize: '0.85rem',
+  },
+  feedList: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '20px',
+  },
+  feedCard: {
+    padding: '24px',
+    borderRadius: '16px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px',
+  },
+  feedCardHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+  },
+  feedCardAvatar: {
+    fontSize: '1.8rem',
+    background: 'rgba(255,255,255,0.02)',
+    borderRadius: '50%',
+    width: '42px',
+    height: '42px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  feedCardAuthor: {
+    fontWeight: '700',
+    fontSize: '0.95rem',
+    color: 'var(--text-primary)',
+  },
+  teacherBadge: {
+    background: 'rgba(212,175,55,0.1)',
+    border: '1px solid var(--border-gold)',
+    borderRadius: '12px',
+    padding: '2px 8px',
+    fontSize: '0.7rem',
+    color: 'var(--text-gold)',
+    fontWeight: '700',
+  },
+  feedCardTime: {
+    fontSize: '0.75rem',
+    color: 'var(--text-muted)',
+    display: 'block',
+  },
+  feedCardText: {
+    fontSize: '0.9rem',
+    lineHeight: '1.6',
+    color: 'var(--text-primary)',
+    whiteSpace: 'pre-line',
+  },
+  feedCardDivider: {
+    height: '1px',
+    background: 'rgba(255,255,255,0.05)',
+  },
+  feedActions: {
     display: 'flex',
     gap: '20px',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
   },
-  sectionPadding: {
-    padding: '80px 0',
-    position: 'relative',
-  },
-  sectionHeader: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    textAlign: 'center',
-    maxWidth: '700px',
-    margin: '0 auto',
-  },
-  sectionTitle: {
-    fontFamily: "'Playfair Display', serif",
-    fontSize: '2rem',
-    color: 'var(--text-primary)',
-    fontWeight: '600',
-  },
-  sectionSubtitle: {
-    fontSize: '0.95rem',
-    color: 'var(--text-secondary)',
-    marginTop: '10px',
-  },
-  featCard: {
-    padding: '40px 24px',
-    textAlign: 'center',
-    cursor: 'pointer',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: '16px',
-  },
-  featIconWrapper: {
-    width: '60px',
-    height: '60px',
-    borderRadius: '50%',
-    background: 'rgba(212, 175, 55, 0.05)',
-    border: '1px solid var(--border-gold)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    transition: 'var(--transition-smooth)',
-  },
-  featCardTitle: {
-    fontSize: '1.15rem',
-    color: 'var(--text-gold)',
-    fontWeight: '600',
-  },
-  featCardDesc: {
-    fontSize: '0.85rem',
-    color: 'var(--text-secondary)',
-    lineHeight: '1.6',
-  },
-  productGrid: {
-    marginTop: '50px',
-  },
-  productCard: {
-    display: 'flex',
-    flexDirection: 'column',
-    overflow: 'hidden',
-    position: 'relative',
-    height: '100%',
-  },
-  productCategory: {
-    position: 'absolute',
-    top: '16px',
-    left: '16px',
-    background: 'rgba(212, 175, 55, 0.1)',
-    border: '1px solid var(--border-gold)',
-    color: 'var(--text-gold)',
-    fontSize: '0.75rem',
-    padding: '4px 10px',
-    borderRadius: '20px',
-    fontWeight: '600',
-  },
-  productIconWrapper: {
-    height: '180px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    background: 'radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%)',
-    borderBottom: '1px solid rgba(255, 255, 255, 0.03)',
-  },
-  productIcon: {
-    fontSize: '4.5rem',
-    filter: 'drop-shadow(0 8px 16px rgba(212, 175, 55, 0.2))',
-  },
-  productBody: {
-    padding: '24px',
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-  },
-  productCardTitle: {
-    fontSize: '1.1rem',
-    color: 'var(--text-primary)',
-    fontWeight: '600',
-    lineHeight: '1.4',
-  },
-  productAuthor: {
-    fontSize: '0.8rem',
-    color: 'var(--text-gold)',
-    marginTop: '4px',
-    fontWeight: '500',
-  },
-  ratingWrapper: {
+  feedActionBtn: {
+    background: 'none',
+    border: 'none',
     display: 'flex',
     alignItems: 'center',
     gap: '6px',
+    fontSize: '0.8rem',
+    cursor: 'pointer',
+    transition: 'all 0.2s ease',
+  },
+  commentSectionBg: {
+    background: 'rgba(255,255,255,0.01)',
+    borderRadius: '12px',
+    padding: '12px',
     marginTop: '8px',
+  },
+  commentsList: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px',
+    marginBottom: '10px',
+    maxHeight: '200px',
+    overflowY: 'auto',
+  },
+  commentBubbleRow: {
+    display: 'flex',
+    gap: '10px',
+    alignItems: 'flex-start',
+  },
+  commentAvatar: {
+    fontSize: '1.1rem',
+    background: 'rgba(255,255,255,0.02)',
+    borderRadius: '50%',
+    width: '28px',
+    height: '28px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  commentTextCard: {
+    background: 'rgba(255,255,255,0.02)',
+    borderRadius: '12px',
+    padding: '8px 12px',
+    flexGrow: 1,
+  },
+  commentAuthorName: {
+    fontSize: '0.78rem',
+    fontWeight: '700',
+    color: 'var(--text-gold)',
+  },
+  commentBubbleText: {
+    fontSize: '0.82rem',
+    color: 'var(--text-primary)',
+    marginTop: '2px',
+  },
+  commentInputRow: {
+    display: 'flex',
+    gap: '8px',
+    borderTop: '1px solid rgba(255,255,255,0.05)',
+    paddingTop: '10px',
+  },
+  commentInputBox: {
+    flexGrow: 1,
+    background: 'rgba(0,0,0,0.2)',
+    border: '1px solid var(--border-gold)',
+    borderRadius: '8px',
+    padding: '8px 12px',
+    color: 'var(--text-primary)',
+    fontSize: '0.8rem',
+    outline: 'none',
+  },
+  commentSendBtn: {
+    background: 'rgba(212,175,55,0.1)',
+    border: '1px solid var(--border-gold)',
+    borderRadius: '8px',
+    width: '32px',
+    height: '32px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+  },
+  newsCard: {
+    padding: '20px',
+    borderRadius: '16px',
+    borderLeft: '4px solid var(--gold-primary)',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px',
+  },
+  newsBadge: {
+    alignSelf: 'flex-start',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '6px',
+    background: 'rgba(212,175,55,0.08)',
+    border: '1px solid var(--border-gold)',
+    borderRadius: '12px',
+    padding: '3px 8px',
+    fontSize: '0.72rem',
+    color: 'var(--text-gold)',
+    fontWeight: '600',
+  },
+  newsCardTitle: {
+    fontSize: '1.05rem',
+    fontWeight: '700',
+    color: 'var(--text-primary)',
+    lineHeight: '1.4',
+  },
+  newsCardText: {
+    fontSize: '0.88rem',
+    color: 'var(--text-secondary)',
+    lineHeight: '1.5',
+  },
+  newsCardFooter: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    fontSize: '0.75rem',
+    color: 'var(--text-muted)',
+    borderTop: '1px solid rgba(255,255,255,0.03)',
+    paddingTop: '10px',
+  },
+  newsSource: {
+    fontStyle: 'italic',
+  },
+  newsReactText: {
+    fontWeight: '600',
+  },
+  articleCard: {
+    padding: '20px',
+    borderRadius: '16px',
+    cursor: 'pointer',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px',
+    transition: 'all 0.3s ease',
+  },
+  articleCardCategory: {
+    alignSelf: 'flex-start',
+    fontSize: '0.7rem',
+    background: 'rgba(255,255,255,0.03)',
+    border: '1px solid rgba(255,255,255,0.05)',
+    borderRadius: '10px',
+    padding: '2px 8px',
+    color: 'var(--text-secondary)',
+    textTransform: 'uppercase',
+  },
+  articleCardTitle: {
+    fontSize: '1.1rem',
+    fontWeight: '700',
+    lineHeight: '1.4',
+  },
+  articleCardDesc: {
+    fontSize: '0.85rem',
+    color: 'var(--text-secondary)',
+    lineHeight: '1.5',
+  },
+  articleFooter: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderTop: '1px solid rgba(255,255,255,0.03)',
+    paddingTop: '10px',
+    fontSize: '0.78rem',
+  },
+  articleAuthorRow: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+  },
+  articleAvatar: {
+    fontSize: '1.1rem',
+  },
+  articleAuthor: {
+    color: 'var(--text-primary)',
+    fontWeight: '600',
+  },
+  articleTimeBadge: {
+    color: 'var(--text-gold)',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+    fontWeight: '600',
+  },
+  storeHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+    borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+    paddingBottom: '10px',
+  },
+  rightColTitle: {
+    fontSize: '0.95rem',
+    fontWeight: '700',
+    color: 'var(--text-gold)',
+  },
+  storeSubtitle: {
+    fontSize: '0.78rem',
+    color: 'var(--text-secondary)',
+    lineHeight: '1.4',
+    marginBottom: '8px',
+  },
+  amazonList: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '16px',
+  },
+  amazonCard: {
+    borderRadius: '14px',
+    overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  amazonImageWrapper: {
+    height: '110px',
+    background: 'radial-gradient(circle, rgba(212,175,55,0.06) 0%, rgba(255,255,255,0.01) 100%)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderBottom: '1px solid rgba(255,255,255,0.03)',
+  },
+  amazonEmoji: {
+    fontSize: '2.8rem',
+  },
+  amazonCardBody: {
+    padding: '12px 14px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '6px',
+  },
+  amazonCategory: {
+    fontSize: '0.68rem',
+    color: 'var(--text-muted)',
+    textTransform: 'uppercase',
+  },
+  amazonProductTitle: {
+    fontSize: '0.82rem',
+    fontWeight: '700',
+    color: 'var(--text-primary)',
+    lineHeight: '1.35',
+    maxHeight: '34px',
+    overflow: 'hidden',
+  },
+  ratingRow: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '6px',
   },
   stars: {
     display: 'flex',
     gap: '2px',
   },
-  ratingText: {
-    fontSize: '0.8rem',
-    fontWeight: '600',
-    color: 'var(--text-primary)',
-  },
-  reviewsText: {
-    fontSize: '0.75rem',
-    color: 'var(--text-muted)',
-  },
-  productDesc: {
-    fontSize: '0.85rem',
-    color: 'var(--text-secondary)',
-    lineHeight: '1.6',
-    marginTop: '12px',
-    flexGrow: 1,
-  },
-  productDivider: {
-    height: '1px',
-    background: 'rgba(255, 255, 255, 0.05)',
-    margin: '18px 0',
-  },
-  productFooter: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  productPrice: {
-    fontSize: '1.25rem',
+  starsLabel: {
+    fontSize: '0.72rem',
+    color: 'var(--text-gold)',
     fontWeight: '700',
+  },
+  amazonDesc: {
+    fontSize: '0.74rem',
+    color: 'var(--text-secondary)',
+    lineHeight: '1.4',
+    maxHeight: '52px',
+    overflow: 'hidden',
+  },
+  amazonCardDivider: {
+    height: '1px',
+    background: 'rgba(255,255,255,0.03)',
+    margin: '4px 0',
+  },
+  amazonFooter: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  amazonPrice: {
+    fontSize: '1rem',
+    fontWeight: '800',
     color: 'var(--text-primary)',
   },
-  acquireBtn: {
-    padding: '8px 16px',
-    fontSize: '0.8rem',
-  },
-  noResults: {
-    gridColumn: '1 / -1',
-    padding: '40px',
-    textAlign: 'center',
-    color: 'var(--text-secondary)',
+  amazonBuyBtn: {
+    padding: '4px 10px',
+    fontSize: '0.7rem',
+    borderRadius: '6px',
   }
 };
-
-if (typeof document !== 'undefined') {
-  const homeStyle = document.createElement('style');
-  homeStyle.innerHTML = `
-    @media (max-width: 768px) {
-      .home-page [style*="heroTitle"] {
-        font-size: 2.2rem !important;
-      }
-      .home-page [style*="heroSubtitle"] {
-        font-size: 0.95rem !important;
-      }
-      .home-page [style*="sectionTitle"] {
-        font-size: 1.6rem !important;
-      }
-    }
-    .text-center-hover:hover [style*="featIconWrapper"] {
-      transform: scale(1.1);
-      background: rgba(212, 175, 55, 0.15);
-      box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-    }
-    [dir="rtl"] .home-page [style*="productCategory"] {
-      left: auto !important;
-      right: 16px !important;
-    }
-  `;
-  document.head.appendChild(homeStyle);
-}
