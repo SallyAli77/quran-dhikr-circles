@@ -138,7 +138,7 @@ const categoriesTemplate = [
 ];
 
 // Dynamically generate exactly 120 high-quality articles with extensive paragraphs
-const getExtendedContent = (index, titleEn, titleAr) => {
+const generate120Articles = () => {
   const topics = [
     {
       en: `The concept of Ihsan (excellence/perfection) represents the pinnacle of a Muslim's faith journey. In the famous Hadith of Jibril, the Prophet Muhammad (pbuh) defined Ihsan as "to worship Allah as if you see Him, and if you cannot see Him, know that He sees you." This dual-layered consciousness reshapes all aspects of human behavior.
