@@ -187,7 +187,7 @@ export default function Home({ setActivePage }) {
             <Award size={20} color="var(--text-gold)" />
             <div>
               <span style={styles.widgetScoreText}>{dailyScore}</span>
-              <span style={styles.widgetLabel}> {language === 'ar' ? "نقاط السكور اليومي" : "Daily Score Points"}</span>
+              <span style={styles.widgetLabel}> {language === 'ar' ? "النقاط اليومية" : "Daily Score Points"}</span>
             </div>
           </div>
 

@@ -8,38 +8,216 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-// Rigorous 30 Quran Memorization (Hifz) Questions
+// Rigorous 30 Quran Memorization (Hifz) Questions tagged with correct Juz' numbers
 const certificationQuestions = [
-  { q: "What is the verse that comes immediately after: 'And the stupor of death will bring the truth...'?", qAr: "ما هي الآية التالية للآية الكريمة: (وجاءت سكرة الموت بالحق...)؟", options: ["ذلك ما كنت منه تحيد (Kaf: 19)", "ونفخ في الصور ذلك يوم الوعيد", "وجاءت كل نفس معها سائق وشهيد", "لقد كنت في غفلة من هذا"], correctIndex: 0 },
-  { q: "In which Surah is this verse located: 'Indeed, this Qur'an guides to that which is most suitable...'?", qAr: "في أي سورة وردت الآية الكريمة: (إن هذا القرآن يهدي للتي هي أقوم...)؟", options: ["سورة الكهف (Al-Kahf)", "سورة الإسراء (Al-Isra)", "سورة مريم (Maryam)", "سورة يونس (Yunus)"], correctIndex: 1 },
-  { q: "What is the verse that comes immediately after: 'Allah is the Light of the heavens and the earth...'?", qAr: "ما هي الآية التالية للآية الكريمة: (الله نور السموات والأرض...)؟", options: ["مثل نوره كمشكاة فيها مصباح (An-Nur: 35)", "في بيوت أذن الله أن ترفع ويذكر فيها اسمه", "رجال لا تلهيهم تجارة ولا بيع عن ذكر الله", "يسبح له فيها بالغدو والآصال"], correctIndex: 0 },
-  { q: "In which Surah is this verse located: 'Approached for the people their account, while they are in heedlessness...'?", qAr: "في أي سورة وردت الآية الكريمة: (اقترب للناس حسابهم وهم في غفلة معرضون...)؟", options: ["سورة الأنبياء (Al-Anbiya)", "سورة الحج (Al-Hajj)", "سورة المؤمنون (Al-Muminun)", "سورة طه (Ta-Ha)"], correctIndex: 0 },
-  { q: "What is the verse that comes immediately after: 'The Most Merciful • Taught the Qur'an...'?", qAr: "ما هي الآية التالية للآية الكريمة: (الرحمن • علم القرآن...)؟", options: ["خلق الإنسان (Ar-Rahman: 3)", "علمه البيان", "الشمس والقمر بحسبان", "والنجم والشجر يسجدان"], correctIndex: 0 },
-  { q: "In which Surah is this verse located: 'O you who have believed, decreed upon you is fasting as it was decreed upon those before you...'?", qAr: "في أي سورة وردت الآية الكريمة: (يا أيها الذين آمنوا كتب عليكم الصيام كما كتب على الذين من قبلكم...)؟", options: ["سورة آل عمران (Ali 'Imran)", "سورة البقرة (Al-Baqarah)", "سورة النساء (An-Nisa)", "سورة المائدة (Al-Ma'idah)"], correctIndex: 1 },
-  { q: "What is the verse that comes immediately after: 'Every soul will taste death, and you will only be given your full compensation on the Day of Resurrection...'?", qAr: "ما هي الآية التالية للآية الكريمة: (كل نفس ذائقة الموت وإنما توفون أجوركم يوم القيامة...)؟", options: ["فمن زحزح عن النار وأدخل الجنة فقد فاز (Ali 'Imran: 185)", "وما الحياة الدنيا إلا متاع الغرور", "لتبلون في أموالكم وأنفسكم", "ولتسمعن من الذين أوتوا الكتاب"], correctIndex: 0 },
-  { q: "In which Surah is this verse located: 'And your Lord has decreed that you not worship except Him, and to parents, good treatment...'?", qAr: "في أي سورة وردت الآية الكريمة: (وقضى ربك ألا تعبدوا إلا إياه وبالوالدين إحساناً...)؟", options: ["سورة الإسراء (Al-Isra)", "سورة النحل (An-Nahl)", "سورة القصص (Al-Qasas)", "سورة لقمان (Luqman)"], correctIndex: 0 },
-  { q: "What is the verse that comes immediately after: 'O reassured soul...'?", qAr: "ما هي الآية التالية للآية الكريمة: (يا أيها النفس المطمئنة...)؟", options: ["ارجعي إلى ربك راضية مرضية (Al-Fajr: 28)", "فادخلي في عبادي", "وادخلي جنتي", "يومئذ يتذكر الإنسان وأنى له الذكرى"], correctIndex: 0 },
-  { q: "In which Surah is this verse located: 'Successful are the believers • Those who are humble in their prayers...'?", qAr: "في أي سورة وردت الآية الكريمة: (قد أفلح المؤمنون • الذين هم في صلاتهم خاشعون...)؟", options: ["سورة المؤمنون (Al-Muminun)", "سورة النور (An-Nur)", "سورة الفرقان (Al-Furqan)", "سورة السجدة (As-Sajdah)"], correctIndex: 0 },
-  { q: "What is the verse that comes immediately after: 'Blessed is He in whose hand is the dominion, and He is over all things competent...'?", qAr: "ما هي الآية التالية للآية الكريمة: (تبارك الذي بيده الملك وهو على كل شيء قدير...)؟", options: ["الذي خلق الموت والحياة ليبلوكم أيكم أحسن عملاً (Al-Mulk: 2)", "الذي خلق سبع سموات طباقاً", "ما ترى في خلق الرحمن من تفاوت", "ثم ارجع البصر كرتين ينقلب إليك البصر خاسئاً"], correctIndex: 0 },
-  { q: "In which Surah is this verse located: 'Say, O My servants who have transgressed against themselves, do not despair of the mercy of Allah...'?", qAr: "في أي سورة وردت الآية الكريمة: (قل يا عبادي الذين أسرفوا على أنفسهم لا تقنطوا من رحمة الله...)؟", options: ["سورة الزمر (Az-Zumar)", "سورة غافر (Ghafir)", "سورة فصلت (Fussilat)", "سورة الشورى (Ash-Shura)"], correctIndex: 0 },
-  { q: "What is the verse that comes immediately after: 'When the victory of Allah has come and the conquest...'?", qAr: "ما هي الآية التالية للآية الكريمة: (إذا جاء نصر الله والفتح...)؟", options: ["ورأيت الناس يدخلون في دين الله أفواجاً (An-Nasr: 2)", "فسبح بحمد ربك واستغفره", "إنه كان تواباً", "تبت يدا أبي لهب وتب"], correctIndex: 0 },
-  { q: "In which Surah is this verse located: 'And recite to them the news of Noah, when he said to his people: O my people, if my residence has become burdensome to you...'?", qAr: "في أي سورة وردت الآية الكريمة: (واتل عليهم نبأ نوح إذ قال لقومه يا قوم إن كان كبر عليكم مقامي...)؟", options: ["سورة يونس (Yunus)", "سورة هود (Hud)", "سورة يوسف (Yusuf)", "سورة الأعراف (Al-A'raf)"], correctIndex: 0 },
-  { q: "What is the verse that comes immediately after: 'About what are they asking one another? • About the great news...'?", qAr: "ما هي الآية التالية للآية الكريمة: (عم يتساءلون • عن النبأ العظيم...)؟", options: ["الذي هم فيه مختلفون (An-Naba: 3)", "كلا سيعلمون", "ثم كلا سيعلمون", "ألم نجعل الأرض مهاداً"], correctIndex: 0 },
-  { q: "In which Surah is this verse located: 'We will show them Our signs in the horizons and within themselves until it becomes clear to them that it is the truth...'?", qAr: "في أي سورة وردت الآية الكريمة: (سنريهم آياتنا في الآفاق وفي أنفسهم حتى يتبين لهم أنه الحق...)؟", options: ["سورة فصلت (Fussilat)", "سورة غافر (Ghafir)", "سورة السجدة (As-Sajdah)", "سورة يس (Ya-Sin)"], correctIndex: 0 },
-  { q: "What is the verse that comes immediately after: 'Say, He is Allah, [who is] One • Allah, the Eternal Refuge...'?", qAr: "ما هي الآية التالية للآية الكريمة: (قل هو الله أحد • الله الصمد...)؟", options: ["لم يلد ولم يولد (Al-Ikhlas: 3)", "ولم يكن له كفواً أحد", "من شر ما خلق", "ومن شر غاسق إذا وقب"], correctIndex: 0 },
-  { q: "In which Surah is this verse located: 'O you who have believed, avoid much [negative] assumption; indeed, some assumption is sin...'?", qAr: "في أي سورة وردت الآية الكريمة: (يا أيها الذين آمنوا اجتنبوا كثيراً من الظن إن بعض الظن إثم...)؟", options: ["سورة الحجرات (Al-Hujurat)", "سورة المجادلة (Al-Mujadilah)", "سورة الممتحنة (Al-Mumtahanah)", "سورة الفتح (Al-Fath)"], correctIndex: 0 },
-  { q: "What is the verse that comes immediately after: 'Indeed, the righteous will be among gardens and springs...'?", qAr: "ما هي الآية التالية للآية الكريمة: (إن المتقين في جنات وعيون...)؟", options: ["آخذين ما آتاهم ربهم إنهم كانوا قبل ذلك محسنين (Adh-Dhariyat: 16)", "كانوا قليلاً من الليل ما يهجعون", "وبالأسحار هم يستغفرون", "وفي أموالهم حق للسائل والمحروم"], correctIndex: 0 },
-  { q: "In which Surah is this verse located: 'O mankind, fear your Lord. Indeed, the convulsion of the [final] Hour is a grave thing...'?", qAr: "في أي سورة وردت الآية الكريمة: (يا أيها الناس اتقوا ربكم إن زلزلة الساعة شيء عظيم...)؟", options: ["سورة الحج (Al-Hajj)", "سورة الأنبياء (Al-Anbiya)", "سورة المؤمنون (Al-Muminun)", "سورة الزمر (Az-Zumar)"], correctIndex: 0 },
-  { q: "What is the verse that comes immediately after: 'Ya, Seen • By the wise Qur'an...'?", qAr: "ما هي الآية التالية للآية الكريمة: (يس • والقرآن الحكيم...)؟", options: ["إنك لمن المرسلين (Ya-Sin: 3)", "على صراط مستقيم", "تنزيل العزيز الرحيم", "لتنذر قوماً ما أنذر آباؤهم"], correctIndex: 0 },
-  { q: "In which Surah is this verse located: 'And of His signs is the creation of the heavens and the earth and the diversity of your languages and your colors...'?", qAr: "في أي سورة وردت الآية الكريمة: (ومن آياته خلق السموات والأرض واختلاف ألسنتكم وألوانكم...)؟", options: ["سورة الروم (Ar-Rum)", "سورة لقمان (Luqman)", "سورة السجدة (As-Sajdah)", "سورة فاطر (Fatir)"], correctIndex: 0 },
-  { q: "What is the verse that comes immediately after: 'Indeed, Allah and His angels confer blessing upon the Prophet...'?", qAr: "ما هي الآية التالية للآية الكريمة: (إن الله وملائكته يصلون على النبي...)؟", options: ["يا أيها الذين آمنوا صلوا عليه وسلموا تسليماً (Al-Ahzab: 56)", "إن الذين يؤذون الله ورسوله لعنهم الله", "والذين يؤذون المؤمنين والمؤمنات بغير ما اكتسبوا", "يا أيها النبي قل لأزواجك وبناتك"], correctIndex: 0 },
-  { q: "In which Surah is this verse located: 'And We made from water every living thing. Then will they not believe...'?", qAr: "في أي سورة وردت الآية الكريمة: (وجعلنا من الماء كل شيء حي أفلا يؤمنون...)؟", options: ["سورة الأنبياء (Al-Anbiya)", "سورة الحجر (Al-Hijr)", "سورة الرعد (Ar-Rad)", "سورة النمل (An-Naml)"], correctIndex: 0 },
-  { q: "What is the verse that comes immediately after: 'Then which of the favors of your Lord will you deny? • He created man from clay like [that of] pottery...'?", qAr: "ما هي الآية التالية للآية الكريمة: (فبأي آلاء ربكما تكذبان • خلق الإنسان من صلصال كالفخار...)؟", options: ["وخلق الجان من مارج من نار (Ar-Rahman: 15)", "رب المشرقين ورب المغربين", "مرج البحرين يلتقيان", "بينهما برزخ لا يبغيان"], correctIndex: 0 },
-  { q: "In which Surah is this verse located: 'Allah will raise those who have believed among you and those who were given knowledge, by degrees...'?", qAr: "في أي سورة وردت الآية الكريمة: (يرفع الله الذين آمنوا منكم والذين أوتوا العلم درجات...)؟", options: ["سورة المجادلة (Al-Mujadilah)", "سورة الحشر (Al-Hashr)", "سورة الجمعة (Al-Jumu'ah)", "سورة الصف (As-Saff)"], correctIndex: 0 },
-  { q: "What is the verse that comes immediately after: 'He is the One who has sent His Messenger with guidance and the religion of truth to manifest it over all religion...'?", qAr: "ما هي الآية التالية للآية الكريمة: (هو الذي أرسل رسوله بالهدى ودين الحق ليظهره على الدين كله...)؟", options: ["ولو كره المشركون (As-Saff: 9)", "وكفى بالله شهيداً", "محمد رسول الله", "والذين معه أشداء على الكفار"], correctIndex: 0 },
-  { q: "In which Surah is this verse located: 'And if whatever trees on earth were pens and the ocean were ink, replenished thereafter by seven more oceans...'?", qAr: "في أي سورة وردت الآية الكريمة: (ولو أنما في الأرض من شجرة أقلام والبحر يمده من بعده سبعة أبحر...)؟", options: ["سورة لقمان (Luqman)", "سورة النمل (An-Naml)", "سورة العنكبوت (Al-Ankabut)", "سورة الروم (Ar-Rum)"], correctIndex: 0 },
-  { q: "What is the verse that comes immediately after: 'And We have sent down blessed rain from the sky and made grow thereby gardens...'?", qAr: "ما هي الآية التالية للآية الكريمة: (ونزلنا من السماء ماء مباركاً فأنبتنا به جنات...)؟", options: ["وحب الحصيد (Qaf: 9)", "والنخل باسقات لها طلع نضيد", "رزقاً للعباد وأحيينا به بلدة ميتاً", "كذلك الخروج"], correctIndex: 0 },
-  { q: "In which Surah is this verse located: 'And have you seen the water that you drink? • Is it you who brought it down from the rain clouds, or is it We who bring it down...'?", qAr: "في أي سورة وردت الآية الكريمة: (أفرأيتم الماء الذي تشربون • أأنتم أنزلتموه من المزن أم نحن المنزلون...)؟", options: ["سورة الواقعة (Al-Waqi'ah)", "سورة الطور (At-Tur)", "سورة النجم (An-Najm)", "سورة الرحمن (Ar-Rahman)"], correctIndex: 0 }
+  { 
+    q: "What is the verse that comes immediately after: 'The path of those upon whom You have bestowed favor, not of those who have evoked [Your] anger or of those who are astray.'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (صراط الذين أنعمت عليهم غير المغضوب عليهم ولا الضالين)؟", 
+    options: ["(الله لا إله إلا هو الحي القيوم)", "(الم • ذلك الكتاب لا ريب فيه هدى للمتقين)", "(يا أيها الناس اعبدوا ربكم الذي خلقكم)", "(وإذ قال ربك للملائكة إني جاعل في الأرض خليفة)"], 
+    correctIndex: 1,
+    juz: 1
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'The foolish among the people will say, What has turned them away from their Qiblah which they used to face?'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (سيقول السفهاء من الناس ما ولاهم عن قبلتهم التي كانوا عليها...)؟", 
+    options: ["(وكذلك جعلناكم أمة وسطاً لتكونوا شهداء على الناس)", "(قد نرى تقلب وجهك في السماء)", "(ولئن أتيت الذين أوتوا الكتاب بكل آية ما تبعوا قبلتك)", "(قل لله المشرق والمغرب يهدي من يشاء إلى صراط مستقيم)"], 
+    correctIndex: 3,
+    juz: 2
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'Allah - there is no deity except Him, the Ever-Living, the Sustainer of [all] existence...'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (الله لا إله إلا هو الحي القيوم لا تأخذه سنة ولا نوم...)؟", 
+    options: ["(له ما في السموات وما في الأرض من ذا الذي يشفع عنده إلا بإذنه)", "(لا إكراه في الدين قد تبين الرشد من الغي)", "(الله ولي الذين آمنوا يخرجهم من الظلمات إلى النور)", "(ألم تر إلى الذي حاج إبراهيم في ربه)"], 
+    correctIndex: 0,
+    juz: 3
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'All food was lawful to the Children of Israel except what Israel had made unlawful to himself...'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (كل الطعام كان حلاً لبني إسرائيل إلا ما حرم إسرائيل على نفسه...)؟", 
+    options: ["(فمن افترى على الله الكذب من بعد ذلك)", "(قل صدق الله فاتبعوا ملة إبراهيم حنيفاً)", "(من قبل أن تنزل التوراة قل فأتوا بالتوراة فاتلوها إن كنتم صادقين)", "(إن أول بيت وضع للناس للذي ببكة مباركاً)"], 
+    correctIndex: 2,
+    juz: 4
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'Worship Allah and associate nothing with Him, and to parents do good...'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (واعبدوا الله ولا تشركوا به شيئاً وبالوالدين إحساناً...)؟", 
+    options: ["(إن الله لا يظلم مثقال ذرة)", "(وبذي القربى واليتامى والمساكين والجار ذي القربى والجار الجنب والجار الجنب والصاحب بالجنب وبن السبيل...)", "(الذين يبخلون ويأمرون الناس بالبخل)", "(وماذا عليهم لو آمنوا بالله واليوم الآخر)"], 
+    correctIndex: 1,
+    juz: 5
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'O you who have believed, fulfill [all] contracts. Lawful for you are the animals of grazing livestock...'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (يا أيها الذين آمنوا أوفوا بالعقود أحلت لكم بهيمة الأنعام...)؟", 
+    options: ["(يا أيها الذين آمنوا لا تحلوا شعائر الله)", "(اليوم أكملت لكم دينكم وأتممت عليكم نعمتي)", "(إلا ما يتلى عليكم غير محلي الصيد وأنتم حرم إن الله يحكم ما يريد)", "(يسألونك ماذا أحل لهم قل أحل لكم الطيبات)"], 
+    correctIndex: 2,
+    juz: 6
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'You will surely find the strongest of all people in enmity toward the believers to be the Jews and those who associate others with Allah...'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (لتجدن أشد الناس عداوة للذين آمنوا اليهود والذين أشركوا...)؟", 
+    options: ["(لتجدن أقربهم مودة للذين آمنوا الذين قالوا إنا نصارى)", "(وإذا سمعوا ما أنزل إلى الرسول ترى أعينهم تفيض من الدمع)", "(يقولون ربنا آمنا فاكتبنا مع الشاهدين)", "(وما لنا لا نؤمن بالله وما جاءنا من الحق)"], 
+    correctIndex: 0,
+    juz: 7
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'And even if We had sent down to them the angels and the dead spoke to them and We gathered together every thing before them...'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (ولو أننا نزلنا إليهم الملائكة وكلمهم الموتى وحشرنا عليهم كل شيء قبلاً...)؟", 
+    options: ["(وكذلك جعلنا لكل نبي عدواً شياطين الإنس والجن)", "(يوحي بعضهم إلى بعض زخرف القول غروراً)", "(ما كانوا ليؤمنوا إلا أن يشاء الله ولكن أكثرهم يجهلون)", "(لتصغى إليه أفئدة الذين لا يؤمنون بالآخرة)"], 
+    correctIndex: 2,
+    juz: 8
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'They said, O Moses, either you throw or we will be the ones to throw...'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (قالوا يا موسى إما أن تلقي وإما أن نكون نحن الملقين)؟", 
+    options: ["(وأوحينا إلى موسى أن ألق عصاك)", "(قال ألقوا فلما ألقوا سحروا أعين الناس واسترهبوهم وجاءوا بسحر عظيم)", "(فوقع الحق وبطل ما كانوا يعملون)", "(فغلبوا هنالك وانقلبوا صاغرين)"], 
+    correctIndex: 1,
+    juz: 9
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'The mosques of Allah are only to be maintained by those who believe in Allah and the Last Day and establish prayer and give Zakah...'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (إنما يعمر مساجد الله من آمن بالله واليوم الآخر وأقام الصلاة وآتى الزكاة...)؟", 
+    options: ["(أجعلتم سقاية الحاج وعمارة المسجد الحرام)", "(الذين آمنوا وهاجروا وجاهدوا في سبيل الله)", "(يبشرهم ربهم برحمة منه ورضوان)", "(ولم يخش إلا الله فعسى أولئك أن يكونوا من المهتدين)"], 
+    correctIndex: 3,
+    juz: 10
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'Indeed, those who do not expect the meeting with Us and are satisfied with the life of this world and feel secure therein...'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (إن الذين لا يرجون لقاءنا ورضوا بالحياة الدنيا واطمأنوا بها...)؟", 
+    options: ["(أولئك مأواهم النار بما كانوا يكسبون)", "(والذين هم عن آياتنا غافلون)", "(إن الذين آمنوا وعملوا الصالحات يهديهم ربهم بإيمانهم)", "(دعواهم فيها سبحانك اللهم وتحيتهم فيها سلام)"], 
+    correctIndex: 1,
+    juz: 11
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'When Joseph said to his father, O my father, indeed I have seen eleven stars...'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (إذ قال يوسف لأبيه يا أبت إني رأيت أحد عشر كوكباً...)؟", 
+    options: ["(والشمس والقمر رأيتهم لي ساجدين)", "(قال يا بني لا تقصص رؤياك على إخوتك)", "(وكذلك يجتبيك ربك ويعلمك من تأويل الأحاديث)", "(لقد كان في يوسف وإخوته آيات للسائلين)"], 
+    correctIndex: 0,
+    juz: 12
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'Those who have believed and whose hearts are assured by the remembrance of Allah...'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (الذين آمنوا وتطمئن قلوبهم بذكر الله...)؟", 
+    options: ["(الذين آمنوا وعملوا الصالحات طوبى لهم وحسن مآب)", "(ألا بذكر الله تطمئن القلوب)", "(كذلك أرسلناك في أمة قد خلت من قبلها أمم)", "(ولو أن قرآناً سيرت به الجبال أو قطعت به الأرض)"], 
+    correctIndex: 1,
+    juz: 13
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'Indeed, it is We who sent down the Qur'an and indeed, We will be its guardian.'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (إنا نحن نزلنا الذكر وإنا له لحافظون)؟", 
+    options: ["(وما يأتيهم من رسول إلا كانوا به يستهزئون)", "(كذلك نسلكه في قلوب المجرمين)", "(ولقد أرسلنا من قبلك في شيع الأولين)", "(لا يؤمنون به وقد خلت سنة الأولين)"], 
+    correctIndex: 2,
+    juz: 14
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'And your Lord has decreed that you not worship except Him, and to parents, good treatment...'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (وقضى ربك ألا تعبدوا إلا إياه وبالوالدين إحساناً...)؟", 
+    options: ["(واخفض لهما جناح الذل من الرحمة)", "(وقل رب ارحمهما كما ربياني صغيراً)", "(إما يبلغن عندك الكبر أحدهما أو كلاهما فلا تقل لهما أوف ولا تنهرهما وقل لهما قولاً كريماً)", "(ربكم أعلم بما في نفوسكم إن تكونوا صالحين)"], 
+    correctIndex: 2,
+    juz: 15
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'Then she brought him to her people, carrying him. They said, O Mary, you have certainly done a thing unprecedented.'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (فأتت به قومها تحمله قالوا يا مريم لقد جئت شيئاً فرياً)؟", 
+    options: ["(يا أخت هارون ما كان أبوك امرأ سوء وما كانت أمك بغياً)", "(فأشارت إليه قالوا كيف نكلم من كان في المهد صبياً)", "(قال إني عبد الله آتاني الكتاب وجعلني نبياً)", "(وجعلني مباركاً أين ما كنت وأوصاني بالصلاة والزكاة ما دمت حياً)"], 
+    correctIndex: 0,
+    juz: 16
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'Approached for the people their account, while they are in heedlessness turning away.'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (اقترب للناس حسابهم وهم في غفلة معرضون)؟", 
+    options: ["(لاهية قلوبهم وأسروا النجوى الذين ظلموا)", "(قال ربي يعلم القول في السماء والأرض)", "(بل قالوا أضغاث أحلام بل افتراه بل هو شاعر)", "(ما يأتيهم من ذكر من ربهم محدث إلا استمعوه وهم يلعبون)"], 
+    correctIndex: 3,
+    juz: 17
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'Successful are the believers...'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (قد أفلح المؤمنون)؟", 
+    options: ["(والذين هم عن اللغو معرضون)", "(الذين هم في صلاتهم خاشعون)", "(والذين هم للزكاة فاعلون)", "(والذين هم لفروجهم حافظون)"], 
+    correctIndex: 1,
+    juz: 18
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'And those who do not expect the meeting with Us say, Why were not angels sent down to us, or [why] do we [not] see our Lord?'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (وقال الذين لا يرجون لقاءنا لولا أنزل علينا الملائكة أو نرى ربنا...)؟", 
+    options: ["(يوم يرون الملائكة لا بشرى يومئذ للمجرمين)", "(وقدمنا إلى ما عملوا من عمل فجعلناه هباء منثوراً)", "(لقد استكبروا في أنفسهم وعتوا عتواً كبيراً)", "(أصحاب الجنة يومئذ خير مستقراً وأحسن مقيلاً)"], 
+    correctIndex: 2,
+    juz: 19
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'Indeed, you do not guide whom you like, but Allah guides whom He wills...'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (إنك لا تهدي من أحببت ولكن الله يهدي من يشاء...)؟", 
+    options: ["(وقالوا إن نتبع الهدى معك نتخطف من أرضنا)", "(وهو أعلم بالمهتدين)", "(وكم أهلكنا من قرية بطرت معيشتها)", "(وما كان ربك مهلك القرى حتى يبعث في أمها رسولاً)"], 
+    correctIndex: 1,
+    juz: 20
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'And if whatever trees on earth were pens and the ocean were ink, replenished thereafter by seven more oceans...'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (ولو أنما في الأرض من شجرة أقلام والبحر يمده من بعده سبعة أبحر...)؟", 
+    options: ["(ما نفدت كلمات الله إن الله عزيز حكيم)", "(ما خلقكم ولا بعثكم إلا كنفس واحدة)", "(ألم تر أن الله يولج الليل في النهار ويولج النهار في الليل)", "(ألم تر أن الفلك تجري في البحر بنعمة الله)"], 
+    correctIndex: 0,
+    juz: 21
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'Ya, Seen...'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (يس)؟", 
+    options: ["(إنك لمن المرسلين)", "(على صراط مستقيم)", "(والقرآن الحكيم)", "(تنزيل العزيز الرحيم)"], 
+    correctIndex: 2,
+    juz: 22
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'And there came from the farthest end of the city a man, running. He said, O my people, follow the messengers.'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (وجاء من أقصى المدينة رجل يسعى قال يا قوم اتبعوا المرسلين)؟", 
+    options: ["(وما لي لا أعبد الذي فطرني وإليه ترجعون)", "(اتبعوا من لا يسألكم أجراً وهم مهتدون)", "(أأتخذ من دونه آلهة إن يردن الرحمن بضر لا تغن عني شفاعتهم شيئاً)", "(إني إذاً لفي ضلال مبين)"], 
+    correctIndex: 1,
+    juz: 23
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'Say, O My servants who have transgressed against themselves, do not despair of the mercy of Allah...'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (قل يا عبادي الذين أسرفوا على أنفسهم لا تقنطوا من رحمة الله...)؟", 
+    options: ["(وأنيبوا إلى ربكم وأسلموا له من قبل أن يأتيكم العذاب)", "(واتبعوا أحسن ما أنزل إليكم من ربكم)", "(إن الله يغفر الذنوب جميعاً إنه هو الغفور الرحيم)", "(أن تقول نفس يا حسرتى على ما فرطت في جنب الله)"], 
+    correctIndex: 2,
+    juz: 24
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'We will show them Our signs in the horizons and within themselves until it becomes clear to them that it is the truth...'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (سنريهم آياتنا في الآفاق وفي أنفسهم حتى يتبين لهم أنه الحق...)؟", 
+    options: ["(ألا إنهم في مرية من لقاء ربهم)", "(أولم يكف بربك أنه على كل شيء شهيد)", "(ألا إنه بكل شيء محيط)", "(حم • عسق)"], 
+    correctIndex: 1,
+    juz: 25
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'And the stupor of death will bring the truth...'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (وجاءت سكرة الموت بالحق...)؟", 
+    options: ["(ونفخ في الصور ذلك يوم الوعيد)", "(وجاءت كل نفس معها سائق وشهيد)", "(لقد كنت في غفلة من هذا فكشفنا عنك غطاءك)", "(ذلك ما كنت منه تحيد)"], 
+    correctIndex: 3,
+    juz: 26
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'The Most Merciful...'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (الرحمن)؟", 
+    options: ["(علم القرآن)", "(خلق الإنسان)", "(علمه البيان)", "(الشمس والقمر بحسبان)"], 
+    correctIndex: 0,
+    juz: 27
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'It is He who sent His Messenger with guidance and the religion of truth to manifest it over all religion...'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (هو الذي أرسل رسوله بالهدى ودين الحق ليظهره على الدين كله...)؟", 
+    options: ["(يا أيها الذين آمنوا هل أدلكم على تجارة تنجيكم)", "(تؤمنون بالله ورسوله وتجاهدون في سبيل الله)", "(ولو كره المشركون)", "(يغفر لكم ذنوبكم ويدخلكم جنات تجري)"], 
+    correctIndex: 2,
+    juz: 28
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'Blessed is He in whose hand is the dominion, and He is over all things competent...'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (تبارك الذي بيده الملك وهو على كل شيء قدير)؟", 
+    options: ["(الذي خلق سبع سموات طباقاً)", "(الذي خلق الموت والحياة ليبلوكم أيكم أحسن عملاً)", "(ما ترى في خلق الرحمن من تفاوت)", "(ثم ارجع البصر كرتين ينقلب إليك البصر خاسئاً)"], 
+    correctIndex: 1,
+    juz: 29
+  },
+  { 
+    q: "What is the verse that comes immediately after: 'About what are they asking one another?'?", 
+    qAr: "ما هي الآية التالية للآية الكريمة: (عم يتساءلون)؟", 
+    options: ["(الذي هم فيه مختلفون)", "(كلا سيعلمون)", "(ثم كلا سيعلمون)", "(عن النبأ العظيم)"], 
+  }
 ];
 
 export default function Login({ setActivePage }) {
@@ -136,6 +314,7 @@ export default function Login({ setActivePage }) {
   const [examTimeLeft, setExamTimeLeft] = useState(1800); // 30 minutes in seconds
   const [examFinished, setExamFinished] = useState(false);
   const [examScore, setExamScore] = useState(0);
+  const [activeQuestions, setActiveQuestions] = useState([]);
 
   // Timer Ref
   const examTimerRef = useRef(null);
@@ -179,6 +358,15 @@ export default function Login({ setActivePage }) {
   }, [isAuthenticated]);
 
   const handleStartExam = () => {
+    // Dynamically filter questions based on the chosen Juz'
+    let filtered = certificationQuestions.filter(q => selectedJuzList.includes(q.juz));
+    
+    // Robust fallback: if fewer than 5 match, load all questions to guarantee active gameplay
+    if (filtered.length < 5) {
+      filtered = [...certificationQuestions];
+    }
+    
+    setActiveQuestions(filtered);
     setIsExamActive(true);
     setExamCurrentQuestionIdx(0);
     setExamAnswers({});
@@ -194,9 +382,9 @@ export default function Login({ setActivePage }) {
   const handleFinishExam = (isTimeout = false) => {
     if (examTimerRef.current) clearInterval(examTimerRef.current);
     
-    // Calculate Score
+    // Calculate Score against the dynamically filtered activeQuestions
     let score = 0;
-    certificationQuestions.forEach((q, index) => {
+    activeQuestions.forEach((q, index) => {
       if (examAnswers[index] === q.correctIndex) {
         score += 1;
       }
@@ -206,7 +394,9 @@ export default function Login({ setActivePage }) {
     setExamFinished(true);
     setIsExamActive(false);
 
-    const passed = score >= 24; // 80% passing standard
+    // Dynamic passing threshold: 80% of selected questions (Math.ceil)
+    const passingThreshold = Math.ceil(activeQuestions.length * 0.8);
+    const passed = score >= passingThreshold;
     if (passed) {
       // Award badges based on the exact number of selected memorized Juz'
       const juzCount = selectedJuzList.length;
@@ -731,7 +921,7 @@ export default function Login({ setActivePage }) {
                 <Award size={24} color="var(--text-gold)" />
                 <div>
                   <div style={styles.badgeCount}>{dailyScore} XP</div>
-                  <div style={styles.badgeLabel}>{language === 'ar' ? "السكور اليومي" : "Daily Score"}</div>
+                  <div style={styles.badgeLabel}>{language === 'ar' ? "النقاط اليومية" : "Daily Score"}</div>
                 </div>
               </div>
             </div>
@@ -950,13 +1140,13 @@ export default function Login({ setActivePage }) {
                 <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   <Award size={48} color="var(--text-gold)" style={{ alignSelf: 'center' }} />
                   <h3 style={styles.sectionTitle} className="gold-gradient-text">
-                    {language === 'ar' ? "اعتماد معلمين القرآن الكريم الموثوقين" : "Certified Tajweed & Quran Recitation Exam"}
+                    {language === 'ar' ? "اعتماد معلمين القرآن الكريم الموثوقين" : "Certified Quran Memorization & Hifz Exam"}
                   </h3>
                   
                   <p style={styles.examIntroText}>
                     {language === 'ar' 
-                      ? "يتيح لك مركز المعلمين التقديم للحصول على رتبة 'معلم معتمد' لمراجعة وتصحيح تلاوات الطلاب الصوتية. الشروط: حفظ 5 أجزاء فأكثر، واجتياز اختبار التجويد التفاعلي المكون من 30 سؤالاً في زمن قدره 30 دقيقة بنسبة نجاح 80%."
-                      : "Apply for 'Certified Teacher' status to review and correct student recitations. Requirements: Memorized 5+ Juz' and passing the 30-question interactive Tajweed exam in 30 minutes (80% score required)."}
+                      ? "يتيح لك مركز المعلمين التقديم للحصول على رتبة 'معلم معتمد' لمراجعة وتصحيح تلاوات الطلاب الصوتية. الشروط: حفظ 5 أجزاء فأكثر، واجتياز اختبار الحفظ المكون من أسئلة تغطي الأجزاء المحددة (سؤال لكل جزء) في زمن قدره 30 دقيقة بنسبة نجاح 80%."
+                      : "Apply for 'Certified Teacher' status to review and correct student recitations. Requirements: Memorized 5+ Juz' and passing the interactive Hifz exam (one question per selected Juz') in 30 minutes (80% score required)."}
                   </p>
 
                   <div style={{ ...styles.memorizeSelectorBox, maxWidth: '100%' }} className="glass-panel">
@@ -1044,7 +1234,9 @@ export default function Login({ setActivePage }) {
                       {language === 'ar' ? "الوقت المتبقي: " : "Time Left: "} {formatTime(examTimeLeft)}
                     </span>
                     <span style={styles.examProgress}>
-                      {language === 'ar' ? "سؤال" : "Question"} {examCurrentQuestionIdx + 1} / 30
+                      {language === 'ar' 
+                        ? `سؤال ${examCurrentQuestionIdx + 1} من ${activeQuestions.length}` 
+                        : `Question ${examCurrentQuestionIdx + 1} of ${activeQuestions.length}`}
                     </span>
                   </div>
 
@@ -1052,14 +1244,14 @@ export default function Login({ setActivePage }) {
                   <div style={styles.questionCard} className="glass-panel">
                     <h3 style={styles.questionTitle}>
                       {language === 'ar' 
-                        ? certificationQuestions[examCurrentQuestionIdx].qAr 
-                        : certificationQuestions[examCurrentQuestionIdx].q}
+                        ? (activeQuestions[examCurrentQuestionIdx]?.qAr || "") 
+                        : (activeQuestions[examCurrentQuestionIdx]?.q || "")}
                     </h3>
                   </div>
 
                   {/* Answers row */}
                   <div style={styles.answersList}>
-                    {certificationQuestions[examCurrentQuestionIdx].options.map((opt, oIdx) => {
+                    {(activeQuestions[examCurrentQuestionIdx]?.options || []).map((opt, oIdx) => {
                       const isSelected = examAnswers[examCurrentQuestionIdx] === oIdx;
                       return (
                         <button 
@@ -1091,9 +1283,9 @@ export default function Login({ setActivePage }) {
                       {language === 'ar' ? "السابق" : "Previous"}
                     </button>
 
-                    {examCurrentQuestionIdx < 29 ? (
+                    {examCurrentQuestionIdx < activeQuestions.length - 1 ? (
                       <button 
-                        onClick={() => setExamCurrentQuestionIdx(p => Math.min(29, p + 1))}
+                        onClick={() => setExamCurrentQuestionIdx(p => Math.min(activeQuestions.length - 1, p + 1))}
                         className="btn-primary"
                         style={{ flex: 1 }}
                       >
@@ -1113,42 +1305,78 @@ export default function Login({ setActivePage }) {
               ) : (
                 // 3. Quiz Complete / Results
                 <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '16px' }} className="fade-in">
-                  <CheckCircle2 size={48} color={examScore >= 24 ? "var(--text-gold)" : "#ff6b6b"} style={{ alignSelf: 'center' }} />
+                  <CheckCircle2 
+                    size={48} 
+                    color={examScore >= Math.ceil(activeQuestions.length * 0.8) ? "var(--text-gold)" : "#ff6b6b"} 
+                    style={{ alignSelf: 'center' }} 
+                  />
                   
                   <h3 style={styles.sectionTitle} className="gold-gradient-text">
-                    {examScore >= 24 
+                    {examScore >= Math.ceil(activeQuestions.length * 0.8) 
                       ? (language === 'ar' ? "✨ مبارك! لقد اجتزت الاختبار بنجاح ✨" : "✨ Congratulations! You Passed! ✨")
                       : (language === 'ar' ? "عذراً، لم تجتز الاختبار هذه المرة" : "Exam Not Passed")}
                   </h3>
 
                   <div style={styles.examScoreCard} className="glass-panel">
-                    <span style={styles.scoreVal}>{examScore} / 30</span>
+                    <span style={styles.scoreVal}>
+                      {language === 'ar' ? `${examScore} من ${activeQuestions.length}` : `${examScore} / ${activeQuestions.length}`}
+                    </span>
                     <p style={styles.scoreLabel}>
-                      {language === 'ar' ? `نسبتك: ${Math.round((examScore / 30) * 100)}% (المطلوب 80% للتأهيل)` : `Your Score: ${Math.round((examScore / 30) * 100)}% (80% required)`}
+                      {language === 'ar' 
+                        ? `نسبتك: ${Math.round((examScore / activeQuestions.length) * 100)}% (المطلوب 80% للتأهيل)` 
+                        : `Your Score: ${Math.round((examScore / activeQuestions.length) * 100)}% (80% required)`}
                     </p>
                   </div>
 
-                  {examScore >= 24 ? (
+                  {examScore >= Math.ceil(activeQuestions.length * 0.8) ? (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                       <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
                         {language === 'ar' 
                           ? "تمت ترقيتك رسمياً لرتبة 'معلم معتمد'. يمكنك الآن تقديم تلاوات وتصحيحها والحصول على شارات خاصة بجوار اسمك!"
                           : "You have been upgraded to 'Certified Teacher'. You can now evaluate and correct student recitations!"}
                       </p>
-                      <button onClick={() => { setExamFinished(false); setActiveTab("my_recordings"); }} className="btn-primary" style={{ alignSelf: 'center', marginTop: '10px' }}>
-                        {language === 'ar' ? "الذهاب للوحة التحكم" : "Go to Dashboard"}
-                      </button>
+                      
+                      <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '12px', flexWrap: 'wrap' }}>
+                        <button 
+                          onClick={() => { setExamFinished(false); setActiveTab("my_recordings"); }} 
+                          className="btn-primary" 
+                          style={{ minWidth: '140px' }}
+                        >
+                          {language === 'ar' ? "الذهاب للوحة التحكم" : "Go to Dashboard"}
+                        </button>
+                        <button 
+                          onClick={() => { setExamFinished(false); setIsExamActive(false); }} 
+                          className="btn-secondary" 
+                          style={{ minWidth: '140px' }}
+                        >
+                          {language === 'ar' ? "الرجوع لتحديد الأجزاء" : "Back to Juz' Selection"}
+                        </button>
+                      </div>
                     </div>
                   ) : (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                       <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
                         {language === 'ar' 
-                          ? "لا تقلق! يمكنك مراجعة أحكام التجويد ومخارج الحروف والمحاولة مجدداً في أي وقت."
-                          : "Don't worry! Review the Tajweed rules and try again anytime."}
+                          ? "لا تقلق! يمكنك تثبيت حفظك والمحاولة مجدداً في أي وقت."
+                          : "Don't worry! Review your Quran memorization and try again anytime."}
                       </p>
-                      <button onClick={handleStartExam} className="btn-primary" style={{ alignSelf: 'center', marginTop: '10px' }}>
-                        {language === 'ar' ? "إعادة خوض الاختبار" : "Retry Exam"}
-                      </button>
+                      
+                      <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '12px', flexWrap: 'wrap' }}>
+                        <button 
+                          onClick={handleStartExam} 
+                          className="btn-primary" 
+                          style={{ minWidth: '140px' }}
+                        >
+                          {language === 'ar' ? "إعادة خوض الاختبار" : "Retry Exam"}
+                        </button>
+                        <button 
+                          onClick={() => { setExamFinished(false); setIsExamActive(false); }} 
+                          className="btn-secondary" 
+                          style={{ minWidth: '140px' }}
+                        >
+                          {language === 'ar' ? "الرجوع لتحديد الأجزاء" : "Back to Juz' Selection"}
+                        </button>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -1931,11 +2159,13 @@ const styles = {
     background: 'rgba(212,175,55,0.05)',
   },
   scoreVal: {
-    fontSize: '3.6rem',
+    fontFamily: "'Cairo', 'Poppins', sans-serif",
+    fontSize: '2.8rem',
     fontWeight: '900',
     color: 'var(--text-gold)',
     display: 'block',
-    lineHeight: '1.1',
+    lineHeight: '1.2',
+    textShadow: '0 0 10px rgba(212, 175, 55, 0.35)',
   },
   scoreLabel: {
     fontSize: '0.8rem',
