@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
-import { Users, Send, Heart, MessageSquare, Award, AlertCircle, PlusCircle, RotateCcw, HeartHandshake, BookOpen, Sparkles, Crown, UserPlus, UserMinus, Plus, Compass, X, Clock } from 'lucide-react';
+import { Users, Send, Heart, MessageSquare, Award, AlertCircle, PlusCircle, RotateCcw, HeartHandshake, BookOpen, Sparkles, Crown, UserPlus, UserMinus, Plus, Compass, X, Clock, Mic } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function Community() {
@@ -20,6 +20,8 @@ export default function Community() {
     updateCircleTurn,
     updateCircleDhikr,
     incrementCircleProgress,
+    friendsList,
+    toggleFriend,
     t 
   } = useApp();
 
@@ -34,7 +36,7 @@ export default function Community() {
   const [newCircleDesc, setNewCircleDesc] = useState("");
   const [newCircleCap, setNewCircleCap] = useState(5);
   const [newCircleType, setNewCircleType] = useState("adhkar");
-  const [newCircleDuration, setNewCircleDuration] = useState(10);
+  const [newCircleDuration, setNewCircleDuration] = useState(5); // Default to 5 minutes
   const [formSuccess, setFormSuccess] = useState(false);
 
   // Simulated global click counters
@@ -46,6 +48,11 @@ export default function Community() {
   const [sessionTimeLeft, setSessionTimeLeft] = useState(0);
   const [sessionEnded, setSessionEnded] = useState(false);
   const [floatingReactions, setFloatingReactions] = useState([]);
+  const [isMicActive, setIsMicActive] = useState(false);
+  const [customRecitationText, setCustomRecitationText] = useState("");
+  const [recitationMode, setRecitationMode] = useState("confirm"); // "confirm" or "write"
+  const [sessionScoreAwarded, setSessionScoreAwarded] = useState(false);
+  const [teacherDhikrInputText, setTeacherDhikrInputText] = useState("");
 
   // Session timer countdown effect
   useEffect(() => {
@@ -67,8 +74,6 @@ export default function Community() {
         if (prev <= 1) {
           clearInterval(timer);
           setSessionEnded(true);
-          // Play success fanfare!
-          triggerGoldMilestoneConfetti();
           return 0;
         }
         return prev - 1;
@@ -78,7 +83,31 @@ export default function Community() {
     return () => clearInterval(timer);
   }, [activeSessionCircleId]);
 
-  // Simulated real-time turns & reactions from other participants
+  // Award score once when session ends
+  useEffect(() => {
+    if (sessionEnded && activeSessionCircleId && !sessionScoreAwarded) {
+      const circle = onlineCircles.find(c => c.id === activeSessionCircleId);
+      if (circle) {
+        const earnedScore = (circle.sessionProgress * 15) + 50;
+        setTasbihCount(prev => prev + earnedScore);
+        setSessionScoreAwarded(true);
+        triggerGoldMilestoneConfetti();
+      }
+    }
+  }, [sessionEnded, activeSessionCircleId, sessionScoreAwarded, onlineCircles]);
+
+  // Reset mic and console states when active circle or current turn changes
+  const activeCircle = onlineCircles.find(c => c.id === activeSessionCircleId);
+  const activeCircleTurn = activeCircle ? activeCircle.currentTurnIndex : null;
+
+  useEffect(() => {
+    setIsMicActive(false);
+    setCustomRecitationText("");
+    setRecitationMode("confirm");
+    setTeacherDhikrInputText("");
+  }, [activeSessionCircleId, activeCircleTurn]);
+
+  // Simulated real-time turns by AI teacher for students
   useEffect(() => {
     if (!activeSessionCircleId || sessionEnded) return;
 
@@ -88,15 +117,14 @@ export default function Community() {
 
       const userIdentifier = isAuthenticated ? user.email : "guest_user";
       const userIndex = circle.joinedUsers.findIndex(u => u.email === userIdentifier || (userIdentifier === "guest_user" && u.name === "Guest Member"));
-      const currentTurn = circle.currentTurnIndex % circle.joinedUsers.length;
+      const isOrganizer = circle.creator === (isAuthenticated ? user.name : "Guest") || circle.creator === "System";
 
-      // If it's NOT the user's turn, let the current AI member complete their turn
-      if (currentTurn !== userIndex && circle.joinedUsers.length > 0) {
+      if (!isOrganizer) {
+        // Students experience simulated AI Teacher turn assignments randomly
+        const randomMemberIndex = Math.floor(Math.random() * circle.joinedUsers.length);
+        updateCircleTurn(circle.id, randomMemberIndex);
         incrementCircleProgress(circle.id);
-        const nextTurn = (currentTurn + 1) % circle.joinedUsers.length;
-        updateCircleTurn(circle.id, nextTurn);
 
-        // Visual feedback
         confetti({
           particleCount: 5,
           spread: 20,
@@ -104,16 +132,23 @@ export default function Community() {
           colors: ['#d4af37', '#ffffff']
         });
       }
+    }, 15000); // 15 seconds turn assignment
 
-      // Randomly spawn floating emojis from other members
+    return () => clearInterval(interval);
+  }, [activeSessionCircleId, sessionEnded, onlineCircles, isAuthenticated, user]);
+
+  // Simulated reactions from other participants
+  useEffect(() => {
+    if (!activeSessionCircleId || sessionEnded) return;
+
+    const interval = setInterval(() => {
       const randomEmojis = ['🤲', '❤️', '✨', '⭐', '🌸'];
       const randomEmoji = randomEmojis[Math.floor(Math.random() * randomEmojis.length)];
       spawnReaction(randomEmoji);
-
-    }, 8000); // Ticks every 8 seconds for high-fidelity interactive feel
+    }, 6000); // 6 seconds reaction interval
 
     return () => clearInterval(interval);
-  }, [activeSessionCircleId, sessionEnded, onlineCircles]);
+  }, [activeSessionCircleId, sessionEnded]);
 
   const spawnReaction = (emoji) => {
     const id = Date.now() + Math.random();
@@ -127,6 +162,7 @@ export default function Community() {
 
   const handleEnterSession = (circleId) => {
     setActiveSessionCircleId(circleId);
+    setSessionScoreAwarded(false); // Reset score award state on entry
   };
 
   const handleExitSession = () => {
@@ -189,7 +225,7 @@ export default function Community() {
     setNewCircleDesc("");
     setNewCircleCap(5);
     setNewCircleType("adhkar");
-    setNewCircleDuration(10);
+    setNewCircleDuration(5);
     
     setFormSuccess(true);
     setTimeout(() => setFormSuccess(false), 3000);
@@ -317,7 +353,7 @@ export default function Community() {
   };
 
   return (
-    <div className="community-page container fade-in" style={{ minHeight: '80vh' }}>
+    <div className="community-page container fade-in" style={{ minHeight: '80vh', paddingTop: '100px' }}>
       <div style={styles.header}>
         <Users size={32} color="var(--text-gold)" style={styles.headerIcon} />
         <h1 style={styles.title}>{t('commTitle')}</h1>
@@ -584,7 +620,7 @@ export default function Community() {
                         if (tType === 'quran') {
                           setNewCircleDuration(60);
                         } else {
-                          setNewCircleDuration(10);
+                          setNewCircleDuration(5);
                         }
                       }}
                       style={{
@@ -919,11 +955,48 @@ export default function Community() {
                 </div>
               </div>
 
-              {/* Countdown badge */}
-              <div style={styles.sessionTimerBadge}>
-                <span style={styles.sessionTimerDot}></span>
-                <span style={styles.sessionTimerVal}>{formatTime(sessionTimeLeft)}</span>
-              </div>
+              {/* Delightful Countdown circular timer */}
+              {(() => {
+                const totalSecs = circle.duration * 60;
+                const ratio = totalSecs > 0 ? (sessionTimeLeft / totalSecs) : 0;
+                let strokeColor = '#10b981'; // Emerald
+                if (ratio <= 0.2) {
+                  strokeColor = '#ef4444'; // Crimson
+                } else if (ratio <= 0.5) {
+                  strokeColor = '#d4af37'; // Gold
+                }
+                return (
+                  <div style={styles.circularTimerContainer}>
+                    <svg width="56" height="56" viewBox="0 0 56 56" style={{ transform: 'rotate(-90deg)' }}>
+                      <circle
+                        cx="28"
+                        cy="28"
+                        r="24"
+                        fill="transparent"
+                        stroke="rgba(255, 255, 255, 0.04)"
+                        strokeWidth="3.5"
+                      />
+                      <circle
+                        cx="28"
+                        cy="28"
+                        r="24"
+                        fill="transparent"
+                        stroke={strokeColor}
+                        strokeWidth="3.5"
+                        strokeDasharray="150.8"
+                        strokeDashoffset={150.8 - (150.8 * ratio)}
+                        strokeLinecap="round"
+                        style={{
+                          transition: 'stroke 0.5s ease, stroke-dashoffset 1s linear',
+                        }}
+                      />
+                    </svg>
+                    <div style={styles.circularTimerText}>
+                      {formatTime(sessionTimeLeft)}
+                    </div>
+                  </div>
+                );
+              })()}
 
               {/* Exit button */}
               <button onClick={handleExitSession} style={styles.sessionCloseBtn} className="circle-join-btn-hover">
@@ -952,6 +1025,134 @@ export default function Community() {
                       </div>
                     </div>
 
+                    {/* Delightful Premium Achievement Tree / شجرة الإنجازات والأوسمة المتميزة */}
+                    <div style={styles.achievementTreeSection}>
+                      <h4 style={styles.treeSectionTitle}>
+                        <Sparkles size={16} color="var(--text-gold)" style={{ marginRight: '6px', marginLeft: '6px' }} />
+                        {language === 'en' ? "Premium Achievements Tree" : "شجرة الإنجازات والأوسمة المتميزة"}
+                      </h4>
+                      <p style={styles.treeSectionSubtitle}>
+                        {language === 'en' 
+                          ? `Your accumulated Tasbihs: ${tasbihCount} points. Grow your tree to unlock spiritual gifts!`
+                          : `رصيد نقاط تسبيحك التراكمي: ${tasbihCount} نقطة. اسعَ لنمو شجرتك لفتح الهدايا والأوسمة!`}
+                      </p>
+
+                      <div style={styles.treeVisualContainer}>
+                        <svg width="320" height="260" viewBox="0 0 320 260" style={{ margin: '0 auto', display: 'block' }}>
+                          {/* Trunk */}
+                          <path d="M160,250 C160,200 160,180 160,150" stroke="#8b5a2b" strokeWidth="8" fill="none" strokeLinecap="round" />
+                          
+                          {/* Primary Branches */}
+                          <path d="M160,190 Q120,160 80,140" stroke="#8b5a2b" strokeWidth="4" fill="none" strokeLinecap="round" />
+                          <path d="M160,190 Q200,160 240,140" stroke="#8b5a2b" strokeWidth="4" fill="none" strokeLinecap="round" />
+                          <path d="M80,140 Q90,105 100,70" stroke="#8b5a2b" strokeWidth="3" fill="none" strokeLinecap="round" />
+                          <path d="M240,140 Q230,105 220,70" stroke="#8b5a2b" strokeWidth="3" fill="none" strokeLinecap="round" />
+                          
+                          {/* Achievement Nodes */}
+                          {[
+                            { id: "g1", nameEn: "Dhikr Novice", nameAr: "مبتدئ الذكر", req: 50, icon: "🌱", x: 160, y: 190, color: "#10b981" },
+                            { id: "g2", nameEn: "Quran Companion", nameAr: "رفيق القرآن", req: 150, icon: "📖", x: 80, y: 140, color: "#3b82f6" },
+                            { id: "g3", nameEn: "Morning Pioneer", nameAr: "رائد أذكار الصباح", req: 300, icon: "🌅", x: 240, y: 140, color: "#f59e0b" },
+                            { id: "g4", nameEn: "Dhikr Knight", nameAr: "فارس التسبيح", req: 600, icon: "⚔️", x: 100, y: 70, color: "#d4af37" },
+                            { id: "g5", nameEn: "Spiritual Light", nameAr: "النور الإلهي", req: 1000, icon: "✨", x: 220, y: 70, color: "#a855f7" }
+                          ].map(node => {
+                            const isUnlocked = tasbihCount >= node.req;
+                            return (
+                              <g key={node.id} className="achievement-tree-node">
+                                {/* Outer Pulsing Glow */}
+                                {isUnlocked && (
+                                  <circle
+                                    cx={node.x}
+                                    cy={node.y}
+                                    r="22"
+                                    fill="none"
+                                    stroke={node.color}
+                                    strokeWidth="2"
+                                    strokeDasharray="4 4"
+                                    className="achievement-glow-pulse"
+                                  />
+                                )}
+                                {/* Badge Base */}
+                                <circle
+                                  cx={node.x}
+                                  cy={node.y}
+                                  r="18"
+                                  fill={isUnlocked ? 'rgba(0, 0, 0, 0.7)' : 'rgba(255, 255, 255, 0.05)'}
+                                  stroke={isUnlocked ? 'var(--gold-primary)' : 'rgba(255, 255, 255, 0.2)'}
+                                  strokeWidth={isUnlocked ? '2.5' : '1.5'}
+                                  style={{ transition: 'all 0.4s ease' }}
+                                />
+                                {/* Icon Emoji */}
+                                <text
+                                  x={node.x}
+                                  y={node.y + 5}
+                                  textAnchor="middle"
+                                  fontSize="16"
+                                  style={{ filter: isUnlocked ? 'none' : 'grayscale(100%) opacity(30%)' }}
+                                >
+                                  {node.icon}
+                                </text>
+                                
+                                <title>
+                                  {language === 'en' 
+                                    ? `${node.nameEn} (Required: ${node.req} tasbihs) - ${isUnlocked ? 'Unlocked!' : 'Locked'}`
+                                    : `${node.nameAr} (مطلوب: ${node.req} تسبيحة) - ${isUnlocked ? 'تم الفتح!' : 'مغلق'}`}
+                                </title>
+                              </g>
+                            );
+                          })}
+                        </svg>
+                      </div>
+
+                      {/* Legend Grid */}
+                      <div style={styles.treeNodesLegend}>
+                        {[
+                          { nameEn: "Dhikr Novice", nameAr: "مبتدئ الذكر", req: 50, icon: "🌱" },
+                          { nameEn: "Quran Companion", nameAr: "رفيق القرآن", req: 150, icon: "📖" },
+                          { nameEn: "Morning Pioneer", nameAr: "رائد أذكار الصباح", req: 300, icon: "🌅" },
+                          { nameEn: "Dhikr Knight", nameAr: "فارس التسبيح", req: 600, icon: "⚔️" },
+                          { nameEn: "Spiritual Light", nameAr: "النور الإلهي", req: 1000, icon: "✨" }
+                        ].map((item, idx) => {
+                          const isUnlocked = tasbihCount >= item.req;
+                          return (
+                            <div 
+                              key={idx} 
+                              style={{
+                                ...styles.legendItem,
+                                opacity: isUnlocked ? 1 : 0.45,
+                                borderColor: isUnlocked ? 'var(--gold-primary)' : 'rgba(255,255,255,0.05)',
+                                background: isUnlocked ? 'rgba(212, 175, 55, 0.05)' : 'rgba(255,255,255,0.01)',
+                                flexDirection: language === 'ar' ? 'row-reverse' : 'row'
+                              }}
+                              className="glass-panel"
+                            >
+                              <span style={{ fontSize: '1.2rem' }}>{item.icon}</span>
+                              <div style={{ textAlign: language === 'ar' ? 'right' : 'left' }}>
+                                <div style={{ fontSize: '0.8rem', fontWeight: '700', color: isUnlocked ? 'var(--text-gold)' : 'var(--text-secondary)' }}>
+                                  {language === 'en' ? item.nameEn : item.nameAr}
+                                </div>
+                                <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>
+                                  {language === 'en' ? `${item.req} pts` : `${item.req} نقطة`}
+                                </div>
+                              </div>
+                              <div style={{ marginLeft: language === 'ar' ? 0 : 'auto', marginRight: language === 'ar' ? 'auto' : 0 }}>
+                                <span style={{ 
+                                  fontSize: '0.7rem', 
+                                  fontWeight: '600', 
+                                  padding: '2px 6px', 
+                                  borderRadius: '4px',
+                                  background: isUnlocked ? 'rgba(16, 185, 129, 0.15)' : 'rgba(255, 255, 255, 0.05)',
+                                  color: isUnlocked ? '#10b981' : 'var(--text-muted)'
+                                }}>
+                                  {isUnlocked ? (language === 'en' ? "Unlocked" : "مفتوح") : (language === 'en' ? "Locked" : "مغلق")}
+                                </span>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+
                     <button onClick={handleExitSession} className="btn-primary" style={{ marginTop: '24px', padding: '12px 32px' }}>
                       {language === 'en' ? "Return to Circles" : "العودة إلى الحلقات"}
                     </button>
@@ -971,10 +1172,44 @@ export default function Community() {
                       </p>
                     </div>
 
+                    {/* Teacher Dhikr Editor - Allows teacher to change the active focus on the fly */}
+                    {isOrganizer && (
+                      <div style={styles.teacherConsoleDhikr} className="glass-panel">
+                        <span style={{ fontSize: '0.8rem', color: 'var(--text-gold)', fontWeight: '700', display: 'block', marginBottom: '8px', textAlign: language === 'ar' ? 'right' : 'left' }}>
+                          {language === 'en' ? "👑 Teacher Tool: Change active focus for everyone" : "👑 أدوات المعلم: تغيير الذكر أو التلاوة المستهدفة للجميع"}
+                        </span>
+                        <div style={{ display: 'flex', gap: '8px', width: '100%', flexDirection: language === 'ar' ? 'row-reverse' : 'row' }}>
+                          <input 
+                            type="text"
+                            value={teacherDhikrInputText}
+                            onChange={(e) => setTeacherDhikrInputText(e.target.value)}
+                            placeholder={circle.type === 'quran' 
+                              ? (language === 'en' ? "Enter new verse to recite..." : "أدخل الآية القرآنية الجديدة...") 
+                              : (language === 'en' ? "Enter new supplication..." : "أدخل الذكر أو التسبيح الجديد...")}
+                            style={styles.teacherDhikrInput}
+                          />
+                          <button 
+                            type="button" 
+                            onClick={() => {
+                              if (teacherDhikrInputText.trim()) {
+                                updateCircleDhikr(circle.id, teacherDhikrInputText, teacherDhikrInputText);
+                                setTeacherDhikrInputText("");
+                                triggerGoldMilestoneConfetti();
+                              }
+                            }}
+                            style={styles.teacherDhikrBtn}
+                            className="circle-join-btn-hover"
+                          >
+                            {language === 'en' ? "Update" : "تحديث"}
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
                     {/* Active Reciter Info */}
-                    <div style={styles.activeReciterProfileBanner}>
-                      <div style={styles.reciterDetails}>
-                        <span style={styles.reciterAvatarBouncing}>
+                    <div style={{ ...styles.activeReciterProfileBanner, flexDirection: language === 'ar' ? 'row-reverse' : 'row' }}>
+                      <div style={{ ...styles.reciterDetails, flexDirection: language === 'ar' ? 'row-reverse' : 'row' }}>
+                        <span style={styles.reciterAvatarBouncing} className="muslim-avatar-pulse">
                           {activeReciter ? activeReciter.avatar : "🧕"}
                         </span>
                         <div style={{ textAlign: language === 'ar' ? 'right' : 'left' }}>
@@ -988,8 +1223,41 @@ export default function Community() {
                         </div>
                       </div>
 
-                      {/* Soundwave animation */}
-                      {!isMyTurn && (
+                      {/* Microphone button / soundwave animation */}
+                      {isMyTurn ? (
+                        <button
+                          onClick={() => {
+                            setIsMicActive(!isMicActive);
+                            if (typeof navigator !== 'undefined' && navigator.vibrate) {
+                              navigator.vibrate(30);
+                            }
+                          }}
+                          style={{
+                            ...styles.micToggleButton,
+                            background: isMicActive ? 'rgba(239, 68, 68, 0.15)' : 'rgba(16, 185, 129, 0.15)',
+                            borderColor: isMicActive ? '#ef4444' : '#10b981',
+                            color: isMicActive ? '#ef4444' : '#10b981',
+                            flexDirection: language === 'ar' ? 'row-reverse' : 'row'
+                          }}
+                          className={isMicActive ? "pulse-mic-glow" : ""}
+                        >
+                          <Mic size={16} />
+                          <span style={{ fontSize: '0.8rem', fontWeight: '600' }}>
+                            {isMicActive 
+                              ? (language === 'en' ? "Mic Active" : "المايك مفتوح") 
+                              : (language === 'en' ? "Mic Off" : "المايك مغلق")}
+                          </span>
+                        </button>
+                      ) : (
+                        <div style={styles.audioWaveform}>
+                          <span style={styles.waveBar} className="wave-bar-anim-1"></span>
+                          <span style={styles.waveBar} className="wave-bar-anim-2"></span>
+                          <span style={styles.waveBar} className="wave-bar-anim-3"></span>
+                          <span style={styles.waveBar} className="wave-bar-anim-4"></span>
+                        </div>
+                      )}
+
+                      {isMyTurn && isMicActive && (
                         <div style={styles.audioWaveform}>
                           <span style={styles.waveBar} className="wave-bar-anim-1"></span>
                           <span style={styles.waveBar} className="wave-bar-anim-2"></span>
@@ -999,22 +1267,91 @@ export default function Community() {
                       )}
                     </div>
 
-                    {/* Recitation Turn Action */}
+                    {/* Recitation Turn Action - Console Tabs */}
                     <div style={styles.recitationActions}>
                       {isMyTurn ? (
-                        <button 
-                          onClick={() => {
-                            incrementCircleProgress(circle.id);
-                            const nextTurn = (circle.currentTurnIndex + 1) % circle.joinedUsers.length;
-                            updateCircleTurn(circle.id, nextTurn);
-                            triggerGoldMilestoneConfetti();
-                          }}
-                          style={styles.confirmRecitationBtn}
-                          className="confirm-recitation-glow"
-                        >
-                          <Sparkles size={20} style={{ marginRight: '6px', marginLeft: '6px' }} />
-                          <span>{t('circleConfirmBtn')}</span>
-                        </button>
+                        <div style={styles.recitationConsole} className="glass-panel">
+                          <div style={{ ...styles.consoleTabRow, flexDirection: language === 'ar' ? 'row-reverse' : 'row' }}>
+                            <button 
+                              type="button"
+                              onClick={() => setRecitationMode("confirm")}
+                              style={{
+                                ...styles.consoleTabBtn,
+                                borderBottom: recitationMode === "confirm" ? '2px solid var(--gold-primary)' : 'none',
+                                color: recitationMode === "confirm" ? 'var(--text-gold)' : 'var(--text-secondary)'
+                              }}
+                            >
+                              {language === 'en' ? "Confirm Recitation" : "تأكيد القراءة / التلاوة"}
+                            </button>
+                            <button 
+                              type="button"
+                              onClick={() => setRecitationMode("write")}
+                              style={{
+                                ...styles.consoleTabBtn,
+                                borderBottom: recitationMode === "write" ? '2px solid var(--gold-primary)' : 'none',
+                                color: recitationMode === "write" ? 'var(--text-gold)' : 'var(--text-secondary)'
+                              }}
+                            >
+                              {language === 'en' ? "Write Reflection" : "كتابة تلاوتي أو تدبري"}
+                            </button>
+                          </div>
+
+                          <div style={styles.consoleTabContent}>
+                            {recitationMode === "confirm" ? (
+                              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', padding: '10px 0' }}>
+                                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textAlign: 'center' }}>
+                                  {language === 'en' 
+                                    ? "Confirm that you have read the active spiritual focus now." 
+                                    : "أكد إتمامك لقراءة الذكر أو الآية القرآنية الجماعية المستهدفة الآن."}
+                                </p>
+                                <button 
+                                  onClick={() => {
+                                    incrementCircleProgress(circle.id);
+                                    const nextTurn = (circle.currentTurnIndex + 1) % circle.joinedUsers.length;
+                                    updateCircleTurn(circle.id, nextTurn);
+                                    triggerGoldMilestoneConfetti();
+                                  }}
+                                  style={styles.confirmRecitationBtn}
+                                  className="confirm-recitation-glow"
+                                >
+                                  <Sparkles size={18} style={{ marginRight: '6px', marginLeft: '6px' }} />
+                                  <span>{t('circleConfirmBtn')}</span>
+                                </button>
+                              </div>
+                            ) : (
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%', padding: '10px 0' }}>
+                                <textarea
+                                  value={customRecitationText}
+                                  onChange={(e) => setCustomRecitationText(e.target.value)}
+                                  placeholder={language === 'en' 
+                                    ? "Type your own custom recitation, chant count, or personal reflection..." 
+                                    : "اكتب تلاوتك الخاصة، تدبرك الروحاني، أو خواطرك المباركة هنا..."}
+                                  rows={3}
+                                  style={styles.consoleTextArea}
+                                />
+                                <button 
+                                  onClick={() => {
+                                    if (!customRecitationText.trim()) return;
+                                    addPost(customRecitationText);
+                                    incrementCircleProgress(circle.id);
+                                    const nextTurn = (circle.currentTurnIndex + 1) % circle.joinedUsers.length;
+                                    updateCircleTurn(circle.id, nextTurn);
+                                    triggerGoldMilestoneConfetti();
+                                  }}
+                                  disabled={!customRecitationText.trim()}
+                                  style={{
+                                    ...styles.confirmRecitationBtn,
+                                    opacity: customRecitationText.trim() ? 1 : 0.5,
+                                    cursor: customRecitationText.trim() ? 'pointer' : 'not-allowed'
+                                  }}
+                                >
+                                  <Send size={14} style={{ marginRight: '6px', marginLeft: '6px' }} />
+                                  <span>{language === 'en' ? "Send Reflection & Complete" : "إرسال التدبر وإكمال الدور"}</span>
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        </div>
                       ) : (
                         <div style={styles.waitingStateContainer}>
                           <p style={styles.waitingStateText}>{t('circleWaitingTurn')}</p>
@@ -1098,23 +1435,50 @@ export default function Community() {
                                 )}
                                 {isMemberMyTurn && (
                                   <span style={styles.recitingMiniBadge}>
-                                    <span>{language === 'en' ? "Active Turn" : "دوره الآن"}</span>
+                                    <span>{language === 'en' ? "Active" : "دوره الآن"}</span>
                                   </span>
                                 )}
                               </div>
                             </div>
                           </div>
 
-                          {/* Teacher Action */}
-                          {isOrganizer && !isMemberMyTurn && (
-                            <button 
-                              onClick={() => handleAssignTurn(idx)}
-                              style={styles.assignTurnBtn}
-                              className="circle-join-btn-hover"
-                            >
-                              {language === 'en' ? "Assign Turn" : "تعيين الدور"}
-                            </button>
-                          )}
+                          {/* Social Friend and Teacher Action buttons */}
+                          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                            {/* Friend/Follow Connection Action */}
+                            {!isMe && (
+                              <button
+                                onClick={() => {
+                                  toggleFriend(member.name);
+                                  confetti({
+                                    particleCount: 8,
+                                    spread: 30,
+                                    colors: ['#d4af37', '#ffffff']
+                                  });
+                                }}
+                                style={{
+                                  ...styles.friendFollowBtn,
+                                  color: friendsList && friendsList.includes(member.name) ? 'var(--text-gold)' : 'var(--text-secondary)',
+                                  background: friendsList && friendsList.includes(member.name) ? 'rgba(212,175,55,0.1)' : 'rgba(255,255,255,0.03)',
+                                  borderColor: friendsList && friendsList.includes(member.name) ? 'var(--gold-primary)' : 'rgba(255,255,255,0.1)',
+                                }}
+                                title={friendsList && friendsList.includes(member.name) ? (language === 'en' ? "Friend added" : "صديق مضاف") : (language === 'en' ? "Add Friend" : "إضافة صديق")}
+                                className="circle-join-btn-hover"
+                              >
+                                {friendsList && friendsList.includes(member.name) ? <UserMinus size={13} /> : <UserPlus size={13} />}
+                              </button>
+                            )}
+
+                            {/* Teacher Turn Assignment */}
+                            {isOrganizer && !isMemberMyTurn && (
+                              <button 
+                                onClick={() => handleAssignTurn(idx)}
+                                style={styles.assignTurnBtn}
+                                className="circle-join-btn-hover"
+                              >
+                                {language === 'en' ? "Assign Turn" : "تعيين الدور"}
+                              </button>
+                            )}
+                          </div>
                         </div>
                       );
                     })}
@@ -2123,12 +2487,187 @@ const styles = {
     fontSize: '1.6rem',
     fontWeight: '700',
     color: '#fff',
+  },
+  circularTimerContainer: {
+    position: 'relative',
+    width: '56px',
+    height: '56px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  circularTimerText: {
+    position: 'absolute',
+    fontFamily: 'monospace',
+    fontSize: '0.85rem',
+    fontWeight: '700',
+    color: '#fff',
+  },
+  micToggleButton: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '6px',
+    padding: '6px 12px',
+    borderRadius: '20px',
+    border: '1px solid',
+    cursor: 'pointer',
+    background: 'none',
+    transition: 'all 0.25s ease',
+  },
+  recitationConsole: {
+    width: '100%',
+    padding: '16px',
+    borderRadius: '16px',
+    background: 'rgba(255, 255, 255, 0.01)',
+    border: '1px solid rgba(212, 175, 55, 0.1)',
+  },
+  consoleTabRow: {
+    display: 'flex',
+    borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+    marginBottom: '12px',
+  },
+  consoleTabBtn: {
+    background: 'none',
+    border: 'none',
+    padding: '8px 16px',
+    fontSize: '0.85rem',
+    cursor: 'pointer',
+    transition: 'all 0.2s ease',
+  },
+  consoleTabContent: {
+    width: '100%',
+  },
+  consoleTextArea: {
+    width: '100%',
+    background: 'rgba(0, 0, 0, 0.2)',
+    border: '1px solid rgba(212, 175, 55, 0.2)',
+    borderRadius: '8px',
+    color: '#fff',
+    padding: '10px',
+    fontSize: '0.9rem',
+    outline: 'none',
+    resize: 'none',
+  },
+  friendFollowBtn: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '28px',
+    height: '28px',
+    borderRadius: '50%',
+    border: '1px solid',
+    cursor: 'pointer',
+    background: 'none',
+    transition: 'all 0.2s ease',
+  },
+  achievementTreeSection: {
+    width: '100%',
+    marginTop: '20px',
+    padding: '20px',
+    borderRadius: '16px',
+    background: 'rgba(255, 255, 255, 0.01)',
+    border: '1px solid rgba(212, 175, 55, 0.1)',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  treeSectionTitle: {
+    fontSize: '1.1rem',
+    fontWeight: '700',
+    color: 'var(--text-gold)',
+    margin: '0 0 4px 0',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  treeSectionSubtitle: {
+    fontSize: '0.8rem',
+    color: 'var(--text-secondary)',
+    margin: '0 0 20px 0',
+    textAlign: 'center',
+  },
+  treeVisualContainer: {
+    width: '100%',
+    maxWidth: '320px',
+    background: 'radial-gradient(circle, rgba(0, 0, 0, 0.4) 0%, rgba(0,0,0,0.1) 100%)',
+    borderRadius: '16px',
+    padding: '10px',
+    border: '1px solid rgba(255,255,255,0.03)',
+  },
+  treeNodesLegend: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+    gap: '10px',
+    width: '100%',
+    marginTop: '20px',
+  },
+  legendItem: {
+    padding: '10px',
+    borderRadius: '10px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    border: '1px solid',
+    transition: 'all 0.3s ease',
+  },
+  teacherConsoleDhikr: {
+    width: '100%',
+    padding: '12px 16px',
+    borderRadius: '12px',
+    background: 'rgba(212, 175, 55, 0.03)',
+    border: '1px solid rgba(212, 175, 55, 0.15)',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '6px',
+    alignItems: 'stretch',
+    marginBottom: '10px',
+  },
+  teacherDhikrInput: {
+    flexGrow: 1,
+    background: 'rgba(0, 0, 0, 0.3)',
+    border: '1px solid rgba(212, 175, 55, 0.2)',
+    borderRadius: '8px',
+    color: '#fff',
+    padding: '8px 12px',
+    fontSize: '0.85rem',
+    outline: 'none',
+  },
+  teacherDhikrBtn: {
+    background: 'var(--gold-gradient)',
+    border: 'none',
+    borderRadius: '8px',
+    color: '#000',
+    fontWeight: '700',
+    fontSize: '0.8rem',
+    padding: '8px 16px',
+    cursor: 'pointer',
+    transition: 'all 0.2s ease',
   }
 };
 
 if (typeof document !== 'undefined') {
   const commStyle = document.createElement('style');
   commStyle.innerHTML = `
+    .achievement-glow-pulse {
+      animation: achievement-glow-pulse-anim 2s infinite alternate;
+    }
+    @keyframes achievement-glow-pulse-anim {
+      0% { r: 18; opacity: 0.3; }
+      100% { r: 24; opacity: 0.9; }
+    }
+    .pulse-mic-glow {
+      animation: pulse-mic-glow-anim 1.5s infinite alternate;
+    }
+    @keyframes pulse-mic-glow-anim {
+      0% { box-shadow: 0 0 8px rgba(239, 68, 68, 0.2); }
+      100% { box-shadow: 0 0 16px rgba(239, 68, 68, 0.6); }
+    }
+    .muslim-avatar-pulse {
+      animation: muslim-avatar-pulse-anim 2s infinite alternate;
+    }
+    @keyframes muslim-avatar-pulse-anim {
+      0% { transform: scale(1); box-shadow: 0 0 5px rgba(212, 175, 55, 0.2); }
+      100% { transform: scale(1.06); box-shadow: 0 0 15px rgba(212, 175, 55, 0.5); }
+    }
     .glow-pulse-tasbih {
       animation: pulse-glow-tasbih 2.5s infinite alternate;
     }

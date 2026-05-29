@@ -103,8 +103,8 @@ export default function Footer({ setActivePage }) {
             <h4 style={styles.colTitle}>{language === 'en' ? "Premium Newsletter" : "النشرة الإخبارية"}</h4>
             <p style={styles.colText}>
               {language === 'en'
-                ? "Receive weekly spiritual insights, newly added lessons, and exclusive book recommendations."
-                : "تلقَ الرؤى الروحانية الأسبوعية، الدروس الجديدة، وتوصيات الكتب الحصرية."
+                ? "Receive weekly faith insights, newly added lessons, and exclusive book recommendations."
+                : "شارك التسابيح والآيات القرءانية والتحق بالحلقات المباشرة وتعلم اللغة العربية من خلال منتجاتنا الرقمية"
               }
             </p>
 

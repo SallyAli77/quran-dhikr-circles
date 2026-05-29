@@ -18,7 +18,7 @@ export default function Home({ setActivePage }) {
       rating: 4.9,
       reviews: 5840,
       description: "The most readable, contemporary English translation of the Quran, capturing its spiritual essence and literary eloquence perfectly.",
-      descriptionAr: "الترجمة الإنجليزية الأكثر وضوحاً وبلاغة لآيات القرآن الكريم مع الحفاظ على المقاصد الروحانية والجمالية الأدبية.",
+      descriptionAr: "الترجمة الإنجليزية الأكثر وضوحاً وبلاغة لآيات القرآن الكريم مع الحفاظ على المقاصد الدينية والجمالية الأدبية.",
       image: "📖",
       link: "https://www.amazon.com/s?k=M.A.S.+Abdel+Haleem+Quran+Oxford"
     },
@@ -78,7 +78,7 @@ export default function Home({ setActivePage }) {
       rating: 4.9,
       reviews: 210,
       description: "Premium suede cover notebook featuring gold gilded edges. Perfect for daily reflections, du'as, and Quranic vocab tracking.",
-      descriptionAr: "دفتر يوميات بغلاف فاخر مع حواف ذهبية مذهبة. مثالي لكتابة الخواطر الروحانية اليومية والأدعية وتدبر الآيات.",
+      descriptionAr: "دفتر يوميات بغلاف فاخر مع حواف ذهبية مذهبة. مثالي لكتابة الخواطر النفسية اليومية والأدعية وتدبر الآيات.",
       image: "✍️",
       link: "https://www.amazon.com/s?k=Islamic+prayer+journal+gold"
     }

@@ -9,7 +9,7 @@ const faqsList = [
     q: "What is the mission of ArabicMuslim?",
     qAr: "ما هي رسالة أرابيك مسلم؟",
     a: "ArabicMuslim is a premium digital sanctuary built to bridge classical Islamic learning with cutting-edge modern aesthetics. We provide bilingual tools, Quran recitation audio, real-time prayer countdowns, and handpicked literature recommendations to elevate your spiritual study.",
-    aAr: "أرابيك مسلم هي ملاذ رقمي فاخر مصمم لربط العلوم الإسلامية الكلاسيكية بالجماليات المعاصرة. نحن نقدم أدوات ثنائية اللغة، تلاوة القرآن الكريم، والعد التنازلي لمواقيت الصلاة، وتوصيات كتب حصرية لترقية دراستك الروحانية."
+    aAr: "Arabic Muslim هي ملاذ رقمي متميز مصمم لربط العلوم الإسلامية بالجماليات المعاصرة. نحن نقدم أدوات ثنائية اللغة، تلاوة القرآن الكريم، والعد التنازلي لمواقيت الصلاة، وتوصيات كتب حصرية لتعلم اللغة العربية والدروس الإسلامية"
   },
   {
     id: 2,

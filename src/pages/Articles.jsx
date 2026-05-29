@@ -7,25 +7,25 @@ import confetti from 'canvas-confetti';
 const baseArticles = [
   {
     id: 1,
-    title: "The Spiritual Power of Morning Dhikr",
-    titleAr: "القوة الروحانية لأذكار الصباح",
-    category: "Spirituality",
-    categoryAr: "روحانيات",
+    title: "The Faith Power of Morning Dhikr",
+    titleAr: "من أذكار الصباح",
+    category: "Faith",
+    categoryAr: "إيمانيات",
     author: "Dr. Bilal Hassan",
     authorAr: "د. بلال حسن",
     avatar: "🌙",
     date: "May 25, 2026",
     readTime: 5,
-    summary: "Explore the profound spiritual and neurological benefits of dedicating the first moments of your day to the remembrance of Allah.",
-    summaryAr: "استكشف الفوائد الروحانية والنفسية العميقة لتكريس اللحظات الأولى من يومك لذكر الله وطمأنينة القلب.",
+    summary: "Explore the profound faith and neurological benefits of dedicating the first moments of your day to the remembrance of Allah.",
+    summaryAr: "فضائل ذكر الله",
     content: `Assalamu Alaikum dear reader. In the hustle and bustle of modern life, our minds are bombarded with endless notifications, stress, and noise. Allah says in the Noble Quran: "O you who have believed, remember Allah with much remembrance. And exalt Him morning and afternoon." (Surah Al-Ahzab 33:41-42).
 
-    Morning Dhikr (remembrance) acts as a spiritual shield. Historically, the Prophet Muhammad (peace be upon him) and his companions never left the morning and evening supplications. 
+    Morning Dhikr (remembrance) acts as a faith shield. Historically, the Prophet Muhammad (peace be upon him) and his companions never left the morning and evening supplications. 
     
     From a psychological perspective, beginning the day with terms of gratitude ("Alhamdulillah") and praise ("Subhan Allah") resets the amygdala—the brain's threat-detection center. This grounds you in a state of high mindfulness, equipping you with pristine patience to handle whatever challenges the day presents. Dedicate just 10 minutes after Fajr prayer to sit in silence, count your Tasbih, and feel the divine light enter your chest.`,
     contentAr: `السلام عليكم ورحمة الله. في صخب الحياة المعاصرة، تتعرض عقولنا لقصف مستمر من التنبيهات والضغوط والضوضاء. يقول الله تعالى في القرآن الكريم: "يَا أَيُّهَا الَّذِينَ آمَنُوا اذْكُرُوا اللَّهَ ذِكْرًا كَثِيرًا * وَسَبِّحُوهُ بُكْرَةً وَأَصِيلًا" (الأحزاب: 41-42).
 
-    أذكار الصباح بمثابة درع روحاني متين. تاريخياً، لم يترك النبي محمد صلى الله عليه وسلم وأصحابه الكرام أذكار الصباح والمساء أبداً.
+    أذكار الصباح حصن لك من كل شر تاريخياً، لم يترك النبي محمد صلى الله عليه وسلم وأصحابه الكرام أذكار الصباح والمساء أبداً.
     
     من منظور علم النفس الحديث، فإن بدء اليوم بعبارات الامتنان والحمد ("الحمد لله") والتسبيح ("سبحان الله") يعيد ضبط مركز القلق في الدماغ، مما يمنحك سكينة عالية وصيراً جميلاً لمواجهة عقبات اليوم. خصص 10 دقائق فقط بعد صلاة الفجر للجلوس في هدوء تام، وحساب تسابيحك، والشعور بالنور الإلهي يملأ صدرك.`
   },
@@ -72,9 +72,9 @@ const baseArticles = [
     avatar: "🕌",
     date: "May 12, 2026",
     readTime: 6,
-    summary: "Unveiling the deep spiritual lessons and allegories of the four major stories in Surah Al-Kahf read every Friday.",
-    summaryAr: "الكشف عن الدروس والرموز الروحانية العميقة للقصص الأربعة الكبرى في سورة الكهف التي نقرؤها كل جمعة.",
-    content: `Reading Surah Al-Kahf on Fridays is a beloved sunnah that illuminates a spiritual light for the reader until the next Friday. But why this specific Surah? 
+    summary: "Unveiling the deep faith lessons and allegories of the four major stories in Surah Al-Kahf read every Friday.",
+    summaryAr: "الكشف عن الدروس المستفادة للقصص الأربعة من سورة الكهف",
+    content: `Reading Surah Al-Kahf on Fridays is a beloved sunnah that illuminates a divine light for the reader until the next Friday. But why this specific Surah? 
 
     Surah Al-Kahf contains four major narratives, each answering a critical trial of human life:
     1. The Companions of the Cave: The trial of faith (Deen).
@@ -82,7 +82,7 @@ const baseArticles = [
     3. Musa and Al-Khidr: The trial of knowledge ('Ilm).
     4. Dhul-Qarnayn: The trial of power (Sultan).
 
-    Each story provides a pristine spiritual antidote to these worldly tests, emphasizing that true security lies not in material strength or status, but in unwavering trust in Allah's wisdom. As you read it this Friday, don't just speed through the verses; pause, contemplate the transition between stories, and let the serenity wash over your home.`,
+    Each story provides a pristine faith antidote to these worldly tests, emphasizing that true security lies not in material strength or status, but in unwavering trust in Allah's wisdom. As you read it this Friday, don't just speed through the verses; pause, contemplate the transition between stories, and let the serenity wash over your home.`,
     contentAr: `قراءة سورة الكهف يوم الجمعة سنة مباركة تضيء للمؤمن نوراً بين الجمعتين. ولكن لماذا هذه السورة تحديداً؟
 
     تحتوي سورة الكهف على أربعة محاور قصصية كبرى، تجيب كل منها على فتنة حرجة من فتن الحياة الدنيا:
@@ -91,7 +91,7 @@ const baseArticles = [
     3. موسى والخضر: فتنة العلم.
     4. ذو القرنين: فتنة السلطة والقوة.
 
-    توفر كل قصة ترياقاً روحانياً لهذه الابتلاءات الدنيوية، مؤكدة أن الأمان الحقيقي يكمن في التوكل التام على حكمة الله سبحانه وتعالى. بينما تقرؤها هذا الأسبوع، لا تكتف بالمرور السريع على الكلمات؛ بل تأمل تفاصيل القصص ودع السكينة تغمر قلبك.`
+    توفر كل قصة حماية نفسية من الابتلاءات الدنيوية، مؤكدة أن الأمان الحقيقي يكمن في التوكل التام على حكمة الله سبحانه وتعالى. بينما تقرؤها هذا الأسبوع، لا تكتف بالمرور السريع على الكلمات؛ بل تأمل تفاصيل القصص ودع السكينة تغمر قلبك.`
   }
 ];
 
@@ -118,7 +118,7 @@ const authorsTemplate = [
 ];
 
 const categoriesTemplate = [
-  { cat: "Spirituality", catAr: "روحانيات" },
+  { cat: "Faith", catAr: "إيمانيات" },
   { cat: "Arabic Learning", catAr: "تعلم العربية" },
   { cat: "Tafsir", catAr: "تفسير" },
   { cat: "History", catAr: "التاريخ الإسلامي" }
@@ -140,7 +140,7 @@ const generate120Articles = () => {
     const titleAr = `${titleTemplate.ar} - الجزء ${Math.floor(i / 10) + 1}`;
 
     const summary = `Unlocking pristine dimensional aspects of ${titleTemplate.en.toLowerCase()} to enrich your study. Discover historical contexts and structural guides.`;
-    const summaryAr = `الكشف عن أبعاد روحانية ولغوية عميقة حول ${titleTemplate.ar} لإثراء تدبرك ودراستك اليومية في هذا المجال الهام.`;
+    const summaryAr = `الكشف عن الدروس الدينية واللغوية حول ${titleTemplate.ar} لإثراء تدبرك ودراستك اليومية في هذا المجال الهام.`;
 
     const content = `Assalamu Alaikum dear seeker of wisdom. This article (Volume ${Math.floor(i / 10) + 1}) addresses critical aspects of ${titleTemplate.en.toLowerCase()}. Understanding this concept requires constant daily reflection, patient study, and aligning actions with pure intentions (Ikhlas). 
 
@@ -149,7 +149,7 @@ const generate120Articles = () => {
     2. Commit to 10 minutes of silent meditation / dhikr daily.
     3. Practice high-frequency vocabulary learning through bilingual texts (such as the textbooks listed on our Home page).
     
-    May Allah grant us wisdom, continuous spiritual elevation, and open our hearts to the deep paths of knowledge and peace.`;
+    May Allah grant us wisdom, continuous faith elevation, and open our hearts to the deep paths of knowledge and peace.`;
 
     const contentAr = `السلام عليكم ورحمة الله وبركاته يا طالب الحكمة والسكينة. في هذا المقال (الجزء ${Math.floor(i / 10) + 1}) نتناول محاور هامة حول ${titleTemplate.ar}. إن فهم هذه الجوانب يتطلب تفكراً مستمراً، ودراسة متأنية، ومطابقة للعمل مع خلوص النية والإخلاص لله تعالى.
 
@@ -188,10 +188,10 @@ export default function Articles() {
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [activeCategory, setActiveCategory] = useState("All");
 
-  const categories = ["All", "Spirituality", "Arabic Learning", "Tafsir", "History"];
+  const categories = ["All", "Faith", "Arabic Learning", "Tafsir", "History"];
   const categoriesAr = {
     All: "الكل",
-    Spirituality: "روحانيات",
+    Faith: "إيمانيات",
     "Arabic Learning": "تعلم العربية",
     Tafsir: "تفسير",
     History: "التاريخ الإسلامي"
@@ -390,8 +390,8 @@ export default function Articles() {
               <Award size={20} color="var(--text-gold)" style={styles.quoteAward} />
               <p style={styles.highlightQuoteText}>
                 {language === 'en'
-                  ? "True spiritual elevation is achieved through continuous daily commitment, authentic study of language, and aligning action with sincerity."
-                  : "إن الارتقاء الروحاني الحقيقي يتحقق عبر الالتزام اليومي المستمر، والتدبر العميق لكلمات الوحي الشريف بصدق وإخلاص."
+                  ? "True faith elevation is achieved through continuous daily commitment, authentic study of language, and aligning action with sincerity."
+                  : "إن الارتقاء النفسي الحقيقي يتحقق عبر الالتزام اليومي المستمر، والتدبر العميق لكلمات الوحي الشريف بصدق وإخلاص."
                 }
               </p>
             </div>
