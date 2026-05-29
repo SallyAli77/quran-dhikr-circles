@@ -535,7 +535,6 @@ export default function Quran({ setActivePage }) {
         </div>
       )}
 
-      {/* Main content based on quranMode and selectedSurah */}
       {quranMode === null ? (
         // Land Choice Screen
         <div style={styles.choiceContainer}>
@@ -547,6 +546,61 @@ export default function Quran({ setActivePage }) {
                 ? "اختر طريقتك للتفاعل مع كتاب الله عز وجل اليوم" 
                 : "Select your preferred way to interact with the Holy Quran today"}
             </p>
+          </div>
+
+          {/* Deep-linked Teacher Certification Promotion Banner */}
+          <div className="glass-panel teacher-promo-banner" style={{
+            padding: '20px 24px',
+            borderRadius: '16px',
+            background: 'linear-gradient(135deg, rgba(212,175,55,0.08) 0%, rgba(15,17,26,0.9) 100%)',
+            border: '1.5px solid var(--border-gold)',
+            marginBottom: '30px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: '16px',
+            position: 'relative',
+            overflow: 'hidden'
+          }}>
+            <div className="islamic-pattern" style={{ opacity: 0.04 }}></div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              <div style={{
+                width: '48px',
+                height: '48px',
+                borderRadius: '50%',
+                background: 'rgba(212,175,55,0.1)',
+                border: '1px solid var(--border-gold)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 0 15px rgba(212,175,55,0.2)'
+              }}>
+                <Award size={24} color="var(--text-gold)" />
+              </div>
+              <div style={{ textAlign: language === 'ar' ? 'right' : 'left' }}>
+                <h3 style={{ fontSize: '1.08rem', fontWeight: '700', color: 'var(--text-gold)', fontFamily: language === 'ar' ? "'Cairo', sans-serif" : 'inherit' }}>
+                  {language === 'ar' ? "هل تجيد تلاوة القرآن وتجويده؟ كن معلماً معتمداً!" : "Master of Quran Recitation? Become a Certified Teacher!"}
+                </h3>
+                <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
+                  {language === 'ar' 
+                    ? "أتمم اختبار التجويد الشريف المكون من 30 سؤالاً في 30 دقيقة، واحصل على شارات معلّم برونزية/فضية/ذهبية مميزة!" 
+                    : "Complete the rigorous 30-question, 30-minute Tajweed quiz, unlock elite badges, and certify your profile today!"}
+                </p>
+              </div>
+            </div>
+            <button 
+              onClick={() => {
+                localStorage.setItem('arabicmuslim_deep_link', 'teacher_center');
+                setActivePage('login');
+                window.dispatchEvent(new CustomEvent('deep_link_teacher_center'));
+              }}
+              className="btn-primary" 
+              style={{ padding: '8px 18px', fontSize: '0.8rem' }}
+            >
+              <span>{language === 'ar' ? "تقدم للاختبار الآن" : "Apply for Exam"}</span>
+              <ArrowRight size={12} />
+            </button>
           </div>
 
           <div style={styles.choiceGrid}>

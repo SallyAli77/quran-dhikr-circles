@@ -295,3 +295,106 @@ select:focus {
   border-color: var(--gold-primary) !important;
   box-shadow: 0 0 10px rgba(212, 175, 55, 0.25) !important;
 }
+
+/* Floating flying emojis reaction system */
+.floating-reactions-container {
+  position: fixed;
+  bottom: 100px;
+  left: 0;
+  width: 100%;
+  height: 350px;
+  pointer-events: none;
+  z-index: 100000;
+  overflow: hidden;
+}
+
+.floating-reaction {
+  position: absolute;
+  bottom: 0;
+  font-size: 2.4rem;
+  opacity: 0;
+  animation: floatUpAndRotate 2.5s cubic-bezier(0.08, 0.82, 0.17, 1) forwards;
+  filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.6));
+}
+
+@keyframes floatUpAndRotate {
+  0% {
+    transform: translateY(0) scale(0.4) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+    transform: translateY(-50px) scale(1.35) rotate(15deg);
+  }
+  50% {
+    transform: translateY(-160px) scale(1) rotate(-15deg);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(-350px) scale(0.7) rotate(10deg);
+    opacity: 0;
+  }
+}
+
+/* Worshipper live mic pulse animations */
+.reciter-mic-pulse {
+  animation: micGlowPulse 1.8s infinite ease-in-out;
+}
+
+@keyframes micGlowPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.5);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 15px 4px rgba(212, 175, 55, 0.25);
+    transform: scale(1.03);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+    transform: scale(1);
+  }
+}
+
+.muslim-avatar-pulse {
+  animation: avatarGlowPulse 2s infinite ease-in-out;
+  border-color: var(--gold-primary) !important;
+}
+
+@keyframes avatarGlowPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+    border-color: var(--gold-primary);
+  }
+  50% {
+    box-shadow: 0 0 25px 8px rgba(212, 175, 55, 0.2);
+    border-color: #fbf5b7;
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+    border-color: var(--gold-primary);
+  }
+}
+
+/* community circle cards hover entrance and filter exit animations */
+.circle-grid-card {
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  animation: cardEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.circle-grid-card:hover {
+  transform: translateY(-5px) scale(1.02) !important;
+  border-color: var(--border-gold-hover) !important;
+  box-shadow: var(--shadow-gold-intense), 0 0 20px rgba(212, 175, 55, 0.15) !important;
+}
+
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}

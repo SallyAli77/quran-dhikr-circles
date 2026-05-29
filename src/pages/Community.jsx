@@ -97,6 +97,13 @@ export default function Community() {
       if (circle.recitationRule !== recitationRuleFilter) return false;
     }
 
+    // 4. Hide completed/full circles (capacity reached) unless user is joined
+    const totalJoined = circle.joinedUsers.length;
+    const isFull = totalJoined >= circle.capacity;
+    const userIdentifier = isAuthenticated ? user.email : "guest_user";
+    const isJoined = circle.joinedUsers.some(u => u.email === userIdentifier || (userIdentifier === "guest_user" && u.name === "Guest Member"));
+    if (isFull && !isJoined) return false;
+
     return true;
   });
 
@@ -614,21 +621,49 @@ export default function Community() {
           return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
         };
 
+        const totalDuration = circle.duration || (circle.type === 'quran' ? 60 : 10);
+        const totalSecs = totalDuration * 60;
+        const circleLength = 2 * Math.PI * 30; // Radius 30
+        const strokeDashoffset = totalSecs > 0 ? circleLength - (sessionTimeLeft / totalSecs) * circleLength : 0;
+
         return (
           <div style={styles.sessionOverlay} className="fade-in">
-            <div style={styles.sessionCard} className="glass-panel">
-              <div className="islamic-pattern"></div>
+            <div style={styles.sessionFullscreenCard} className="glass-panel">
+              <div className="islamic-pattern" style={{ opacity: 0.08 }}></div>
               
-              {/* Header block */}
-              <div style={styles.sessionHeader}>
+              {/* Top Navbar Bar inside Fullscreen */}
+              <div style={styles.fullscreenHeader}>
                 <div>
-                  <h2 style={styles.sessionCircleName}>{circle.name}</h2>
-                  <span style={styles.sessionRule}>{circle.recitationRule} • {circle.joinedUsers.length} Worshippers</span>
+                  <h2 style={styles.fullscreenCircleName}>
+                    {language === 'ar' ? circle.nameAr : circle.name}
+                  </h2>
+                  <span style={styles.fullscreenRule}>
+                    {circle.recitationRule} • {circle.type.toUpperCase()} • {circle.joinedUsers.length} {language === 'ar' ? "مصلٍ متفاعل" : "Active Worshippers"}
+                  </span>
                 </div>
                 
-                <div style={styles.timerBadge}>
-                  <Volume2 size={14} color="var(--text-gold)" />
-                  <span>{formatTime(sessionTimeLeft)}</span>
+                {/* Radial Clock Timer */}
+                <div style={{ position: 'relative', width: '80px', height: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="80" height="80" viewBox="0 0 80 80" style={{ transform: 'rotate(-90deg)' }}>
+                    <circle cx="40" cy="40" r="30" fill="transparent" stroke="rgba(255,255,255,0.05)" strokeWidth="5" />
+                    <circle cx="40" cy="40" r="30" fill="transparent" stroke="var(--gold-primary)" strokeWidth="5"
+                      strokeDasharray={circleLength}
+                      strokeDashoffset={strokeDashoffset}
+                      strokeLinecap="round"
+                      style={{ transition: 'stroke-dashoffset 1s linear' }}
+                    />
+                  </svg>
+                  <div style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    fontSize: '0.85rem',
+                    fontWeight: '700',
+                    color: 'var(--text-gold)'
+                  }}>
+                    {formatTime(sessionTimeLeft)}
+                  </div>
                 </div>
               </div>
 
@@ -639,79 +674,186 @@ export default function Community() {
                 </div>
               )}
 
-              {/* Central Worship turn indicator */}
-              <div style={styles.recitationConsole}>
-                {sessionEnded ? (
-                  <div style={styles.sessionEndedCard} className="text-center">
-                    <CheckCircle2 size={48} color="var(--text-gold)" />
-                    <h2 className="gold-gradient-text" style={{ marginTop: '14px' }}>{t('circleSessionEnded')}</h2>
-                    <p style={{ color: 'var(--text-secondary)', marginTop: '8px' }}>{t('circleCongratulations')}</p>
-                    
-                    <button onClick={handleExitSession} className="btn-primary" style={{ marginTop: '20px' }}>
-                      <span>{language === 'ar' ? "الخروج ومتابعة الحساب" : "Exit Session"}</span>
-                    </button>
+              {/* Grid 2 Column Content Layout */}
+              <div style={styles.fullscreenContentGrid}>
+                
+                {/* LEFT PANEL: Worshippers Board */}
+                <div style={styles.worshippersPanel} className="glass-panel">
+                  <h3 style={styles.panelTitle}>
+                    <Users size={16} color="var(--text-gold)" style={{ marginRight: '6px', marginLeft: '6px' }} />
+                    <span>{language === 'ar' ? "لوحة المصلين بالحلقة" : "Worshippers Ring"}</span>
+                  </h3>
+                  
+                  <div style={styles.worshippersList}>
+                    {circle.joinedUsers.map((member, idx) => {
+                      const isMemberTurn = idx === currentTurn;
+                      const isCreator = member.name === circle.creator || (circle.creator === "System" && idx === 0);
+                      return (
+                        <div 
+                          key={idx} 
+                          style={{
+                            ...styles.worshipperItem,
+                            background: isMemberTurn ? 'rgba(212,175,55,0.06)' : 'rgba(255,255,255,0.02)',
+                            borderColor: isMemberTurn ? 'var(--border-gold-hover)' : 'var(--border-glass)'
+                          }}
+                        >
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <span style={styles.worshipperAvatar}>{member.avatar || "🧕"}</span>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                              <span style={{
+                                ...styles.worshipperName,
+                                color: isMemberTurn ? 'var(--text-gold)' : 'var(--text-primary)'
+                              }}>
+                                {member.name}
+                              </span>
+                              <span style={styles.worshipperRole}>
+                                {isCreator ? (language === 'ar' ? "مؤسس الحلقة" : "Ring Leader") : (language === 'ar' ? "عضو متفاعل" : "Active Member")}
+                              </span>
+                            </div>
+                          </div>
+                          
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            {isCreator && <Crown size={12} color="var(--text-gold)" title="Creator" />}
+                            {isMemberTurn ? (
+                              <span className="reciter-mic-pulse" style={styles.micPulseBadge}>
+                                <Mic size={11} color="#000" />
+                                <span style={{ fontSize: '0.65rem', fontWeight: '700', color: '#000' }}>
+                                  {language === 'ar' ? "يتلو" : "Live"}
+                                </span>
+                              </span>
+                            ) : (
+                              <Mic size={11} color="var(--text-muted)" />
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
-                ) : (
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
-                    <div style={{
-                      ...styles.activeUserAvatarCircle,
-                      borderColor: isMyTurn ? 'var(--gold-primary)' : 'rgba(255,255,255,0.05)',
-                      boxShadow: isMyTurn ? '0 0 30px rgba(212,175,55,0.3)' : 'none'
-                    }} className={isMyTurn ? "muslim-avatar-pulse" : ""}>
-                      <span style={{ fontSize: '3rem' }}>{activeReciter?.avatar || "🧕"}</span>
+                </div>
+
+                {/* RIGHT PANEL: Main Interactive Worship Console */}
+                <div style={styles.interactiveConsole} className="glass-panel">
+                  {sessionEnded ? (
+                    <div style={styles.sessionEndedCard} className="text-center">
+                      <CheckCircle2 size={56} color="var(--text-gold)" style={{ filter: 'drop-shadow(0 0 10px rgba(212, 175, 55, 0.4))' }} />
+                      <h2 className="gold-gradient-text" style={{ marginTop: '16px', fontSize: '1.8rem' }}>{t('circleSessionEnded')}</h2>
+                      <p style={{ color: 'var(--text-secondary)', marginTop: '8px', maxWidth: '400px', margin: '8px auto 0 auto' }}>
+                        {language === 'ar' 
+                          ? "الحمد لله رب العالمين! تقبل الله منا ومنكم صالح الأعمال والذكر والقيام." 
+                          : t('circleCongratulations')
+                        }
+                      </p>
+                      
+                      <button onClick={handleExitSession} className="btn-primary" style={{ marginTop: '24px' }}>
+                        <span>{language === 'ar' ? "العودة لقائمة الحلقات" : "Back to Circles"}</span>
+                      </button>
                     </div>
+                  ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', width: '100%' }}>
+                      
+                      {/* Active Reciter Huge Avatar */}
+                      <div style={{
+                        ...styles.activeUserAvatarCircle,
+                        borderColor: isMyTurn ? 'var(--gold-primary)' : 'rgba(255,255,255,0.05)',
+                        boxShadow: isMyTurn ? '0 0 35px rgba(212,175,55,0.35)' : 'none',
+                        width: '110px',
+                        height: '110px'
+                      }} className={isMyTurn ? "muslim-avatar-pulse" : ""}>
+                        <span style={{ fontSize: '3.6rem' }}>{activeReciter?.avatar || "🧕"}</span>
+                      </div>
 
-                    <div style={{ textAlign: 'center' }}>
-                      <span style={styles.turnLabel}>{t('circleTurnReciter')}</span>
-                      <h3 style={styles.activeWorshipperName} className="gold-gradient-text">{activeReciter?.name}</h3>
-                    </div>
+                      <div style={{ textAlign: 'center' }}>
+                        <span style={styles.turnLabel}>{t('circleTurnReciter')}</span>
+                        <h3 style={styles.activeWorshipperName} className="gold-gradient-text">{activeReciter?.name}</h3>
+                      </div>
 
-                    {isMyTurn ? (
-                      <div style={styles.myTurnBox} className="glass-panel fade-in">
-                        <span style={styles.myTurnTitle}>{t('circleYourTurn')}</span>
-                        <p style={styles.myTurnDhikr}>"{circle.dhikrTarget}"</p>
+                      {/* Dhikr text box */}
+                      <div style={styles.dhikrDisplayCard} className="glass-panel">
+                        <span style={{ fontSize: '0.78rem', color: 'var(--text-gold)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                          {circle.type === 'quran' ? (language === 'ar' ? "الآيات المقررة للتلاوة" : "Quranic Verses for Recitation") : (language === 'ar' ? "الذكر المستهدف" : "Supplication Target")}
+                        </span>
+                        <p style={styles.dhikrTextContent} className="arabic-text">
+                          "{language === 'ar' ? circle.dhikrTargetAr : circle.dhikrTarget}"
+                        </p>
+                      </div>
 
-                        <div style={{ display: 'flex', gap: '12px', width: '100%', marginTop: '10px' }}>
+                      {isMyTurn ? (
+                        <div style={styles.myTurnActionBox} className="glass-panel fade-in">
+                          <span style={styles.myTurnTitle}>{t('circleYourTurn')}</span>
+                          <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
+                            {language === 'ar' ? "يرجى قراءة الذكر بصوت مسموع ثم اضغط لتأكيد إتمام القراءة ودفع الدور للتالي" : "Read the supplication clearly and click to submit your turn progress."}
+                          </p>
+
                           <button 
                             onClick={() => {
                               const nextTurn = (circle.currentTurnIndex + 1) % circle.joinedUsers.length;
                               updateCircleTurn(circle.id, nextTurn);
                               incrementCircleProgress(circle.id);
                               addDailyScorePoints(30);
+                              
+                              if (navigator.vibrate) navigator.vibrate([40, 40]);
+                              
+                              confetti({
+                                particleCount: 40,
+                                spread: 50,
+                                colors: ['#d4af37', '#ffffff']
+                              });
                             }} 
                             className="btn-primary"
-                            style={{ flex: 1, padding: '12px' }}
+                            style={{ width: '100%', padding: '14px', justifyContent: 'center' }}
                           >
-                            <span>{t('circleConfirmBtn')}</span>
+                            <CheckCircle2 size={16} />
+                            <span>{language === 'ar' ? "تأكيد إتمام التلاوة والذكر" : t('circleConfirmBtn')}</span>
                           </button>
                         </div>
-                      </div>
-                    ) : (
-                      <div style={styles.waitingTurnBox} className="glass-panel">
-                        <Loader size={16} className="spin-pulse" color="var(--text-gold)" style={{ marginRight: '6px' }} />
-                        <span>{t('circleWaitingTurn')}</span>
-                      </div>
-                    )}
-                  </div>
-                )}
+                      ) : (
+                        <div style={styles.waitingTurnConsoleBox} className="glass-panel">
+                          <Loader size={18} className="spin-pulse" color="var(--text-gold)" style={{ marginRight: '8px', marginLeft: '8px' }} />
+                          <span style={{ fontWeight: '600', color: 'var(--text-secondary)' }}>
+                            {language === 'ar' 
+                              ? `استمع الآن بخشوع إلى تلاوة ${activeReciter?.name}...`
+                              : `Please listen patiently as ${activeReciter?.name} recites...`
+                            }
+                          </span>
+                        </div>
+                      )}
+
+                    </div>
+                  )}
+                </div>
+
               </div>
 
-              {/* Bottom user action control buttons */}
-              <div style={styles.sessionFooter}>
-                <button 
-                  onClick={() => {
-                    const emojis = ['🤲', '❤️', '✨', '🌸'];
-                    spawnReaction(emojis[Math.floor(Math.random() * emojis.length)]);
-                  }} 
-                  className="btn-secondary"
-                  style={styles.footerActionBtn}
-                >
-                  <Heart size={14} color="#ff6b6b" />
-                  <span>{t('circleSendReaction')}</span>
-                </button>
+              {/* Bottom Interactive Reactions Bar */}
+              <div style={styles.fullscreenFooter}>
+                <div style={styles.quickReactionsRow}>
+                  <span style={styles.reactionLabel}>
+                    {language === 'ar' ? "شجع الآخرين بالدعاء:" : "Encourage Worshippers:"}
+                  </span>
+                  <div style={styles.quickReactionBtnsGrid}>
+                    {[
+                      { emoji: '🤲', label: language === 'ar' ? "دعاء" : "Dua" },
+                      { emoji: '❤️', label: language === 'ar' ? "حب" : "Love" },
+                      { emoji: '✨', label: language === 'ar' ? "نور" : "Light" },
+                      { emoji: '🌸', label: language === 'ar' ? "ورد" : "Flower" },
+                      { emoji: '👏', label: language === 'ar' ? "أحسنت" : "Kudos" },
+                      { emoji: '👍', label: language === 'ar' ? "دعم" : "Support" }
+                    ].map(r => (
+                      <button 
+                        key={r.emoji}
+                        onClick={() => spawnReaction(r.emoji)}
+                        style={styles.quickEmojiBtn}
+                        className="glass-panel"
+                        title={r.label}
+                      >
+                        <span style={{ fontSize: '1.25rem' }}>{r.emoji}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
-                <button onClick={handleExitSession} className="btn-secondary" style={styles.footerActionBtn}>
-                  <span>{language === 'ar' ? "مغادرة الحلقة" : "Leave Session"}</span>
+                <button onClick={handleExitSession} className="btn-secondary" style={styles.fullscreenLeaveBtn}>
+                  <span>{language === 'ar' ? "مغادرة الجلسة" : "Leave Session"}</span>
                 </button>
               </div>
 
@@ -1237,79 +1379,213 @@ const styles = {
     position: 'fixed',
     top: 0,
     left: 0,
-    width: '100%',
-    height: '100%',
-    background: 'rgba(0,0,0,0.92)',
+    width: '100vw',
+    height: '100vh',
+    background: 'rgba(5, 5, 8, 0.96)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 9999,
+    zIndex: 99999,
     padding: '24px',
+    boxSizing: 'border-box',
   },
-  sessionCard: {
+  sessionFullscreenCard: {
     width: '100%',
-    maxWidth: '600px',
-    padding: '30px',
+    maxWidth: '1000px',
+    height: '90vh',
+    maxHeight: '750px',
+    padding: '24px 30px',
     borderRadius: '24px',
     display: 'flex',
     flexDirection: 'column',
-    gap: '24px',
+    gap: '20px',
     position: 'relative',
     overflow: 'hidden',
+    boxSizing: 'border-box',
+    background: 'rgba(15, 17, 26, 0.88)',
+    border: '1px solid var(--border-gold)',
   },
-  sessionHeader: {
+  fullscreenHeader: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderBottom: '1px solid rgba(255,255,255,0.05)',
+    borderBottom: '1px solid rgba(255,255,255,0.06)',
     paddingBottom: '16px',
+    width: '100%',
   },
-  sessionCircleName: {
-    fontSize: '1.4rem',
-    fontWeight: '700',
-    color: 'var(--text-primary)',
-  },
-  sessionRule: {
-    fontSize: '0.78rem',
+  fullscreenCircleName: {
+    fontSize: '1.6rem',
+    fontWeight: '800',
     color: 'var(--text-gold)',
-    display: 'block',
-    marginTop: '2px',
   },
-  timerBadge: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '6px',
-    background: 'rgba(212,175,55,0.1)',
-    border: '1px solid var(--border-gold)',
-    borderRadius: '20px',
-    padding: '6px 14px',
-    fontSize: '0.85rem',
-    color: 'var(--text-gold)',
-    fontWeight: '700',
-  },
-  botReflectionBanner: {
-    background: 'rgba(212,175,55,0.06)',
-    border: '1px solid var(--border-gold)',
-    borderRadius: '12px',
-    padding: '12px',
-    textAlign: 'center',
-  },
-  botReflectionText: {
-    fontSize: '0.88rem',
-    color: 'var(--text-gold)',
-    fontStyle: 'italic',
+  fullscreenRule: {
+    fontSize: '0.8rem',
+    color: 'var(--text-secondary)',
     fontWeight: '600',
   },
-  recitationConsole: {
-    padding: '30px 20px',
-    borderRadius: '20px',
-    background: 'rgba(0,0,0,0.3)',
-    border: '1px solid rgba(255,255,255,0.03)',
+  fullscreenContentGrid: {
+    display: 'flex',
+    gap: '24px',
+    flex: '1',
+    minHeight: '0',
+    width: '100%',
+  },
+  worshippersPanel: {
+    flex: '1 1 280px',
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '16px',
+    borderRadius: '16px',
+    background: 'rgba(0, 0, 0, 0.2)',
+    maxHeight: '100%',
+    overflowY: 'auto',
+  },
+  panelTitle: {
+    fontSize: '0.9rem',
+    fontWeight: '700',
+    color: 'var(--text-gold)',
+    marginBottom: '12px',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  worshippersList: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px',
+    flex: '1',
+    overflowY: 'auto',
+  },
+  worshipperItem: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '10px 14px',
+    borderRadius: '12px',
+    border: '1px solid transparent',
+    transition: 'all 0.3s ease',
+  },
+  worshipperAvatar: {
+    fontSize: '1.4rem',
+  },
+  worshipperName: {
+    fontSize: '0.88rem',
+    fontWeight: '700',
+  },
+  worshipperRole: {
+    fontSize: '0.68rem',
+    color: 'var(--text-muted)',
+    marginTop: '1px',
+  },
+  micPulseBadge: {
+    background: 'var(--gold-gradient)',
+    padding: '3px 8px',
+    borderRadius: '10px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+    boxShadow: '0 0 10px rgba(212,175,55,0.4)',
+  },
+  interactiveConsole: {
+    flex: '2 1 450px',
+    padding: '24px',
+    borderRadius: '16px',
+    background: 'rgba(0, 0, 0, 0.35)',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: '260px',
+    maxHeight: '100%',
+    overflowY: 'auto',
+  },
+  dhikrDisplayCard: {
+    width: '100%',
+    padding: '20px',
+    borderRadius: '16px',
+    background: 'rgba(212, 175, 55, 0.03)',
+    border: '1px solid var(--border-gold)',
+    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px',
+  },
+  dhikrTextContent: {
+    fontSize: '1.45rem',
+    fontWeight: '800',
+    color: 'var(--text-gold)',
+    lineHeight: '1.8',
+    margin: '4px 0',
+  },
+  myTurnActionBox: {
+    width: '100%',
+    padding: '16px',
+    borderRadius: '14px',
+    background: 'rgba(212,175,55,0.04)',
+    border: '1px solid rgba(212,175,55,0.15)',
+    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px',
+  },
+  myTurnTitle: {
+    fontSize: '0.85rem',
+    fontWeight: '700',
+    color: '#ff6b6b',
+    textTransform: 'uppercase',
+    letterSpacing: '1px',
+  },
+  waitingTurnConsoleBox: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '12px 20px',
+    borderRadius: '30px',
+    background: 'rgba(255,255,255,0.02)',
+    border: '1px solid rgba(255,255,255,0.05)',
+    fontSize: '0.85rem',
+  },
+  fullscreenFooter: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderTop: '1px solid rgba(255,255,255,0.06)',
+    paddingTop: '16px',
+    width: '100%',
+  },
+  quickReactionsRow: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '14px',
+  },
+  reactionLabel: {
+    fontSize: '0.8rem',
+    color: 'var(--text-gold)',
+    fontWeight: '700',
+  },
+  quickReactionBtnsGrid: {
+    display: 'flex',
+    gap: '8px',
+  },
+  quickEmojiBtn: {
+    width: '38px',
+    height: '38px',
+    borderRadius: '50%',
+    border: '1px solid var(--border-glass)',
+    background: 'rgba(255,255,255,0.02)',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: 'all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+  },
+  fullscreenLeaveBtn: {
+    padding: '8px 20px',
+    fontSize: '0.82rem',
+  },
+  sessionEndedCard: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   activeUserAvatarCircle: {
     width: '90px',
@@ -1331,52 +1607,5 @@ const styles = {
     fontSize: '1.6rem',
     fontWeight: '700',
     marginTop: '2px',
-  },
-  myTurnBox: {
-    width: '100%',
-    padding: '16px',
-    borderRadius: '16px',
-    textAlign: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '10px',
-    background: 'rgba(212,175,55,0.03)',
-  },
-  myTurnTitle: {
-    fontSize: '0.85rem',
-    fontWeight: '700',
-    color: '#ff6b6b',
-    textTransform: 'uppercase',
-  },
-  myTurnDhikr: {
-    fontSize: '1.25rem',
-    fontWeight: '800',
-    color: 'var(--text-gold)',
-    margin: '6px 0',
-  },
-  waitingTurnBox: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    padding: '10px 18px',
-    borderRadius: '30px',
-    background: 'rgba(255,255,255,0.02)',
-    fontSize: '0.82rem',
-    color: 'var(--text-secondary)',
-  },
-  sessionEndedCard: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  sessionFooter: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    borderTop: '1px solid rgba(255,255,255,0.05)',
-    paddingTop: '16px',
-  },
-  footerActionBtn: {
-    padding: '8px 16px',
-    fontSize: '0.8rem',
   }
 };

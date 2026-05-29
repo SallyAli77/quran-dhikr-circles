@@ -6,6 +6,8 @@ export default function Navbar({ activePage, setActivePage }) {
   const { language, setLanguage, searchQuery, setSearchQuery, isAuthenticated, user, logout, t } = useApp();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
+  const [othersDropdownOpen, setOthersDropdownOpen] = useState(false);
+  const [mobileOthersOpen, setMobileOthersOpen] = useState(false);
 
   const toggleLanguage = () => {
     setLanguage(prev => prev === 'en' ? 'ar' : 'en');
@@ -15,8 +17,7 @@ export default function Navbar({ activePage, setActivePage }) {
     { id: 'home', label: 'navHome' },
     { id: 'quran', label: 'navQuran' },
     { id: 'prayer', label: 'navPrayer' },
-    { id: 'community', label: 'navCommunity' },
-    { id: 'products', label: 'navProducts' }
+    { id: 'community', label: 'navCommunity' }
   ];
 
   const handleNavClick = (pageId) => {
@@ -55,6 +56,55 @@ export default function Navbar({ activePage, setActivePage }) {
               {activePage === item.id && <span style={styles.activeGoldDot}></span>}
             </button>
           ))}
+
+          {/* Group "Others / أخرى" Dropdown */}
+          <div 
+            style={{ position: 'relative', display: 'inline-block' }}
+            onMouseEnter={() => setOthersDropdownOpen(true)}
+            onMouseLeave={() => setOthersDropdownOpen(false)}
+          >
+            <button
+              style={{
+                ...styles.navLink,
+                color: (activePage === 'products' || activePage === 'articles') ? 'var(--text-gold)' : 'var(--text-secondary)',
+                textShadow: (activePage === 'products' || activePage === 'articles') ? '0 0 10px rgba(212, 175, 55, 0.4)' : 'none'
+              }}
+              className="premium-nav-item"
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <span>{language === 'ar' ? "أخرى" : "Others"}</span>
+                <span style={{ fontSize: '0.65rem', marginLeft: '3px' }}>▼</span>
+              </div>
+              {(activePage === 'products' || activePage === 'articles') && <span style={styles.activeGoldDot}></span>}
+            </button>
+
+            {othersDropdownOpen && (
+              <div style={styles.othersDropdown} className="glass-panel fade-in">
+                <button 
+                  onClick={() => handleNavClick('products')}
+                  style={{
+                    ...styles.dropdownItem,
+                    color: activePage === 'products' ? 'var(--text-gold)' : 'var(--text-primary)',
+                    background: activePage === 'products' ? 'rgba(212,175,55,0.08)' : 'transparent'
+                  }}
+                  className="dropdown-item-hover"
+                >
+                  {language === 'ar' ? "المتجر الإسلامي" : "Islamic Store"}
+                </button>
+                <button 
+                  onClick={() => handleNavClick('articles')}
+                  style={{
+                    ...styles.dropdownItem,
+                    color: activePage === 'articles' ? 'var(--text-gold)' : 'var(--text-primary)',
+                    background: activePage === 'articles' ? 'rgba(212,175,55,0.08)' : 'transparent'
+                  }}
+                  className="dropdown-item-hover"
+                >
+                  {language === 'ar' ? "المقالات والأخبار" : "Articles & News"}
+                </button>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Right Side: Sleek Search + Language + Auth */}
@@ -169,6 +219,52 @@ export default function Navbar({ activePage, setActivePage }) {
                 {t(item.label)}
               </button>
             ))}
+
+            {/* Mobile Collapsible "Others / أخرى" Accordion */}
+            <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+              <button
+                onClick={() => setMobileOthersOpen(!mobileOthersOpen)}
+                style={{
+                  ...styles.mobileNavLink,
+                  color: (activePage === 'products' || activePage === 'articles') ? 'var(--text-gold)' : 'var(--text-primary)',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  width: '100%',
+                  borderLeft: (activePage === 'products' || activePage === 'articles') ? '3px solid var(--gold-primary)' : '3px solid transparent'
+                }}
+              >
+                <span>{language === 'ar' ? "أخرى" : "Others"}</span>
+                <span style={{ fontSize: '0.7rem' }}>{mobileOthersOpen ? "▲" : "▼"}</span>
+              </button>
+
+              {mobileOthersOpen && (
+                <div style={{ display: 'flex', flexDirection: 'column', paddingLeft: language === 'ar' ? 0 : '20px', paddingRight: language === 'ar' ? '20px' : 0, gap: '6px', marginTop: '4px' }} className="fade-in">
+                  <button
+                    onClick={() => handleNavClick('products')}
+                    style={{
+                      ...styles.mobileNavLink,
+                      fontSize: '0.82rem',
+                      color: activePage === 'products' ? 'var(--text-gold)' : 'var(--text-secondary)',
+                      padding: '8px 12px'
+                    }}
+                  >
+                    {language === 'ar' ? "المتجر الإسلامي" : "Islamic Store"}
+                  </button>
+                  <button
+                    onClick={() => handleNavClick('articles')}
+                    style={{
+                      ...styles.mobileNavLink,
+                      fontSize: '0.82rem',
+                      color: activePage === 'articles' ? 'var(--text-gold)' : 'var(--text-secondary)',
+                      padding: '8px 12px'
+                    }}
+                  >
+                    {language === 'ar' ? "المقالات والأخبار" : "Articles & News"}
+                  </button>
+                </div>
+              )}
+            </div>
 
             <div style={styles.mobileDivider}></div>
 
@@ -491,6 +587,34 @@ const styles = {
     fontSize: '0.9rem',
     fontWeight: '600',
   },
+  othersDropdown: {
+    position: 'absolute',
+    top: '55px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    width: '180px',
+    background: 'rgba(8, 9, 13, 0.98)',
+    border: '1.5px solid rgba(212,175,55,0.3)',
+    borderRadius: '12px',
+    padding: '8px 0',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '4px',
+    boxShadow: '0 10px 30px rgba(0, 0, 0, 0.7)',
+    zIndex: 1100,
+  },
+  dropdownItem: {
+    background: 'none',
+    border: 'none',
+    width: '100%',
+    padding: '10px 16px',
+    textAlign: 'center',
+    fontSize: '0.82rem',
+    fontWeight: '700',
+    color: 'var(--text-primary)',
+    cursor: 'pointer',
+    transition: 'var(--transition-smooth)',
+  }
 };
 
 if (typeof document !== 'undefined') {
@@ -600,6 +724,16 @@ if (typeof document !== 'undefined') {
         margin-left: 0 !important;
       }
     }
+    
+    .dropdown-item-hover:hover {
+      background: rgba(212, 175, 55, 0.12) !important;
+      color: var(--text-gold) !important;
+    }
+    
+    [dir="rtl"] .navbar-premium .othersDropdown {
+      box-shadow: 0 10px 30px rgba(0,0,0,0.7) !important;
+    }
+
   `;
   document.head.appendChild(customStyles);
 }

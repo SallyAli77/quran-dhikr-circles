@@ -342,6 +342,13 @@ const generate120Articles = () => {
     const content = `Assalamu Alaikum dear reader. ${topic.en}\n\nUnderstanding this topic in depth helps us develop a stronger relationship with the Quran and Arabic Muslim heritage. May Allah grant us beneficial knowledge and sincere intentions.`;
     const contentAr = `السلام عليكم ورحمة الله وبركاته. ${topic.ar}\n\nإن الفهم العميق والتدبر الدقيق لهذا المحور الهام يقربنا أكثر من كتاب الله وتراثنا الإسلامي العريق. نسأل الله أن يرزقنا العلم النافع والإخلاص في القول والعمل.`;
 
+    const videoUrls = [
+      "https://www.youtube.com/embed/xL8S5d9e5E8",
+      "https://www.youtube.com/embed/Z_AcrFIPgz0",
+      "https://www.youtube.com/embed/1Oa86tA-Pio"
+    ];
+    const videoUrl = i % 5 === 0 ? videoUrls[i % videoUrls.length] : undefined;
+
     list.push({
       id: i,
       title,
@@ -356,7 +363,167 @@ const generate120Articles = () => {
       summary,
       summaryAr,
       content,
-      contentAr
+      contentAr,
+      videoUrl
+    });
+  }
+  return list;
+};
+
+// Seed exactly 125 active worship circles dynamically with diverse presets
+const generate125Circles = () => {
+  const base = [
+    {
+      id: "c1",
+      name: "Morning Adhkar Circle",
+      nameAr: "حلقة أذكار الصباح",
+      description: "Starting the day with the remembrance of Allah. Daily morning prayers.",
+      descriptionAr: "نبدأ يومنا بذكر الله وطاعته. قراءة أذكار الصباح والتدبر اليومي.",
+      capacity: 10,
+      duration: 10,
+      currentTurnIndex: 0,
+      sessionProgress: 12,
+      dhikrTarget: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ ، سُبْحَانَ اللَّهِ الْعَظِيمِ",
+      dhikrTargetAr: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ ، سُبْحَانَ اللَّهِ الْعَظِيمِ",
+      joinedUsers: [
+        { name: "Fatima Hassan", avatar: "🧕", email: "fatima@arabicmuslim.com" },
+        { name: "Ahmed Selim", avatar: "👳", email: "ahmed@arabicmuslim.com" },
+        { name: "Omar Farooq", avatar: "🧔", email: "omar@arabicmuslim.com" },
+        { name: "Amina Yusuf", avatar: "🧕", email: "amina@arabicmuslim.com" },
+        { name: "Yusuf Al-Qurashi", avatar: "👳", email: "yusuf@arabicmuslim.com" },
+        { name: "Sara Ali", avatar: "🧕", email: "sara@arabicmuslim.com" },
+        { name: "Bilal Khan", avatar: "🧔", email: "bilal@arabicmuslim.com" },
+        { name: "Zainab Ahmed", avatar: "🧕", email: "zainab@arabicmuslim.com" },
+        { name: "Hamza Malik", avatar: "👳", email: "hamza@arabicmuslim.com" },
+        { name: "Layla Hussein", avatar: "🧕", email: "layla@arabicmuslim.com" }
+      ],
+      creator: "System",
+      type: "adhkar",
+      recitationRule: "Tajweed"
+    },
+    {
+      id: "c2",
+      name: "Surah Al-Mulk Recitation",
+      nameAr: "تلاوة سورة الملك",
+      description: "Reciting Surah Al-Mulk together before sleep for protection and peace.",
+      descriptionAr: "قراءة جماعية لسورة الملك قبل النوم لحفظ الصدور ونيل السكينة.",
+      capacity: 5,
+      duration: 60,
+      currentTurnIndex: 0,
+      sessionProgress: 8,
+      dhikrTarget: "تَبَارَكَ الَّذِي بِيَدِهِ الْمُلْكُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",
+      dhikrTargetAr: "تَبَارَكَ الَّذِي بِيَدِهِ الْمُلْكُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",
+      joinedUsers: [
+        { name: "Fatima Hassan", avatar: "🧕", email: "fatima@arabicmuslim.com" },
+        { name: "Ahmed Selim", avatar: "👳", email: "ahmed@arabicmuslim.com" },
+        { name: "Omar Farooq", avatar: "🧔", email: "omar@arabicmuslim.com" },
+        { name: "Amina Yusuf", avatar: "🧕", email: "amina@arabicmuslim.com" }
+      ],
+      creator: "System",
+      type: "quran",
+      recitationRule: "Hafs"
+    },
+    {
+      id: "c3",
+      name: "Global Istighfar 1000x",
+      nameAr: "حلقة الاستغفار الكبرى",
+      description: "Seeking forgiveness together in these blessed moments.",
+      descriptionAr: "الاستغفار الجماعي وطلب المغفرة لتطهير القلوب وتفريج الهموم.",
+      capacity: 8,
+      duration: 15,
+      currentTurnIndex: 0,
+      sessionProgress: 4,
+      dhikrTarget: "أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ الَّذِي لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ وَأَتُوبُ إِلَيْهِ",
+      dhikrTargetAr: "أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ الَّذِي لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ وَأَتُوبُ إِلَيْهِ",
+      joinedUsers: [
+        { name: "Yusuf Al-Qurashi", avatar: "👳", email: "yusuf@arabicmuslim.com" },
+        { name: "Sara Ali", avatar: "🧕", email: "sara@arabicmuslim.com" },
+        { name: "Bilal Khan", avatar: "🧔", email: "bilal@arabicmuslim.com" },
+        { name: "Zainab Ahmed", avatar: "🧕", email: "zainab@arabicmuslim.com" },
+        { name: "Hamza Malik", avatar: "👳", email: "hamza@arabicmuslim.com" }
+      ],
+      creator: "System",
+      type: "adhkar",
+      recitationRule: "General"
+    }
+  ];
+
+  const types = ["quran", "adhkar", "salawat", "istighfar"];
+  const surahs = ["Al-Baqarah", "Yaseen", "Al-Kahf", "Ar-Rahman", "Al-Waqi'ah", "Al-Mulk", "An-Nasr", "Al-Ikhlas"];
+  const surahsAr = ["البقرة", "يس", "الكهف", "الرحمن", "الواقعة", "الملك", "النصر", "الإخلاص"];
+  const rules = ["Hafs", "Warsh", "Tajweed", "General"];
+  const members = [
+    { name: "Fatima Hassan", avatar: "🧕", email: "fatima@arabicmuslim.com" },
+    { name: "Ahmed Selim", avatar: "👳", email: "ahmed@arabicmuslim.com" },
+    { name: "Omar Farooq", avatar: "🧔", email: "omar@arabicmuslim.com" },
+    { name: "Amina Yusuf", avatar: "🧕", email: "amina@arabicmuslim.com" },
+    { name: "Yusuf Al-Qurashi", avatar: "👳", email: "yusuf@arabicmuslim.com" },
+    { name: "Sara Ali", avatar: "🧕", email: "sara@arabicmuslim.com" },
+    { name: "Bilal Khan", avatar: "🧔", email: "bilal@arabicmuslim.com" },
+    { name: "Zainab Ahmed", avatar: "🧕", email: "zainab@arabicmuslim.com" },
+    { name: "Hamza Malik", avatar: "👳", email: "hamza@arabicmuslim.com" },
+    { name: "Layla Hussein", avatar: "🧕", email: "layla@arabicmuslim.com" }
+  ];
+
+  const list = [...base];
+  for (let i = 4; i <= 125; i++) {
+    const type = types[i % types.length];
+    const surahIdx = i % surahs.length;
+    const rule = rules[i % rules.length];
+    const cap = (i % 6) + 3; // capacity 3 to 8
+    
+    // Pick joined users dynamically
+    const joinedCount = i % 2 === 0 ? cap : cap - 1; // seed some completed ones!
+    const joinedUsers = [];
+    for (let j = 0; j < joinedCount; j++) {
+      joinedUsers.push(members[(i + j) % members.length]);
+    }
+
+    let name = `Dhikr Circle ${i}`;
+    let nameAr = `حلقة الذكر التفاعلية ${i}`;
+    let desc = `Gathering to gain tranquility and rewards through continuous worship.`;
+    let descAr = `حلقة تجمع المؤمنين لنيل المغفرة والسكينة والارتقاء اليومي بذكر الله.`;
+    let dhikr = "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ";
+    let duration = type === 'quran' ? 60 : 10;
+
+    if (type === 'quran') {
+      name = `Surah ${surahs[surahIdx]} Recitation ${i}`;
+      nameAr = `تلاوة سورة ${surahsAr[surahIdx]} ${i}`;
+      desc = `Group recitation and tajweed correction of Surah ${surahs[surahIdx]}.`;
+      descAr = `تلاوة وتصحيح مخارج الحروف لسورة ${surahsAr[surahIdx]} جماعياً.`;
+      dhikr = `قراءة آيات مباركة من سورة ${surahsAr[surahIdx]} الكريمة.`;
+    } else if (type === 'salawat') {
+      name = `Salawat Ring ${i}`;
+      nameAr = `مجلس الصلاة على النبي ﷺ ${i}`;
+      desc = `Sending blessings and prayers upon our beloved Prophet Muhammad.`;
+      descAr = `مجلس لتعطير الألسنة بالصلاة والسلام على الرسول الكريم ﷺ.`;
+      dhikr = "اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَى نَبِينَا مُحَمَّدٍ ﷺ";
+      duration = 15;
+    } else if (type === 'istighfar') {
+      name = `Daily Istighfar Ring ${i}`;
+      nameAr = `حلقة الاستغفار اليومي ${i}`;
+      desc = `Unifying hearts in deep istighfar and seeking divine forgiveness.`;
+      descAr = `مجلس استغفار جماعي لطلب العفو والمغفرة وتفريج الكروب والهموم.`;
+      dhikr = "أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ وَأَتُوبُ إِلَيْهِ";
+      duration = 15;
+    }
+
+    list.push({
+      id: `c-${i}`,
+      name,
+      nameAr,
+      description: desc,
+      descriptionAr: descAr,
+      capacity: cap,
+      duration,
+      currentTurnIndex: 0,
+      sessionProgress: i % 10,
+      dhikrTarget: dhikr,
+      dhikrTargetAr: dhikr,
+      joinedUsers,
+      creator: "System",
+      type,
+      recitationRule: rule
     });
   }
   return list;
@@ -785,82 +952,13 @@ export const AppProvider = ({ children }) => {
   // Active Circles
   const [onlineCircles, setOnlineCircles] = useState(() => {
     const saved = localStorage.getItem('arabicmuslim_circles');
-    if (saved) return JSON.parse(saved);
-    return [
-      {
-        id: "c1",
-        name: "Morning Adhkar Circle",
-        nameAr: "حلقة أذكار الصباح",
-        description: "Starting the day with the remembrance of Allah. Daily morning prayers.",
-        descriptionAr: "نبدأ يومنا بذكر الله وطاعته. قراءة أذكار الصباح والتدبر اليومي.",
-        capacity: 10,
-        duration: 10,
-        currentTurnIndex: 0,
-        sessionProgress: 12,
-        dhikrTarget: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ ، سُبْحَانَ اللَّهِ الْعَظِيمِ",
-        dhikrTargetAr: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ ، سُبْحَانَ اللَّهِ الْعَظِيمِ",
-        joinedUsers: [
-          { name: "Fatima Hassan", avatar: "🧕", email: "fatima@arabicmuslim.com" },
-          { name: "Ahmed Selim", avatar: "👳", email: "ahmed@arabicmuslim.com" },
-          { name: "Omar Farooq", avatar: "🧔", email: "omar@arabicmuslim.com" },
-          { name: "Amina Yusuf", avatar: "🧕", email: "amina@arabicmuslim.com" },
-          { name: "Yusuf Al-Qurashi", avatar: "👳", email: "yusuf@arabicmuslim.com" },
-          { name: "Sara Ali", avatar: "🧕", email: "sara@arabicmuslim.com" },
-          { name: "Bilal Khan", avatar: "🧔", email: "bilal@arabicmuslim.com" },
-          { name: "Zainab Ahmed", avatar: "🧕", email: "zainab@arabicmuslim.com" },
-          { name: "Hamza Malik", avatar: "👳", email: "hamza@arabicmuslim.com" },
-          { name: "Layla Hussein", avatar: "🧕", email: "layla@arabicmuslim.com" }
-        ],
-        creator: "System",
-        type: "adhkar",
-        recitationRule: "Tajweed"
-      },
-      {
-        id: "c2",
-        name: "Surah Al-Mulk Recitation",
-        nameAr: "تلاوة سورة الملك",
-        description: "Reciting Surah Al-Mulk together before sleep for protection and peace.",
-        descriptionAr: "قراءة جماعية لسورة الملك قبل النوم لحفظ الصدور ونيل السكينة.",
-        capacity: 5,
-        duration: 60,
-        currentTurnIndex: 0,
-        sessionProgress: 8,
-        dhikrTarget: "تَبَارَكَ الَّذِي بِيَدِهِ الْمُلْكُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",
-        dhikrTargetAr: "تَبَارَكَ الَّذِي بِيَدِهِ الْمُلْكُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",
-        joinedUsers: [
-          { name: "Fatima Hassan", avatar: "🧕", email: "fatima@arabicmuslim.com" },
-          { name: "Ahmed Selim", avatar: "👳", email: "ahmed@arabicmuslim.com" },
-          { name: "Omar Farooq", avatar: "🧔", email: "omar@arabicmuslim.com" },
-          { name: "Amina Yusuf", avatar: "🧕", email: "amina@arabicmuslim.com" }
-        ],
-        creator: "System",
-        type: "quran",
-        recitationRule: "Hafs"
-      },
-      {
-        id: "c3",
-        name: "Global Istighfar 1000x",
-        nameAr: "حلقة الاستغفار الكبرى",
-        description: "Seeking forgiveness together in these blessed moments.",
-        descriptionAr: "الاستغفار الجماعي وطلب المغفرة لتطهير القلوب وتفريج الهموم.",
-        capacity: 8,
-        duration: 15,
-        currentTurnIndex: 0,
-        sessionProgress: 4,
-        dhikrTarget: "أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ الَّذِي لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ وَأَتُوبُ إِلَيْهِ",
-        dhikrTargetAr: "أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ الَّذِي لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ وَأَتُوبُ إِلَيْهِ",
-        joinedUsers: [
-          { name: "Yusuf Al-Qurashi", avatar: "👳", email: "yusuf@arabicmuslim.com" },
-          { name: "Sara Ali", avatar: "🧕", email: "sara@arabicmuslim.com" },
-          { name: "Bilal Khan", avatar: "🧔", email: "bilal@arabicmuslim.com" },
-          { name: "Zainab Ahmed", avatar: "🧕", email: "zainab@arabicmuslim.com" },
-          { name: "Hamza Malik", avatar: "👳", email: "hamza@arabicmuslim.com" }
-        ],
-        creator: "System",
-        type: "adhkar",
-        recitationRule: "General"
-      }
-    ];
+    const version = localStorage.getItem('arabicmuslim_circles_ver');
+    if (saved && version === '3.0') return JSON.parse(saved);
+    
+    const fresh = generate125Circles();
+    localStorage.setItem('arabicmuslim_circles', JSON.stringify(fresh));
+    localStorage.setItem('arabicmuslim_circles_ver', '3.0');
+    return fresh;
   });
 
   // Dynamic Bot Simulation Engine

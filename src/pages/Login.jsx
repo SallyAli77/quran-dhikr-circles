@@ -134,6 +134,25 @@ export default function Login({ setActivePage }) {
     };
   }, [isExamActive, examFinished]);
 
+  // Deep Link tab auto-focus handlers
+  useEffect(() => {
+    const handleDeepLink = () => {
+      setActiveTab("teacher_center");
+    };
+    window.addEventListener('deep_link_teacher_center', handleDeepLink);
+
+    // Also check on mount
+    const link = localStorage.getItem('arabicmuslim_deep_link');
+    if (link === 'teacher_center' && isAuthenticated) {
+      setActiveTab('teacher_center');
+      localStorage.removeItem('arabicmuslim_deep_link');
+    }
+
+    return () => {
+      window.removeEventListener('deep_link_teacher_center', handleDeepLink);
+    };
+  }, [isAuthenticated]);
+
   const handleStartExam = () => {
     setIsExamActive(true);
     setExamCurrentQuestionIdx(0);

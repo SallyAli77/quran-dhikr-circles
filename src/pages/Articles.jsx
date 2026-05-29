@@ -18,6 +18,7 @@ const baseArticles = [
     readTime: 5,
     summary: "Explore the profound faith and neurological benefits of dedicating the first moments of your day to the remembrance of Allah.",
     summaryAr: "فضائل ذكر الله",
+    videoUrl: "https://www.youtube.com/embed/xL8S5d9e5E8",
     content: `Assalamu Alaikum dear reader. In the hustle and bustle of modern life, our minds are bombarded with endless notifications, stress, and noise. Allah says in the Noble Quran: "O you who have believed, remember Allah with much remembrance. And exalt Him morning and afternoon." (Surah Al-Ahzab 33:41-42).
 
     Morning Dhikr (remembrance) acts as a faith shield. Historically, the Prophet Muhammad (peace be upon him) and his companions never left the morning and evening supplications. 
@@ -42,6 +43,7 @@ const baseArticles = [
     readTime: 8,
     summary: "Discover the root-system structure of the Arabic language and how learning key roots unlocks 70% of Quranic meanings.",
     summaryAr: "اكتشف الهيكل الجمالي لنظام الاشتقاق اللغوي في العربية وكيف يفتح لك تعلم الجذور 70% من معاني الآيات.",
+    videoUrl: "https://www.youtube.com/embed/Z_AcrFIPgz0",
     content: `To the untrained eye, classical Arabic seems like an intimidating language with infinite vocabulary. However, Arabic is one of the most mathematically structured languages in existence, built entirely on a three-letter root system (known as the 'Thulathi' root).
 
     Every verb, noun, and adjective is derived from a core root that carries a primary semantic concept. For instance, the root 'K-T-B' (ك-ت-ب) carries the concept of writing:
@@ -74,6 +76,7 @@ const baseArticles = [
     readTime: 6,
     summary: "Unveiling the deep faith lessons and allegories of the four major stories in Surah Al-Kahf read every Friday.",
     summaryAr: "الكشف عن الدروس المستفادة للقصص الأربعة من سورة الكهف",
+    videoUrl: "https://www.youtube.com/embed/1Oa86tA-Pio",
     content: `Reading Surah Al-Kahf on Fridays is a beloved sunnah that illuminates a divine light for the reader until the next Friday. But why this specific Surah? 
 
     Surah Al-Kahf contains four major narratives, each answering a critical trial of human life:
@@ -160,6 +163,13 @@ const generate120Articles = () => {
     
     نسأل الله تعالى أن يمنّ علينا بالحكمة والسكينة ونور البصيرة، وأن يفتح قلوبنا لسبل السلام والهداية.`;
 
+    const videoUrls = [
+      "https://www.youtube.com/embed/xL8S5d9e5E8",
+      "https://www.youtube.com/embed/Z_AcrFIPgz0",
+      "https://www.youtube.com/embed/1Oa86tA-Pio"
+    ];
+    const videoUrl = i % 5 === 0 ? videoUrls[i % videoUrls.length] : undefined;
+
     list.push({
       id: i,
       title,
@@ -174,7 +184,8 @@ const generate120Articles = () => {
       summary,
       summaryAr,
       content,
-      contentAr
+      contentAr,
+      videoUrl
     });
   }
 
@@ -375,6 +386,35 @@ export default function Articles() {
             </div>
 
             <div style={styles.fullDivider}></div>
+
+            {selectedArticle.videoUrl && (
+              <div className="article-video-container glass-panel" style={{
+                position: 'relative',
+                paddingBottom: '56.25%', /* 16:9 Aspect Ratio */
+                height: 0,
+                overflow: 'hidden',
+                borderRadius: '16px',
+                marginBottom: '24px',
+                border: '1px solid var(--border-gold)'
+              }}>
+                <iframe
+                  title="Islamic Wisdom Video"
+                  src={selectedArticle.videoUrl}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: '16px',
+                    border: 'none'
+                  }}
+                />
+              </div>
+            )}
 
             <div style={styles.fullContent}>
               {(language === 'en' ? selectedArticle.content : selectedArticle.contentAr)
