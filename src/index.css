@@ -275,3 +275,23 @@ body {
   opacity: 0.15;
   z-index: 0;
 }
+
+/* Site-wide Premium Dark Dropdown Select & Option Styling */
+select, select.formSelect {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-gold) !important;
+  border-radius: 10px !important;
+}
+
+select option {
+  background-color: #0f111a !important; /* var(--bg-secondary) */
+  color: var(--text-primary) !important;
+  padding: 12px !important;
+  font-family: inherit !important;
+}
+
+select:focus {
+  border-color: var(--gold-primary) !important;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.25) !important;
+}
