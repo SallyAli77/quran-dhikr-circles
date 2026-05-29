@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Search, Globe, Menu, X, User, LogOut, Sparkles } from 'lucide-react';
+import { Search, Globe, Menu, X, User, LogOut } from 'lucide-react';
 
 export default function Navbar({ activePage, setActivePage }) {
   const { language, setLanguage, searchQuery, setSearchQuery, isAuthenticated, user, logout, t } = useApp();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
-  const [othersDropdownOpen, setOthersDropdownOpen] = useState(false);
-  const [mobileOthersOpen, setMobileOthersOpen] = useState(false);
 
   const toggleLanguage = () => {
     setLanguage(prev => prev === 'en' ? 'ar' : 'en');
@@ -17,7 +15,9 @@ export default function Navbar({ activePage, setActivePage }) {
     { id: 'home', label: 'navHome' },
     { id: 'quran', label: 'navQuran' },
     { id: 'prayer', label: 'navPrayer' },
-    { id: 'community', label: 'navCommunity' }
+    { id: 'community', label: 'navCommunity' },
+    { id: 'products', label: 'navProducts' },
+    { id: 'articles', label: 'navArticles' }
   ];
 
   const handleNavClick = (pageId) => {
@@ -56,55 +56,6 @@ export default function Navbar({ activePage, setActivePage }) {
               {activePage === item.id && <span style={styles.activeGoldDot}></span>}
             </button>
           ))}
-
-          {/* Group "Others / أخرى" Dropdown */}
-          <div 
-            style={{ position: 'relative', display: 'inline-block' }}
-            onMouseEnter={() => setOthersDropdownOpen(true)}
-            onMouseLeave={() => setOthersDropdownOpen(false)}
-          >
-            <button
-              style={{
-                ...styles.navLink,
-                color: (activePage === 'products' || activePage === 'articles') ? 'var(--text-gold)' : 'var(--text-secondary)',
-                textShadow: (activePage === 'products' || activePage === 'articles') ? '0 0 10px rgba(212, 175, 55, 0.4)' : 'none'
-              }}
-              className="premium-nav-item"
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <span>{language === 'ar' ? "أخرى" : "Others"}</span>
-                <span style={{ fontSize: '0.65rem', marginLeft: '3px' }}>▼</span>
-              </div>
-              {(activePage === 'products' || activePage === 'articles') && <span style={styles.activeGoldDot}></span>}
-            </button>
-
-            {othersDropdownOpen && (
-              <div style={styles.othersDropdown} className="glass-panel fade-in">
-                <button 
-                  onClick={() => handleNavClick('products')}
-                  style={{
-                    ...styles.dropdownItem,
-                    color: activePage === 'products' ? 'var(--text-gold)' : 'var(--text-primary)',
-                    background: activePage === 'products' ? 'rgba(212,175,55,0.08)' : 'transparent'
-                  }}
-                  className="dropdown-item-hover"
-                >
-                  {language === 'ar' ? "المتجر الإسلامي" : "Islamic Store"}
-                </button>
-                <button 
-                  onClick={() => handleNavClick('articles')}
-                  style={{
-                    ...styles.dropdownItem,
-                    color: activePage === 'articles' ? 'var(--text-gold)' : 'var(--text-primary)',
-                    background: activePage === 'articles' ? 'rgba(212,175,55,0.08)' : 'transparent'
-                  }}
-                  className="dropdown-item-hover"
-                >
-                  {language === 'ar' ? "المقالات والأخبار" : "Articles & News"}
-                </button>
-              </div>
-            )}
-          </div>
         </div>
 
         {/* Right Side: Sleek Search + Language + Auth */}
@@ -112,11 +63,11 @@ export default function Navbar({ activePage, setActivePage }) {
           {/* Spaced Search Bar */}
           <div style={{
             ...styles.searchWrapper,
-            borderColor: searchFocused ? 'var(--gold-primary)' : 'rgba(212, 175, 55, 0.25)',
+            borderColor: searchFocused ? 'var(--gold-primary)' : 'rgba(212, 175, 55, 0.15)',
             boxShadow: searchFocused ? '0 0 15px rgba(212, 175, 55, 0.2)' : 'none',
             background: searchFocused ? 'rgba(8, 9, 13, 0.95)' : 'rgba(255, 255, 255, 0.02)'
           }} className="navbar-search-wrapper">
-            <Search size={15} color="var(--text-gold)" style={styles.searchIcon} />
+            <Search size={13} color="var(--text-gold)" style={styles.searchIcon} />
             <input
               type="text"
               value={searchQuery}
@@ -142,7 +93,7 @@ export default function Navbar({ activePage, setActivePage }) {
             style={styles.langBtn}
             className="lang-btn-premium navbar-lang-btn"
           >
-            <Globe size={15} color="var(--text-gold)" />
+            <Globe size={13} color="var(--text-gold)" />
             <span style={styles.langBtnText}>{language === 'en' ? "AR" : "EN"}</span>
           </button>
 
@@ -172,7 +123,7 @@ export default function Navbar({ activePage, setActivePage }) {
               style={styles.loginBtn}
             >
               <User size={13} />
-              <span style={{ fontSize: '0.82rem', fontWeight: '700' }}>{t('navLogin')}</span>
+              <span style={{ fontSize: '0.78rem', fontWeight: '700' }}>{t('navLogin')}</span>
             </button>
           )}
 
@@ -182,7 +133,7 @@ export default function Navbar({ activePage, setActivePage }) {
             style={styles.mobileToggle}
             className="navbar-mobile-toggle"
           >
-            {mobileMenuOpen ? <X size={24} color="var(--text-gold)" /> : <Menu size={24} color="var(--text-gold)" />}
+            {mobileMenuOpen ? <X size={20} color="var(--text-gold)" /> : <Menu size={20} color="var(--text-gold)" />}
           </button>
         </div>
       </div>
@@ -192,7 +143,7 @@ export default function Navbar({ activePage, setActivePage }) {
         <div style={styles.mobileDrawer} className="glass-panel slide-up">
           {/* Mobile Search */}
           <div style={styles.mobileSearchWrapper}>
-            <Search size={16} color="var(--text-gold)" />
+            <Search size={14} color="var(--text-gold)" />
             <input
               type="text"
               value={searchQuery}
@@ -200,7 +151,7 @@ export default function Navbar({ activePage, setActivePage }) {
               placeholder={language === 'en' ? "Search..." : "ابحث..."}
               style={styles.mobileSearchInput}
             />
-            {searchQuery && <X size={14} onClick={() => setSearchQuery("")} />}
+            {searchQuery && <X size={14} onClick={() => setSearchQuery("")} style={{ cursor: 'pointer' }} />}
           </div>
 
           {/* Links list */}
@@ -212,7 +163,8 @@ export default function Navbar({ activePage, setActivePage }) {
                 style={{
                   ...styles.mobileNavLink,
                   color: activePage === item.id ? 'var(--text-gold)' : 'var(--text-primary)',
-                  borderLeft: activePage === item.id ? '3px solid var(--gold-primary)' : '3px solid transparent'
+                  borderLeft: activePage === item.id && language !== 'ar' ? '3px solid var(--gold-primary)' : '3px solid transparent',
+                  borderRight: activePage === item.id && language === 'ar' ? '3px solid var(--gold-primary)' : '3px solid transparent'
                 }}
                 className="navbar-mobile-nav-link"
               >
@@ -220,58 +172,12 @@ export default function Navbar({ activePage, setActivePage }) {
               </button>
             ))}
 
-            {/* Mobile Collapsible "Others / أخرى" Accordion */}
-            <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-              <button
-                onClick={() => setMobileOthersOpen(!mobileOthersOpen)}
-                style={{
-                  ...styles.mobileNavLink,
-                  color: (activePage === 'products' || activePage === 'articles') ? 'var(--text-gold)' : 'var(--text-primary)',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  width: '100%',
-                  borderLeft: (activePage === 'products' || activePage === 'articles') ? '3px solid var(--gold-primary)' : '3px solid transparent'
-                }}
-              >
-                <span>{language === 'ar' ? "أخرى" : "Others"}</span>
-                <span style={{ fontSize: '0.7rem' }}>{mobileOthersOpen ? "▲" : "▼"}</span>
-              </button>
-
-              {mobileOthersOpen && (
-                <div style={{ display: 'flex', flexDirection: 'column', paddingLeft: language === 'ar' ? 0 : '20px', paddingRight: language === 'ar' ? '20px' : 0, gap: '6px', marginTop: '4px' }} className="fade-in">
-                  <button
-                    onClick={() => handleNavClick('products')}
-                    style={{
-                      ...styles.mobileNavLink,
-                      fontSize: '0.82rem',
-                      color: activePage === 'products' ? 'var(--text-gold)' : 'var(--text-secondary)',
-                      padding: '8px 12px'
-                    }}
-                  >
-                    {language === 'ar' ? "المتجر الإسلامي" : "Islamic Store"}
-                  </button>
-                  <button
-                    onClick={() => handleNavClick('articles')}
-                    style={{
-                      ...styles.mobileNavLink,
-                      fontSize: '0.82rem',
-                      color: activePage === 'articles' ? 'var(--text-gold)' : 'var(--text-secondary)',
-                      padding: '8px 12px'
-                    }}
-                  >
-                    {language === 'ar' ? "المقالات والأخبار" : "Articles & News"}
-                  </button>
-                </div>
-              )}
-            </div>
-
             <div style={styles.mobileDivider}></div>
 
             {/* Language and Auth */}
             <div style={styles.mobileActions}>
               <button onClick={toggleLanguage} style={styles.mobileLangBtn}>
-                <Globe size={18} color="var(--text-gold)" />
+                <Globe size={16} color="var(--text-gold)" />
                 <span>{language === 'en' ? "العربية (Arabic)" : "English (الإنجليزية)"}</span>
               </button>
 
@@ -288,7 +194,7 @@ export default function Navbar({ activePage, setActivePage }) {
                     onClick={() => { logout(); setMobileMenuOpen(false); }} 
                     style={styles.mobileLogoutBtn}
                   >
-                    <LogOut size={16} />
+                    <LogOut size={14} />
                     <span>{t('navLogout')}</span>
                   </button>
                 </div>
@@ -296,9 +202,9 @@ export default function Navbar({ activePage, setActivePage }) {
                 <button 
                   onClick={() => handleNavClick('login')} 
                   className="btn-primary" 
-                  style={{ width: '100%', justifyContent: 'center' }}
+                  style={{ width: '100%', justifyContent: 'center', height: '40px' }}
                 >
-                  <User size={16} />
+                  <User size={14} />
                   <span>{t('navLogin')}</span>
                 </button>
               )}
@@ -313,69 +219,70 @@ export default function Navbar({ activePage, setActivePage }) {
 const styles = {
   navbar: {
     position: 'fixed',
-    top: '15px',
+    top: '8px',
     left: '2%',
     right: '2%',
     width: '96%',
     zIndex: 1000,
-    borderRadius: '20px',
-    border: '1.5px solid rgba(212, 175, 55, 0.25)',
-    boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.5), 0 0 15px rgba(212, 175, 55, 0.05)',
-    background: 'rgba(8, 9, 13, 0.85)',
-    backdropFilter: 'blur(20px)',
-    WebkitBackdropFilter: 'blur(20px)',
-    transition: 'var(--transition-smooth)',
+    borderRadius: '15px',
+    border: '1.5px solid rgba(212, 175, 55, 0.2)',
+    boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.4), 0 0 15px rgba(212, 175, 55, 0.03)',
+    background: 'rgba(8, 9, 13, 0.72)',
+    backdropFilter: 'blur(25px) saturate(180%)',
+    WebkitBackdropFilter: 'blur(25px) saturate(180%)',
+    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
   },
   navbarContainer: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: '76px',
-    padding: '0 32px',
+    height: '52px',
+    padding: '0 20px',
     maxWidth: '1600px',
   },
   logo: {
     display: 'flex',
     alignItems: 'center',
-    gap: '10px',
+    gap: '6px',
     cursor: 'pointer',
     userSelect: 'none',
-    marginRight: '50px', /* Generous distance from left in LTR */
+    marginRight: '24px', /* Generous distance from left in LTR */
     flexShrink: 0,
+    transition: 'all 0.3s ease',
   },
   logoCrescent: {
-    fontSize: '1.8rem',
+    fontSize: '1.35rem',
     filter: 'drop-shadow(0 0 8px rgba(212, 175, 55, 0.4))',
   },
   logoText: {
-    fontFamily: "'Playfair Display', serif",
-    fontSize: '1.5rem',
+    fontFamily: "'Cairo', 'Playfair Display', serif",
+    fontSize: '1.15rem',
     fontWeight: '800',
-    letterSpacing: '1px',
+    letterSpacing: '0.5px',
   },
   desktopNav: {
     display: 'flex',
     alignItems: 'center',
-    gap: '28px', /* Premium layout spacing */
+    gap: '16px', /* Tightened spacing to cleanly fit 6 items */
     flexGrow: 1,
     justifyContent: 'center',
-    margin: '0 40px', /* Increased margin for logo/search isolation */
+    margin: '0 16px',
     overflow: 'hidden',
   },
   navLink: {
     background: 'none',
     border: 'none',
     cursor: 'pointer',
-    fontSize: '0.88rem',
+    fontSize: '0.82rem',
     fontWeight: '600',
-    letterSpacing: '0.5px',
-    transition: 'var(--transition-smooth)',
-    whiteSpace: 'nowrap', /* Forces every single link on exactly one line! */
+    letterSpacing: '0.3px',
+    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+    whiteSpace: 'nowrap',
     flexShrink: 0,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: '8px 4px',
+    padding: '4px 2px',
     position: 'relative',
   },
   activeGoldDot: {
@@ -384,80 +291,82 @@ const styles = {
     borderRadius: '50%',
     background: 'var(--gold-primary)',
     position: 'absolute',
-    bottom: '-1px',
+    bottom: '-2px',
     boxShadow: '0 0 6px var(--gold-primary)',
   },
   rightSide: {
     display: 'flex',
     alignItems: 'center',
-    gap: '16px',
+    gap: '10px',
     flexShrink: 0,
   },
   searchWrapper: {
     display: 'flex',
     alignItems: 'center',
-    border: '1px solid rgba(212, 175, 55, 0.25)',
+    border: '1px solid rgba(212, 175, 55, 0.15)',
     borderRadius: '30px',
-    padding: '7px 14px',
-    width: '180px', /* Elegant compact width */
-    transition: 'var(--transition-smooth)',
-    marginLeft: '30px', /* Increased spacing to distance search bar from center nav */
+    padding: '5px 10px',
+    width: '130px', /* Elegant compact width */
+    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+    marginLeft: '12px',
   },
   searchIcon: {
-    marginRight: '6px',
+    marginRight: '4px',
   },
   searchInput: {
     background: 'none',
     border: 'none',
     outline: 'none',
     color: 'var(--text-primary)',
-    fontSize: '0.82rem',
+    fontSize: '0.78rem',
     width: '100%',
   },
   langBtn: {
     background: 'rgba(255, 255, 255, 0.02)',
-    border: '1px solid rgba(212, 175, 55, 0.2)',
-    borderRadius: '10px',
-    padding: '8px 12px',
+    border: '1px solid rgba(212, 175, 55, 0.15)',
+    borderRadius: '8px',
+    padding: '6px 10px',
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
-    gap: '6px',
-    transition: 'var(--transition-smooth)',
+    gap: '4px',
+    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
   },
   langBtnText: {
-    fontSize: '0.78rem',
+    fontSize: '0.72rem',
     fontWeight: '700',
     color: 'var(--text-primary)',
   },
   loginBtn: {
-    padding: '8px 18px',
-    borderRadius: '10px',
-    boxShadow: '0 4px 12px rgba(212, 175, 55, 0.2)',
-    whiteSpace: 'nowrap', /* Guarantee single line */
+    padding: '6px 14px',
+    borderRadius: '8px',
+    boxShadow: '0 4px 10px rgba(212, 175, 55, 0.15)',
+    whiteSpace: 'nowrap',
+    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
   },
   profileBadge: {
     display: 'flex',
     alignItems: 'center',
-    gap: '10px',
-    padding: '6px 14px',
+    gap: '8px',
+    padding: '4px 10px',
     background: 'rgba(212, 175, 55, 0.05)',
     borderRadius: '30px',
-    border: '1.5px solid rgba(212, 175, 55, 0.3)',
-    whiteSpace: 'nowrap', /* Guarantee single line */
+    border: '1px solid rgba(212, 175, 55, 0.25)',
+    whiteSpace: 'nowrap',
+    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
   },
   profileTrigger: {
     display: 'flex',
     alignItems: 'center',
-    gap: '8px',
+    gap: '6px',
     cursor: 'pointer',
-    whiteSpace: 'nowrap', /* Guarantee single line */
+    whiteSpace: 'nowrap',
   },
   avatarEmoji: {
-    fontSize: '1.25rem',
+    fontSize: '1.1rem',
   },
   profileName: {
-    fontSize: '0.82rem',
+    fontSize: '0.78rem',
     fontWeight: '700',
     color: 'var(--text-gold)',
   },
@@ -478,17 +387,17 @@ const styles = {
   },
   mobileDrawer: {
     position: 'absolute',
-    top: '86px',
+    top: '62px', /* Matches the new smaller top (8px) + height (52px) = 60px + 2px offset */
     left: '0',
     right: '0',
     width: '100%',
-    padding: '24px',
+    padding: '20px',
     display: 'flex',
     flexDirection: 'column',
-    gap: '16px',
+    gap: '12px',
     zIndex: 999,
-    borderRadius: '20px',
-    border: '1.5px solid rgba(212, 175, 55, 0.25)',
+    borderRadius: '15px',
+    border: '1px solid rgba(212, 175, 55, 0.2)',
     background: 'rgba(8, 9, 13, 0.98)',
     boxShadow: '0 20px 40px rgba(0, 0, 0, 0.8)',
   },
@@ -496,10 +405,10 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     background: 'rgba(255, 255, 255, 0.04)',
-    border: '1px solid rgba(212, 175, 55, 0.25)',
-    borderRadius: '12px',
-    padding: '10px 14px',
-    gap: '10px',
+    border: '1px solid rgba(212, 175, 55, 0.2)',
+    borderRadius: '10px',
+    padding: '8px 12px',
+    gap: '8px',
   },
   mobileSearchInput: {
     background: 'none',
@@ -507,113 +416,87 @@ const styles = {
     outline: 'none',
     color: 'var(--text-primary)',
     width: '100%',
+    fontSize: '0.88rem',
   },
   mobileNavLinks: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '10px',
+    gap: '8px',
   },
   mobileNavLink: {
     background: 'none',
     border: 'none',
     textAlign: 'left',
-    fontSize: '1rem',
+    fontSize: '0.92rem',
     fontWeight: '600',
-    padding: '12px 16px',
+    padding: '10px 14px',
     cursor: 'pointer',
-    borderRadius: '10px',
+    borderRadius: '8px',
     transition: 'var(--transition-fast)',
   },
   mobileDivider: {
     height: '1px',
-    background: 'rgba(212, 175, 55, 0.15)',
-    margin: '8px 0',
+    background: 'rgba(212, 175, 55, 0.1)',
+    margin: '6px 0',
   },
   mobileActions: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '12px',
+    gap: '10px',
   },
   mobileLangBtn: {
     background: 'rgba(255, 255, 255, 0.02)',
-    border: '1px solid rgba(212, 175, 55, 0.2)',
-    borderRadius: '10px',
-    padding: '12px',
+    border: '1px solid rgba(212, 175, 55, 0.15)',
+    borderRadius: '8px',
+    padding: '10px',
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
-    gap: '10px',
+    gap: '8px',
     color: 'var(--text-primary)',
     fontWeight: '600',
+    fontSize: '0.88rem',
   },
   mobileProfilePanel: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '12px',
-    background: 'rgba(212, 175, 55, 0.05)',
-    border: '1px solid rgba(212, 175, 55, 0.3)',
-    borderRadius: '12px',
-    padding: '14px',
+    gap: '10px',
+    background: 'rgba(212, 175, 55, 0.03)',
+    border: '1px solid rgba(212, 175, 55, 0.2)',
+    borderRadius: '10px',
+    padding: '12px',
   },
   mobileUserInfo: {
     display: 'flex',
     alignItems: 'center',
-    gap: '12px',
+    gap: '10px',
     cursor: 'pointer',
   },
   mobileUserAvatar: {
-    fontSize: '2.2rem',
+    fontSize: '1.8rem',
   },
   mobileUserName: {
-    fontSize: '0.98rem',
+    fontSize: '0.9rem',
     fontWeight: '700',
     color: 'var(--text-gold)',
   },
   mobileUserRole: {
-    fontSize: '0.78rem',
+    fontSize: '0.74rem',
     color: 'var(--text-secondary)',
   },
   mobileLogoutBtn: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: '8px',
+    gap: '6px',
     background: 'rgba(255, 107, 107, 0.08)',
     border: '1px solid rgba(255, 107, 107, 0.25)',
     color: '#ff6b6b',
-    borderRadius: '10px',
-    padding: '10px',
+    borderRadius: '8px',
+    padding: '8px',
     cursor: 'pointer',
-    fontSize: '0.9rem',
+    fontSize: '0.85rem',
     fontWeight: '600',
-  },
-  othersDropdown: {
-    position: 'absolute',
-    top: '55px',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    width: '180px',
-    background: 'rgba(8, 9, 13, 0.98)',
-    border: '1.5px solid rgba(212,175,55,0.3)',
-    borderRadius: '12px',
-    padding: '8px 0',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '4px',
-    boxShadow: '0 10px 30px rgba(0, 0, 0, 0.7)',
-    zIndex: 1100,
-  },
-  dropdownItem: {
-    background: 'none',
-    border: 'none',
-    width: '100%',
-    padding: '10px 16px',
-    textAlign: 'center',
-    fontSize: '0.82rem',
-    fontWeight: '700',
-    color: 'var(--text-primary)',
-    cursor: 'pointer',
-    transition: 'var(--transition-smooth)',
   }
 };
 
@@ -621,29 +504,30 @@ if (typeof document !== 'undefined') {
   const customStyles = document.createElement('style');
   customStyles.innerHTML = `
     .navbar-premium {
-      top: 15px !important;
+      top: 8px !important;
     }
     .logo-gold-glow:hover {
-      filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.6));
-      transform: translateY(-0.5px);
+      filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.7));
+      transform: translateY(-0.5px) scale(1.02);
     }
     .logo-gold-glow {
-      transition: var(--transition-smooth);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .premium-nav-item {
       position: relative;
-      padding-bottom: 6px !important;
-      white-space: nowrap !important; /* Forces link text strictly into a single line */
+      padding-bottom: 4px !important;
+      white-space: nowrap !important;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
     .premium-nav-item::after {
       content: '';
       position: absolute;
-      bottom: 0;
+      bottom: -1px;
       left: 50%;
       width: 0;
       height: 1.5px;
       background: var(--gold-gradient);
-      transition: var(--transition-smooth);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       transform: translateX(-50%);
       box-shadow: 0 0 8px rgba(212,175,55,0.6);
     }
@@ -652,33 +536,40 @@ if (typeof document !== 'undefined') {
     }
     .premium-nav-item:hover {
       color: var(--text-gold) !important;
+      transform: translateY(-1px) scale(1.04);
+      text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    }
+    .lang-btn-premium {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
     .lang-btn-premium:hover {
       border-color: var(--gold-primary) !important;
       background: rgba(212, 175, 55, 0.05) !important;
-      box-shadow: 0 0 8px rgba(212, 175, 55, 0.1);
+      box-shadow: 0 0 8px rgba(212, 175, 55, 0.15);
+      transform: translateY(-1px);
     }
     .profile-badge-glow {
-      box-shadow: 0 0 10px rgba(212, 175, 55, 0.1);
-      transition: var(--transition-smooth);
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.05);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .profile-badge-glow:hover {
       border-color: var(--gold-primary) !important;
       box-shadow: 0 0 15px rgba(212, 175, 55, 0.25) !important;
+      transform: translateY(-1px);
     }
     
     /* Responsive Media Queries fixing spacing and wrapping */
     @media (max-width: 1280px) {
       .navbar-premium .navbar-desktop-nav {
-        gap: 16px !important;
-        margin: 0 20px !important;
+        gap: 10px !important;
+        margin: 0 10px !important;
       }
       .navbar-premium .navbar-logo {
-        margin-right: 30px !important;
+        margin-right: 12px !important;
       }
       .navbar-premium .navbar-search-wrapper {
-        width: 145px !important;
-        margin-left: 15px !important;
+        width: 110px !important;
+        margin-left: 8px !important;
       }
     }
     @media (max-width: 1180px) {
@@ -708,32 +599,22 @@ if (typeof document !== 'undefined') {
     }
     [dir="rtl"] .navbar-premium .navbar-logo {
       margin-right: 0 !important;
-      margin-left: 50px !important;
+      margin-left: 24px !important;
     }
     [dir="rtl"] .navbar-premium .navbar-search-wrapper {
       margin-left: 0 !important;
-      margin-right: 30px !important;
+      margin-right: 12px !important;
     }
     @media (max-width: 1280px) {
       [dir="rtl"] .navbar-premium .navbar-logo {
-        margin-left: 30px !important;
+        margin-left: 12px !important;
         margin-right: 0 !important;
       }
       [dir="rtl"] .navbar-premium .navbar-search-wrapper {
-        margin-right: 15px !important;
+        margin-right: 8px !important;
         margin-left: 0 !important;
       }
     }
-    
-    .dropdown-item-hover:hover {
-      background: rgba(212, 175, 55, 0.12) !important;
-      color: var(--text-gold) !important;
-    }
-    
-    [dir="rtl"] .navbar-premium .othersDropdown {
-      box-shadow: 0 10px 30px rgba(0,0,0,0.7) !important;
-    }
-
   `;
   document.head.appendChild(customStyles);
 }
