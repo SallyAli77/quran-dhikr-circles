@@ -1255,6 +1255,10 @@ export const AppProvider = ({ children }) => {
       updateCircleTurn,
       updateCircleDhikr,
       incrementCircleProgress,
+      communityPosts,
+      addPost,
+      likePost,
+      addComment,
       t
     }}>
       {children}
