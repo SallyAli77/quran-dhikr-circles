@@ -6,9 +6,9 @@ import confetti from 'canvas-confetti';
 const faqsList = [
   {
     id: 1,
-    q: "What is the mission of ArabicMuslim?",
+    q: "What is the mission of Arabic Muslim?",
     qAr: "ما هي رسالة أرابيك مسلم؟",
-    a: "ArabicMuslim is a premium digital sanctuary built to bridge classical Islamic learning with cutting-edge modern aesthetics. We provide bilingual tools, Quran recitation audio, real-time prayer countdowns, and handpicked literature recommendations to elevate your spiritual study.",
+    a: "Arabic Muslim is a premium digital sanctuary built to bridge classical Islamic learning with cutting-edge modern aesthetics. We provide bilingual tools, Quran recitation audio, real-time prayer countdowns, and handpicked literature recommendations to elevate your spiritual study.",
     aAr: "Arabic Muslim هي ملاذ رقمي متميز مصمم لربط العلوم الإسلامية بالجماليات المعاصرة. نحن نقدم أدوات ثنائية اللغة، تلاوة القرآن الكريم، والعد التنازلي لمواقيت الصلاة، وتوصيات كتب حصرية لتعلم اللغة العربية والدروس الإسلامية"
   },
   {

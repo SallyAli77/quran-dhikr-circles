@@ -3,7 +3,8 @@ import { useApp, mockBots } from '../context/AppContext';
 import { 
   ShieldAlert, LogIn, UserPlus, Key, Award, Bookmark, Edit2, Check, 
   ArrowRight, User, Mic, Star, Heart, UserMinus, Volume2, Loader, 
-  Clock, Plus, Shield, Settings, AlertCircle, BookOpen, Trash2, Send, CheckCircle2, Play
+  Clock, Plus, Shield, Settings, AlertCircle, BookOpen, Trash2, Send, CheckCircle2, Play,
+  Eye, EyeOff
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -408,7 +409,7 @@ export default function Login({ setActivePage }) {
                   placeholder={language === 'en' ? "e.g. Ahmad Abdullah" : "مثال: أحمد عبدالله"}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  style={styles.formInput}
+                  className="premium-input"
                   autoComplete="name"
                 />
               </div>
@@ -422,29 +423,50 @@ export default function Login({ setActivePage }) {
                 placeholder={language === 'en' ? "your@email.com" : "بريدك@الإلكتروني.com"}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                style={styles.formInput}
+                className="premium-input"
                 autoComplete={isSignUpMode ? "email" : "username"}
               />
             </div>
 
             <div style={styles.formField}>
               <label style={styles.fieldLabel}>{t('authPass')}</label>
-              <div style={{ position: 'relative' }}>
+              <div style={{ position: 'relative', width: '100%' }}>
                 <input
                   type={showPassword ? "text" : "password"}
                   required
                   placeholder={isSignUpMode ? (language === 'en' ? "Min 8 chars, A-Z, 0-9, symbol" : "8+ حروف، كبيرة، أرقام، رمز") : "••••••••"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  style={{ ...styles.formInput, paddingRight: '44px' }}
+                  className="premium-input"
+                  style={{ 
+                    paddingRight: language === 'ar' ? '16px' : '44px',
+                    paddingLeft: language === 'ar' ? '44px' : '16px'
+                  }}
                   autoComplete={isSignUpMode ? "new-password" : "current-password"}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(p => !p)}
-                  style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', fontSize: '0.75rem', fontWeight: '600' }}
+                  style={{
+                    position: 'absolute',
+                    right: language === 'ar' ? 'auto' : '16px',
+                    left: language === 'ar' ? '16px' : 'auto',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    color: 'var(--text-gold)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: 0,
+                    opacity: 0.8,
+                    transition: 'all 0.2s ease',
+                  }}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                 >
-                  {showPassword ? (language === 'ar' ? 'إخفاء' : 'Hide') : (language === 'ar' ? 'إظهار' : 'Show')}
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
 
@@ -479,15 +501,22 @@ export default function Login({ setActivePage }) {
             {isSignUpMode && (
               <div style={styles.formField}>
                 <label style={styles.fieldLabel}>{language === 'en' ? "Confirm Password" : "تأكيد كلمة المرور"}</label>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  required
-                  placeholder="••••••••"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  style={{ ...styles.formInput, borderColor: confirmPassword && confirmPassword !== password ? '#ef4444' : confirmPassword && confirmPassword === password ? '#22c55e' : undefined }}
-                  autoComplete="new-password"
-                />
+                <div style={{ position: 'relative', width: '100%' }}>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    required
+                    placeholder="••••••••"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="premium-input"
+                    style={{ 
+                      borderColor: confirmPassword && confirmPassword !== password ? '#ef4444' : confirmPassword && confirmPassword === password ? '#22c55e' : undefined,
+                      paddingRight: language === 'ar' ? '16px' : '44px',
+                      paddingLeft: language === 'ar' ? '44px' : '16px'
+                    }}
+                    autoComplete="new-password"
+                  />
+                </div>
                 {confirmPassword.length > 0 && (
                   <span style={{ fontSize: '0.72rem', marginTop: '4px', color: confirmPassword === password ? '#22c55e' : '#ef4444', fontWeight: '600', display: 'block' }}>
                     {confirmPassword === password

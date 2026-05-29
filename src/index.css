@@ -398,3 +398,35 @@ select:focus {
     transform: scale(1) translateY(0);
   }
 }
+
+/* Premium Form & Input Styles */
+.premium-input {
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.02) !important;
+  border: 1px solid var(--border-gold) !important;
+  border-radius: 12px !important;
+  padding: 14px 16px !important;
+  color: var(--text-primary) !important;
+  font-size: 0.95rem !important;
+  outline: none !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  font-family: inherit;
+}
+
+.premium-input:focus {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-color: var(--gold-primary) !important;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.3), inset 0 0 8px rgba(212, 175, 55, 0.05) !important;
+  transform: translateY(-1px);
+}
+
+.premium-input::placeholder {
+  color: var(--text-muted);
+  opacity: 0.8;
+}
+
+[dir="rtl"] .premium-input {
+  text-align: right;
+}
+

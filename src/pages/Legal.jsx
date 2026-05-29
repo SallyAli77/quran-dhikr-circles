@@ -80,7 +80,7 @@ export default function Legal({ initialTab = "privacy", setActivePage }) {
               {language === 'en' ? (
                 <>
                   <h3>1. Introduction</h3>
-                  <p>Welcome to ArabicMuslim ("we," "our," "us"). We are deeply committed to protecting your personal privacy and providing a secure, spiritually enriching digital experience. This Privacy Policy outlines how we collect, use, safeguard, and disclose your information when you interact with our Islamic portal, including memorizing the Holy Quran, reciting daily Adhkar, using our interactive Tasbih counter, joining or creating collaborative recitation/memorization circles, browsing and purchasing Islamic e-books and Arabic-learning materials, checking accurate prayer times, posting spiritual reflections, and tracking your personal progress and spiritual statistics.</p>
+                  <p>Welcome to Arabic Muslim ("we," "our," "us"). We are deeply committed to protecting your personal privacy and providing a secure, spiritually enriching digital experience. This Privacy Policy outlines how we collect, use, safeguard, and disclose your information when you interact with our Islamic portal, including memorizing the Holy Quran, reciting daily Adhkar, using our interactive Tasbih counter, joining or creating collaborative recitation/memorization circles, browsing and purchasing Islamic e-books and Arabic-learning materials, checking accurate prayer times, posting spiritual reflections, and tracking your personal progress and spiritual statistics.</p>
                   
                   <h3>2. Collection of Information</h3>
                   <p>We may collect information about you in several ways to support and improve your journey. The categories of information we collect include:</p>
@@ -119,7 +119,7 @@ export default function Legal({ initialTab = "privacy", setActivePage }) {
               ) : (
                 <>
                   <h3>1. مقدمة</h3>
-                  <p>أهلاً بك في منصة "العربي المسلم" (ArabicMuslim). نلتزم في منصتنا بأعلى معايير الأمان وحماية خصوصية مستخدمينا الكرام. تهدف سياسة الخصوصية هذه إلى توضيح كيف نجمع ونستخدم ونحمي بياناتك الشخصية عند تفاعلك مع خدماتنا الإيمانية المتكاملة، مثل حفظ القرآن الكريم، وتلاوة الأذكار، واستخدام عداد التسبيح التفاعلي، والمشاركة في حلقات التلاوة والحفظ الجماعية، وتصفح واقتناء الكتب الإلكترونية الإسلامية ومواد تعليم اللغة العربية، واستعراض مواقيت الصلاة ومشاركة المنشورات والخواطر مع أفراد المجتمع الإسلامي، ومتابعة إحصائياتك ومدى تحقيق أهدافك.</p>
+                  <p>أهلاً بك في منصة "العربي المسلم" (Arabic Muslim). نلتزم في منصتنا بأعلى معايير الأمان وحماية خصوصية مستخدمينا الكرام. تهدف سياسة الخصوصية هذه إلى توضيح كيف نجمع ونستخدم ونحمي بياناتك الشخصية عند تفاعلك مع خدماتنا الإيمانية المتكاملة، مثل حفظ القرآن الكريم، وتلاوة الأذكار، واستخدام عداد التسبيح التفاعلي، والمشاركة في حلقات التلاوة والحفظ الجماعية، وتصفح واقتناء الكتب الإلكترونية الإسلامية ومواد تعليم اللغة العربية، واستعراض مواقيت الصلاة ومشاركة المنشورات والخواطر مع أفراد المجتمع الإسلامي، ومتابعة إحصائياتك ومدى تحقيق أهدافك.</p>
                   
                   <h3>2. البيانات التي نجمعها وكيفية جمعها</h3>
                   <p>تتمحور البيانات التي قد نقوم بجمعها حول تحسين تجربتك الإيمانية والتقنية وتشتمل على:</p>
@@ -173,7 +173,7 @@ export default function Legal({ initialTab = "privacy", setActivePage }) {
               {language === 'en' ? (
                 <>
                   <h3>1. Agreement to Terms</h3>
-                  <p>Welcome to ArabicMuslim. These Terms of Use constitute a legally binding agreement made between you, whether personally or on behalf of an entity ("you") and ArabicMuslim ("we," "us," or "our"), concerning your access to and use of our platform.</p>
+                  <p>Welcome to Arabic Muslim. These Terms of Use constitute a legally binding agreement made between you, whether personally or on behalf of an entity ("you") and Arabic Muslim ("we," "us," or "our"), concerning your access to and use of our platform.</p>
                   <p>By accessing the Site, you acknowledge that you have read, understood, and agreed to be bound by all of these Terms of Use. If you do not agree with all of these terms, you are expressly prohibited from using our services and must discontinue use immediately.</p>
 
                   <h3>2. Intellectual Property Rights</h3>
@@ -207,7 +207,7 @@ export default function Legal({ initialTab = "privacy", setActivePage }) {
               ) : (
                 <>
                   <h3>1. الموافقة على الشروط والأحكام</h3>
-                  <p>يرجى قراءة شروط الاستخدام هذه بعناية. تُعد هذه الشروط اتفاقية ملزمة قانوناً بينك بصفتك مستخدماً وبين منصة "العربي المسلم" (ArabicMuslim) وتخص وصولك واستخدامك لكافة خدمات الموقع وتطبيقاته.</p>
+                  <p>يرجى قراءة شروط الاستخدام هذه بعناية. تُعد هذه الشروط اتفاقية ملزمة قانوناً بينك بصفتك مستخدماً وبين منصة "العربي المسلم" (Arabic Muslim) وتخص وصولك واستخدامك لكافة خدمات الموقع وتطبيقاته.</p>
                   <p>بمجرد تصفحك أو استخدامك لأي جزء من الموقع، فإنك تقر بأنك قد قرأت هذه الشروط، وفهمتها، ووافقت على الالتزام الكامل بها. إذا كنت لا توافق على أي بند من هذه الشروط، يرجى التوقف عن استخدام خدمات المنصة فوراً.</p>
 
                   <h3>2. الملكية الفكرية وحقوق المحتوى</h3>
