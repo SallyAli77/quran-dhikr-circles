@@ -41,6 +41,8 @@ function AppContent() {
         return <Legal initialTab="privacy" setActivePage={setActivePage} />;
       case 'terms':
         return <Legal initialTab="terms" setActivePage={setActivePage} />;
+      case 'legal':
+        return <Legal initialTab="privacy" setActivePage={setActivePage} />;
       default:
         return <Home setActivePage={setActivePage} />;
     }

@@ -663,7 +663,7 @@ const translations = {
     contactSubmit: "Submit Inquiry",
     contactSuccess: "Inquiry sent with peace and blessings.",
     contactFAQTitle: "Frequently Asked Questions",
-    authTitle: "ArabicMuslim Portal",
+    authTitle: "Arabic Muslim Portal",
     authSubtitle: "Register or log in to manage your daily scores and bookmarks.",
     authEmail: "Email Address",
     authPass: "Password",
@@ -671,7 +671,7 @@ const translations = {
     authSignUpSubmit: "Create Profile",
     authToggleToSignUp: "Need a profile? Sign Up here",
     authToggleToLogin: "Have a profile? Sign In here",
-    authError: "Credentials failed. Try 'sally@arabicmuslim.com' / 'bismillah'",
+    authError: "Credentials failed. Try 'sally@arabicmuslim.com' / 'Bismillah1!'",
     authWelcome: "Assalamu Alaikum",
     searchTitle: "Search Results for",
     searchNoResults: "No items matched your search query."
@@ -773,7 +773,7 @@ const translations = {
     authSignUpSubmit: "إنشاء حساب جديد",
     authToggleToSignUp: "ليس لديك حساب؟ أنشئ حساباً مجانياً",
     authToggleToLogin: "لديك حساب بالفعل؟ سجل دخولك الآن",
-    authError: "خطأ في تسجيل الدخول. التجربة: 'sally@arabicmuslim.com' / 'bismillah'",
+    authError: "خطأ في تسجيل الدخول. التجربة: 'sally@arabicmuslim.com' / 'Bismillah1!'",
     authWelcome: "السلام عليكم ورحمة الله",
     searchTitle: "نتائج البحث عن",
     searchNoResults: "لم يتم العثور على أي نتائج تطابق عملية البحث."

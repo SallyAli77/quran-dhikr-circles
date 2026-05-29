@@ -28,20 +28,21 @@ export default function Legal({ initialTab = "privacy", setActivePage }) {
         </h1>
         <p style={styles.subtitle}>
           {language === 'en' 
-            ? "Please review our privacy policies and terms of service for the ArabicMuslim platform." 
-            : "يرجى مراجعة سياسة الخصوصية وشروط الاستخدام الخاصة بمنصة العربي المسلم لضمان استخدام آمن وموثوق."}
+                      ? "Please review our privacy policies and terms of service for the Arabic Muslim platform." 
+            : "يرجى مراجعة سياسة الخصوصية وشروط الاستخدام الخاصة بمنصة Arabic Muslim لضمان استخدام آمن وموثوق."}
         </p>
       </div>
 
-      {/* Tabs */}
-      <div style={styles.tabContainer} className="glass-panel">
+      {/* Tabs - full width, clean */}
+      <div style={styles.tabContainer}>
         <button 
           onClick={() => setActiveTab('privacy')}
           style={{
             ...styles.tabBtn,
-            background: activeTab === 'privacy' ? 'var(--gold-gradient)' : 'transparent',
+            background: activeTab === 'privacy' ? 'var(--gold-gradient)' : 'rgba(255,255,255,0.04)',
             color: activeTab === 'privacy' ? '#000' : 'var(--text-secondary)',
-            fontWeight: activeTab === 'privacy' ? '600' : '400',
+            fontWeight: activeTab === 'privacy' ? '700' : '500',
+            border: activeTab === 'privacy' ? 'none' : '1px solid rgba(212,175,55,0.15)'
           }}
         >
           <Shield size={16} style={{ marginRight: '6px', marginLeft: '6px' }} />
@@ -51,9 +52,10 @@ export default function Legal({ initialTab = "privacy", setActivePage }) {
           onClick={() => setActiveTab('terms')}
           style={{
             ...styles.tabBtn,
-            background: activeTab === 'terms' ? 'var(--gold-gradient)' : 'transparent',
+            background: activeTab === 'terms' ? 'var(--gold-gradient)' : 'rgba(255,255,255,0.04)',
             color: activeTab === 'terms' ? '#000' : 'var(--text-secondary)',
-            fontWeight: activeTab === 'terms' ? '600' : '400',
+            fontWeight: activeTab === 'terms' ? '700' : '500',
+            border: activeTab === 'terms' ? 'none' : '1px solid rgba(212,175,55,0.15)'
           }}
         >
           <FileText size={16} style={{ marginRight: '6px', marginLeft: '6px' }} />
@@ -287,8 +289,10 @@ const styles = {
     gap: '8px',
     padding: '6px',
     borderRadius: '12px',
-    maxWidth: '360px',
-    margin: '0 auto 30px auto',
+    width: '100%',
+    margin: '0 0 30px 0',
+    background: 'rgba(255,255,255,0.02)',
+    border: '1px solid rgba(212,175,55,0.12)',
   },
   tabBtn: {
     flexGrow: 1,

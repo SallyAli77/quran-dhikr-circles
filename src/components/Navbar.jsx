@@ -36,7 +36,7 @@ export default function Navbar({ activePage, setActivePage }) {
           className="logo-gold-glow navbar-logo"
         >
           <span style={styles.logoCrescent}>🌙</span>
-          <span style={styles.logoText} className="gold-gradient-text">ArabicMuslim</span>
+          <span style={styles.logoText} className="gold-gradient-text">Arabic Muslim</span>
         </div>
 
         {/* Center: Desktop Nav Links (Forces single-line, zero wrap!) */}

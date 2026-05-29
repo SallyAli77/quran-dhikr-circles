@@ -61,7 +61,7 @@ export default function Footer({ setActivePage }) {
           <div style={styles.footerCol}>
             <div style={styles.logo}>
               <span style={{ fontSize: '1.5rem' }}>🌙</span>
-              <span style={styles.logoText} className="gold-gradient-text">ArabicMuslim</span>
+              <span style={styles.logoText} className="gold-gradient-text">Arabic Muslim</span>
             </div>
             <p style={styles.colText}>
               {language === 'en' 
@@ -137,7 +137,7 @@ export default function Footer({ setActivePage }) {
         {/* Bottom Rights */}
         <div style={styles.bottomBar}>
           <div style={styles.copyright}>
-            <span>© {new Date().getFullYear()} ArabicMuslim.</span>
+            <span>© {new Date().getFullYear()} Arabic Muslim.</span>
             <span> {language === 'en' ? "All rights reserved." : "جميع الحقوق محفوظة."}</span>
           </div>
           <div style={styles.legalLinks}>
@@ -151,7 +151,7 @@ export default function Footer({ setActivePage }) {
           </div>
           <div style={styles.poweredBy}>
             <Shield size={12} color="var(--text-gold)" style={{ marginRight: '4px', marginLeft: '4px' }} />
-            <span>arabicmuslim.com</span>
+            <span>arabic-muslim.com</span>
           </div>
         </div>
       </div>
