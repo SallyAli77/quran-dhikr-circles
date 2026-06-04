@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { FileText, Search, Bookmark, BookmarkCheck, ChevronLeft, Calendar, User, Clock, Heart, Award, ArrowRight } from 'lucide-react';
+import { 
+  FileText, Search, Bookmark, BookmarkCheck, ChevronLeft, Calendar, User, 
+  Clock, Heart, Award, ArrowRight, AlertCircle, ExternalLink 
+} from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function Articles() {
-  const { articlesList: fullArticlesList = [], language, searchQuery, bookmarks, toggleBookmark, t } = useApp();
+  const { 
+    articlesList: fullArticlesList = [], 
+    language, 
+    searchQuery, 
+    bookmarks, 
+    toggleBookmark, 
+    t,
+    newsList = [] 
+  } = useApp();
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [activeCategory, setActiveCategory] = useState("All");
+  const [activeTab, setActiveTab] = useState("articles"); // 'articles' or 'news'
 
   const categories = ["All", "Faith", "Arabic Learning", "Tafsir", "History"];
   const categoriesAr = {
@@ -66,85 +78,174 @@ export default function Articles() {
             <p style={styles.subtitle}>{t('artSubtitle')} ({language === 'en' ? "Explore all 120 articles" : "تصفح كافة المقالات الـ 120 كاملة"})</p>
           </div>
 
-          {/* Category Tabs */}
-          <div style={styles.categoriesRow} className="glass-panel">
-            {categories.map(cat => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                style={{
-                  ...styles.catTab,
-                  background: activeCategory === cat ? 'var(--gold-gradient)' : 'transparent',
-                  color: activeCategory === cat ? '#000' : 'var(--text-secondary)',
-                  fontWeight: activeCategory === cat ? '600' : '400'
-                }}
-              >
-                {language === 'en' ? cat : categoriesAr[cat]}
-              </button>
-            ))}
+          {/* Main Tab Switcher */}
+          <div style={styles.mainTabsContainer} className="glass-panel">
+            <button
+              onClick={() => setActiveTab("articles")}
+              style={{
+                ...styles.mainTabBtn,
+                background: activeTab === "articles" ? 'var(--gold-gradient)' : 'transparent',
+                color: activeTab === "articles" ? '#000' : 'var(--text-primary)',
+                boxShadow: activeTab === "articles" ? '0 4px 15px rgba(212, 175, 55, 0.2)' : 'none',
+                fontWeight: activeTab === "articles" ? '600' : '400'
+              }}
+            >
+              <FileText size={16} />
+              <span>{language === 'en' ? "Articles Catalog" : "مكتبة المقالات"}</span>
+            </button>
+            <button
+              onClick={() => setActiveTab("news")}
+              style={{
+                ...styles.mainTabBtn,
+                background: activeTab === "news" ? 'var(--gold-gradient)' : 'transparent',
+                color: activeTab === "news" ? '#000' : 'var(--text-primary)',
+                boxShadow: activeTab === "news" ? '0 4px 15px rgba(212, 175, 55, 0.2)' : 'none',
+                fontWeight: activeTab === "news" ? '600' : '400'
+              }}
+            >
+              <AlertCircle size={16} />
+              <span>{language === 'en' ? "Global Muslim News" : "أخبار العالم الإسلامي"}</span>
+            </button>
           </div>
 
-          {/* Articles Feed */}
-          <div style={styles.articlesFeed} className="grid-3">
-            {filteredArticles.length > 0 ? (
-              filteredArticles.map(a => {
-                const bookmarked = isArticleBookmarked(a.id);
-                return (
-                  <div 
-                    key={a.id} 
-                    className="glass-panel article-card-hover" 
-                    style={styles.articleCard}
-                    onClick={() => handleArticleOpen(a)}
+          {activeTab === 'articles' ? (
+            <>
+              {/* Category Tabs */}
+              <div style={styles.categoriesRow} className="glass-panel">
+                {categories.map(cat => (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveCategory(cat)}
+                    style={{
+                      ...styles.catTab,
+                      background: activeCategory === cat ? 'var(--gold-gradient)' : 'transparent',
+                      color: activeCategory === cat ? '#000' : 'var(--text-secondary)',
+                      fontWeight: activeCategory === cat ? '600' : '400'
+                    }}
                   >
-                    <span style={styles.cardCategory}>
-                      {language === 'en' ? a.category : a.categoryAr}
-                    </span>
+                    {language === 'en' ? cat : categoriesAr[cat]}
+                  </button>
+                ))}
+              </div>
 
-                    <h3 style={styles.cardTitle}>
-                      {language === 'en' ? a.title : a.titleAr}
-                    </h3>
+              {/* Articles Feed */}
+              <div style={styles.articlesFeed} className="grid-3">
+                {filteredArticles.length > 0 ? (
+                  filteredArticles.map(a => {
+                    const bookmarked = isArticleBookmarked(a.id);
+                    return (
+                      <div 
+                        key={a.id} 
+                        className="glass-panel article-card-hover" 
+                        style={styles.articleCard}
+                        onClick={() => handleArticleOpen(a)}
+                      >
+                        <span style={styles.cardCategory}>
+                          {language === 'en' ? a.category : a.categoryAr}
+                        </span>
 
-                    <p style={styles.cardSummary}>
-                      {language === 'en' ? a.summary : a.summaryAr}
-                    </p>
+                        <h3 style={styles.cardTitle}>
+                          {language === 'en' ? a.title : a.titleAr}
+                        </h3>
 
-                    <div style={styles.cardDivider}></div>
+                        <p style={styles.cardSummary}>
+                          {language === 'en' ? a.summary : a.summaryAr}
+                        </p>
 
-                    <div style={styles.cardFooter}>
-                      <div style={styles.authorBadge}>
-                        <span style={styles.authorAvatar}>{a.avatar}</span>
-                        <div style={styles.authorDetails}>
-                          <span style={styles.authorName}>{language === 'en' ? a.author : a.authorAr}</span>
-                          <span style={styles.pubDate}>{a.date}</span>
+                        <div style={styles.cardDivider}></div>
+
+                        <div style={styles.cardFooter}>
+                          <div style={styles.authorBadge}>
+                            <span style={styles.authorAvatar}>{a.avatar}</span>
+                            <div style={styles.authorDetails}>
+                              <span style={styles.authorName}>{language === 'en' ? a.author : a.authorAr}</span>
+                              <span style={styles.pubDate}>{a.date}</span>
+                            </div>
+                          </div>
+
+                          <div style={styles.actionPanel}>
+                            <span style={styles.readTime}>
+                              <Clock size={12} />
+                              <span>{a.readTime} {t('artReadTime')}</span>
+                            </span>
+                            
+                            <button 
+                              onClick={(e) => handleBookmarkToggle(e, a)} 
+                              style={{
+                                ...styles.bookmarkBtn,
+                                color: bookmarked ? 'var(--text-gold)' : 'var(--text-secondary)'
+                              }}
+                            >
+                              {bookmarked ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}
+                            </button>
+                          </div>
                         </div>
                       </div>
-
-                      <div style={styles.actionPanel}>
-                        <span style={styles.readTime}>
-                          <Clock size={12} />
-                          <span>{a.readTime} {t('artReadTime')}</span>
+                    );
+                  })
+                ) : (
+                  <div style={styles.noResults} className="glass-panel">
+                    <span>{t('searchNoResults')}</span>
+                  </div>
+                )}
+              </div>
+            </>
+          ) : (
+            /* News Feed View */
+            <div style={styles.newsFeed} className="grid-2">
+              {newsList && newsList.length > 0 ? (
+                newsList.map((n, idx) => (
+                  <div key={n.id || idx} style={styles.newsCard} className="glass-panel news-card-hover">
+                    <div style={styles.newsCardHeader}>
+                      <div style={styles.newsBadge}>
+                        <span>{n.image || "📰"}</span>
+                        <span>{language === 'en' ? "Global Muslim News" : "أخبار المسلمين"}</span>
+                      </div>
+                      {n.breaking && (
+                        <span style={styles.breakingBadge}>
+                          {language === 'en' ? "Breaking" : "عاجل"}
                         </span>
-                        
-                        <button 
-                          onClick={(e) => handleBookmarkToggle(e, a)} 
-                          style={{
-                            ...styles.bookmarkBtn,
-                            color: bookmarked ? 'var(--text-gold)' : 'var(--text-secondary)'
-                          }}
-                        >
-                          {bookmarked ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}
-                        </button>
+                      )}
+                    </div>
+
+                    <h3 style={styles.newsCardTitle}>
+                      {language === 'en' ? n.title : n.titleAr}
+                    </h3>
+
+                    <p style={styles.newsCardText}>
+                      {language === 'en' ? n.summary : n.summaryAr}
+                    </p>
+
+                    <div style={styles.newsCardFooter}>
+                      <span style={styles.newsSource}>
+                        {language === 'en' ? n.source : n.sourceAr} • {n.date}
+                      </span>
+
+                      <div style={styles.newsActions}>
+                        <span style={styles.newsReactText}>❤️ {n.likes}</span>
+                        <span style={styles.newsReactText}>💬 {n.commentsCount}</span>
+                        {n.link && (
+                          <a 
+                            href={n.link} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            style={styles.newsLinkIcon}
+                            title={language === 'en' ? "Read Full Story" : "قراءة الخبر بالكامل"}
+                          >
+                            <ExternalLink size={14} color="var(--text-gold)" />
+                          </a>
+                        )}
                       </div>
                     </div>
                   </div>
-                );
-              })
-            ) : (
-              <div style={styles.noResults} className="glass-panel">
-                <span>{t('searchNoResults')}</span>
-              </div>
-            )}
-          </div>
+                ))
+              ) : (
+                <div style={styles.noResults} className="glass-panel">
+                  <span>{language === 'en' ? "No news items available at the moment." : "لا توجد أخبار متاحة حالياً."}</span>
+                </div>
+              )}
+            </div>
+          )}
         </>
       ) : (
         // Detailed Full Article View
@@ -267,8 +368,118 @@ const styles = {
     transition: 'var(--transition-smooth)',
     whiteSpace: 'nowrap',
   },
+  mainTabsContainer: {
+    display: 'flex',
+    gap: '12px',
+    padding: '6px',
+    borderRadius: '14px',
+    marginBottom: '30px',
+    maxWidth: '500px',
+    margin: '0 auto 30px auto',
+    justifyContent: 'center',
+    background: 'rgba(255, 255, 255, 0.01)',
+  },
+  mainTabBtn: {
+    flex: 1,
+    border: 'none',
+    borderRadius: '10px',
+    padding: '10px 20px',
+    fontSize: '0.9rem',
+    cursor: 'pointer',
+    transition: 'var(--transition-smooth)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '8px',
+  },
   articlesFeed: {
     marginTop: '10px',
+  },
+  newsFeed: {
+    marginTop: '10px',
+  },
+  newsCard: {
+    padding: '28px',
+    borderRadius: '18px',
+    display: 'flex',
+    flexDirection: 'column',
+    position: 'relative',
+    gap: '14px',
+    background: 'rgba(255, 255, 255, 0.02)',
+    border: '1px solid var(--border-glass)',
+    height: '100%',
+    textAlign: 'start',
+  },
+  newsCardHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  newsBadge: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '6px',
+    fontSize: '0.75rem',
+    color: 'var(--text-gold)',
+    background: 'rgba(212, 175, 55, 0.05)',
+    padding: '4px 10px',
+    borderRadius: '20px',
+    fontWeight: '600',
+    border: '1px solid var(--border-gold)',
+  },
+  breakingBadge: {
+    fontSize: '0.7rem',
+    color: '#ff4d4d',
+    background: 'rgba(255, 77, 77, 0.1)',
+    padding: '2px 8px',
+    borderRadius: '4px',
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    border: '1px solid rgba(255, 77, 77, 0.3)',
+  },
+  newsCardTitle: {
+    fontSize: '1.25rem',
+    fontWeight: '700',
+    color: 'var(--text-primary)',
+    lineHeight: '1.45',
+  },
+  newsCardText: {
+    fontSize: '0.9rem',
+    color: 'var(--text-secondary)',
+    lineHeight: '1.65',
+    flexGrow: 1,
+  },
+  newsCardFooter: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: '10px',
+    fontSize: '0.8rem',
+    borderTop: '1px solid rgba(255, 255, 255, 0.04)',
+    paddingTop: '14px',
+  },
+  newsSource: {
+    color: 'var(--text-muted)',
+  },
+  newsActions: {
+    display: 'flex',
+    gap: '14px',
+    alignItems: 'center',
+  },
+  newsReactText: {
+    color: 'var(--text-secondary)',
+    fontSize: '0.8rem',
+  },
+  newsLinkIcon: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background: 'rgba(255, 255, 255, 0.03)',
+    borderRadius: '50%',
+    width: '28px',
+    height: '28px',
+    border: '1px solid var(--border-glass)',
+    transition: 'var(--transition-smooth)',
   },
   articleCard: {
     padding: '24px',
@@ -484,12 +695,13 @@ const styles = {
 if (typeof document !== 'undefined') {
   const artStyle = document.createElement('style');
   artStyle.innerHTML = `
-    .article-card-hover {
+    .article-card-hover, .news-card-hover {
       transition: var(--transition-smooth);
     }
-    .article-card-hover:hover {
+    .article-card-hover:hover, .news-card-hover:hover {
       transform: translateY(-3px);
       border-color: var(--border-gold-hover) !important;
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.08);
     }
     [dir="rtl"] .articles-page [style*="backBtn"] {
       align-self: flex-end !important;
