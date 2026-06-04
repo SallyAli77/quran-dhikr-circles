@@ -29,10 +29,13 @@ export default function Home({ setActivePage }) {
     friendRequestsSent,
     setQuranLaunchMode,
     setTriggerCreateCircleModal,
-    newsList
+    newsList,
+    viewUserProfileByName,
+    getAffiliateLink
   } = useApp();
 
   // Social feed states
+  const [homeFeedTab, setHomeFeedTab] = useState("news"); // 'news' or 'reflections'
   const [reflectionText, setReflectionText] = useState("");
   const [activeCommentsPostId, setActiveCommentsPostId] = useState(null);
   const [commentText, setCommentText] = useState({});
@@ -317,134 +320,192 @@ export default function Home({ setActivePage }) {
             </div>
           </div>
 
-          <div style={styles.pointsWidget}>
-            <Award size={20} color="var(--text-gold)" />
-            <div>
-              <span style={styles.widgetScoreText}>{dailyScore}</span>
-              <span style={styles.widgetLabel}> {language === 'ar' ? "النقاط اليومية" : "Daily Score Points"}</span>
+          {!isAuthenticated ? (
+            <div style={styles.ctaBox} className="glass-panel text-center">
+              <h4 style={styles.ctaTitle} className="gold-gradient-text">
+                {language === 'ar' ? "انضم لمجتمعنا الإيماني" : "Elevate Your Spiritual Routine"}
+              </h4>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.5', margin: '12px 0', textAlign: 'center' }}>
+                {language === 'ar' 
+                  ? "سجّل الدخول لتتمكن من تتبع نقاطك اليومية، وإنجاز المهام التعبدية، وكسب الشارات التقديرية، والالتحاق بحلقات القرآن الكريم مع معلمين معتمدين."
+                  : "Sign in or create a profile to track daily scores, accomplish spiritual goals, unlock badges, and join Quran circles with certified teachers."
+                }
+              </p>
+              <button 
+                onClick={() => setActivePage('login')} 
+                className="btn-primary" 
+                style={{ width: '100%', padding: '10px', marginTop: '10px', display: 'flex', justifyContent: 'center' }}
+              >
+                {language === 'ar' ? "تسجيل الدخول / إنشاء حساب" : "Log In / Register"}
+              </button>
             </div>
-          </div>
+          ) : (
+            <>
+              <div style={styles.pointsWidget}>
+                <Award size={20} color="var(--text-gold)" />
+                <div>
+                  <span style={styles.widgetScoreText}>{dailyScore}</span>
+                  <span style={styles.widgetLabel}> {language === 'ar' ? "النقاط اليومية" : "Daily Score Points"}</span>
+                </div>
+              </div>
 
-          {/* Daily Goals Progress Tracker */}
-          <div style={styles.goalsContainer}>
-            <h4 style={styles.sidebarSectionTitle}>
-              <Flame size={16} color="var(--text-gold)" />
-              <span>{language === 'ar' ? "الأهداف اليومية" : "Daily goals tracker"}</span>
-            </h4>
-            
-            <div style={styles.goalsList}>
-              {dailyGoalsList.map(g => {
-                const isDone = completedGoals.includes(g.id) || (g.id === "tap_subha" && tasbihCount >= 100);
-                const progressPct = Math.min(100, (g.current / g.target) * 100);
+              {/* Daily Goals Progress Tracker */}
+              <div style={styles.goalsContainer}>
+                <h4 style={styles.sidebarSectionTitle}>
+                  <Flame size={16} color="var(--text-gold)" />
+                  <span>{language === 'ar' ? "الأهداف اليومية" : "Daily goals tracker"}</span>
+                </h4>
                 
-                return (
-                  <div key={g.id} style={styles.goalItem} onClick={() => {
-                    if (g.id === "read_article") {
-                      setActivePage('articles');
-                    } else if (g.id === "recite_quran") {
-                      setActivePage('quran');
-                    }
-                  }}>
-                    <div style={styles.goalMetaRow}>
-                      <span style={{
-                        ...styles.goalLabel,
-                        textDecoration: isDone ? 'line-through' : 'none',
-                        color: isDone ? 'var(--text-muted)' : 'var(--text-primary)'
+                <div style={styles.goalsList}>
+                  {dailyGoalsList.map(g => {
+                    const isDone = completedGoals.includes(g.id) || (g.id === "tap_subha" && tasbihCount >= 100);
+                    const progressPct = Math.min(100, (g.current / g.target) * 100);
+                    
+                    return (
+                      <div key={g.id} style={styles.goalItem} onClick={() => {
+                        if (g.id === "read_article") {
+                          setActivePage('articles');
+                        } else if (g.id === "recite_quran") {
+                          setActivePage('quran');
+                        }
                       }}>
-                        {language === 'ar' ? g.labelAr : g.labelEn}
-                      </span>
-                      <span style={styles.goalPoints}>+{g.points} XP</span>
-                    </div>
-                    
-                    <div style={styles.progressBarBg}>
-                      <div style={{
-                        ...styles.progressBarFill,
-                        width: `${progressPct}%`,
-                        background: isDone ? 'var(--gold-gradient)' : 'linear-gradient(90deg, #b38728 0%, #daae48 100%)'
-                      }}></div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+                        <div style={styles.goalMetaRow}>
+                          <span style={{
+                            ...styles.goalLabel,
+                            textDecoration: isDone ? 'line-through' : 'none',
+                            color: isDone ? 'var(--text-muted)' : 'var(--text-primary)'
+                          }}>
+                            {language === 'ar' ? g.labelAr : g.labelEn}
+                          </span>
+                          <span style={styles.goalPoints}>+{g.points} XP</span>
+                        </div>
+                        
+                        <div style={styles.progressBarBg}>
+                          <div style={{
+                            ...styles.progressBarFill,
+                            width: `${progressPct}%`,
+                            background: isDone ? 'var(--gold-gradient)' : 'linear-gradient(90deg, #b38728 0%, #daae48 100%)'
+                          }}></div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
 
-          {/* User Badges gallery brief */}
-          <div style={styles.badgesWidget}>
-            <h4 style={styles.sidebarSectionTitle}>
-              <Award size={16} color="var(--text-gold)" />
-              <span>{language === 'ar' ? "شارات إنجازاتك" : "My Badges Gallery"}</span>
-            </h4>
-            
-            <div style={styles.badgeEmojisRow}>
-              {badgesCatalog.map(b => {
-                const isUnlocked = unlockedBadges.includes(b.id) || (b.id === "teacher_qualified" && user.role === "Certified Teacher");
-                return (
-                  <div 
-                    key={b.id} 
-                    style={{
-                      ...styles.badgeBubble,
-                      opacity: isUnlocked ? 1 : 0.25,
-                      filter: isUnlocked ? 'grayscale(0)' : 'grayscale(1)',
-                      borderColor: isUnlocked ? 'var(--gold-primary)' : 'rgba(255,255,255,0.05)'
-                    }}
-                    title={language === 'ar' ? `${b.labelAr} - ${b.descAr}` : `${b.labelEn} - ${b.descEn}`}
-                  >
-                    <span>{b.icon}</span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Quick Active Bots recommendation list */}
-          <div style={styles.botsContainer}>
-            <h4 style={styles.sidebarSectionTitle}>
-              <Users size={16} color="var(--text-gold)" />
-              <span>{language === 'ar' ? "مقترحات أصدقاء" : "Simulated Active Muslims"}</span>
-            </h4>
-            
-            <div style={styles.botsList}>
-              {mockBots.slice(0, 3).map(bot => {
-                const isFriend = friendsList.includes(bot.name);
-                const isSent = friendRequestsSent.some(r => r.email === bot.email);
-
-                return (
-                  <div key={bot.email} style={styles.botRow}>
-                    <span style={styles.botAvatar}>{bot.avatar}</span>
-                    <div style={{ flexGrow: 1, minWidth: 0 }}>
-                      <div style={styles.botName}>{bot.name}</div>
-                      <span style={styles.botSub}>{bot.role || "Worshipper"}</span>
-                    </div>
-                    
-                    {!isFriend ? (
-                      <button 
-                        onClick={() => sendFriendRequest({ name: bot.name, email: bot.email, avatar: bot.avatar })}
+              {/* User Badges gallery brief */}
+              <div style={styles.badgesWidget}>
+                <h4 style={styles.sidebarSectionTitle}>
+                  <Award size={16} color="var(--text-gold)" />
+                  <span>{language === 'ar' ? "شارات إنجازاتك" : "My Badges Gallery"}</span>
+                </h4>
+                
+                <div style={styles.badgeEmojisRow}>
+                  {badgesCatalog.map(b => {
+                    const isUnlocked = unlockedBadges.includes(b.id) || (b.id === "teacher_qualified" && user.role === "Certified Teacher");
+                    return (
+                      <div 
+                        key={b.id} 
                         style={{
-                          ...styles.botAddBtn,
-                          backgroundColor: isSent ? 'rgba(212,175,55,0.05)' : 'rgba(212,175,55,0.1)',
-                          color: isSent ? 'var(--text-muted)' : 'var(--text-gold)',
-                          borderColor: isSent ? 'transparent' : 'var(--border-gold)'
+                          ...styles.badgeBubble,
+                          opacity: isUnlocked ? 1 : 0.25,
+                          filter: isUnlocked ? 'grayscale(0)' : 'grayscale(1)',
+                          borderColor: isUnlocked ? 'var(--gold-primary)' : 'rgba(255,255,255,0.05)'
                         }}
-                        disabled={isSent}
+                        title={language === 'ar' ? `${b.labelAr} - ${b.descAr}` : `${b.labelEn} - ${b.descEn}`}
                       >
-                        {isSent ? (language === 'ar' ? "معلق" : "Sent") : "+"}
-                      </button>
-                    ) : (
-                      <span style={styles.friendCheck}>✓</span>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+                        <span>{b.icon}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Quick Active Bots recommendation list */}
+              <div style={styles.botsContainer}>
+                <h4 style={styles.sidebarSectionTitle}>
+                  <Users size={16} color="var(--text-gold)" />
+                  <span>{language === 'ar' ? "مقترحات أصدقاء" : "Simulated Active Muslims"}</span>
+                </h4>
+                
+                <div style={styles.botsList}>
+                  {mockBots.slice(0, 3).map(bot => {
+                    const isFriend = friendsList.includes(bot.name);
+                    const isSent = friendRequestsSent.some(r => r.email === bot.email);
+
+                    return (
+                      <div 
+                        key={bot.email} 
+                        style={{ ...styles.botRow, cursor: 'pointer' }}
+                        onClick={() => viewUserProfileByName(bot.name)}
+                      >
+                        <span style={styles.botAvatar}>{bot.avatar}</span>
+                        <div style={{ flexGrow: 1, minWidth: 0 }}>
+                          <div style={styles.botName}>{bot.name}</div>
+                          <span style={styles.botSub}>{bot.role || "Worshipper"}</span>
+                        </div>
+                        
+                        {!isFriend ? (
+                          <button 
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              sendFriendRequest({ name: bot.name, email: bot.email, avatar: bot.avatar });
+                            }}
+                            style={{
+                              ...styles.botAddBtn,
+                              backgroundColor: isSent ? 'rgba(212,175,55,0.05)' : 'rgba(212,175,55,0.1)',
+                              color: isSent ? 'var(--text-muted)' : 'var(--text-gold)',
+                              borderColor: isSent ? 'transparent' : 'var(--border-gold)'
+                            }}
+                            disabled={isSent}
+                          >
+                            {isSent ? (language === 'ar' ? "معلق" : "Sent") : "+"}
+                          </button>
+                        ) : (
+                          <span style={styles.friendCheck}>✓</span>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </>
+          )}
         </aside>
 
         {/* ================= CENTER COLUMN: Social News Feed ================= */}
         <section style={styles.centerCol}>
           
-          {/* Facebook-style Publisher Box */}
+          {/* Premium Segmented Switcher for logged in users */}
           {isAuthenticated && (
+            <div style={styles.tabSwitcher} className="glass-panel">
+              <button
+                onClick={() => setHomeFeedTab("news")}
+                style={{
+                  ...styles.tabBtn,
+                  background: homeFeedTab === "news" ? "var(--gold-gradient)" : "transparent",
+                  color: homeFeedTab === "news" ? "#000" : "var(--text-secondary)",
+                  fontWeight: homeFeedTab === "news" ? "700" : "400"
+                }}
+              >
+                {language === 'ar' ? "الأخبار المباشرة" : "Live News"}
+              </button>
+              <button
+                onClick={() => setHomeFeedTab("reflections")}
+                style={{
+                  ...styles.tabBtn,
+                  background: homeFeedTab === "reflections" ? "var(--gold-gradient)" : "transparent",
+                  color: homeFeedTab === "reflections" ? "#000" : "var(--text-secondary)",
+                  fontWeight: homeFeedTab === "reflections" ? "700" : "400"
+                }}
+              >
+                {language === 'ar' ? "خواطر المجتمع" : "Community Reflections"}
+              </button>
+            </div>
+          )}
+
+          {/* Facebook-style Publisher Box - only shown on reflections tab */}
+          {isAuthenticated && homeFeedTab === "reflections" && (
             <div style={styles.publishBox} className="glass-panel">
               <h4 style={styles.publishTitle}>{t('commCreatePost')}</h4>
               <form onSubmit={handlePublishReflection} style={styles.publishForm}>
@@ -467,10 +528,40 @@ export default function Home({ setActivePage }) {
             </div>
           )}
 
-          {/* Dynamic Mixed Feed list */}
+          {/* Dynamic Feed list */}
           <div style={styles.feedList}>
-            {feedItems.map((item, idx) => {
-              if (item.type === 'post') {
+            {(!isAuthenticated || homeFeedTab === 'news') ? (
+              // Live News Tab (displays Al Jazeera news list)
+              newsList.map((item, idx) => (
+                <article key={item.id || idx} style={styles.newsCard} className="glass-panel news-card-hover">
+                  <div style={styles.newsBadge}>
+                    <AlertCircle size={12} color="var(--text-gold)" />
+                    <span>{language === 'ar' ? "أخبار العالم الإسلامي" : "Global Muslim News"}</span>
+                  </div>
+
+                  <h3 style={styles.newsCardTitle}>
+                    {language === 'ar' ? item.titleAr : item.title}
+                  </h3>
+
+                  <p style={styles.newsCardText}>
+                    {language === 'ar' ? item.summaryAr : item.summary}
+                  </p>
+
+                  <div style={styles.newsCardFooter}>
+                    <span style={styles.newsSource}>
+                      {language === 'ar' ? item.sourceAr : item.source} • {item.date}
+                    </span>
+                    
+                    <div style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
+                      <span style={styles.newsReactText}>❤️ {item.likes}</span>
+                      <span style={styles.newsReactText}>💬 {item.commentsCount}</span>
+                    </div>
+                  </div>
+                </article>
+              ))
+            ) : (
+              // Community Reflections Tab
+              communityPosts.map((item, idx) => {
                 const userLiked = item.likedBy && item.likedBy.includes(user.email);
                 const isTeacher = mockBots.some(b => b.name === item.author && b.role === "Certified Teacher");
                 const botMatch = mockBots.find(b => b.name === item.author);
@@ -478,12 +569,27 @@ export default function Home({ setActivePage }) {
                 return (
                   <article key={item.id || idx} style={styles.feedCard} className="glass-panel">
                     <header style={styles.feedCardHeader}>
-                      <span style={styles.feedCardAvatar}>{item.avatar}</span>
+                      <span 
+                        style={{ ...styles.feedCardAvatar, cursor: 'pointer' }}
+                        onClick={() => viewUserProfileByName(item.author)}
+                      >
+                        {item.avatar}
+                      </span>
                       <div style={{ flexGrow: 1 }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                          <span style={styles.feedCardAuthor}>{item.author}</span>
+                          <span 
+                            style={{ ...styles.feedCardAuthor, cursor: 'pointer' }}
+                            onClick={() => viewUserProfileByName(item.author)}
+                            className="author-name-hover"
+                          >
+                            {item.author}
+                          </span>
                           {isTeacher && (
-                            <span style={styles.teacherBadge} title={language === 'ar' ? "معلم معتمد" : "Certified Quran & Tajweed Teacher"}>
+                            <span 
+                              style={{ ...styles.teacherBadge, cursor: 'pointer' }}
+                              onClick={() => viewUserProfileByName(item.author)}
+                              title={language === 'ar' ? "معلم معتمد" : "Certified Quran & Tajweed Teacher"}
+                            >
                               🎓 {botMatch?.level || "Teacher"}
                             </span>
                           )}
@@ -525,9 +631,19 @@ export default function Home({ setActivePage }) {
                         <div style={styles.commentsList}>
                           {item.comments && item.comments.map(c => (
                             <div key={c.id} style={styles.commentBubbleRow}>
-                              <span style={styles.commentAvatar}>{c.avatar}</span>
+                              <span 
+                                style={{ ...styles.commentAvatar, cursor: 'pointer' }}
+                                onClick={() => viewUserProfileByName(c.author)}
+                              >
+                                {c.avatar}
+                              </span>
                               <div style={styles.commentTextCard}>
-                                <div style={styles.commentAuthorName}>{c.author}</div>
+                                <div 
+                                  style={{ ...styles.commentAuthorName, cursor: 'pointer' }}
+                                  onClick={() => viewUserProfileByName(c.author)}
+                                >
+                                  {c.author}
+                                </div>
                                 <p style={styles.commentBubbleText}>{c.text}</p>
                               </div>
                             </div>
@@ -562,65 +678,8 @@ export default function Home({ setActivePage }) {
                     )}
                   </article>
                 );
-              } else if (item.type === 'news') {
-                return (
-                  <article key={item.id || idx} style={styles.newsCard} className="glass-panel">
-                    <div style={styles.newsBadge}>
-                      <AlertCircle size={12} color="var(--text-gold)" />
-                      <span>{language === 'ar' ? "أخبار العالم الإسلامي" : "Global Muslim News"}</span>
-                    </div>
-
-                    <h3 style={styles.newsCardTitle}>
-                      {language === 'ar' ? item.titleAr : item.title}
-                    </h3>
-
-                    <p style={styles.newsCardText}>
-                      {language === 'ar' ? item.summaryAr : item.summary}
-                    </p>
-
-                    <div style={styles.newsCardFooter}>
-                      <span style={styles.newsSource}>
-                        {language === 'ar' ? item.sourceAr : item.source} • {item.date}
-                      </span>
-                      
-                      <div style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
-                        <span style={styles.newsReactText}>❤️ {item.likes}</span>
-                        <span style={styles.newsReactText}>💬 {item.commentsCount}</span>
-                      </div>
-                    </div>
-                  </article>
-                );
-              } else if (item.type === 'article') {
-                return (
-                  <article key={item.id || idx} style={styles.articleCard} className="glass-panel" onClick={() => setActivePage('articles')}>
-                    <span style={styles.articleCardCategory}>
-                      {language === 'ar' ? item.categoryAr : item.category}
-                    </span>
-
-                    <h3 style={styles.articleCardTitle} className="gold-gradient-text">
-                      {language === 'ar' ? item.titleAr : item.title}
-                    </h3>
-
-                    <p style={styles.articleCardDesc}>
-                      {language === 'ar' ? item.summaryAr : item.summary}
-                    </p>
-
-                    <div style={styles.articleFooter}>
-                      <div style={styles.articleAuthorRow}>
-                        <span style={styles.articleAvatar}>{item.avatar}</span>
-                        <span style={styles.articleAuthor}>{language === 'ar' ? item.authorAr : item.author}</span>
-                      </div>
-
-                      <div style={styles.articleTimeBadge}>
-                        <span>{item.readTime} {language === 'ar' ? "دقائق" : "min read"}</span>
-                        <ChevronRight size={14} />
-                      </div>
-                    </div>
-                  </article>
-                );
-              }
-              return null;
-            })}
+              })
+            )}
           </div>
         </section>
 
@@ -670,7 +729,7 @@ export default function Home({ setActivePage }) {
                   <div style={styles.amazonFooter}>
                     <span style={styles.amazonPrice}>{p.price}</span>
                     <a 
-                      href={p.link} 
+                      href={getAffiliateLink(p.link)} 
                       target="_blank" 
                       rel="noopener noreferrer" 
                       className="btn-primary" 
@@ -1293,5 +1352,27 @@ const styles = {
     padding: '4px 10px',
     fontSize: '0.7rem',
     borderRadius: '6px',
+  },
+  tabSwitcher: {
+    display: 'flex',
+    gap: '8px',
+    padding: '6px',
+    borderRadius: '12px',
+    background: 'rgba(255, 255, 255, 0.02)',
+    border: '1px solid var(--border-glass)',
+    marginBottom: '16px',
+  },
+  tabBtn: {
+    flex: 1,
+    border: 'none',
+    borderRadius: '8px',
+    padding: '10px 16px',
+    fontSize: '0.85rem',
+    cursor: 'pointer',
+    transition: 'all 0.25s ease',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '8px',
   }
 };

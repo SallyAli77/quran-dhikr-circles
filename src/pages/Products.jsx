@@ -4,7 +4,7 @@ import { BookOpen, Star, Search, Filter, ShoppingBag, ArrowRight, ExternalLink }
 import confetti from 'canvas-confetti';
 
 export default function Products() {
-  const { language, t } = useApp();
+  const { language, t, getAffiliateLink } = useApp();
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [productSearch, setProductSearch] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -292,7 +292,7 @@ export default function Products() {
                   {language === 'ar' ? "إغلاق" : "Close"}
                 </button>
                 <a 
-                  href={selectedProduct.link} 
+                  href={getAffiliateLink(selectedProduct.link)} 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="btn-primary" 

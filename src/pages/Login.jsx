@@ -4,7 +4,7 @@ import {
   ShieldAlert, LogIn, UserPlus, Key, Award, Bookmark, Edit2, Check, 
   ArrowRight, User, Mic, Star, Heart, UserMinus, Volume2, Loader, 
   Clock, Plus, Shield, Settings, AlertCircle, BookOpen, Trash2, Send, CheckCircle2, Play,
-  Eye, EyeOff
+  Eye, EyeOff, ShoppingBag
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -251,7 +251,10 @@ export default function Login({ setActivePage }) {
     setBotSettings,
     articlesList,
     adminAddArticle,
-    updateUserRole
+    updateUserRole,
+    amazonAffiliateTag,
+    setAmazonAffiliateTag,
+    viewUserProfileByName
   } = useApp();
 
   // Auth modes
@@ -855,7 +858,10 @@ export default function Login({ setActivePage }) {
             
             <div style={styles.profileInfoRow}>
               {/* Profile Avatar */}
-              <div style={styles.avatarCircle}>
+              <div 
+                style={{ ...styles.avatarCircle, cursor: 'pointer' }}
+                onClick={() => viewUserProfileByName(user.name)}
+              >
                 <span style={styles.avatarBig}>{user.avatar}</span>
               </div>
 
@@ -892,7 +898,11 @@ export default function Login({ setActivePage }) {
                   </div>
                 ) : (
                   <>
-                    <h2 style={styles.userName} className="gold-gradient-text">
+                    <h2 
+                      style={{ ...styles.userName, cursor: 'pointer' }} 
+                      className="gold-gradient-text"
+                      onClick={() => viewUserProfileByName(user.name)}
+                    >
                       {t('authWelcome')}, {user.name}
                     </h2>
                     
@@ -1103,16 +1113,64 @@ export default function Login({ setActivePage }) {
           {/* ================= TAB 3: FRIEND REQUEST SYSTEM UI ================= */}
           {activeTab === "friend_requests" && (
             <div style={styles.requestsPanel} className="glass-panel fade-in">
+              <h3 style={styles.sectionTitle}>
+                {language === 'ar' ? "قائمة أصدقائي" : "My Friends"}
+              </h3>
+              
+              <div style={{ ...styles.requestsList, marginBottom: '24px' }}>
+                {friendsList.length > 0 ? (
+                  friendsList.map(name => {
+                    const botMatch = mockBots.find(b => b.name === name);
+                    const avatar = botMatch ? botMatch.avatar : "🧔";
+                    const role = botMatch ? botMatch.role : "Premium Member";
+
+                    return (
+                      <div key={name} style={styles.reqRow} className="glass-panel">
+                        <div 
+                          style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', flexGrow: 1 }}
+                          onClick={() => viewUserProfileByName(name)}
+                        >
+                          <span style={styles.reqAvatar}>{avatar}</span>
+                          <div>
+                            <div style={styles.reqName}>{name}</div>
+                            <span style={styles.reqRole}>{role}</span>
+                          </div>
+                        </div>
+                        
+                        <button 
+                          onClick={() => removeFriend(name)} 
+                          className="btn-secondary" 
+                          style={{ padding: '6px 14px', fontSize: '0.78rem', color: '#ff4d4d', borderColor: 'rgba(255, 77, 77, 0.2)' }}
+                        >
+                          {language === 'ar' ? "إزالة" : "Remove"}
+                        </button>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <div style={styles.emptyNotice}>
+                    <span>{language === 'ar' ? "لا يوجد أصدقاء مضافين حالياً." : "No friends added yet."}</span>
+                  </div>
+                )}
+              </div>
+
+              <div style={{ height: '1px', background: 'rgba(255,255,255,0.05)', margin: '24px 0' }}></div>
+
               <h3 style={styles.sectionTitle}>{language === 'ar' ? "طلبات الصداقة المعلقة" : "Pending Friend Requests"}</h3>
               
               <div style={styles.requestsList}>
                 {friendRequestsReceived.length > 0 ? (
                   friendRequestsReceived.map(req => (
                     <div key={req.email} style={styles.reqRow} className="glass-panel">
-                      <span style={styles.reqAvatar}>{req.avatar || "🧕"}</span>
-                      <div style={{ flexGrow: 1 }}>
-                        <div style={styles.reqName}>{req.name}</div>
-                        <span style={styles.reqRole}>{req.role || "Premium Member"}</span>
+                      <div 
+                        style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', flexGrow: 1 }}
+                        onClick={() => viewUserProfileByName(req.name)}
+                      >
+                        <span style={styles.reqAvatar}>{req.avatar || "🧕"}</span>
+                        <div>
+                          <div style={styles.reqName}>{req.name}</div>
+                          <span style={styles.reqRole}>{req.role || "Premium Member"}</span>
+                        </div>
                       </div>
                       
                       <div style={styles.reqActions}>
@@ -1427,6 +1485,49 @@ export default function Login({ setActivePage }) {
                     }}
                   >
                     User
+                  </button>
+                </div>
+              </div>
+
+              {/* Amazon Affiliate Tag Input Card */}
+              <div style={{ ...styles.botSettingsCard, padding: '20px', borderRadius: '16px', marginBottom: '20px' }} className="glass-panel">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+                  <ShoppingBag size={18} color="var(--text-gold)" />
+                  <h4 style={{ ...styles.adminCardTitle, margin: 0 }}>
+                    {language === 'ar' ? "إعدادات الربط للتسويق بالعمولة (Amazon Affiliate)" : "Amazon Affiliate Configuration"}
+                  </h4>
+                </div>
+                <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: '1.4', marginBottom: '14px' }}>
+                  {language === 'ar' 
+                    ? "أدخل معرّف التتبع الخاص بك لتسويق أمازون بالعمولة (Affiliate Tag). سيتم إلحاق هذا المعرف تلقائياً بكافة روابط المنتجات المعروضة في المتجر."
+                    : "Enter your Amazon Affiliate tracking ID/tag. This ID will automatically be appended as a URL parameter to all product purchase links on the site."
+                  }
+                </p>
+                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                  <input
+                    type="text"
+                    value={amazonAffiliateTag}
+                    onChange={(e) => setAmazonAffiliateTag(e.target.value)}
+                    placeholder="e.g. sallyali77-20"
+                    style={{
+                      flexGrow: 1,
+                      background: 'rgba(0,0,0,0.2)',
+                      border: '1px solid var(--border-gold)',
+                      borderRadius: '8px',
+                      padding: '10px 14px',
+                      color: 'var(--text-primary)',
+                      fontSize: '0.85rem',
+                      outline: 'none',
+                    }}
+                  />
+                  <button 
+                    onClick={() => {
+                      confetti({ particleCount: 20, colors: ['#d4af37', '#ffffff'] });
+                    }} 
+                    className="btn-primary"
+                    style={{ padding: '10px 18px', fontSize: '0.82rem' }}
+                  >
+                    {language === 'ar' ? "حفظ" : "Save Tag"}
                   </button>
                 </div>
               </div>

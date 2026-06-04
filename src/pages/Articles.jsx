@@ -78,174 +78,85 @@ export default function Articles() {
             <p style={styles.subtitle}>{t('artSubtitle')} ({language === 'en' ? "Explore all 120 articles" : "تصفح كافة المقالات الـ 120 كاملة"})</p>
           </div>
 
-          {/* Main Tab Switcher */}
-          <div style={styles.mainTabsContainer} className="glass-panel">
-            <button
-              onClick={() => setActiveTab("articles")}
-              style={{
-                ...styles.mainTabBtn,
-                background: activeTab === "articles" ? 'var(--gold-gradient)' : 'transparent',
-                color: activeTab === "articles" ? '#000' : 'var(--text-primary)',
-                boxShadow: activeTab === "articles" ? '0 4px 15px rgba(212, 175, 55, 0.2)' : 'none',
-                fontWeight: activeTab === "articles" ? '600' : '400'
-              }}
-            >
-              <FileText size={16} />
-              <span>{language === 'en' ? "Articles Catalog" : "مكتبة المقالات"}</span>
-            </button>
-            <button
-              onClick={() => setActiveTab("news")}
-              style={{
-                ...styles.mainTabBtn,
-                background: activeTab === "news" ? 'var(--gold-gradient)' : 'transparent',
-                color: activeTab === "news" ? '#000' : 'var(--text-primary)',
-                boxShadow: activeTab === "news" ? '0 4px 15px rgba(212, 175, 55, 0.2)' : 'none',
-                fontWeight: activeTab === "news" ? '600' : '400'
-              }}
-            >
-              <AlertCircle size={16} />
-              <span>{language === 'en' ? "Global Muslim News" : "أخبار العالم الإسلامي"}</span>
-            </button>
+          {/* Category Tabs */}
+          <div style={styles.categoriesRow} className="glass-panel">
+            {categories.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                style={{
+                  ...styles.catTab,
+                  background: activeCategory === cat ? 'var(--gold-gradient)' : 'transparent',
+                  color: activeCategory === cat ? '#000' : 'var(--text-secondary)',
+                  fontWeight: activeCategory === cat ? '600' : '400'
+                }}
+              >
+                {language === 'en' ? cat : categoriesAr[cat]}
+              </button>
+            ))}
           </div>
 
-          {activeTab === 'articles' ? (
-            <>
-              {/* Category Tabs */}
-              <div style={styles.categoriesRow} className="glass-panel">
-                {categories.map(cat => (
-                  <button
-                    key={cat}
-                    onClick={() => setActiveCategory(cat)}
-                    style={{
-                      ...styles.catTab,
-                      background: activeCategory === cat ? 'var(--gold-gradient)' : 'transparent',
-                      color: activeCategory === cat ? '#000' : 'var(--text-secondary)',
-                      fontWeight: activeCategory === cat ? '600' : '400'
-                    }}
+          {/* Articles Feed */}
+          <div style={styles.articlesFeed} className="grid-3">
+            {filteredArticles.length > 0 ? (
+              filteredArticles.map(a => {
+                const bookmarked = isArticleBookmarked(a.id);
+                return (
+                  <div 
+                    key={a.id} 
+                    className="glass-panel article-card-hover" 
+                    style={styles.articleCard}
+                    onClick={() => handleArticleOpen(a)}
                   >
-                    {language === 'en' ? cat : categoriesAr[cat]}
-                  </button>
-                ))}
-              </div>
+                    <span style={styles.cardCategory}>
+                      {language === 'en' ? a.category : a.categoryAr}
+                    </span>
 
-              {/* Articles Feed */}
-              <div style={styles.articlesFeed} className="grid-3">
-                {filteredArticles.length > 0 ? (
-                  filteredArticles.map(a => {
-                    const bookmarked = isArticleBookmarked(a.id);
-                    return (
-                      <div 
-                        key={a.id} 
-                        className="glass-panel article-card-hover" 
-                        style={styles.articleCard}
-                        onClick={() => handleArticleOpen(a)}
-                      >
-                        <span style={styles.cardCategory}>
-                          {language === 'en' ? a.category : a.categoryAr}
-                        </span>
-
-                        <h3 style={styles.cardTitle}>
-                          {language === 'en' ? a.title : a.titleAr}
-                        </h3>
-
-                        <p style={styles.cardSummary}>
-                          {language === 'en' ? a.summary : a.summaryAr}
-                        </p>
-
-                        <div style={styles.cardDivider}></div>
-
-                        <div style={styles.cardFooter}>
-                          <div style={styles.authorBadge}>
-                            <span style={styles.authorAvatar}>{a.avatar}</span>
-                            <div style={styles.authorDetails}>
-                              <span style={styles.authorName}>{language === 'en' ? a.author : a.authorAr}</span>
-                              <span style={styles.pubDate}>{a.date}</span>
-                            </div>
-                          </div>
-
-                          <div style={styles.actionPanel}>
-                            <span style={styles.readTime}>
-                              <Clock size={12} />
-                              <span>{a.readTime} {t('artReadTime')}</span>
-                            </span>
-                            
-                            <button 
-                              onClick={(e) => handleBookmarkToggle(e, a)} 
-                              style={{
-                                ...styles.bookmarkBtn,
-                                color: bookmarked ? 'var(--text-gold)' : 'var(--text-secondary)'
-                              }}
-                            >
-                              {bookmarked ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })
-                ) : (
-                  <div style={styles.noResults} className="glass-panel">
-                    <span>{t('searchNoResults')}</span>
-                  </div>
-                )}
-              </div>
-            </>
-          ) : (
-            /* News Feed View */
-            <div style={styles.newsFeed} className="grid-2">
-              {newsList && newsList.length > 0 ? (
-                newsList.map((n, idx) => (
-                  <div key={n.id || idx} style={styles.newsCard} className="glass-panel news-card-hover">
-                    <div style={styles.newsCardHeader}>
-                      <div style={styles.newsBadge}>
-                        <span>{n.image || "📰"}</span>
-                        <span>{language === 'en' ? "Global Muslim News" : "أخبار المسلمين"}</span>
-                      </div>
-                      {n.breaking && (
-                        <span style={styles.breakingBadge}>
-                          {language === 'en' ? "Breaking" : "عاجل"}
-                        </span>
-                      )}
-                    </div>
-
-                    <h3 style={styles.newsCardTitle}>
-                      {language === 'en' ? n.title : n.titleAr}
+                    <h3 style={styles.cardTitle}>
+                      {language === 'en' ? a.title : a.titleAr}
                     </h3>
 
-                    <p style={styles.newsCardText}>
-                      {language === 'en' ? n.summary : n.summaryAr}
+                    <p style={styles.cardSummary}>
+                      {language === 'en' ? a.summary : a.summaryAr}
                     </p>
 
-                    <div style={styles.newsCardFooter}>
-                      <span style={styles.newsSource}>
-                        {language === 'en' ? n.source : n.sourceAr} • {n.date}
-                      </span>
+                    <div style={styles.cardDivider}></div>
 
-                      <div style={styles.newsActions}>
-                        <span style={styles.newsReactText}>❤️ {n.likes}</span>
-                        <span style={styles.newsReactText}>💬 {n.commentsCount}</span>
-                        {n.link && (
-                          <a 
-                            href={n.link} 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            style={styles.newsLinkIcon}
-                            title={language === 'en' ? "Read Full Story" : "قراءة الخبر بالكامل"}
-                          >
-                            <ExternalLink size={14} color="var(--text-gold)" />
-                          </a>
-                        )}
+                    <div style={styles.cardFooter}>
+                      <div style={styles.authorBadge}>
+                        <span style={styles.authorAvatar}>{a.avatar}</span>
+                        <div style={styles.authorDetails}>
+                          <span style={styles.authorName}>{language === 'en' ? a.author : a.authorAr}</span>
+                          <span style={styles.pubDate}>{a.date}</span>
+                        </div>
+                      </div>
+
+                      <div style={styles.actionPanel}>
+                        <span style={styles.readTime}>
+                          <Clock size={12} />
+                          <span>{a.readTime} {t('artReadTime')}</span>
+                        </span>
+                        
+                        <button 
+                          onClick={(e) => handleBookmarkToggle(e, a)} 
+                          style={{
+                            ...styles.bookmarkBtn,
+                            color: bookmarked ? 'var(--text-gold)' : 'var(--text-secondary)'
+                          }}
+                        >
+                          {bookmarked ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}
+                        </button>
                       </div>
                     </div>
                   </div>
-                ))
-              ) : (
-                <div style={styles.noResults} className="glass-panel">
-                  <span>{language === 'en' ? "No news items available at the moment." : "لا توجد أخبار متاحة حالياً."}</span>
-                </div>
-              )}
-            </div>
-          )}
+                );
+              })
+            ) : (
+              <div style={styles.noResults} className="glass-panel">
+                <span>{t('searchNoResults')}</span>
+              </div>
+            )}
+          </div>
         </>
       ) : (
         // Detailed Full Article View

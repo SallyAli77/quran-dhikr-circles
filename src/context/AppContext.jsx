@@ -961,10 +961,10 @@ export const globalMuslimNews = [
 // Localization Dictionary
 const translations = {
   en: {
-    navHome: "Home Feed",
+    navHome: "Home",
     navQuran: "Quran & Tasmee'",
     navPrayer: "Prayer Times",
-    navArticles: "Articles & News",
+    navArticles: "Articles",
     navCommunity: "Live Circles",
     navContact: "Help Desk",
     navProducts: "Bookstore",
@@ -1063,10 +1063,10 @@ const translations = {
     searchNoResults: "No items matched your search query."
   },
   ar: {
-    navHome: "تغذية الأخبار",
+    navHome: "الرئيسية",
     navQuran: "القرآن والتسميع",
     navPrayer: "مواقيت الصلاة",
-    navArticles: "المقالات والأخبار",
+    navArticles: "المقالات",
     navCommunity: "الحلقات المباشرة",
     navContact: "الدعم الفني",
     navProducts: "المتجر الإسلامي",
@@ -1248,8 +1248,129 @@ const fallbackNewsList = [
     commentsCount: 12
   }
 ];
+export const quranSurahs = [
+  { number: 1, name: "الفاتحة", englishName: "Al-Fatiha" },
+  { number: 2, name: "البقرة", englishName: "Al-Baqarah" },
+  { number: 3, name: "آل عمران", englishName: "Ali 'Imran" },
+  { number: 4, name: "النساء", englishName: "An-Nisa" },
+  { number: 5, name: "المائدة", englishName: "Al-Ma'idah" },
+  { number: 6, name: "الأنعام", englishName: "Al-An'am" },
+  { number: 7, name: "الأعراف", englishName: "Al-A'raf" },
+  { number: 8, name: "الأنفال", englishName: "Al-Anfal" },
+  { number: 9, name: "التوبة", englishName: "At-Tawbah" },
+  { number: 10, name: "يونس", englishName: "Yunus" },
+  { number: 11, name: "هود", englishName: "Hud" },
+  { number: 12, name: "يوسف", englishName: "Yusuf" },
+  { number: 13, name: "الرعد", englishName: "Ar-Ra'd" },
+  { number: 14, name: "إبراهيم", englishName: "Ibrahim" },
+  { number: 15, name: "الحجر", englishName: "Al-Hijr" },
+  { number: 16, name: "النحل", englishName: "An-Nahl" },
+  { number: 17, name: "الإسراء", englishName: "Al-Isra" },
+  { number: 18, name: "الكهف", englishName: "Al-Kahf" },
+  { number: 19, name: "مريم", englishName: "Maryam" },
+  { number: 20, name: "طه", englishName: "Taha" },
+  { number: 21, name: "الأنبياء", englishName: "Al-Anbiya" },
+  { number: 22, name: "الحج", englishName: "Al-Hajj" },
+  { number: 23, name: "المؤمنون", englishName: "Al-Mu'minun" },
+  { number: 24, name: "النور", englishName: "An-Nur" },
+  { number: 25, name: "الفرقان", englishName: "Al-Furqan" },
+  { number: 26, name: "الشعراء", englishName: "Ash-Shu'ara" },
+  { number: 27, name: "النمل", englishName: "An-Naml" },
+  { number: 28, name: "القصص", englishName: "Al-Qasas" },
+  { number: 29, name: "العنكبوت", englishName: "Al-Ankabut" },
+  { number: 30, name: "الروم", englishName: "Ar-Rum" },
+  { number: 31, name: "لقمان", englishName: "Luqman" },
+  { number: 32, name: "السجدة", englishName: "As-Sajdah" },
+  { number: 33, name: "الأحزاب", englishName: "Al-Ahzab" },
+  { number: 34, name: "سبأ", englishName: "Saba" },
+  { number: 35, name: "فاطر", englishName: "Fatir" },
+  { number: 36, name: "يس", englishName: "Ya-Sin" },
+  { number: 37, name: "الصافات", englishName: "As-Saffat" },
+  { number: 38, name: "ص", englishName: "Sad" },
+  { number: 39, name: "الزمر", englishName: "Az-Zumar" },
+  { number: 40, name: "غافر", englishName: "Ghafir" },
+  { number: 41, name: "فصلت", englishName: "Fussilat" },
+  { number: 42, name: "الشورى", englishName: "Ash-Shura" },
+  { number: 43, name: "الزخرف", englishName: "Az-Zukhruf" },
+  { number: 44, name: "الدخان", englishName: "Ad-Dukhan" },
+  { number: 45, name: "الجاثية", englishName: "Al-Jathiyah" },
+  { number: 46, name: "الأحقاف", englishName: "Al-Ahqaf" },
+  { number: 47, name: "محمد", englishName: "Muhammad" },
+  { number: 48, name: "الفتح", englishName: "Al-Fath" },
+  { number: 49, name: "الحجرات", englishName: "Al-Hujurat" },
+  { number: 50, name: "ق", englishName: "Qaf" },
+  { number: 51, name: "الذاريات", englishName: "Adh-Dhariyat" },
+  { number: 52, name: "الطور", englishName: "At-Tur" },
+  { number: 53, name: "النجم", englishName: "An-Najm" },
+  { number: 54, name: "القمر", englishName: "Al-Qamar" },
+  { number: 55, name: "الرحمن", englishName: "Ar-Rahman" },
+  { number: 56, name: "الواقعة", englishName: "Al-Waqiah" },
+  { number: 57, name: "الحديد", englishName: "Al-Hadid" },
+  { number: 58, name: "المجادلة", englishName: "Al-Mujadilah" },
+  { number: 59, name: "الحشر", englishName: "Al-Hashr" },
+  { number: 60, name: "الممتحنة", englishName: "Al-Mumtahanah" },
+  { number: 61, name: "الصف", englishName: "As-Saff" },
+  { number: 62, name: "الجمعة", englishName: "Al-Jumu'ah" },
+  { number: 63, name: "المنافقون", englishName: "Al-Munafiqun" },
+  { number: 64, name: "التغابن", englishName: "At-Taghabun" },
+  { number: 65, name: "الطلاق", englishName: "At-Talaq" },
+  { number: 66, name: "التحريم", englishName: "At-Tahrim" },
+  { number: 67, name: "الملك", englishName: "Al-Mulk" },
+  { number: 68, name: "القلم", englishName: "Al-Qalam" },
+  { number: 70, name: "المعارج", englishName: "Al-Ma'arij" },
+  { number: 71, name: "نوح", englishName: "Nuh" },
+  { number: 72, name: "الجن", englishName: "Al-Jinn" },
+  { number: 73, name: "المزمل", englishName: "Al-Muzzammil" },
+  { number: 74, name: "المدثر", englishName: "Al-Muddaththir" },
+  { number: 75, name: "القيامة", englishName: "Al-Qiyamah" },
+  { number: 76, name: "الإنسان", englishName: "Al-Insan" },
+  { number: 77, name: "المرسلات", englishName: "Al-Mursalat" },
+  { number: 78, name: "النبأ", englishName: "An-Naba" },
+  { number: 79, name: "النازعات", englishName: "An-Naziat" },
+  { number: 80, name: "عبس", englishName: "Abasa" },
+  { number: 81, name: "التكوير", englishName: "At-Takwir" },
+  { number: 82, name: "الانفطار", englishName: "Al-Infitar" },
+  { number: 83, name: "المطففين", englishName: "Al-Mutaffifin" },
+  { number: 84, name: "الانشقاق", englishName: "Al-Inshiqaq" },
+  { number: 85, name: "البروج", englishName: "Al-Buruj" },
+  { number: 86, name: "الطارق", englishName: "At-Tariq" },
+  { number: 87, name: "الأعلى", englishName: "Al-A'la" },
+  { number: 88, name: "الغاشية", englishName: "Al-Ghashiyah" },
+  { number: 89, name: "الفجر", englishName: "Al-Fajr" },
+  { number: 90, name: "البلد", englishName: "Al-Balad" },
+  { number: 91, name: "الشمس", englishName: "Ash-Shams" },
+  { number: 92, name: "الليل", englishName: "Al-Layl" },
+  { number: 93, name: "الضحى", englishName: "Ad-Duha" },
+  { number: 94, name: "الشرح", englishName: "Ash-Sharh" },
+  { number: 95, name: "التين", englishName: "At-Tin" },
+  { number: 96, name: "العلق", englishName: "Al-Alaq" },
+  { number: 97, name: "القدر", englishName: "Al-Qadr" },
+  { number: 98, name: "البينة", englishName: "Al-Bayyinah" },
+  { number: 99, name: "الزلزلة", englishName: "Az-Zalzalah" },
+  { number: 100, name: "العاديات", englishName: "Al-Adiyat" },
+  { number: 101, name: "القارعة", englishName: "Al-Qariah" },
+  { number: 102, name: "التكاثر", englishName: "At-Takathur" },
+  { number: 103, name: "العصر", englishName: "Al-Asr" },
+  { number: 104, name: "الهمزة", englishName: "Al-Humazah" },
+  { number: 105, name: "الفيل", englishName: "Al-Fil" },
+  { number: 106, name: "قريش", englishName: "Quraysh" },
+  { number: 107, name: "الماعون", englishName: "Al-Ma'un" },
+  { number: 108, name: "الكوثر", englishName: "Al-Kauthar" },
+  { number: 109, name: "الكافرون", englishName: "Al-Kafirun" },
+  { number: 110, name: "النصر", englishName: "An-Nasr" },
+  { number: 111, name: "المسد", englishName: "Al-Masad" },
+  { number: 112, name: "الإخلاص", englishName: "Al-Ikhlas" },
+  { number: 113, name: "الفلق", englishName: "Al-Falq" },
+  { number: 114, name: "الناس", englishName: "An-Nas" }
+];
 
 export const AppProvider = ({ children }) => {
+  // Global customizable states
+  const [selectedUserProfile, setSelectedUserProfile] = useState(null);
+  const [amazonAffiliateTag, setAmazonAffiliateTag] = useState(() => {
+    return localStorage.getItem('arabicmuslim_affiliate_tag') || 'sallyali77-20';
+  });
+
   // Localization state
   const [language, setLanguage] = useState(() => {
     const saved = localStorage.getItem('arabicmuslim_lang');
@@ -1799,6 +1920,68 @@ export const AppProvider = ({ children }) => {
     });
   };
 
+  const viewUserProfileByName = (name) => {
+    if (!name) return;
+    let profile = mockBots.find(b => b.name === name);
+    if (!profile) {
+      if (name === user.name) {
+        profile = {
+          name: user.name,
+          avatar: user.avatar,
+          email: user.email,
+          role: user.role,
+          memberSince: user.memberSince || "May 2026",
+          level: user.teacherLevel || ""
+        };
+      } else {
+        profile = {
+          name: name,
+          avatar: "🧔",
+          email: `${name.toLowerCase().replace(/\s+/g, '')}@arabicmuslim.com`,
+          role: "Worshipper",
+          memberSince: "June 2026"
+        };
+      }
+    }
+    
+    const extraDetails = {
+      ...profile,
+      bioAr: profile.role === "Certified Teacher" 
+        ? `معلم معتمد وحافظ لكتاب الله الكريم. أقوم بمراجعة وتصحيح تلاوات الطلاب الصوتية ومساعدتهم على إتقان التجويد ومخارج الحروف الصحيحة.`
+        : `عضو نشط ومجتهد في مجتمع حلقات الذكر. أسعى لتدبر القرآن الكريم والتعاون مع الإخوة والأخوات في حلقات المراجعة والحفظ اليومية.`,
+      bioEn: profile.role === "Certified Teacher"
+        ? `Certified Quran teacher. Dedicated to reviewing student recitations, helping them master Tajweed rules, correct articulation points, and achieve high proficiency.`
+        : `Active member in the community. Committed to reciting and understanding the Holy Quran, and working together with fellow worshippers on daily goals.`,
+      badges: profile.role === "Certified Teacher" 
+        ? ["dhikr_pioneer", "knowledge_seeker", "teacher_qualified"]
+        : ["dhikr_pioneer", "tasbih_master"],
+      circlesAr: profile.role === "Certified Teacher"
+        ? ["حلقة الفجر لتصحيح التلاوة", "مراجعة جزء عمّ ورش/حفص"]
+        : ["حلقة سورة الكهف الأسبوعية"],
+      circlesEn: profile.role === "Certified Teacher"
+        ? ["Fajr Tilawah Correction Circle", "Juz' Amma Tajweed Review"]
+        : ["Weekly Surah Al-Kahf Circle"]
+    };
+    
+    setSelectedUserProfile(extraDetails);
+  };
+
+  const getAffiliateLink = (baseLink) => {
+    if (!baseLink) return "";
+    try {
+      const url = new URL(baseLink);
+      url.searchParams.set('tag', amazonAffiliateTag);
+      return url.toString();
+    } catch (e) {
+      const separator = baseLink.includes('?') ? '&' : '?';
+      return `${baseLink}${separator}tag=${amazonAffiliateTag}`;
+    }
+  };
+
+  useEffect(() => {
+    localStorage.setItem('arabicmuslim_affiliate_tag', amazonAffiliateTag);
+  }, [amazonAffiliateTag]);
+
   // Sync state changes with localStorage
   useEffect(() => {
     localStorage.setItem('arabicmuslim_lang', language);
@@ -2186,6 +2369,12 @@ export const AppProvider = ({ children }) => {
       triggerCreateCircleModal,
       setTriggerCreateCircleModal,
       newsList,
+      selectedUserProfile,
+      setSelectedUserProfile,
+      viewUserProfileByName,
+      amazonAffiliateTag,
+      setAmazonAffiliateTag,
+      getAffiliateLink,
       t
     }}>
       {children}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useApp, mockBots } from '../context/AppContext';
+import { useApp, mockBots, quranSurahs } from '../context/AppContext';
 import { 
   Users, Sparkles, UserPlus, UserMinus, Crown, Play, Square, Loader, 
   Mic, Heart, RefreshCw, Send, Settings, Book, Compass, Award, 
@@ -25,6 +25,7 @@ export default function Community() {
     botSettings,
     triggerCreateCircleModal,
     setTriggerCreateCircleModal,
+    viewUserProfileByName,
     t
   } = useApp();
 
@@ -398,10 +399,11 @@ export default function Community() {
                   style={styles.filterSelect}
                 >
                   <option value="all">{language === 'ar' ? "كافة السور" : "All Surahs"}</option>
-                  <option value="الفاتحة">الفاتحة</option>
-                  <option value="الملك">الملك</option>
-                  <option value="يس">يس</option>
-                  <option value="الكهف">الكهف</option>
+                  {quranSurahs.map(surah => (
+                    <option key={surah.number} value={language === 'ar' ? surah.name : surah.englishName}>
+                      {language === 'ar' ? `${surah.number}. ${surah.name}` : `${surah.number}. ${surah.englishName}`}
+                    </option>
+                  ))}
                 </select>
               </div>
             )}
@@ -503,9 +505,14 @@ export default function Community() {
                             style={{
                               ...styles.stackAvatarCircle,
                               zIndex: 10 - idx,
-                              marginLeft: idx === 0 ? 0 : '-6px'
+                              marginLeft: idx === 0 ? 0 : '-6px',
+                              cursor: 'pointer'
                             }}
                             title={member.name}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              viewUserProfileByName(member.name);
+                            }}
                           >
                             {member.avatar || "🧕"}
                           </span>
@@ -741,8 +748,10 @@ export default function Community() {
                           style={{
                             ...styles.worshipperItem,
                             background: isMemberTurn ? 'rgba(212,175,55,0.06)' : 'rgba(255,255,255,0.02)',
-                            borderColor: isMemberTurn ? 'var(--border-gold-hover)' : 'var(--border-glass)'
+                            borderColor: isMemberTurn ? 'var(--border-gold-hover)' : 'var(--border-glass)',
+                            cursor: 'pointer'
                           }}
+                          onClick={() => viewUserProfileByName(member.name)}
                         >
                           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                             <span style={styles.worshipperAvatar}>{member.avatar || "🧕"}</span>
