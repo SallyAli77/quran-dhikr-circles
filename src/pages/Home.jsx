@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useApp, mockBots, globalMuslimNews } from '../context/AppContext';
+import { useApp, mockBots } from '../context/AppContext';
 import { 
   BookOpen, Compass, Users, FileText, ShoppingBag, Star, ArrowRight, Award, 
   Flame, Heart, MessageCircle, Send, CheckCircle2, ChevronRight, Share2, AlertCircle 
@@ -28,7 +28,8 @@ export default function Home({ setActivePage }) {
     sendFriendRequest,
     friendRequestsSent,
     setQuranLaunchMode,
-    setTriggerCreateCircleModal
+    setTriggerCreateCircleModal,
+    newsList
   } = useApp();
 
   // Social feed states
@@ -152,7 +153,7 @@ export default function Home({ setActivePage }) {
   // Combine feed: Community Posts + Global Muslim News + Select Premium Articles
   const feedItems = [
     ...communityPosts.map(p => ({ ...p, type: 'post' })),
-    ...globalMuslimNews.map(n => ({ ...n, type: 'news' })),
+    ...newsList.map(n => ({ ...n, type: 'news' })),
     ...articlesList.slice(0, 3).map(a => ({ ...a, type: 'article' }))
   ].sort((a, b) => {
     // Keep seed/new posts near top, alternate cleanly

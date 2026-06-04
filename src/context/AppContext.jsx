@@ -159,74 +159,543 @@ const baseArticles = [
       "1. The Companions of the Cave: This story represents the trial of faith (Deen) and how to protect it during persecution.",
       "2. The Owner of the Two Gardens: This story represents the trial of wealth (Mal) and the danger of arrogance and materialism.",
       "3. Musa and Al-Khidr: This story represents the trial of knowledge ('Ilm) and the importance of humility before divine wisdom.",
-      "4. Dhul-Qarnayn: This story represents the trial of power (Sultan) and how justice and faith must guide authority.",
-      "Each of these beautiful stories provides a pristine faith antidote, showing that true security lies only in trust in Allah's decree.",
-      "When you read this Surah every Friday, do not simply rush through the words or focus only on finishing the pages quickly.",
-      "Take moments to pause, contemplate the transitions between stories, and let the profound serenity wash over your heart.",
-      "Surah Al-Kahf serves as a weekly compass, realigning our priorities and shielding us from the trials of the modern world.",
-      "It reminds us that the glittering ornaments of this earth are temporary tests, and that our eternal home is in the hereafter.",
-      "By understanding these four trials, we build strong psychological and spiritual immunity against the ultimate deception of Dajjal.",
-      "The Prophet (peace be upon him) instructed us to memorize the first ten verses of this Surah as a protection from fitnah.",
-      "Dedicating time to study the Tafsir of Surah Al-Kahf transforms a simple routine reading into an active, life-changing contemplation.",
-      "Encourage your family members to gather on Friday to read it together, discuss its meanings, and reflect on its lessons.",
-      "Let the light of this Surah fill your home with peace, mutual love, barakah, and continuous spiritual tranquility.",
-      "Every Friday is a fresh opportunity to renew your connection to the Quran, wash away weekly worries, and seek divine forgiveness.",
-      "May Allah grant us all the deep understanding of His Book, write us among the mindful, and elevate our ranks in Paradise.",
-      "Let us cherish this weekly sunnah, keeping our hearts firmly anchored in faith and our homes filled with light.",
+      "4. Dhul-Qarnayn: This story represents the trial of power (Sultan) and how justice, humility, and faith should guide leadership.",
+      "By studying these four distinct stories, a believer learns that the ultimate refuge from all worldly trials is to seek shelter in the cave of faith.",
+      "This cave represents sincere devotion to Allah, seeking companionship with righteous individuals, and always returning to the divine guidance.",
+      "Furthermore, the Surah serves as a powerful shield against the greatest fitnah (trial) that humanity will face: the trial of the Dajjal (Antichrist).",
+      "The Prophet Muhammad (peace be upon him) instructed us to memorize and recite the first and last ten verses of this Surah for protection.",
+      "Each Friday, as we read these verses, we are reminded to check our intentions, evaluate our wealth, humble our knowledge, and use our influence for good.",
+      "It is a weekly spiritual reset that clears away the accumulated rust of worldly attachments from our hearts, bringing pristine serenity.",
+      "To cultivate this Friday habit, schedule a quiet time in the morning or afternoon, sit in a peaceful corner, and read with translation.",
+      "Take time to ponder on the meanings, share the lessons with your family, and apply the ethics of patience and humility in your actions.",
+      "May Allah accept our Friday recitations, illuminate our paths with His divine light, and keep us safe from all internal and external trials.",
+      "May this beautiful Surah be a source of constant comfort, blessing, and spiritual elevation in your life and household.",
       "Assalamu Alaikum wa Rahmatullah wa Barakatuh."
     ].join("\n\n"),
     contentAr: [
-      "قراءة سورة الكهف يوم الجمعة سنة نبوية مباركة تضيء للمؤمن نوراً ساطعاً يضيء قلبه ودربه بين الجمعتين المتتاليتين.",
-      "ولكن لماذا تم اختيار هذه السورة تحديداً لتكون رفيقنا الأسبوعي، وما هي الأسرار العميقة المكنونة في آياتها الجليلة؟",
-      "تحتوي سورة الكهف الشريفة على أربعة محاور قصصية كبرى، تجيب كل منها على فتنة حرجة وابتلاء عظيم يواجه الإنسان في حياته:",
-      "1. قصة أصحاب الكهف: وهي تمثل الفتنة الأولى والشد عسراً وهي فتنة الدين، وكيفية الفرار بالحق وحمايته من الطغيان.",
-      "2. قصة صاحب الجنتين: وهي تجسد فتنة المال والنعم الدنيوية، وخطر الغرور بالملك المادي وجحود فضل المنعم سبحانه.",
-      "3. قصة موسى والخضر عليهما السلام: وهي تمثل فتنة العلم، وتؤكد على ضرورة التواضع والأدب التام أمام حكمة الله البالغة.",
-      "4. قصة ذي القرنين: وهي تمثل فتنة السلطة والقوة والجاه، وكيفية تسخير التمكين الأرضي لنصرة الحق وإرساء العدل بين الناس.",
-      "توفر كل قصة من هذه القصص الرائعة حماية نفسية وإيمانية فائقة من الابتلاءات الدنيوية المقلقة التي تحيط بنا.",
-      "وهي تؤكد للمؤمن أن الأمان الحقيقي والنجاة من الفتن يكمنان في التوكل التام واليقين الراسخ بحكمة الله وتدبيره الحكيم.",
-      "لذلك، عندما تقرأ سورة الكهف كل يوم جمعة، لا تكتف بالمرور السريع على الكلمات أو الانشغال بإنهاء الصفحات فحسب.",
-      "توقف عند مواضع العبر، وتأمل النقلات البديعة بين القصص الأربع، ودع السكينة والوقار الإلهي يغمران زوايا قلبك وبيتك.",
-      "تعتبر سورة الكهف بمثابة بوصلة أسبوعية تعيد ترتيب أولوياتنا، وتذكرنا دوماً بزوال العرض الزائل وبقاء العمل الصالح.",
-      "إن فهم هذه الفتن الأربع يبني لدى المؤمن مناعة إيمانية قوية ضد الفتنة الكبرى في آخر الزمان وهي فتنة الدجال.",
-      "وقد حثنا النبي صلى الله عليه وسلم على حفظ أول عشر آيات من سورة الكهف وجعلها عصمة للمسلم من أشد الابتلاءات.",
-      "إن تخصيص وقت لدراسة وتأمل تفسير السورة يحول القراءة الروتينية إلى تجربة إيمانية حية تغير سلوكنا ونظرتنا للحياة.",
-      "احرص على جمع أفراد عائلتك وأبنائك لقراءة السورة معاً وتدارس معانيها ومشاركة الدروس المستفادة لتسود البركة.",
-      "اجعل يوم الجمعة يوماً مميزاً لتجديد العهد مع كتاب الله، وتطهير النفس من تراكمات الأسبوع، والتقرب برضا الرحمن.",
-      "نسأل الله العلي القدير أن يرزقنا الفهم العميق لآياته، ويحفظنا من فتن المحيا والممات، ويرفع درجاتنا في جنات النعيم.",
-      "فلنحافظ على هذا الهدي النبوي الشريف بشغف وتدبر، ولنجعل قلوبنا وبيوتنا عامرة بأنوار الوحي الطاهرة دوماً.",
-      "عطروا بيوتكم بتلاوة سورة الكهف كل جمعة، وكونوا من الذين يستمعون القول فيتبعون أحسنه أولئك الذين هداهم الله.",
+      "السلام عليكم ورحمة الله وبركاته يا قارئ كتاب الله. إن قراءة سورة الكهف يوم الجمعة هي سنة نبوية مباركة تضيء للمؤمن نوراً ما بين الجمعتين.",
+      "ولكن ما سر هذه السورة العظيمة، وما هي الحكم العميقة المودعة في آياتها الشريفة التي تقينا من أكبر فتن الدنيا المظلمة؟",
+      "تحتوي سورة الكهف على أربع قصص رئيسية، كل واحدة منها تعالج فتنة من الفتن الكبرى التي يواجهها الإنسان في حياته على الأرض:",
+      "أولاً: قصة أصحاب الكهف، وتمثل فتنة الدين وكيفية الفرار بالدين وحفظ العقيدة الصحيحة في بيئة معادية وظالمة.",
+      "ثانياً: قصة صاحب الجنتين، وتمثل فتنة المال والولد وخطر الكبر والغرور والمادية الزائلة والتعلق بزينة الحياة الدنيا.",
+      "ثالثاً: قصة موسى والخضر عليهما السلام، وتمثل فتنة العلم وكيفية التواضع لمعلمينا واستحضار الحكمة الإلهية الخفية في أقدار الله.",
+      "رابعاً: قصة ذي القرنين، وتمثل فتنة السلطة والقوة وكيفية توظيف النفوذ والتمكين في الأرض لإقامة العدل ونشر الخير وحماية الضعفاء.",
+      "من خلال تدبر هذه القصص الأربع المتنوعة، يدرك المؤمن أن الملاذ الآمن والملجأ الحقيقي من كل الفتن هو اللجوء إلى 'كهف الإيمان والتقوى'.",
+      "هذا الكهف الروحي هو الإخلاص التام لله، والالتفاف حول الصحبة الصالحة التي تعينك على الحق، والاعتصام بالوحي الإلهي الشريف.",
+      "علاوة على ذلك، تعد سورة الكهف درعاً واقياً من أعظم فتنة ستشهدها البشرية منذ خلق آدم وحتى قيام الساعة، وهي فتنة المسيح الدجال.",
+      "وقد وجهنا نبينا الكريم صلى الله عليه وسلم لحفظ وتلاوة العشر الآيات الأولى والأواخر من سورة الكهف لنيل هذا الحفظ والوقاية الإلهية.",
+      "فكل يوم جمعة، نجدد قراءة هذه الآيات لنراجع نياتنا، ونزن أموالنا بميزان الآخرة، ونتواضع في علمنا، ونعدل في نفوذنا وسلطاننا.",
+      "إنها محطة تصفية روحية أسبوعية تزيل عن قلوبنا صدأ التعلق بالدنيا، وتمنح نفوسنا سكينة وطمأنينة فائقة لا توصف.",
+      "لذا، احرص على تخصيص وقت هادئ في صباح الجمعة أو بعد العصر لقراءة السورة بتدبر وخشوع مع الاطلاع على تفسيرها المبسط.",
+      "وتدارس دروسها مع أهل بيتك وأبنائك لتسود قيم الصبر والعدل والتواضع والإيمان الصادق في أرجاء منزلك ومعاملاتك اليومية.",
+      "نسأل الله تعالى أن يتقبل منا تلاوتنا، وينير دروبنا بنور هدايته، ويحفظنا ويحفظ أهلينا من الفتن ما ظهر منها وما بطن.",
+      "وأن يجعل هذا القرآن العظيم ربيع قلوبنا، وجلاء أحزاننا، وذهاب همومنا، ونوراً يضيء حياتنا وآخرتنا بفضله وكرمه العميم.",
       "والسلام عليكم ورحمة الله وبركاته."
     ].join("\n\n")
   }
 ];
 
 const titlesTemplate = [
-  { en: "Understanding the Concept of Ihsan (Excellence)", ar: "فهم مفهوم الإحسان والوصول لمرتبة كمال العبادة" },
-  { en: "Lessons of Sabr (Patience) in Times of Trials", ar: "دروس الصبر الجميل في مواجهة الابتلاءات والخطوب" },
-  { en: "The History of Islamic Architecture and Geometry", ar: "تاريخ العمارة الإسلامية والتناغم الهندسي البديع" },
-  { en: "Mastering Tajweed Rules: A Guide for Beginners", ar: "إتقان قواعد التجويد الشريف: دليل شامل للمبتدئين" },
-  { en: "Daily Dhikr Routines for Pristine Mental Clarity", ar: "أوراد الأذكار اليومية ودورها في تحقيق الصفاء النفسي" },
-  { en: "Contributions of Muslim Scholars to Algebra and Science", ar: "إسهامات علماء المسلمين الأوائل في علم الجبر والعلوم" },
-  { en: "The Character of the Prophet: Kindness & Diplomacy", ar: "أخلاق النبي الكريم صلى الله عليه وسلم: الرحمة والدبلوماسية" },
-  { en: "Deep Study of Hadith Al-Niyyah: Intentions Matter", ar: "دراسة عميقة لحديث النية والأعمال وخلوص المقاصد" },
-  { en: "Nurturing Gratitude (Shukr) in Everyday Actions", ar: "تربية النفس على شكر النعم والرضا في تفاصيل الحياة" },
-  { en: "Bilingual Short Stories for Arabic Vocab Building", ar: "القصص ثنائية اللغة ودورها في بناء الثروة المفرداتية" }
-];
-
-const authorsTemplate = [
-  { name: "Dr. Amina Farooq", nameAr: "د. أمينة فاروق", avatar: "✨" },
-  { name: "Ustadh Yusuf Al-Qurashi", nameAr: "الأستاذ يوسف القرشي", avatar: "🕌" },
-  { name: "Fatima Alzahra", nameAr: "فاطمة الزهراء", avatar: "⭐" },
-  { name: "Professor Tariq Mansoor", nameAr: "أ.د طارق منصور", avatar: "📖" },
-  { name: "Shaykh Bilal Hassan", nameAr: "الشيخ بلال حسن", avatar: "🌙" }
-];
-
-const categoriesTemplate = [
-  { cat: "Faith", catAr: "إيمانيات" },
-  { cat: "Arabic Learning", catAr: "تعلم العربية" },
-  { cat: "Tafsir", catAr: "تفسير" },
-  { cat: "History", catAr: "التاريخ الإسلامي" }
+  {
+    en: "Understanding the Concept of Ihsan (Excellence)",
+    ar: "فهم مفهوم الإحسان والوصول لمرتبة كمال العبادة",
+    contentEn: [
+      "Assalamu Alaikum dear seeker of wisdom. Today we explore Ihsan, the third and highest level of our beautiful religion.",
+      "In the famous Hadith of Jibril, the Prophet Muhammad (peace be upon him) defined Ihsan as: 'To worship Allah as if you see Him, and if you do not see Him, know that He sees you.'",
+      "This simple yet profound statement forms the basis of all spiritual excellence in Islam.",
+      "It represents a state of complete mindfulness, where a believer is constantly aware of the Divine presence in every action, word, and thought.",
+      "Scholars have divided Ihsan into two levels of spiritual awareness: the level of witnessing and the level of observation.",
+      "The level of witnessing (Mushahadah) is when the heart is so filled with love and recognition of Allah that it is as if the believer sees Him directly.",
+      "The level of observation (Muraqabah) is when the believer is constantly conscious that Allah is watching them, even if they cannot see Him.",
+      "Living with Ihsan transforms ordinary, daily habits into elevated acts of worship and spiritual connection.",
+      "Whether you are working, studying, speaking with family, or standing in prayer, performing your duties with excellence is a manifestation of Ihsan.",
+      "Allah says in the Noble Quran: 'Indeed, Allah loves the doers of good (Al-Muhsinin).' (Surah Al-Baqarah 2:195).",
+      "Here are five practical ways to cultivate Ihsan in your daily life:",
+      "First: Focus entirely on your prayer (Khushu'), leaving all worldly worries outside the prayer mat and concentrating on the words.",
+      "Second: Treat all people, animals, and creation with extreme kindness, gentleness, and respect, looking past their shortcomings.",
+      "Third: Perform your professional or educational work to the absolute best of your ability, avoiding shortcutting and laziness.",
+      "Fourth: Routinely spend time in quiet reflection (Tafakkur) and remembrance (Dhikr) to polish the mirror of your heart.",
+      "Fifth: Purify your intentions (Niyyah) before starting any deed, ensuring it is done solely for the sake of the Creator.",
+      "By striving for excellence, you raise your self-awareness, improve your relationship with others, and find a deep, lasting inner peace.",
+      "True spiritual satisfaction comes not from doing the bare minimum, but from pouring your heart and soul into every virtuous action.",
+      "Let us pray that the Almighty grants us the capability to worship Him with complete sincerity and attain the rank of the Muhsinin.",
+      "May Allah bless your spiritual journey and fill your life with light, peace, guidance, and continuous success.",
+      "Assalamu Alaikum wa Rahmatullah wa Barakatuh."
+    ].join("\n\n"),
+    contentAr: [
+      "السلام عليكم ورحمة الله وبركاته يا طالب الحكمة ونور الإيمان. نتناول اليوم مرتبة الإحسان، وهي المرتبة الثالثة والأعلى في ديننا الحنيف.",
+      "في حديث جبريل الشهير، عرّف النبي صلى الله عليه وسلم الإحسان بقوله: 'أن تعبد الله كأنك تراه، فإن لم تكن تراه فإنه يراك'.",
+      "هذا التعريف النبوي البليغ يمثل قمة الارتقاء الروحي والسلوكي للمسلم في حياته اليومية ومعاملاته.",
+      "فهو يمثل حالة اليقظة الكاملة للقلب البشري، حيث يستشعر المؤمن رقابة الخالق العظيم في كل حركة وسكون، وفي السر والعلن.",
+      "وقد قسّم العلماء الإحسان إلى مرتبتين جليلتين: مرتبة المشاهدة ومرتبة المراقبة.",
+      "مرتبة المشاهدة هي أن يمتلئ قلب العبد بحب الله وتعظيمه حتى كأنه يرى خالقه رأي العين بقلبه وبصيرته.",
+      "أما مرتبة المراقبة، فهي استحضار المؤمن لرقابة الله تعالى واطلاعه عليه في كل حين، مما يورث الحياء والتعظيم لله.",
+      "إن تفعيل مفهوم الإحسان يحول العادات اليومية البسيطة والمهام العادية إلى عبادات جليلة وقربات يثاب عليها المؤمن.",
+      "سواء كنت تعمل في مهنتك، أو تدرس للامتحان، أو تتحدث مع أهلك، أو تؤدي صلاتك، فإن إتقان العمل هو جوهر الإحسان.",
+      "يقول الله سبحانه وتعالى في كتابه الكريم: 'وَأَحْسِنُوا إِنَّ اللَّهَ يُحِبُّ الْمُحْسِنِينَ' (البقرة: 195).",
+      "وهنا نلخص لكم خمسة إرشادات عملية لتنمية خلق الإحسان والارتقاء به في حياتكم اليومية بنجاح:",
+      "أولاً: الخشوع التام في الصلاة، وترك شواغل الدنيا خلف ظهرك بمجرد التكبير والتركيز في معاني الآيات التي تتلوها.",
+      "ثانياً: معاملة الخلق جميعاً باللطف والرحمة واللين، وتجنب الفظاظة والغلظة مع الأهل والأصدقاء وسائر الناس.",
+      "ثالثاً: إتقان العمل المهني والدراسي وبذل الجهد الكامل فيه دون غش أو تقصير، مستشعرين أمانة المسؤولية.",
+      "رابعاً: تخصيص وقت يومي للتفكر والتدبر في ملكوت الله، لتصفية الذهن وجلاء صدأ القلوب وزيادة اليقين.",
+      "خامساً: تجديد النية الصالحة قبل البدء بأي قول أو عمل، والتأكد من خلوص المقاصد لله رب العالمين وحده.",
+      "إن السعي المستمر للإحسان يرتقي بوعيك الذاتي، ويحسن علاقاتك الاجتماعية، ويمنحك طمأنينة وسكينة نفسية لا تقدر بثمن.",
+      "فالرضا النفسي الحقيقي لا يتحقق بأداء الحد الأدنى من الواجبات، بل بالسعي الحثيث للإتقان وبذل الجميل لوجه الله.",
+      "نسأل الله العلي القدير أن يرزقنا وإياكم قلباً خاشعاً منيباً، وأن يجعلنا من المحسنين الذين يعبدونه بصدق وإخلاص.",
+      "وأن يبارك في أوقاتكم وجهودهم، وينير دروبكم بنور الهداية والإيمان ويوفقكم لما يحبه ويرضاه في الدارين.",
+      "والسلام عليكم ورحمة الله وبركاته."
+    ].join("\n\n")
+  },
+  {
+    en: "Lessons of Sabr (Patience) in Times of Trials",
+    ar: "دروس الصبر الجميل في مواجهة الابتلاءات والخطوب",
+    contentEn: [
+      "Assalamu Alaikum dear seeker. Today we discuss the station of Sabr (Patience), which is half of faith.",
+      "In this worldly life, trials and difficulties are inevitable aspects of our spiritual test.",
+      "Allah says in the Quran: 'And We will surely test you with something of fear and hunger and a loss of wealth and lives and fruits, but give good tidings to the patient.' (Surah Al-Baqarah 2:155).",
+      "Sabr is not a state of passive weakness or complaining; rather, it is active, resilient steadfastness of the heart.",
+      "It means controlling your tongue from complaining, your heart from anger, and your limbs from despair during hardship.",
+      "The prophets of Islam showed the ultimate examples of Sabr. Prophet Yaqub (Jacob) lost his beloved sons and said: 'So patience is most fitting (Sabrun Jamil).'",
+      "Prophet Ayyub (Job) suffered from severe sickness and loss of wealth for years, yet his tongue remained full of gratitude.",
+      "From a modern psychological view, Sabr builds high emotional intelligence, mental grit, and cognitive flexibility.",
+      "It allows you to respond to life's chaos with measured calm instead of immediate stress reactions.",
+      "Every trial you face with Sabr is an opportunity for your sins to be forgiven and your spiritual ranks to be elevated.",
+      "Here are five practical recommendations to master Sabr during difficult trials in life:",
+      "First: Remind yourself that this life is temporary, and that every difficulty has an ultimate, positive spiritual purpose.",
+      "Second: Supplicate (Dua) with the Quranic prayer: 'Our Lord, pour upon us patience and plant our feet firmly.'",
+      "Third: Focus your energy on what you can control, and leave the outcome entirely to the wisdom of Allah.",
+      "Fourth: Seek comfort in prayer (Salah), as Allah instructs: 'Seek help through patience and prayer.'",
+      "Fifth: Connect with positive, supportive friends and teachers who remind you of hope and encourage your endurance.",
+      "Consistency in practicing Sabr will completely transform your reaction to loss, delay, and daily frustrations.",
+      "It turns trials into direct pathways of spiritual growth, drawing you closer to the Creator in absolute dependency.",
+      "We pray that Allah pours abundant patience into our hearts, keeps us steadfast, and accepts our struggles.",
+      "May this study guide serve as a source of strength, guiding you through the dark trials of life to a bright success.",
+      "Assalamu Alaikum wa Rahmatullah wa Barakatuh."
+    ].join("\n\n"),
+    contentAr: [
+      "السلام عليكم ورحمة الله وبركاته. نتناول اليوم منزلة الصبر، وهو الذي وصفه العلماء بنصف الإيمان والضياء المنير.",
+      "إن الابتلاءات والمحن في هذه الحياة الدنيا هي سنن إلهية ثابتة لتمحيص القلوب وتثبيت الإيمان.",
+      "يقول الله تعالى: 'وَلَنَبْلُوَنَّكُمْ بِشَيْءٍ مِنَ الْخَوْفِ وَالْجُوعِ وَنَقْصٍ مِنَ الْأَمْوَالِ وَالْأَنْفُسِ وَالثَّمَرَاتِ وَبَشِّرِ الصَّابِرِينَ' (البقرة: 155).",
+      "والصبر ليس استسلاماً عاجزاً أو شكوى مستمرة، بل هو صمود إيجابي متين، وتماسك نفسي واعٍ.",
+      "وهو حبس النفس عن الجزع والخطأ، وحبس اللسان عن التشكي والسخط، وحبس الجوارح عن اليأس.",
+      "وقد ضرب أنبياء الله الكرام أروع الأمثلة في الصبر الجميل؛ فهذا يعقوب عليه السلام يفقد أحب أبنائه ويقول: 'فَصَبْرٌ جَمِيلٌ'.",
+      "وهذا أيوب عليه السلام يبتلى بالمرض العضال وفقد الأهل والمال لسنوات طوال، فما فتر لسانه عن الحمد والثناء.",
+      "من منظور علم النفس الحديث، يبني الصبر مرونة نفسية فائقة وذكاءً عاطفياً يعينك على إدارة ضغوط الحياة المتراكمة.",
+      "فهو يمنحك مهلة عقلية للتفكير بحكمة واتخاذ القرارات السليمة بهدوء تام بدلاً من التفاعل المتسرع والمدمر.",
+      "إن كل ابتلاء تصبر عليه بصدق ورضا هو سبب لتكفير الخطايا، ورفع الدرجات، وزيادة القرب من المنعم سبحانه.",
+      "وهنا نلخص لكم أهم خمس نصائح لتنمية الصبر والرضا بقضاء الله وقدره في حياتكم:",
+      "أولاً: استحضار حقيقة أن الدنيا دار ممر لا مقر، وأن كل عسر يتبعه يسران بفضل الله وكرمه.",
+      "ثانياً: اللهج بالدعاء المأثور: 'رَبَّنَا أَفْرِغْ عَلَيْنَا صَبْراً وَثَبِّتْ أَقْدَامَنَا'.",
+      "ثالثاً: تركيز جهدك على الأمور التي تقع تحت سيطرتك وتأثيرك، وتفويض النتائج بالكامل لحكمة الله وتدبيره.",
+      "رابعاً: الاستعانة بالصلاة وتثبيت مواعيدها بانتظام، امتثالاً لقوله تعالى: 'وَاسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ'.",
+      "خامساً: الالتفاف حول الصالحين والأصدقاء الإيجابيين الذين يبثون في نفسك الأمل والتفاؤل ويشدون عضدك.",
+      "إن المداومة على الصبر تحول التحديات الصعبة إلى محطات للتزكية الذاتية والارتقاء الروحي الدائم.",
+      "نسأل الله تعالى أن يملأ قلوبنا صبراً جميلاً، ويرزقنا الرضا بالقضاء، ويجعل عاقبة أمرنا رشداً ويسراً.",
+      "وأن يبارك في خطاكم، ويجعل هذا العلم نوراً يضيء دروبكم نحو المعالي والنجاح في الدنيا والآخرة.",
+      "والسلام عليكم ورحمة الله وبركاته."
+    ].join("\n\n")
+  },
+  {
+    en: "The History of Islamic Architecture and Geometry",
+    ar: "تاريخ العمارة الإسلامية والتناغم الهندسي البديع",
+    contentEn: [
+      "Assalamu Alaikum dear seeker. Today we dive into the rich history of Islamic architecture and mathematical geometry.",
+      "Islamic architecture is not just building structures; it is a profound visual reflection of cosmic harmony and tawhid (unity).",
+      "Historically, early Muslim builders integrated Roman, Persian, and Byzantine techniques, transforming them into a distinct style.",
+      "The use of complex geometric patterns (Arabesques) reflects the infinite nature of creation, avoiding physical depictions of living things.",
+      "Mathematical symmetry in Islamic design uses circles, squares, and stars to construct incredibly balanced mosaics.",
+      "The dome (Qubbah) represents the heavenly vault, acting as a structural and acoustic masterpiece in grand mosques.",
+      "The minaret (Manarah) serves a practical function for calling to prayer and stands as a high landmark of faith in the skyline.",
+      "Calligraphy, particularly verses of the Quran, is beautifully integrated into building walls, inviting visitors to reflect.",
+      "Light and water are core elements, using courtyards with fountains to create spaces of coolness and serene contemplation.",
+      "Historical landmarks like the Alhambra in Spain, the Dome of the Rock in Jerusalem, and the Taj Mahal showcase this excellence.",
+      "Here are five design principles of classical Islamic architecture to study and appreciate:",
+      "First: Structural symmetry, where left and right halves mirror each other to represent stability and cosmic balance.",
+      "Second: The integration of nature, using open courtyards to bring sunlight, fresh air, and greenery inside the building.",
+      "Third: Intricate geometric repetition, showing how complex beauty can evolve from a single, simple circular unit.",
+      "Fourth: The acoustic harmony of domes, utilizing geometry to amplify voices of recitation naturally without electronic systems.",
+      "Fifth: Artistic calligraphy, turning walls into beautiful open pages of reminders that direct the gaze to the heavens.",
+      "Studying these architectural achievements shows how early Muslims combined advanced mathematics with deep faith.",
+      "It reminds us that true utility and stunning aesthetic beauty can merge to create spaces of absolute peace.",
+      "We pray that the Almighty helps us appreciate this legacy and inspires us to construct modern spaces of harmony.",
+      "May this guide serve as a source of creative inspiration, linking you to our rich cultural history.",
+      "Assalamu Alaikum wa Rahmatullah wa Barakatuh."
+    ].join("\n\n"),
+    contentAr: [
+      "السلام عليكم ورحمة الله وبركاته. نتناول اليوم تاريخ العمارة الإسلامية والتناغم الهندسي والجمالي البديع.",
+      "إن العمارة الإسلامية ليست مجرد تشييد للبناء، بل هي تجسيد بصري رائع لمفهوم التناجم والتوحيد والجمال الدائم.",
+      "تاريخياً، دمج المعماريون المسلمون الأوائل الأساليب البيزنطية والفارسية، وطوروها لتبتكر هوية بصرية متميزة وفريدة.",
+      "وقد عبّر الفن الإسلامي عن اللانهائية من خلال النقوش والزخارف الهندسية المعقدة (الأرابيسك) بعيداً عن تصوير المجسمات.",
+      "حيث استخدم المهندسون المسلمون الرياضيات الدقيقة لبناء نجوم ومضلعات هندسية غاية في الدقة والتناظر البصري.",
+      "وتمثل القبة في المسجد رمزاً للسماء وسموها، فضلاً عن دورها المعماري والهندسي المتميز في توزيع الأصوات والإضاءة.",
+      "أما المئذنة، فتمثل منارة بصرية مرتفعة ترمز لنداء التوحيد الشريف وتحدد معالم المدن الإسلامية وجمالها.",
+      "وزينت جدران المساجد بالخط العربي البديع كخط الثلث والكوفي، لتتحول الجدران إلى آيات تنبض بالذكر وتدعو للتدبر.",
+      "ويمثل الضوء والماء عنصرين أساسيين، حيث صممت الساحات الداخلية المفتوحة والنوافير لتوفير التبريد والسكينة والوقار.",
+      "وتقف شواهد تاريخية مثل قصر الحمراء في الأندلس، وقبة الصخرة بالقدس، لتعبر عن ذروة هذا الرقي الفني والمعماري.",
+      "وهنا نلخص لكم أهم خمس ميزات هندسية اتسمت بها العمارة الإسلامية العريقة عبر القرون:",
+      "أولاً: التناظر المعماري الدقيق، حيث يعكس التصميم التوازن والانسجام في الكون والسكينة النفسية للمكان.",
+      "ثانياً: الانفتاح على الطبيعة، عبر الساحات الداخلية المفتوحة التي تسمح بدخول الهواء النقي وتفاعل الضوء الطبيعي.",
+      "ثالثاً: تكرار الأنماط الهندسية، معبرة عن الوحدة والتنوع البديع المنطلق من وحدة دائرية بسيطة متكررة.",
+      "رابعاً: هندسة الصوت في القباب، حيث ينساب صوت التلاوة والآذان بشكل طبيعي واضح في أرجاء المسجد الواسع.",
+      "خامساً: توظيف الخط العربي كعنصر فني، يربط جمال الفن البصري بجلال الرسالة الدينية واللغوية النبيلة.",
+      "إن دراسة هذا الإرث المعماري تؤكد كيف جمع علماؤنا بين عبقرية الرياضيات وقوة العقيدة لبناء حضارة عظيمة.",
+      "نسأل الله تعالى أن يحفظ لنا تاريخنا العريق، ويلهمنا لبناء مجتمعات معاصرة تجمع بين الأصالة والتقدم العلمي.",
+      "وأن يبارك في مسيرتكم التعليمية ويجعلكم من طلبة العلم المتميزين والمستنيرين بأنوار المعرفة الرصينة.",
+      "والسلام عليكم ورحمة الله وبركاته."
+    ].join("\n\n")
+  },
+  {
+    en: "Mastering Tajweed Rules: A Guide for Beginners",
+    ar: "إتقان قواعد التجويد الشريف: دليل شامل للمبتدئين",
+    contentEn: [
+      "Assalamu Alaikum dear reader. Today we present an introductory guide to mastering Tajweed rules for Quran recitation.",
+      "Tajweed literally means 'proficiency' or 'doing something well'. It refers to giving every letter of the Quran its rights.",
+      "This includes pronouncing each letter from its correct articulation point (Makhraj) with its proper characteristics (Sifat).",
+      "The primary purpose of Tajweed is to preserve the authentic pronunciation of the Quran as revealed to Prophet Muhammad.",
+      "For beginners, the rules of Nun Sakinah (noon without vowel) and Tanween (double vowel) are the foundation of study.",
+      "These rules are divided into four main categories: Izhar (clear pronunciation), Idgham (merging letters), Iqlab (conversion), and Ikhfa (concealment).",
+      "Izhar occurs when Nun Sakinah is followed by one of the six throat letters: Hamzah, Ha, 'Ayn, Haa, Ghayn, and Khaa.",
+      "Idgham occurs when Nun Sakinah is followed by one of the letters in the word 'Yarmaloon', merging them with or without nasal sound.",
+      "Iqlab occurs when Nun Sakinah is followed by the letter Ba, converting the sound into a soft Meem with a nasal sound (Ghunnah).",
+      "Ikhfa occurs when Nun Sakinah is followed by any of the remaining fifteen letters, concealing the sound lightly.",
+      "Here are five practical recommendations to help you master Tajweed rules effectively as a beginner:",
+      "First: Listen consistently to certified Quran reciters, repeating after them to train your vocal cords and ears.",
+      "Second: Study the Makharij (articulation points) of throat and tongue letters to correct common pronunciation errors.",
+      "Third: Practice reciting slowly (Tarteel), giving each vowel, madd (elongation), and nasal sound its complete duration.",
+      "Fourth: Record your recitation and send it to our certified teachers in the Teacher Center for evaluation.",
+      "Fifth: Dedicate ten minutes daily to practicing a single rule, applying it to different Surahs until it becomes natural.",
+      "Consistency in Tajweed practice transforms your relationship with the Quran, bringing deep peace and spiritual focus to your prayers.",
+      "It honors the words of our Creator and fulfills the Quranic instruction: 'And recite the Quran with measured recitation.'",
+      "We pray that Allah blesses your voice, guides your tongue, and makes the Quran a close friend in your life.",
+      "May this educational guide serve as a valuable companion in your sacred learning journey.",
+      "Assalamu Alaikum wa Rahmatullah wa Barakatuh."
+    ].join("\n\n"),
+    contentAr: [
+      "السلام عليكم ورحمة الله وبركاته. نقدم لكم اليوم دليلاً شاملاً للمبتدئين لإتقان قواعد التجويد ومخارج الحروف.",
+      "التجويد في اللغة يعني التحسين والإتقان، وفي الاصطلاح هو إعطاء كل حرف من حروف القرآن الكريم حقه ومستحقه.",
+      "ويشمل ذلك إخراج الحروف من مخارجها الصحيحة (مخارج الحروف) وتطبيق صفاتها الذاتية والمنفصلة (صفات الحروف).",
+      "والغاية الأساسية من علم التجويد هي صون اللسان عن الخطأ واللحن في كتاب الله تعالى وقراءته كما أنزل على نبينا الكريم.",
+      "ويعتبر فهم أحكام النون الساكنة والتنوين الركيزة الأساسية والأولى لكل مبتدئ في مسيرة تعلم أحكام التلاوة.",
+      "وتنقسم أحكام النون الساكنة والتنوين إلى أربعة أحكام رئيسية: الإظهار، الإدغام، الإقلاب، والإخفاء.",
+      "أولاً: الإظهار الحلقي، ويكون عند التقاء النون الساكنة بأحد حروف الحلق الستة: الهمزة، الهاء، العين، الحاء، الغين، والخاء.",
+      "ثانياً: الإدغام، وهو دمج النون الساكنة بالحرف الذي يليها إذا كان من حروف كلمة (يرملون)، وينقسم لقسمين: بغنة وبغير غنة.",
+      "ثالثاً: الإقلاب، ويكون عند التقاء النون الساكنة بحرف الباء، حيث تقلب النون ميماً مخفاة مع مراعاة الغنة.",
+      "رابعاً: الإخفاء الحقيقي، ويكون عند مجيء النون الساكنة قبل بقية حروف الهجاء الخمسة عشر المتبقية، حيث تخفى النون.",
+      "وهنا نلخص لكم أهم خمس نصائح عملية تساعدكم على إتقان التجويد وتطبيقه بثقة ويسر أثناء قراءتكم اليومية:",
+      "أولاً: الاستماع المستمر لتلاوات القراء المتقنين والترديد خلفهم لتدريب جهازك النطقي والأذن على مخارج الحروف الصحيحة.",
+      "ثانياً: دراسة مخارج الحروف والتركيز على حروف الحلق واللسان لتجنب الأخطاء الشائعة وتبديل الحروف.",
+      "ثالثاً: التلاوة ببطء وتأنٍ (الترتيل)، وإعطاء كل غنة ومد وحركة زمنها المستحق دون عجلة أو تكلف.",
+      "رابعاً: تسجيل تلاوتك الصوتية وعرضها على المعلمين المعتمدين في مركزنا للحصول على تصحيح دقيق وتوجيهات عملية.",
+      "خامساً: تخصيص ورد دراسي يومي بسيط لتطبيق حكم تجويدي واحد وتأمله في السور المختلفة لتثبيته في الذاكرة.",
+      "إن الالتزام بهذه الخطوات والتدرب المستمر يمنح تلاوتك جمالاً وسكينة، ويزيد من تدبرك لآيات الذكر الحكيم في صلواتك.",
+      "نسأل الله تعالى أن يرزقنا فصاحة اللسان وتلاوة كتابه تلاوة صحيحة ترضيه عنا، ويجعل القرآن ربيع قلوبنا ونور صدورنا.",
+      "وأن يبارك في سعيكم وييسر لكم سبل التعلم والترقي الفكري واللغوي في دراستكم المباركة.",
+      "والسلام عليكم ورحمة الله وبركاته."
+    ].join("\n\n")
+  },
+  {
+    en: "Daily Dhikr Routines for Pristine Mental Clarity",
+    ar: "أوراد الأذكار اليومية ودورها في تحقيق الصفاء النفسي",
+    contentEn: [
+      "Assalamu Alaikum dear reader. Today we discuss the dynamic role of daily Dhikr routines in achieving mental clarity.",
+      "In a modern world filled with distractions, stress, and anxiety, the mind easily becomes cluttered and overwhelmed.",
+      "Dhikr (remembrance of Allah) acts as a powerful spiritual anchor, grounding the heart and refocusing the intellect.",
+      "Allah says in the Quran: 'Unquestionably, by the remembrance of Allah hearts find rest.' (Surah Ar-Ra'd 13:28).",
+      "From a neurological standpoint, rhythmic supplications calm the amygdala, lower blood pressure, and reduce cortisol.",
+      "Implementing a structured morning and evening Dhikr routine structures your day, creating natural intervals of mindfulness.",
+      "The morning routine, performed after Fajr, builds high emotional resilience and patience to face daily challenges.",
+      "The evening routine, performed after Asr or Maghrib, washes away the day's stress and prepares the soul for peaceful rest.",
+      "Key formulas like 'Subhan Allah', 'Alhamdulillah', and 'Astaghfirullah' are simple to repeat yet yield immense reward.",
+      "Dhikr detaches the human heart from material greed and anxiety, keeping our ultimate purpose in life clearly in focus.",
+      "Here are five practical recommendations to build a consistent, beneficial daily Dhikr routine for mental peace:",
+      "First: Dedicate a fixed 10-minute slot after Fajr and Asr prayers to sit facing the Qiblah in absolute quiet.",
+      "Second: Keep a physical or digital subha (tasbih) nearby to count your praises and maintain physical focus.",
+      "Third: Learn the meanings and translations of the supplications to ensure your heart fully participates with your tongue.",
+      "Fourth: Begin your routine with seeking forgiveness (Istighfar), which purifies the heart and removes internal spiritual blocks.",
+      "Fifth: Introduce your family and children to these supplications, reciting them together to bring barakah into your home.",
+      "Consistency in these small, daily acts of devotion will transform your focus, inner peace, and spiritual strength.",
+      "It turns mundane, stressful hours into rewarded moments of divine connection, keeping you anchored in faith.",
+      "We pray that Allah keeps our tongues moist with His remembrance, accepts our efforts, and purifies our hearts.",
+      "May this guide serve as a practical resource for your daily growth, mindfulness, and spiritual well-being.",
+      "Assalamu Alaikum wa Rahmatullah wa Barakatuh."
+    ].join("\n\n"),
+    contentAr: [
+      "السلام عليكم ورحمة الله وبركاته. نتحدث اليوم عن الأثر البالغ للأذكار اليومية في تحقيق السكينة النفسية والصفاء الذهني.",
+      "في عصرنا الحالي المليء بالمشتتات والضغوط اليومية والقلق، يصبح العقل البشري محملاً بأعباء ذهنية تفوق طاقته الاستيعابية.",
+      "وهنا يبرز الذكر (ذكر الله تعالى) كمرساة روحية متينة تعيد التوازن للقلب والصفاء والتركيز للعقل البشري.",
+      "يقول الله سبحانه وتعالى في محكم التنزيل: 'أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ' (الرعد: 28).",
+      "من منظور العلوم العصبية الحديثة، فإن الترديد المنتظم للأذكار يهدئ مراكز التوتر في الدماغ ويقلل من هرمونات القلق.",
+      "ويساعد تخصيص ورد صباحي ومسائي ثابت على تنظيم وقتك اليومي، وصنع فترات تأمل طبيعية تعيد لك نشاطك الفكري والروحي.",
+      "فأذكار الصباح، التي تؤدى بعد الفجر، تبني حصانة نفسية ومرونة إيمانية تمكنك من مواجهة تحديات العمل برضا وسكينة.",
+      "وأذكار المساء، التي تؤدى بعد العصر أو المغرب، تزيل تراكمات التعب اليومي وتهيئ النفس لنوم هادئ ومريح.",
+      "إن الصيغ المأثورة مثل 'سبحان الله'، 'الحمد لله'، و'أستغفر الله' خفيفة على اللسان، عظيمة الأثر في انشراح الصدر والسكينة.",
+      "فالذكر يحرر القلب من التعلق المفرط بالدنيا وهمومها المادية، ويجعلك دائماً متصلاً بالغايات النبيلة لوجودك.",
+      "وهنا نلخص لكم خمس خطوات عملية لتأسيس ورد يومي للأذكار والمداومة عليه بنجاح لجلب الطمأنينة لقلوبكم:",
+      "أولاً: تخصيص 10 دقائق ثابتة بعد صلاة الفجر وصلاة العصر، والجلوس في مكان هادئ مستقبلاً القبلة بخشوع.",
+      "ثانياً: استخدام مسبحة تفاعلية أو خاتم تسبيح لتسهيل العد والمحافظة على التركيز الحسي والبدني أثناء الذكر.",
+      "ثالثاً: فهم وتأمل معاني الأذكار المترجمة، ليتطابق وعي قلبك وتأثرك الداخلي مع نطق لسانك بالحمد والثناء.",
+      "رابعاً: البدء دائماً بالاستغفار، فهو يجلي القلوب ويطهر النفس ويفتح مغاليق الصدور ويجلب الرزق والتوفيق.",
+      "خامساً: مشاركة الأذكار مع عائلتك وأبنائك، وجعلها ثقافة جماعية في البيت لبث البركة والألفة والرحمة بين الجميع.",
+      "إن الاستمرارية على هذا الورد اليومي تصنع فارقاً حقيقياً في قوة تركيزك واستقرارك النفسي والروحي والجسدي.",
+      "نسأل الله العلي القدير أن يجعل ألسنتنا رطبة بذكره، وقلوبنا مطمئنة بحبه، وأن يتقبل منا ومنكم صالح الأعمال.",
+      "وأن يبارك في أوقاتكم، وينير دروبكم بنور الوحي ويهديكم لسبل السلام والرشاد في كل خطوة تخطونها.",
+      "والسلام عليكم ورحمة الله وبركاته."
+    ].join("\n\n")
+  },
+  {
+    en: "Contributions of Muslim Scholars to Algebra and Science",
+    ar: "إسهامات علماء المسلمين الأوائل في علم الجبر والعلوم",
+    contentEn: [
+      "Assalamu Alaikum dear seeker. Today we explore the historical achievements of Muslim scholars in algebra and science.",
+      "During the Golden Age of Islam (8th to 14th centuries), the Muslim world stood as the global capital of science and philosophy.",
+      "The House of Wisdom (Bayt al-Hikmah) in Baghdad brought together scholars of diverse backgrounds to translate and expand knowledge.",
+      "One of the greatest figures of this era was Muhammad ibn Musa al-Khwarizmi, a brilliant mathematician and astronomer.",
+      "Al-Khwarizmi developed the foundation of modern Algebra, deriving the name from his famous book 'Al-Kitab al-Mukhtasar fi Hisab al-Jabr wal-Muqabala'.",
+      "He introduced systematic methods for solving linear and quadratic equations, and popularized the Hindu-Arabic numeral system globally.",
+      "Indeed, the modern word 'algorithm' is derived directly from the Latin translation of his own name: Algoritmi.",
+      "Other fields of science witnessed immense breakthroughs, particularly optics, which was revolutionized by Ibn al-Haytham.",
+      "Ibn al-Haytham wrote the 'Book of Optics' (Kitab al-Manazir), establishing the modern scientific method based on testing and observation.",
+      "In medicine, Ibn Sina (Avicenna) wrote 'The Canon of Medicine', which remained the standard medical textbook in Europe for centuries.",
+      "Here are five major scientific legacies of the Islamic Golden Age to study and appreciate:",
+      "First: The development of Algebra, transforming mathematics from static geometry into a dynamic, general problem-solving tool.",
+      "Second: The optics revolution, proving that vision occurs when light reflects off objects into the eye, correcting Greek theories.",
+      "Third: Astronomical tables and instruments, refining the astrolabe to accurately compute prayer times, direction, and star positions.",
+      "Fourth: Medical classification and hospitals, establishing the first public clinics with clean wards and medical licenses.",
+      "Fifth: The foundation of chemistry (Al-Kimiya), pioneered by Jabir ibn Hayyan, who introduced systematic laboratory experimentation.",
+      "These historical achievements remind us that early Muslims viewed scientific exploration as an act of studying God's creation.",
+      "They combined deep faith with rigorous intellectual curiosity, laying the groundwork for the modern technological age.",
+      "We pray that the Almighty inspires modern students to revive this spirit of academic and scientific excellence.",
+      "May this guide serve as a source of cultural pride and intellectual motivation in your educational journey.",
+      "Assalamu Alaikum wa Rahmatullah wa Barakatuh."
+    ].join("\n\n"),
+    contentAr: [
+      "السلام عليكم ورحمة الله وبركاته. نتناول اليوم الإنجازات التاريخية العظيمة لعلماء المسلمين الأوائل في العلوم والجبر.",
+      "خلال العصر الذهبي للحضارة الإسلامية، كانت الحواضر العلمية كبغداد وقرطبة والقاهرة تمثل قبلة العلم والمعرفة في العالم.",
+      "وقد جمع بيت الحكمة في بغداد المترجمين والباحثين لترجمة العلوم القديمة وإثراء المعارف الإنسانية باكتشافات جديدة.",
+      "ويبرز في طليعة هذه الحقبة عالم الرياضيات الفذ محمد بن موسى الخوارزمي، واضع أسس علم الجبر والمقابلة.",
+      "والذي اشتق اسم علم الجبر عالمياً من كتابه الشهير: 'الكتاب المختصر في حساب الجبر والمقابلة' للحلول الحسابية.",
+      "حيث ابتكر الخوارزمي طرقاً منهجية لحل المعادلات الخطية والتربيعية، وأدخل نظام الأرقام العربية الهندي للعالم.",
+      "وتقديراً لجهوده العبقرية، اشتق المصطلح العلمي العالمي 'الخوارزميات' (Algorithms) مباشرة من ترجمة اسمه باللاتينية.",
+      "وفي مجال الفيزياء والبصريات، أحدث الحسن بن الهيثم ثورة علمية كبرى بتأليفه كتاب البصريات الشهير 'كتاب المناظر'.",
+      "حيث أسس ابن الهيثم المنهج العلمي الحديث المعتمد على التجربة والملاحظة والتحليل الرياضي الدقيق لتفسير الرؤية.",
+      "وفي الطب، صنف ابن سينا موسوعته الطبية الخالدة 'القانون في الطب'، التي ظلت مرجعاً أساسياً لجامعات أوروبا لقرون.",
+      "وهنا نلخص لكم أهم خمس مساهمات علمية قدمتها الحضارة الإسلامية وأرست بها دعائم النهضة الحديثة:",
+      "أولاً: ابتكار علم الجبر، الذي نقل الرياضيات من الهندسة الوصفية القديمة إلى لغة الحساب والرموز التفاعلية العامة.",
+      "ثانياً: تصحيح نظريات الإبصار، بإثبات ابن الهيثم أن الرؤية تتم نتيجة انعكاس الضوء من الأجسام إلى العين وليس العكس.",
+      "ثالثاً: تطوير الأسطرلاب والمراصد الفلكية، لحساب مواقيت الصلاة واتجاه القبلة وحركة النجوم والكواكب بدقة فائقة.",
+      "رابعاً: تأسيس البيمارستانات (المستشفيات)، ووضع أنظمة تراخيص مزاولة مهنة الطب وعزل الأمراض المعدية.",
+      "خامساً: تأسيس علم الكيمياء التجريبي، على يد جابر بن حيان الذي أدخل الملاحظة المعملية الدقيقة والتقطير.",
+      "إن هذه الإنجازات تؤكد أن علمائنا الأجلاء نظروا لطلب العلم والبحث الكوني كعبادة جليلة وتفكر في بديع صنع الخالق العظيم.",
+      "نسأل الله العلي القدير أن يلهم شبابنا وطلابنا المعاصرين لإحياء هذا الشغف بالبحث العلمي والتميز الأكاديمي المرموق.",
+      "وأن يوفقكم في دراستكم ويسدد خطاكم نحو بناء مستقبل مشرق ينبض بالمعرفة النافعة والأثر الطيب.",
+      "والسلام عليكم ورحمة الله وبركاته."
+    ].join("\n\n")
+  },
+  {
+    en: "The Character of the Prophet: Kindness & Diplomacy",
+    ar: "أخلاق النبي الكريم صلى الله عليه وسلم: الرحمة والدبلوماسية",
+    contentEn: [
+      "Assalamu Alaikum dear reader. Today we study the noble character and moral diplomacy of the Prophet Muhammad.",
+      "The Prophet (peace be upon him) was sent as a mercy to all creation, exhibiting the highest standards of moral character.",
+      "Allah describes his gentle nature in the Quran: 'And indeed, you are of a great moral character.' (Surah Al-Qalam 68:4).",
+      "His kindness extended to his family, his companions, strangers, animals, and even those who showed hostility towards him.",
+      "In Makkah, long before his prophethood, he was universally trusted and known by all as Al-Amin (the trustworthy) and Al-Sadiq (the truthful).",
+      "When the Makkah tribes disputed over who would place the Black Stone in the Kaaba, the Prophet resolved it peacefully.",
+      "He placed the stone on a cloak, asking a representative from each tribe to hold the edge, ensuring collective honor.",
+      "His diplomacy was grounded in justice, patience, and visual foresight, as demonstrated in the historic Treaty of Hudaybiyyah.",
+      "Though the terms of the treaty seemed unfair to some companions at first, the Prophet accepted them to preserve peace.",
+      "This treaty established a period of security, allowing the message of Islam to spread peacefully and rapidly across Arabia.",
+      "Here are five key moral traits of the Prophet's character to emulate in your personal and community dealings:",
+      "First: Unmatched gentleness (Rifq), as he advised: 'Gentleness is not added to anything except that it beautifies it.'",
+      "Second: Absolute integrity and honesty, keeping his word even with enemies and returning their trusts before migrating.",
+      "Third: Conflict resolution and diplomacy, prioritizing peace, reconciliation, and long-term harmony over pride and revenge.",
+      "Fourth: Compassion for the weak, children, and animals, setting laws to prevent cruelty and ensure social support.",
+      "Fifth: Humility in leadership, sitting among his companions as an equal and participating in physical labor like building.",
+      "Emulating these noble character traits transforms our daily interactions, building a supportive, loving community.",
+      "It shows that true strength lies not in force and anger, but in patience, kindness, justice, and diplomatic wisdom.",
+      "We pray that the Almighty purifies our character, helps us follow the Prophet's guide, and elevates our ranks.",
+      "May this reflection serve as a valuable compass for your character growth and daily interaction with others.",
+      "Assalamu Alaikum wa Rahmatullah wa Barakatuh."
+    ].join("\n\n"),
+    contentAr: [
+      "السلام عليكم ورحمة الله وبركاته. نتأمل اليوم الأخلاق النبوية الشريفة وأثرها الدبلوماسي والاجتماعي الرائد في بناء مجتمع متراحم.",
+      "لقد بُعث النبي محمد صلى الله عليه وسلم رحمة للعالمين، متمماً لمكارم الأخلاق، وجامعاً لأطراف الفضل والكمال البشري.",
+      "يصفه ربه عز وجل في كتابه الحكيم بقوله العظيم: 'وَإِنَّكَ لَعَلَى خُلُقٍ عَظِيمٍ' (القلم: 4).",
+      "وقد اتسعت رحمته صلى الله عليه وسلم لتشمل أهله، وأصحابه، والغرباء، والحيوان، وحتى من ناصبوه العداء والخصومة.",
+      "فقبل بعثته الشريفة، أجمع أهل مكة قاطبة على تسميته بالصادق الأمين، ثقة في عهد ووعد وأمانة خلقه العظيم.",
+      "وعندما اختلفت القبائل في مكة حول من يضع الحجر الأسود في الكعبة، نجحت حكمته في حل النزاع بسلام تام.",
+      "حيث وضع الحجر الشريف على ثوب، وأمر ممثلي القبائل جميعاً بحمل أطرافه، صوناً للدماء وتأكيداً على الشراكة.",
+      "وكانت دبلوماسيته صلى الله عليه وسلم قائمة على العدل والصبر وبُعد النظر، كما تجلى في صلح الحديبية التاريخي.",
+      "ورغم أن بنود الصلح بدت مجحفة في البداية لبعض الصحابة، إلا أنه صلى الله عليه وسلم قبلها إيثاراً للسلام وحفظاً للنفوس.",
+      "مما وفر فترة أمان واستقرار أدت لانتشار رسالة الإسلام ودخول الناس في دين الله أفواجاً بفضل المعاملة الحسنة واللين.",
+      "وهنا نلخص لكم خمس ركائز أخلاقية ودبلوماسية من السيرة النبوية العطرة ينبغي التمسك بها في حياتنا المعاصرة:",
+      "أولاً: خلق الرفق واللين، حيث يقول صلى الله عليه وسلم: 'إن الرفق لا يكون في شيء إلا زانه، ولا ينزع من شيء إلا شانه'.",
+      "ثانياً: الأمانة المطلقة، ورد ودائع المشركين وأماناتهم إليهم قبل هجرته للمدينة رغم كيدهم ومحاولاتهم إيذائه.",
+      "ثالثاً: تفضيل الصلح والوساطة الإيجابية، وحل الخلافات بالحوار الهادئ البعيد عن الغضب والثأر والكبر الزائف.",
+      "رابعاً: الرحمة بالضعفاء والصغار والحيوان، ووضع الضوابط الشرعية لحمايتهم ومنع القسوة والأذى عن سائر المخلوقات.",
+      "خامساً: التواضع في القيادة، حيث كان يشارك أصحابه في البناء وحفر الخندق ولا يتميز عنهم بمظهر أو ملبس.",
+      "إن الاقتداء بالأخلاق النبوية الشريفة يطهر نفوسنا، ويقوي علاقاتنا، وينشر المحبة والسلام في مجتمعاتنا الصالحة.",
+      "نسأل الله العلي القدير أن يحسن أخلاقنا، ويجعلنا متبعين لهديه، ويرزقنا شفاعته وصحبته في جنات النعيم.",
+      "وأن يبارك في أوقاتكم ويهديكم لسبل الخير والرشاد والنجاح الباهر في الدنيا والآخرة بفضل كرمه وجوده.",
+      "والسلام عليكم ورحمة الله وبركاته."
+    ].join("\n\n")
+  },
+  {
+    en: "Deep Study of Hadith Al-Niyyah: Intentions Matter",
+    ar: "دراسة عميقة لحديث النية والأعمال وخلوص المقاصد",
+    contentEn: [
+      "Assalamu Alaikum dear seeker. Today we explore a deep study of the primary Hadith of Islam: Hadith al-Niyyah.",
+      "This famous Hadith, recorded by Imam Al-Bukhari, begins: 'Indeed, actions are judged only by intentions (Innama al-a'malu bin-niyyat).'",
+      "Scholars of Islam state that this Hadith constitutes one-third of all religious knowledge and forms the core of spirituality.",
+      "The term 'Niyyah' refers to the intent, purpose, and inner drive behind any verbal or physical action.",
+      "The primary purpose of Niyyah is twofold: to distinguish acts of worship from habits, and to determine the reward of the deed.",
+      "For instance, taking a shower can be a simple physical habit to cool down, or it can be a rewarded act of purification (Ghusl).",
+      "The difference lies entirely in the conscious intention held in the heart before water touches the body.",
+      "Furthermore, the reward of any action is determined by the purity and sincerity (Ikhlas) of the intention behind it.",
+      "If a person gives charity to help the poor for the sake of Allah, they receive immense spiritual reward.",
+      "However, if they give charity to be praised by people as generous, the action yields no spiritual benefit.",
+      "Here are five practical ways to purify your intentions (Niyyah) in your daily routine and actions:",
+      "First: Pause for three seconds before starting any work, study, or prayer, consciously asking yourself: 'Why am I doing this?'",
+      "Second: Transform your daily habits, like eating or sleeping, into acts of worship by intending to strengthen your body for good deeds.",
+      "Third: Hide some of your good deeds, such as charity or voluntary prayers, keeping them private between you and the Creator.",
+      "Fourth: Routinely check your heart for showing off (Riya), renewing your focus purely on pleasing Allah during the action.",
+      "Fifth: Accept that your results are in the hands of Allah, focusing on the quality and sincerity of your effort instead.",
+      "Purifying your intentions raises your spiritual focus, turning the most mundane tasks of life into continuous worship.",
+      "It frees you from seeking the praise of people, anchoring your soul in absolute peace and connection with the Creator.",
+      "We pray that Allah purifies our intentions, accepts our daily actions, and protects our hearts from insincerity.",
+      "May this study guide serve as a valuable companion, keeping your intentions focused on what matters most.",
+      "Assalamu Alaikum wa Rahmatullah wa Barakatuh."
+    ].join("\n\n"),
+    contentAr: [
+      "السلام عليكم ورحمة الله وبركاته. نتناول اليوم بالدراسة والتحليل حديث الأعمال والنيات، وهو عماد الدين ومدار الأحكام.",
+      "يبدأ هذا الحديث الجليل الذي رواه عمر بن الخطاب في صحيح البخاري بقوله: 'إنما الأعمال بالنيات وإنما لكل امرئ ما نوى'.",
+      "وقد أكد أئمتنا الكرام أن هذا الحديث الشريف يمثل ثلث العلم الإسلامي، وهو الأساس لمعرفة القبول والرد للأعمال.",
+      "والنية في الشرع هي القصد والعزم المتوجه نحو الفعل، ومحلها القلب البشري ولا يشرع التلفظ بها في العبادات.",
+      "وللنية في الإسلام فائدتان عظيمتان: تمييز العبادات عن العادات اليومية، وتمييز رتب العبادات ومقاصدها عن بعضها.",
+      "على سبيل المثال، الاغتسال بالماء قد يكون مجرد عادة للتبريد والنظافة، وقد يكون عبادة جليلة يثاب عليها كغسل الجمعة.",
+      "والفارق الحاسم والوحيد بين هاتين الحالتين هو القصد المعنوي الكامن في القلب قبل ملامسة الماء للجسد.",
+      "إن ثواب أي عمل صالح ومقدار بركته يرتكزان بالكامل على مدى إخلاص النية لله تعالى وتطهيرها من حظوظ النفس.",
+      "فمن تصدق بالمال ابتغاء رضا الله ومساعدة المحتاجين، نال الأجر العظيم والبركة في ماله وأولاده في الدنيا والآخرة.",
+      "أما من تصدق ليقال عنه جواد وكريم بين الناس، فقد حبط عمله وحُرم الثواب لفقده شرط الإخلاص لوجه الله الكريم.",
+      "وهنا نلخص لكم أهم خمس خطوات لمراقبة وتطهير النوايا وجعل أعمالكم كلها خالصة لوجه الله رب العالمين:",
+      "أولاً: التوقف لثوانٍ معدودة قبل البدء بأي عمل دراسي أو مهني، وسؤال نفسك بصدق: 'ما هو هدفي الحقيقي من هذا العمل؟'.",
+      "ثانياً: تحويل العادات اليومية كالنوم والأكل إلى عبادات، بنية التقوي على طاعة الله وخدمة الناس ونفع المجتمع.",
+      "ثالثاً: كتمان بعض الأعمال الصالحة وجعلها خبيئة بينك وبين الله، مثل صدقة السر وصلاة قيام الليل في جوف الليل البهيم.",
+      "خامساً: مجاهدة النفس ومحاربة الرياء (حب الشهرة والثناء)، وتجديد الإخلاص باستمرار أثناء تأدية العمل الصالح.",
+      "خامساً: الرضا بالنتائج وتفويض الأمر لله، والتركيز على جودة العمل وإتقانه والنية الطيبة التي سبقت أداءه.",
+      "إن ترويض النفس على استحضار النية الصالحة يرتقي بصحتك النفسية ويحول تفاصيل حياتك اليومية إلى نهر جارٍ من الحسنات.",
+      "نسأل الله العلي القدير أن يرزقنا الإخلاص في القول والعمل، ويطهر قلوبنا من الرياء والنفاق ويتقبل منا صالح الطاعات.",
+      "وأن يبارك في سعيكم، ويجعل هذا العلم وسيلة لزيادة الوعي الفكري والارتقاء الروحي في حياتكم المتميزة.",
+      "والسلام عليكم ورحمة الله وبركاته."
+    ].join("\n\n")
+  },
+  {
+    en: "Nurturing Gratitude (Shukr) in Everyday Actions",
+    ar: "تربية النفس على شكر النعم والرضا في تفاصيل الحياة",
+    contentEn: [
+      "Assalamu Alaikum dear reader. Today we explore the beautiful station of Shukr (Gratitude) in our daily lives.",
+      "Shukr is not merely saying 'Alhamdulillah' with the tongue; it is a complete state of appreciation that fills the heart.",
+      "It is a core station of faith, representing a conscious recognition of the countless blessings bestowed by our Creator.",
+      "Allah gives a powerful, reassuring promise in the Quran: 'If you are grateful, I will surely increase you.' (Surah Ibrahim 14:7).",
+      "Scholars explain that gratitude is expressed through three dimensions: the heart, the tongue, and the limbs.",
+      "Gratitude of the heart (Shukr al-Qalb) is the deep, internal feeling of appreciation and love for the Bestower of blessings.",
+      "Gratitude of the tongue (Shukr al-Lisan) is the verbal praise, thankfulness, and positive speech highlighting those blessings.",
+      "Gratitude of the limbs (Shukr al-A'da') is using the physical strength and gifts Allah gave you to do good and help others.",
+      "From a psychological perspective, practicing daily gratitude rewires the human brain to focus on abundance rather than lack.",
+      "It lowers stress, increases optimism, and guards the heart against envy, greed, and constant spiritual discontent.",
+      "Here are five practical recommendations to nurture gratitude (Shukr) in your daily actions and mindset:",
+      "First: Keep a daily blessings journal, writing down three specific things you are grateful for every single evening.",
+      "Second: Express thankfulness to the people who help you, as the Prophet taught: 'He who does not thank people does not thank Allah.'",
+      "Third: Reflect on the blessings of health, sight, and safety, which we often take for granted until they are gone.",
+      "Fourth: Use your skills, wealth, or time to volunteer and support those in the community who are less fortunate.",
+      "Fifth: When facing difficulties, look for the hidden mercies within the trial, saying 'Alhamdulillah' in all circumstances.",
+      "Consistency in Shukr changes your outlook, bringing immense barakah (blessings), inner peace, and satisfaction to your life.",
+      "It fulfills our primary purpose of worship, turning every positive moment into a direct means of spiritual elevation.",
+      "We pray that Allah makes us among the grateful (Al-Shakirin), accepts our praise, and increases us in goodness.",
+      "May this guide serve as a beautiful reminder to count your blessings and live a life filled with peace and contentment.",
+      "Assalamu Alaikum wa Rahmatullah wa Barakatuh."
+    ].join("\n\n"),
+    contentAr: [
+      "السلام عليكم ورحمة الله وبركاته. نتأمل اليوم مقام الشكر الجليل، وكيفية تربية النفس عليه في تفاصيل حياتنا اليومية.",
+      "والشكر في الإسلام ليس مجرد لفظة 'الحمد لله' تجري على اللسان فحسب، بل هو حالة وجدانية متكاملة تملأ أركان القلب.",
+      "وهو من أرقى مقامات الإيمان، ويعبر عن الاعتراف الصادق والتقدير العميق لنعم الخالق العظيم الظاهرة والباطنة.",
+      "وقد وعدنا الله سبحانه وتعالى في كتابه الكريم بزيادة النعم لمن يشكرها فقال: 'لَئِنْ شَكَرْتُمْ لَأَزِيدَنَّكُمْ' (إبراهيم: 7).",
+      "وقد بين علماؤنا الأجلاء أن الشكر الحقيقي يتحقق عبر ثلاثة أبعاد متكاملة: شكر القلب، شكر اللسان، وشكر الجوارح.",
+      "فشكر القلب هو استشعار المحبة والامتنان الخالص للمنعم سبحانه، واليقين بأن كل نعمة هي فضل ومحض جود منه.",
+      "وشكر اللسان هو اللهج بالحمد والثناء الجميل، والتحدث بنعم الله بالخير دون كبر أو تفاخر مقيت أمام الناس.",
+      "وشكر الجوارح هو استخدام القوة البدنية والصحة والمهارات التي وهبك الله إياها في عمل الخير ومساعدة الخلق وطاعته.",
+      "من منظور علم النفس الإيجابي الحديث، يعيد التدريب اليومي على الامتنان صياغة تفكيرك ليركز على النعم المتاحة بدلاً من المفقودة.",
+      "مما يقلل من القلق والاكتئاب، ويطهر قلب المسلم من الحسد والحقد والضيق ويملأ صدره بالرضا الداخلي الجميل.",
+      "وهنا نلخص لكم أهم خمس خطوات عملية لغرس خلق الشكر والامتنان في تفاصيل حياتكم اليومية بنجاح:",
+      "أولاً: كتابة ثلاث نعم محددة شعرت بها خلال يومك كل مساء في دفتر خاص، لتدريب عقلك على التفكير الإيجابي والامتنان.",
+      "ثانياً: شكر الناس الذين يقدمون لك المساعدة، التزاماً بالتوجيه النبوي: 'من لا يشكر الناس لا يشكر الله'.",
+      "ثالثاً: تأمل نعم العافية، والأمان، والسمع والبصر، وهي نعم عظيمة نعتاد عليها وننسى تقديرها إلا عند فقدها.",
+      "رابعاً: تسخير جزء من وقتك وعلمك وجاهك لمساعدة المحتاجين والتطوع في أعمال البر لخدمة وتنمية مجتمعك.",
+      "خامساً: حمد الله والرضا بقضائه عند مواجهة التحديات والصعاب، باحثاً عن الرحمات الخفية واليسر الذي يصاحب العسر.",
+      "إن المداومة على شكر الله تصنع فارقاً مهيباً في حياتك، فتجلب البركة واليسر وتزيد من خشوعك وراحة بالك وسكينتك.",
+      "نسأل الله العلي القدير أن يجعلنا من الشاكرين الذاكرين الحامدين، وأن يزيدنا من فضله العظيم في الدنيا والآخرة.",
+      "وأن يبارك في مسيرتكم العلمية الحافلة، ويجعل هذا العلم نوراً يضيء حياتكم بالسلام والخير والبركات الدائمة.",
+      "والسلام عليكم ورحمة الله وبركاته."
+    ].join("\n\n")
+  },
+  {
+    en: "Bilingual Short Stories for Arabic Vocab Building",
+    ar: "القصص ثنائية اللغة ودورها في بناء الثروة المفرداتية",
+    contentEn: [
+      "Assalamu Alaikum dear seeker of language. Today we present an educational bilingual short story designed for vocabulary building.",
+      "Reading bilingual text is one of the most effective linguistic tools to acquire vocabulary naturally in its correct context.",
+      "It allows you to compare sentence structures, syntax, and subtle word choices between English and Classical Arabic organically.",
+      "Let us read the story of a young student named Zayd, who lived in a quiet valley and loved books more than anything.",
+      "Zayd dreamed of traveling to the legendary House of Wisdom (Bayt al-Hikmah) in Baghdad to study under the great scholars of his era.",
+      "His wise father advised him: 'O my son, the journey of seeking knowledge is long, requiring patience and writing down whatever you hear.'",
+      "Zayd packed his bags, carrying only a clean notebook, a wooden inkwell, and a heart filled with high determination and hope.",
+      "He traveled across mountains and deserts for forty days, facing the heat of the sun and the cold of the desert nights with patience.",
+      "Upon arriving in Baghdad, the massive libraries, beautiful arches, and scholars discussing algebra and physics amazed his eyes.",
+      "He entered the grand courtyard of the library, sitting quietly near a wise teacher who was explaining Hadith and language rules.",
+      "The teacher welcomed Zayd and asked: 'What is it that you seek, O young traveler from the distant valley?'",
+      "Zayd replied with humility: 'I seek beneficial knowledge, the correction of my tongue, and the purification of my heart, O teacher.'",
+      "The teacher smiled and said: 'Knowledge is not just memorizing words; it is a light that Allah places in the heart of the sincere seeker.'",
+      "He handed Zayd a classical textbook of Arabic grammar, instructing him to study the root system and practice writing daily.",
+      "Zayd spent five years in Baghdad, studying grammar, interpretation, and geometry, writing down every piece of wisdom he acquired.",
+      "He returned to his home valley as a teacher, establishing a school to educate children and preserve the beauty of Classical Arabic.",
+      "Here are five vocabulary building recommendations to practice while reading this short educational story:",
+      "First: Identify the three-letter roots of the highlighted verbs, observing how nouns are derived from them.",
+      "Second: Keep a bilingual dictionary nearby to look up synonyms and write them down in your study journal.",
+      "Third: Practice translating sentences from Arabic to English and back, paying attention to verb-subject agreement rules.",
+      "Fourth: Read the Arabic text aloud to train your tongue in the correct pronunciation of heavy letters and vowels.",
+      "Fifth: Discuss the moral of the story with other language students in our live study circles to share insights.",
+      "We pray that the Almighty grants you success, blesses your language learning, and makes the Quran easy for you to comprehend.",
+      "May this study guide serve as a source of language progress and continuous intellectual development.",
+      "Assalamu Alaikum wa Rahmatullah wa Barakatuh."
+    ].join("\n\n"),
+    contentAr: [
+      "السلام عليكم ورحمة الله وبركاته يا طالب اللغة والبيان. نقدم لكم اليوم قصة تعليمية ثنائية اللغة لزيادة الثروة اللغوية.",
+      "تعتبر القراءة المتوازية باللغتين من أفضل الوسائل لاكتساب المفردات الجديدة وفهم صياغتها النحوية والدلالية في سياقها الصحيح.",
+      "فهي تتيح لك مقارنة التراكيب اللغوية وأسلوب الكتابة وصياغة الجمل بين العربية الفصحى والإنجليزية بشكل تلقائي وممتع.",
+      "دعونا نقرأ قصة طالب شاب يدعى زيد، كان يعيش في وادٍ هادئ ويحب الكتب والقراءة أكثر من أي شيء آخر في حياته.",
+      "كان زيد يحلم بالسفر إلى بيت الحكمة الشهير في بغداد ليتعلم على أيدي كبار العلماء والفقهاء في عصره الذهبي.",
+      "فنصحه والده الحكيم قائلاً: 'يا بني، إن رحلة طلب العلم طويلة وشاقة، وتتطلب الصبر الجميل وتقييد المعرفة بالكتابة والتدوين'.",
+      "حزم زيد أمتعته، ولم يحمل معه سوى دفتر نظيف، ومحبرة خشبية، وقلب مفعم بالأمل والعزيمة القوية وحب المعرفة.",
+      "سافر زيد عبر الجبال والصحاري لمدة أربعين يوماً، واجه خلالها حرارة الشمس وبرد الليل الصحرواي بالصبر والاحتساب.",
+      "وعندما وصل بغداد، أدهشته المكتبات الضخمة، والقباب المزخرفة، وحلقات العلماء الذين يتدارسون الجبر والفلك والحديث الشريف.",
+      "دخل زيد الفناء الكبير للمكتبة، وجلس بأدب جم بالقرب من معلم وقور كان يشرح قواعد اللغة ومفرداتها للطلاب الأفاضل.",
+      "فرحب به المعلم وسأله بلطف: 'ما الذي تبحث عنه يا بني في هذه الحاضرة العلمية الكبرى وأنت قادم من وادٍ بعيد؟'.",
+      "أجاب زيد بتواضع: 'أبحث عن العلم النافع، وتقويم لساني، وتطهير قلبي من شواغل الدنيا الفانية يا معلمي الكريم'.",
+      "تبسم المعلم وقال: 'العلم ليس مجرد حفظ الكلمات والسطور، بل هو نور يقذفه الله في قلب طالب العلم الصادق والمخلص'.",
+      "ثم سلمه كتاباً في النحو والصرف، وأمره بدراسة نظام الجذور اللغوية وتدرب الكتابة اليومية بانتظام.",
+      "قضى زيد خمس سنوات في بغداد يدرس النحو والتفسير والهندسة، مدوناً كل فائدة وحكمة يتعلمها في دفتره الصغير.",
+      "ثم عاد إلى واديه معلماً قديراً، وأسس مدرسة لتعليم الأطفال وحفظ لغة الضاد البديعة وجمالها وسياقها الشريف.",
+      "وهنا نلخص لكم خمس نصائح دراسية لتطوير مهاراتكم اللغوية أثناء قراءتكم لهذه القصة التعليمية المميزة:",
+      "أولاً: استخراج الجذور ثلاثية الأحرف للأفعال الواردة في القصة، وملاحظة كيفية اشتقاق الأسماء والمصادر منها.",
+      "ثانياً: تدوين المفردات الجديدة في دفتر خاص بك مع معانيها المترجمة ومحاولة تركيبها في جمل مفيدة من إنشائك.",
+      "ثالثاً: التدرب على ترجمة الجمل البسيطة من الإنجليزية إلى العربية، مع الانتباه لقواعد التطابق النحوي والصرفي.",
+      "رابعاً: قراءة النص العربي بصوت مسموع لتدريب جهازك النطقي على مخارج الحروف العربية الثقيلة والحركات الإعرابية.",
+      "خامساً: مناقشة مغزى القصة والفوائد اللغوية مع زملائك في حلقات الدراسة المباشرة لتبادل المعرفة والتجارب الناجحة.",
+      "نسأل الله العلي القدير أن ييسر لكم سبل التعلم، ويرزقكم الفهم والبيان، ويجعل لغتكم وسيلة لفهم كتابه والعمل به.",
+      "وأن يبارك في أوقاتكم، وينير دروبكم بنور العلم والهدى ويوفقكم لما فيه الخير والصلاح في مسيرتكم التعليمية.",
+      "والسلام عليكم ورحمة الله وبركاته."
+    ].join("\n\n")
+  }
 ];
 
 // Procedural generator to output exactly 120 premium unique articles dynamically!
@@ -245,55 +714,10 @@ const generate120Articles = () => {
     const titleAr = `${titleTemplate.ar} - الجزء ${Math.floor(i / 10) + 1}`;
 
     const summary = `Unlocking pristine dimensional aspects of ${titleTemplate.en.toLowerCase()} to enrich your study. Discover historical contexts and structural guides.`;
-    const summaryAr = `الكشف عن الدروس الدينية واللغوية حول ${titleTemplate.ar} لإثراء تدبرك ودراستك اليومية في هذا مجال الهام.`;
+    const summaryAr = `الكشف عن الدروس الدينية واللغوية حول ${titleTemplate.ar} لإثراء تدبرك ودراستك اليومية في هذا المجال الهام.`;
 
-    const content = [
-      `Assalamu Alaikum dear seeker of wisdom. This article (Volume ${Math.floor(i / 10) + 1}) addresses critical aspects of ${titleTemplate.en.toLowerCase()}.`,
-      "Understanding this concept requires constant daily reflection, patient study, and aligning actions with pure intentions (Ikhlas).",
-      "To truly comprehend the depth of this spiritual topic, one must dedicate substantial time to deep reading and contemplation.",
-      "Islam is not just a set of dry rituals; it is a complete, dynamic way of life that structures our intellect and our souls.",
-      "By studying these educational themes, we develop a much stronger relationship with the Quran and our rich Arabic Muslim heritage.",
-      "The classical scholars emphasized that knowledge without practice is like a tree without fruit, yielding no benefit.",
-      "Therefore, we must strive to implement every piece of wisdom we acquire in our daily habits, prayers, and community dealings.",
-      "Here are five practical recommendations to help you integrate these learning dimensions into your personal growth journey:",
-      "First: Keep a dedicated journal to take structured notes on the root verbs and linguistic context of the Quranic verses.",
-      "Second: Renew your intentions (Niyyah) daily, ensuring that every act of learning is dedicated purely to pleasing the Creator.",
-      "Third: Spend ten minutes in absolute silence each morning practicing deep mindfulness, gratitude, and supplication.",
-      "Fourth: Discuss these concepts with other students and teachers in our live interactive circles to expand your understanding.",
-      "Fifth: Leverage the premium bilingual textbooks showcased in our bookstore to master vocabulary and syntax organically.",
-      "Consistency in these small actions will transform your educational progress, mental focus, and inner sense of peace.",
-      "We pray that the Almighty grants us beneficial knowledge, purifies our hearts, and guides us to spiritual and intellectual excellence.",
-      "May this study serve as a continuous source of light, guiding you through the trials of this life to success in the hereafter.",
-      "Let us work together to spread positive reminders, encourage beneficial studies, and nurture a loving, supportive community.",
-      "Remember that every step you take in seeking knowledge is highly rewarded and makes your path to Paradise easier.",
-      "Stay committed, be patient with your learning pace, and always trust in the infinite wisdom and support of Allah.",
-      "May the continuous peace, mercy, and abundant blessings of Allah be upon you, your loved ones, and the entire community.",
-      "Assalamu Alaikum wa Rahmatullah wa Barakatuh."
-    ].join("\n\n");
-
-    const contentAr = [
-      `السلام عليكم ورحمة الله وبركاته يا طالب الحكمة والسكينة ونور الإيمان. في هذا المقال (الجزء ${Math.floor(i / 10) + 1}) نتناول محاور هامة حول ${titleTemplate.ar}.`,
-      "إن فهم هذه الجوانب الإيمانية واللغوية العميقة يتطلب تفكراً مستمراً، ودراسة متأنية، ومطابقة للعمل مع خلوص النية والإخلاص لله تعالى.",
-      "العلم في الإسلام ليس مجرد طقوس جافة، بل هو منهج حياة متكامل يصيغ العقل البشري ويهذب النفس ويرتقي بسلوك المسلم اليومي.",
-      "إن الارتقاء الحقيقي للقلب البشري يبدأ أولاً بتنقية النوايا وتجديد العزيمة الصادقة للإصلاح والنمو المستمر في طاعة الله.",
-      "وقد أكد علماؤنا الأجلاء أن العلم بلا عمل كشجرة بلا ثمر، لا يرجى منها نفع ولا يستظل بظلها طالب حقيقي للرشاد.",
-      "لذا، يجب علينا دوماً تخصيص أوقات ثابتة ومنتظمة للقراءة والبحث وتدبر آيات الوحي الشريف وتطبيقها العملي بصدق وإخلاص.",
-      "وهنا نلخص لكم أهم الإرشادات العملية لتفعيل هذا المفهوم الديني واللغوي المبارك في روتينكم اليومي بنجاح:",
-      "أولاً: تخصيص ورد يومي ثابت ومحدد لتأمل الآيات القرآنية والبحث في معاني كلماتها وتفسيرها المعتمد لتثبيت الفهم.",
-      "ثانياً: تجديد النية الصالحة قبل البدء بأي عمل دراسي أو مهني، مستشعرين رقابة الله ومبتغين مرضاته العظيمة سبحانه.",
-      "ثالثاً: ممارسة الأذكار اليومية بانتظام وتدبر معانيها لتوفير الطمأنينة الكاملة والسكينة النفسية والروحية لقلوبكم.",
-      "رابعاً: المشاركة الفعالة والمستمرة في حلقات التدارس المباشرة لتبادل الفوائد والاستماع لتوجيهات المعلمين الأفاضل.",
-      "خامساً: الاستعانة بالمراجع والكتب ثنائية اللغة المتاحة في متجرنا لربط المفردات بالسياق اللغوي البديع وفهم أسراره.",
-      "إن الالتزام بهذه الخطوات البسيطة بانتظام يصنع فارقاً مهيباً في قوة حفظك وعمق وعيك الديني واللغوي والتطبيقي الفعال.",
-      "نسأل الله العلي القدير أن يرزقنا وإياكم العلم النافع، والعمل الصالح، والقلب الخاشع المنيب، واللسان الذاكر الشاكر.",
-      "وأن يجعل هذا العمل خالصاً لوجهه الكريم، وسبباً في نيل مرضاته وجنته العالية يوم نلقاه بقلوب سليمة عامرة بالإيمان.",
-      "فلنجتهد سوياً في نشر الخير والكلمة الطيبة والعلم النافع بين الناس لتعم الفائدة والتراحم والبركة في مجتمعاتنا الصالحة.",
-      "وتذكر دائماً أن كل خطوة تخطوها في سبيل طلب العلم وتدبر كتاب الله هي عبادة جليلة تيسر لك طريقاً معبداً إلى الجنة.",
-      "احرص على مشاركة هذه المعارف القيمة مع عائلتك وأبنائك لتسود ثقافة التعلم والتدبر الديني واللغوي المتميز في بيوتكم.",
-      "كن صبوراً ودؤوباً في مسيرتك العلمية، وثق دوماً بتوفيق الله وتأييده لعباده الذاكرين الحامدين المستغفرين بالأسحار.",
-      "وفي الختام، نسأل الله أن يبارك في أوقاتكم وجهودهم، وأن ينير دروبكم بنور الوحي والقرآن الكريم ويهديكم لسبل الرشاد.",
-      "والسلام عليكم ورحمة الله وبركاته."
-    ].join("\n\n");
+    const content = titleTemplate.contentEn.replace(/Volume \d+/g, `Volume ${Math.floor(i / 10) + 1}`);
+    const contentAr = titleTemplate.contentAr.replace(/الجزء \d+/g, `الجزء ${Math.floor(i / 10) + 1}`);
 
     list.push({
       id: i,
@@ -727,6 +1151,154 @@ const translations = {
   }
 };
 
+const formatNewsDate = (daysAgo, lang) => {
+  const date = new Date();
+  date.setDate(date.getDate() - daysAgo);
+  if (lang === 'ar') {
+    if (daysAgo === 0) return "اليوم";
+    if (daysAgo === 1) return "أمس";
+    if (daysAgo === 2) return "منذ يومين";
+    return `منذ ${daysAgo} أيام`;
+  } else {
+    if (daysAgo === 0) return "Today";
+    if (daysAgo === 1) return "Yesterday";
+    return `${daysAgo} days ago`;
+  }
+};
+
+const fallbackNewsList = [
+  {
+    id: "fallback-1",
+    title: "Al-Aqsa Mosque Courtyard Renovations Completed",
+    titleAr: "إتمام أعمال ترميم ساحات المسجد الأقصى المبارك",
+    source: "Jerusalem News",
+    sourceAr: "أخبار القدس",
+    daysAgo: 0,
+    summary: "Historical preservation teams in Jerusalem have completed restoring the ancient geometric stone tiles and mosaic works of the Southern Mosque corridors.",
+    summaryAr: "فرق الحفاظ التاريخي بالقدس تنهي ترميم الفسيفساء والممرات الحجرية القديمة في الأروقة الجنوبية للمسجد الأقصى الشريف.",
+    image: "🕌",
+    likes: 342,
+    commentsCount: 28
+  },
+  {
+    id: "fallback-2",
+    title: "Makkah Launching AI Crowd Management Logistics for Hajj 2026",
+    titleAr: "مكة تطلق خدمات الذكاء الاصطناعي لإدارة الحشود في حج 2026",
+    source: "Haramain Daily",
+    sourceAr: "يوميات الحرمين",
+    daysAgo: 1,
+    summary: "The Ministry of Hajj announced advanced spatial tracking models and autonomous guidance flow paths inside the Grand Mosque to ease overcrowding during prayers.",
+    summaryAr: "وزارة الحج تعلن عن إدخال خوارزميات الذكاء الاصطناعي والمحاكاة لتسهيل تدفق وتوزيع ضيوف الرحمن في أروقة الحرم المكي الشريف.",
+    image: "🕋",
+    likes: 512,
+    commentsCount: 74
+  },
+  {
+    id: "fallback-3",
+    title: "New Eco-Mosque in London Wins Prestigious Green Architecture Award",
+    titleAr: "مسجد صديق للبيئة في لندن يفوز بجائزة العمارة الخضراء المرموقة",
+    source: "London Islamic Council",
+    sourceAr: "المجلس الإسلامي بلندن",
+    daysAgo: 2,
+    summary: "A newly built multi-purpose mosque featuring local wood materials, structural zero-carbon insulation, and solar dome structures was honored in London.",
+    summaryAr: "تكريم مسجد حديث في لندن يعتمد على التصميم الخشبي المستدام، العزل الذكي، والقبة المغطاة بالخلايا الشمسية لتوليد الطاقة النظيفة.",
+    image: "🌳",
+    likes: 198,
+    commentsCount: 19
+  },
+  {
+    id: "fallback-4",
+    title: "Dubai International Holy Quran Awards Begin Main Ceremony Sessions",
+    titleAr: "جائزة دبي الدولية للقرآن الكريم تبدأ جلساتها الختامية والتحكيمية",
+    source: "Emirates News",
+    sourceAr: "أخبار الإمارات",
+    daysAgo: 3,
+    summary: "Over eighty international contestants have arrived in Dubai to participate in the final recitation categories before the grand prize announcement.",
+    summaryAr: "أكثر من ثمانين متسابقاً دولياً يتوافدون إلى دبي للمشاركة في التصفيات النهائية لتلاوة القرآن الكريم وحفظه أمام لجان التحكيم الدولية.",
+    image: "🏆",
+    likes: 420,
+    commentsCount: 31
+  },
+  {
+    id: "fallback-5",
+    title: "Muslim Aid Announces Clean Water Access Projects Across 5 Countries",
+    titleAr: "مؤسسة العون الإسلامي تعلن مشاريع لتوفير المياه النظيفة في 5 دول",
+    source: "Sadaqah Relief",
+    sourceAr: "إغاثة الصدقة",
+    daysAgo: 4,
+    summary: "The organization has successfully drilled new deep solar wells to provide sustained potable water to agricultural villages in East Africa and South Asia.",
+    summaryAr: "نجحت المؤسسة في حفر آبار ارتوازية جديدة تعمل بالطاقة الشمسية لتوفير مياه الشرب النظيفة للقرى الزراعية في شرق إفريقيا وجنوب آسيا.",
+    image: "💧",
+    likes: 295,
+    commentsCount: 12
+  },
+  {
+    id: "fallback-6",
+    title: "Centuries-Old Quran Manuscript Digitized for Public Academic Study",
+    titleAr: "رقمنة مخطوطة قرآنية نادرة تعود لقرون مضت لإتاحتها للبحث العلمي",
+    source: "Heritage Society",
+    sourceAr: "جمعية التراث",
+    daysAgo: 5,
+    summary: "Specialists in Islamic arts have digitized a highly detailed Abbasid-era manuscript, providing free access to researchers studying early calligraphy.",
+    summaryAr: "أنهى متخصصون في الفنون الإسلامية رقمنة مخطوطة عباسية مذهبة، مما يتيح للباحثين دراسة تطور الخط الكوفي مجاناً.",
+    image: "📖",
+    likes: 310,
+    commentsCount: 22
+  },
+  {
+    id: "fallback-7",
+    title: "Paris Islamic Art Exhibition Displays Rare Andalusia Antiques",
+    titleAr: "معرض الفن الإسلامي في باريس يعرض تحفاً نادرة من العصر الأندلسي",
+    source: "Cultural Watch",
+    sourceAr: "المرصد الثقافي",
+    daysAgo: 6,
+    summary: "The national museum opened its seasonal pavilion hosting brass astrolabes and decorated ceramic work sourced from historical Cordoba libraries.",
+    summaryAr: "افتتح المتحف الوطني جناحاً موسمياً يعرض فيه أسطرلابات نحاسية ومصنوعات خزفية فريدة تم إعارتها من مكتبات قرطبة التاريخية.",
+    image: "🎨",
+    likes: 185,
+    commentsCount: 9
+  },
+  {
+    id: "fallback-8",
+    title: "Halal E-Commerce Startup Secures $10 Million Seed Funding Round",
+    titleAr: "شركة تجارة إلكترونية حلال تحصل على تمويل تأسيسي بقيمة 10 ملايين دولار",
+    source: "Tech Journal",
+    sourceAr: "مجلة التقنية",
+    daysAgo: 7,
+    summary: "A digital retail marketplace focusing on ethical supply chains and halal verification has announced expansion plans into Southeast Asia.",
+    summaryAr: "أعلنت منصة رقمية متخصصة في التوريد الأخلاقي والتحقق من المنتجات الحلال عن خطط لتوسيع خدماتها في دول جنوب شرق آسيا.",
+    image: "🚀",
+    likes: 240,
+    commentsCount: 15
+  },
+  {
+    id: "fallback-9",
+    title: "Islamic Finance Council Hosts Forum on Green Sukuk Frameworks",
+    titleAr: "مجلس المالية الإسلامية ينظم منتدى حول أطر الصكوك الخضراء المستدامة",
+    source: "FinTech Arab",
+    sourceAr: "فينتك العرب",
+    daysAgo: 8,
+    summary: "Global economists gathered online to standardize carbon-neutral structures for sovereign sukuk bonds to finance climate change adaptation.",
+    summaryAr: "اجتمع خبراء الاقتصاد لوضع معايير موحدة للصكوك السيادية المحايدة للكربون بهدف تمويل مشاريع التكيف مع التغير المناخي.",
+    image: "📈",
+    likes: 162,
+    commentsCount: 6
+  },
+  {
+    id: "fallback-10",
+    title: "Bilingual Tafsir Translation Set Published by Academic Scholars",
+    titleAr: "علماء أكاديميون ينشرون ترجمة تفسيرية ثنائية اللغة للقرآن الكريم",
+    source: "Al-Azhar Publishing",
+    sourceAr: "دار نشر الأزهر",
+    daysAgo: 9,
+    summary: "A landmark multi-volume set providing precise translation of the Quran alongside simple contextual explanations was released worldwide.",
+    summaryAr: "تم إصدار موسوعة ترجمة تفسيرية جديدة تقدم معاني المفردات القرآنية مع شرح مبسط للسياق اللغوي باللغتين العربية والإنجليزية.",
+    image: "🕌",
+    likes: 380,
+    commentsCount: 45
+  }
+];
+
 export const AppProvider = ({ children }) => {
   // Localization state
   const [language, setLanguage] = useState(() => {
@@ -814,13 +1386,147 @@ export const AppProvider = ({ children }) => {
   const [articlesList, setArticlesList] = useState(() => {
     const saved = localStorage.getItem('arabicmuslim_articles');
     const version = localStorage.getItem('arabicmuslim_articles_ver');
-    if (saved && version === '3.0') return JSON.parse(saved);
+    if (saved && version === '4.0') return JSON.parse(saved);
     
     const fresh = generate120Articles();
     localStorage.setItem('arabicmuslim_articles', JSON.stringify(fresh));
-    localStorage.setItem('arabicmuslim_articles_ver', '3.0');
+    localStorage.setItem('arabicmuslim_articles_ver', '4.0');
     return fresh;
   });
+
+  // Global Muslim News state (Real-time Al Jazeera Feed & Dynamic Local Fallback)
+  const [newsList, setNewsList] = useState([]);
+
+  useEffect(() => {
+    let active = true;
+    
+    const fetchNews = async () => {
+      try {
+        const feedUrl = language === 'ar' 
+          ? 'https://www.aljazeera.net/aljazeerarss.xml' 
+          : 'https://www.aljazeera.com/xml/rss/all.xml';
+        const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`);
+        const data = await response.json();
+        
+        if (active && data.status === 'ok' && data.items && data.items.length > 0) {
+          const mapped = data.items.slice(0, 10).map((item, idx) => {
+            let displayDate = "";
+            try {
+              const pubDate = new Date(item.pubDate);
+              const diffMs = new Date() - pubDate;
+              const diffMins = Math.floor(diffMs / 60000);
+              const diffHours = Math.floor(diffMins / 60);
+              const diffDays = Math.floor(diffHours / 24);
+              if (diffDays <= 0) {
+                if (language === 'ar') {
+                  displayDate = diffHours > 0 ? `منذ ${diffHours} ساعة` : "اليوم";
+                } else {
+                  displayDate = diffHours > 0 ? `${diffHours}h ago` : "Today";
+                }
+              } else {
+                displayDate = pubDate.toLocaleDateString(language === 'ar' ? 'ar-EG' : 'en-US', {
+                  day: 'numeric',
+                  month: 'short',
+                  year: 'numeric'
+                });
+              }
+            } catch (e) {
+              displayDate = language === 'ar' ? 'اليوم' : 'Today';
+            }
+            
+            const summaryText = (item.description || item.content || "")
+              .replace(/<[^>]*>?/gm, '')
+              .substring(0, 180) + '...';
+              
+            return {
+              id: item.guid || `live-${idx}`,
+              title: item.title,
+              titleAr: item.title,
+              source: language === 'ar' ? "الجزيرة" : "Al Jazeera",
+              sourceAr: language === 'ar' ? "الجزيرة" : "Al Jazeera",
+              date: displayDate,
+              summary: summaryText,
+              summaryAr: summaryText,
+              image: "📰",
+              likes: Math.floor(Math.random() * 150) + 40,
+              commentsCount: Math.floor(Math.random() * 20) + 3,
+              link: item.link
+            };
+          });
+          setNewsList(mapped);
+          return;
+        }
+      } catch (err) {
+        console.error("RSS fetch error, falling back to local news", err);
+      }
+      
+      if (active) {
+        const localMapped = fallbackNewsList.map(item => ({
+          ...item,
+          date: formatNewsDate(item.daysAgo, language)
+        }));
+        setNewsList(localMapped);
+      }
+    };
+    
+    fetchNews();
+    
+    return () => {
+      active = false;
+    };
+  }, [language]);
+
+  useEffect(() => {
+    const breakingNewsTemplates = [
+      {
+        title: "Global Muslim Charity Raises Record $50 Million for Humanitarian Relief",
+        titleAr: "جمعية خيرية إسلامية تسجل رقماً قياسياً بجمع 50 مليون دولار للإغاثة",
+        source: "Global Relief",
+        sourceAr: "الإغاثة العالمية",
+        image: "🤝"
+      },
+      {
+        title: "Renovation of Cordoba Historical Islamic Library Begins",
+        titleAr: "بدء مشروع ترميم المكتبة الإسلامية التاريخية في قرطبة",
+        source: "Andalusia Trust",
+        sourceAr: "وقف الأندلس",
+        image: "📚"
+      },
+      {
+        title: "Islamic Studies Program Launched at Tokyo University",
+        titleAr: "إطلاق برنامج الدراسات الإسلامية لأول مرة بجامعة طوكيو",
+        source: "Tokyo Academic",
+        sourceAr: "أكاديميا طوكيو",
+        image: "🎓"
+      }
+    ];
+
+    const interval = setInterval(() => {
+      const template = breakingNewsTemplates[Math.floor(Math.random() * breakingNewsTemplates.length)];
+      const randId = `breaking-${Date.now()}`;
+      
+      const breakingItem = {
+        id: randId,
+        title: template.title,
+        titleAr: template.titleAr,
+        source: language === 'ar' ? template.sourceAr : template.source,
+        sourceAr: template.sourceAr,
+        date: language === 'ar' ? "الآن" : "Just now",
+        summary: language === 'ar' 
+          ? `خبر عاجل: تم الإعلان اليوم عن ${template.titleAr} وسط ترحيب وتفاعل واسع من المتابعين والمهتمين بالعمل الإنساني والثقافي حول العالم.` 
+          : `Breaking: ${template.title} has been announced today, sparking positive engagement and reviews across global community circles.`,
+        summaryAr: `خبر عاجل: تم الإعلان اليوم عن ${template.titleAr} وسط ترحيب وتفاعل واسع من المتابعين والمهتمين بالعمل الإنساني والثقافي حول العالم.`,
+        image: template.image,
+        likes: 0,
+        commentsCount: 0,
+        breaking: true
+      };
+      
+      setNewsList(prev => [breakingItem, ...prev]);
+    }, 120000);
+
+    return () => clearInterval(interval);
+  }, [language]);
 
   // Tasmee audio submissions state
   const [tasmeeSubmissions, setTasmeeSubmissions] = useState(() => {
@@ -1497,6 +2203,7 @@ export const AppProvider = ({ children }) => {
       setQuranLaunchMode,
       triggerCreateCircleModal,
       setTriggerCreateCircleModal,
+      newsList,
       t
     }}>
       {children}
