@@ -698,6 +698,21 @@ const titlesTemplate = [
   }
 ];
 
+const authorsTemplate = [
+  { name: "Dr. Amina Farooq", nameAr: "د. أمينة فاروق", avatar: "✨" },
+  { name: "Ustadh Yusuf Al-Qurashi", nameAr: "الأستاذ يوسف القرشي", avatar: "🕌" },
+  { name: "Fatima Alzahra", nameAr: "فاطمة الزهراء", avatar: "⭐" },
+  { name: "Professor Tariq Mansoor", nameAr: "أ.د طارق منصور", avatar: "📖" },
+  { name: "Shaykh Bilal Hassan", nameAr: "الشيخ بلال حسن", avatar: "🌙" }
+];
+
+const categoriesTemplate = [
+  { cat: "Faith", catAr: "إيمانيات" },
+  { cat: "Arabic Learning", catAr: "تعلم العربية" },
+  { cat: "Tafsir", catAr: "تفسير" },
+  { cat: "History", catAr: "التاريخ الإسلامي" }
+];
+
 // Procedural generator to output exactly 120 premium unique articles dynamically!
 const generate120Articles = () => {
   const list = [...baseArticles];
