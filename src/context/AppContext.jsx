@@ -1183,134 +1183,69 @@ const formatNewsDate = (daysAgo, lang) => {
 
 const fallbackNewsList = [
   {
-    id: "fallback-1",
-    title: "Al-Aqsa Mosque Courtyard Renovations Completed",
-    titleAr: "إتمام أعمال ترميم ساحات المسجد الأقصى المبارك",
-    source: "Jerusalem News",
-    sourceAr: "أخبار القدس",
+    id: "real-fallback-1",
+    title: "Satellite Imagery Identifies 40 Israeli Military Outposts in Gaza",
+    titleAr: "تحقيق للجزيرة: صور الأقمار الاصطناعية تحدد 40 موقعاً عسكرياً للاحتلال في غزة",
+    source: "Al Jazeera",
+    sourceAr: "الجزيرة",
     daysAgo: 0,
-    summary: "Historical preservation teams in Jerusalem have completed restoring the ancient geometric stone tiles and mosaic works of the Southern Mosque corridors.",
-    summaryAr: "فرق الحفاظ التاريخي بالقدس تنهي ترميم الفسيفساء والممرات الحجرية القديمة في الأروقة الجنوبية للمسجد الأقصى الشريف.",
-    image: "🕌",
+    summary: "A detailed Al Jazeera investigative report using high-resolution satellite imagery has identified 40 distinct Israeli military bases within the Gaza Strip.",
+    summaryAr: "تحقيق استقصائي للجزيرة يكشف استناداً لصور الأقمار الاصطناعية عن إنشاء 40 موقعاً عسكرياً لجيش الاحتلال الإسرائيلي في قطاع غزة.",
+    image: "📰",
     likes: 342,
     commentsCount: 28
   },
   {
-    id: "fallback-2",
-    title: "Makkah Launching AI Crowd Management Logistics for Hajj 2026",
-    titleAr: "مكة تطلق خدمات الذكاء الاصطناعي لإدارة الحشود في حج 2026",
-    source: "Haramain Daily",
-    sourceAr: "يوميات الحرمين",
+    id: "real-fallback-2",
+    title: "US House Passes Resolution Attempting to Curb Authority on Iran Operations",
+    titleAr: "مجلس النواب الأمريكي يقرر تقييد الصلاحيات العسكرية بشأن العمليات ضد إيران",
+    source: "Al Jazeera",
+    sourceAr: "الجزيرة",
     daysAgo: 1,
-    summary: "The Ministry of Hajj announced advanced spatial tracking models and autonomous guidance flow paths inside the Grand Mosque to ease overcrowding during prayers.",
-    summaryAr: "وزارة الحج تعلن عن إدخال خوارزميات الذكاء الاصطناعي والمحاكاة لتسهيل تدفق وتوزيع ضيوف الرحمن في أروقة الحرم المكي الشريف.",
-    image: "🕋",
+    summary: "The United States House of Representatives has passed a legislative resolution aiming to restrict direct military actions against Iran without Congressional approval.",
+    summaryAr: "مجلس النواب الأمريكي يمرر قراراً يهدف لتقييد صلاحيات الإدارة الأمريكية في شن عمليات عسكرية ضد إيران دون موافقة مسبقة من الكونغرس.",
+    image: "📰",
     likes: 512,
     commentsCount: 74
   },
   {
-    id: "fallback-3",
-    title: "New Eco-Mosque in London Wins Prestigious Green Architecture Award",
-    titleAr: "مسجد صديق للبيئة في لندن يفوز بجائزة العمارة الخضراء المرموقة",
-    source: "London Islamic Council",
-    sourceAr: "المجلس الإسلامي بلندن",
+    id: "real-fallback-3",
+    title: "Al Jazeera Media Network Wins 12 Accolades at New York Festivals TV & Film Awards",
+    titleAr: "شبكة الجزيرة الإعلامية تحصد 12 جائزة في مهرجان نيويورك للتلفزيون والفيلم",
+    source: "Al Jazeera Network",
+    sourceAr: "شبكة الجزيرة",
     daysAgo: 2,
-    summary: "A newly built multi-purpose mosque featuring local wood materials, structural zero-carbon insulation, and solar dome structures was honored in London.",
-    summaryAr: "تكريم مسجد حديث في لندن يعتمد على التصميم الخشبي المستدام، العزل الذكي، والقبة المغطاة بالخلايا الشمسية لتوليد الطاقة النظيفة.",
-    image: "🌳",
+    summary: "Al Jazeera achieved global recognition by winning twelve major gold, silver, and bronze awards for its investigative journalism, documentaries, and news coverage.",
+    summaryAr: "شبكة الجزيرة تحقق إنجازاً عالمياً جديداً بحصد 12 جائزة متنوعة في مهرجان نيويورك الدولي لمساهماتها الاستقصائية والوثائقية المتميزة.",
+    image: "📰",
     likes: 198,
     commentsCount: 19
   },
   {
-    id: "fallback-4",
-    title: "Dubai International Holy Quran Awards Begin Main Ceremony Sessions",
-    titleAr: "جائزة دبي الدولية للقرآن الكريم تبدأ جلساتها الختامية والتحكيمية",
-    source: "Emirates News",
-    sourceAr: "أخبار الإمارات",
+    id: "real-fallback-4",
+    title: "IAEA Chief Grossi Warns 2015 Iran Nuclear Deal is No Longer Viable",
+    titleAr: "مدير الطاقة الذرية رافائيل غروسي: الاتفاق النووي الإيراني لعام 2015 لم يعد نموذجاً قابلاً للتطبيق",
+    source: "Al Jazeera",
+    sourceAr: "الجزيرة",
     daysAgo: 3,
-    summary: "Over eighty international contestants have arrived in Dubai to participate in the final recitation categories before the grand prize announcement.",
-    summaryAr: "أكثر من ثمانين متسابقاً دولياً يتوافدون إلى دبي للمشاركة في التصفيات النهائية لتلاوة القرآن الكريم وحفظه أمام لجان التحكيم الدولية.",
-    image: "🏆",
+    summary: "International Atomic Energy Agency Director General Rafael Grossi stated that nuclear advancements make the old JCPOA framework obsolete.",
+    summaryAr: "المدير العام للوكالة الدولية للطاقة الذرية يعلن أن التقدم التقني الكبير يجعل الاتفاق النووي الإيراني القديم غير مناسب للمرحلة الحالية.",
+    image: "📰",
     likes: 420,
     commentsCount: 31
   },
   {
-    id: "fallback-5",
-    title: "Muslim Aid Announces Clean Water Access Projects Across 5 Countries",
-    titleAr: "مؤسسة العون الإسلامي تعلن مشاريع لتوفير المياه النظيفة في 5 دول",
-    source: "Sadaqah Relief",
-    sourceAr: "إغاثة الصدقة",
+    id: "real-fallback-5",
+    title: "Saudi Arabia Non-Oil Private Sector Growth Reaches 3-Month High",
+    titleAr: "نمو القطاع الخاص غير النفطي في السعودية يسجل أعلى مستوى في ثلاثة أشهر",
+    source: "Al Jazeera Business",
+    sourceAr: "الجزيرة الاقتصادية",
     daysAgo: 4,
-    summary: "The organization has successfully drilled new deep solar wells to provide sustained potable water to agricultural villages in East Africa and South Asia.",
-    summaryAr: "نجحت المؤسسة في حفر آبار ارتوازية جديدة تعمل بالطاقة الشمسية لتوفير مياه الشرب النظيفة للقرى الزراعية في شرق إفريقيا وجنوب آسيا.",
-    image: "💧",
+    summary: "PMI economic indicators for May 2026 show rapid expansion in the Kingdom's non-oil trade, driving business growth despite regional shipping challenges.",
+    summaryAr: "مؤشرات مديري المشتريات لشهر مايو 2026 تظهر نمواً متسارعاً وتوسعاً قوياً في الأنشطة التجارية غير النفطية بالمملكة العربية السعودية.",
+    image: "📈",
     likes: 295,
     commentsCount: 12
-  },
-  {
-    id: "fallback-6",
-    title: "Centuries-Old Quran Manuscript Digitized for Public Academic Study",
-    titleAr: "رقمنة مخطوطة قرآنية نادرة تعود لقرون مضت لإتاحتها للبحث العلمي",
-    source: "Heritage Society",
-    sourceAr: "جمعية التراث",
-    daysAgo: 5,
-    summary: "Specialists in Islamic arts have digitized a highly detailed Abbasid-era manuscript, providing free access to researchers studying early calligraphy.",
-    summaryAr: "أنهى متخصصون في الفنون الإسلامية رقمنة مخطوطة عباسية مذهبة، مما يتيح للباحثين دراسة تطور الخط الكوفي مجاناً.",
-    image: "📖",
-    likes: 310,
-    commentsCount: 22
-  },
-  {
-    id: "fallback-7",
-    title: "Paris Islamic Art Exhibition Displays Rare Andalusia Antiques",
-    titleAr: "معرض الفن الإسلامي في باريس يعرض تحفاً نادرة من العصر الأندلسي",
-    source: "Cultural Watch",
-    sourceAr: "المرصد الثقافي",
-    daysAgo: 6,
-    summary: "The national museum opened its seasonal pavilion hosting brass astrolabes and decorated ceramic work sourced from historical Cordoba libraries.",
-    summaryAr: "افتتح المتحف الوطني جناحاً موسمياً يعرض فيه أسطرلابات نحاسية ومصنوعات خزفية فريدة تم إعارتها من مكتبات قرطبة التاريخية.",
-    image: "🎨",
-    likes: 185,
-    commentsCount: 9
-  },
-  {
-    id: "fallback-8",
-    title: "Halal E-Commerce Startup Secures $10 Million Seed Funding Round",
-    titleAr: "شركة تجارة إلكترونية حلال تحصل على تمويل تأسيسي بقيمة 10 ملايين دولار",
-    source: "Tech Journal",
-    sourceAr: "مجلة التقنية",
-    daysAgo: 7,
-    summary: "A digital retail marketplace focusing on ethical supply chains and halal verification has announced expansion plans into Southeast Asia.",
-    summaryAr: "أعلنت منصة رقمية متخصصة في التوريد الأخلاقي والتحقق من المنتجات الحلال عن خطط لتوسيع خدماتها في دول جنوب شرق آسيا.",
-    image: "🚀",
-    likes: 240,
-    commentsCount: 15
-  },
-  {
-    id: "fallback-9",
-    title: "Islamic Finance Council Hosts Forum on Green Sukuk Frameworks",
-    titleAr: "مجلس المالية الإسلامية ينظم منتدى حول أطر الصكوك الخضراء المستدامة",
-    source: "FinTech Arab",
-    sourceAr: "فينتك العرب",
-    daysAgo: 8,
-    summary: "Global economists gathered online to standardize carbon-neutral structures for sovereign sukuk bonds to finance climate change adaptation.",
-    summaryAr: "اجتمع خبراء الاقتصاد لوضع معايير موحدة للصكوك السيادية المحايدة للكربون بهدف تمويل مشاريع التكيف مع التغير المناخي.",
-    image: "📈",
-    likes: 162,
-    commentsCount: 6
-  },
-  {
-    id: "fallback-10",
-    title: "Bilingual Tafsir Translation Set Published by Academic Scholars",
-    titleAr: "علماء أكاديميون ينشرون ترجمة تفسيرية ثنائية اللغة للقرآن الكريم",
-    source: "Al-Azhar Publishing",
-    sourceAr: "دار نشر الأزهر",
-    daysAgo: 9,
-    summary: "A landmark multi-volume set providing precise translation of the Quran alongside simple contextual explanations was released worldwide.",
-    summaryAr: "تم إصدار موسوعة ترجمة تفسيرية جديدة تقدم معاني المفردات القرآنية مع شرح مبسط للسياق اللغوي باللغتين العربية والإنجليزية.",
-    image: "🕌",
-    likes: 380,
-    commentsCount: 45
   }
 ];
 
@@ -1410,77 +1345,161 @@ export const AppProvider = ({ children }) => {
   });
 
   // Global Muslim News state (Real-time Al Jazeera Feed & Dynamic Local Fallback)
-  const [newsList, setNewsList] = useState([]);
+  const [newsList, setNewsList] = useState(() => {
+    try {
+      const saved = localStorage.getItem('arabicmuslim_news_cache');
+      if (saved) {
+        return JSON.parse(saved);
+      }
+    } catch (e) {
+      console.error("Error reading cached news from localStorage", e);
+    }
+    const initialLang = localStorage.getItem('arabicmuslim_lang') === 'ar' ? 'ar' : 'en';
+    return fallbackNewsList.map(item => ({
+      ...item,
+      date: formatNewsDate(item.daysAgo, initialLang)
+    }));
+  });
 
   useEffect(() => {
     let active = true;
     
     const fetchNews = async () => {
-      try {
-        const feedUrl = language === 'ar' 
-          ? 'https://www.aljazeera.net/aljazeerarss.xml' 
-          : 'https://www.aljazeera.com/xml/rss/all.xml';
-        const response = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`);
-        const data = await response.json();
-        
-        if (active && data.status === 'ok' && data.items && data.items.length > 0) {
-          const mapped = data.items.slice(0, 10).map((item, idx) => {
-            let displayDate = "";
-            try {
-              const pubDate = new Date(item.pubDate);
-              const diffMs = new Date() - pubDate;
-              const diffMins = Math.floor(diffMs / 60000);
-              const diffHours = Math.floor(diffMins / 60);
-              const diffDays = Math.floor(diffHours / 24);
-              if (diffDays <= 0) {
-                if (language === 'ar') {
-                  displayDate = diffHours > 0 ? `منذ ${diffHours} ساعة` : "اليوم";
+      const feedUrl = language === 'ar' 
+        ? 'https://www.aljazeera.net/aljazeerarss.xml' 
+        : 'https://www.aljazeera.com/xml/rss/all.xml';
+      
+      const proxies = [
+        {
+          name: 'corsproxy.io',
+          fetcher: async (url) => {
+            const res = await fetch(`https://corsproxy.io/?${encodeURIComponent(url)}`);
+            if (!res.ok) throw new Error("corsproxy.io failed with status " + res.status);
+            return await res.text();
+          }
+        },
+        {
+          name: 'allorigins.win',
+          fetcher: async (url) => {
+            const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
+            if (!res.ok) throw new Error("allorigins.win failed with status " + res.status);
+            const json = await res.json();
+            if (!json || !json.contents) throw new Error("allorigins.win empty contents");
+            return json.contents;
+          }
+        },
+        {
+          name: 'codetabs.com',
+          fetcher: async (url) => {
+            const res = await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`);
+            if (!res.ok) throw new Error("codetabs.com failed with status " + res.status);
+            return await res.text();
+          }
+        },
+        {
+          name: 'direct',
+          fetcher: async (url) => {
+            const res = await fetch(url);
+            if (!res.ok) throw new Error("direct fetch failed with status " + res.status);
+            return await res.text();
+          }
+        }
+      ];
+
+      for (const proxy of proxies) {
+        try {
+          const xmlText = await proxy.fetcher(feedUrl);
+          if (!active) return;
+          
+          const parser = new DOMParser();
+          const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+          
+          const parserError = xmlDoc.getElementsByTagName("parsererror");
+          if (parserError.length > 0) {
+            throw new Error("XML parsing error");
+          }
+
+          const xmlItems = xmlDoc.getElementsByTagName("item");
+          if (xmlItems && xmlItems.length > 0) {
+            const mapped = [];
+            const count = Math.min(xmlItems.length, 12);
+            
+            for (let i = 0; i < count; i++) {
+              const item = xmlItems[i];
+              const title = item.getElementsByTagName("title")[0]?.textContent || "";
+              const link = item.getElementsByTagName("link")[0]?.textContent || "";
+              const description = item.getElementsByTagName("description")[0]?.textContent || "";
+              const pubDateStr = item.getElementsByTagName("pubDate")[0]?.textContent || "";
+              const guid = item.getElementsByTagName("guid")[0]?.textContent || link || `live-${i}-${Date.now()}`;
+              
+              let displayDate = "";
+              try {
+                const pubDate = new Date(pubDateStr);
+                const diffMs = new Date() - pubDate;
+                const diffMins = Math.floor(diffMs / 60000);
+                const diffHours = Math.floor(diffMins / 60);
+                const diffDays = Math.floor(diffHours / 24);
+                
+                if (diffDays <= 0) {
+                  if (language === 'ar') {
+                    displayDate = diffHours > 0 ? `منذ ${diffHours} ساعة` : "اليوم";
+                  } else {
+                    displayDate = diffHours > 0 ? `${diffHours}h ago` : "Today";
+                  }
                 } else {
-                  displayDate = diffHours > 0 ? `${diffHours}h ago` : "Today";
+                  displayDate = pubDate.toLocaleDateString(language === 'ar' ? 'ar-EG' : 'en-US', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric'
+                  });
                 }
-              } else {
-                displayDate = pubDate.toLocaleDateString(language === 'ar' ? 'ar-EG' : 'en-US', {
-                  day: 'numeric',
-                  month: 'short',
-                  year: 'numeric'
-                });
+              } catch (e) {
+                displayDate = language === 'ar' ? 'اليوم' : 'Today';
               }
-            } catch (e) {
-              displayDate = language === 'ar' ? 'اليوم' : 'Today';
+              
+              const summaryText = description
+                .replace(/<[^>]*>?/gm, '')
+                .trim();
+              const finalSummary = summaryText.length > 180 
+                ? summaryText.substring(0, 180) + '...' 
+                : summaryText || (language === 'ar' ? "اضغط على الرابط لقراءة تفاصيل الخبر بالكامل." : "Click on the link to read the full story details.");
+                
+              mapped.push({
+                id: guid,
+                title: title,
+                titleAr: title,
+                source: language === 'ar' ? "الجزيرة" : "Al Jazeera",
+                sourceAr: language === 'ar' ? "الجزيرة" : "Al Jazeera",
+                date: displayDate,
+                summary: finalSummary,
+                summaryAr: finalSummary,
+                image: "📰",
+                likes: Math.floor(Math.random() * 150) + 40,
+                commentsCount: Math.floor(Math.random() * 20) + 3,
+                link: link
+              });
             }
             
-            const summaryText = (item.description || item.content || "")
-              .replace(/<[^>]*>?/gm, '')
-              .substring(0, 180) + '...';
-              
-            return {
-              id: item.guid || `live-${idx}`,
-              title: item.title,
-              titleAr: item.title,
-              source: language === 'ar' ? "الجزيرة" : "Al Jazeera",
-              sourceAr: language === 'ar' ? "الجزيرة" : "Al Jazeera",
-              date: displayDate,
-              summary: summaryText,
-              summaryAr: summaryText,
-              image: "📰",
-              likes: Math.floor(Math.random() * 150) + 40,
-              commentsCount: Math.floor(Math.random() * 20) + 3,
-              link: item.link
-            };
-          });
-          setNewsList(mapped);
-          return;
+            if (mapped.length > 0) {
+              setNewsList(mapped);
+              localStorage.setItem('arabicmuslim_news_cache', JSON.stringify(mapped));
+              return;
+            }
+          }
+        } catch (err) {
+          console.warn(`Proxy ${proxy.name} failed:`, err.message);
         }
-      } catch (err) {
-        console.error("RSS fetch error, falling back to local news", err);
       }
       
       if (active) {
-        const localMapped = fallbackNewsList.map(item => ({
-          ...item,
-          date: formatNewsDate(item.daysAgo, language)
-        }));
-        setNewsList(localMapped);
+        const cached = localStorage.getItem('arabicmuslim_news_cache');
+        if (!cached) {
+          const localMapped = fallbackNewsList.map(item => ({
+            ...item,
+            date: formatNewsDate(item.daysAgo, language)
+          }));
+          setNewsList(localMapped);
+        }
       }
     };
     
@@ -1489,58 +1508,6 @@ export const AppProvider = ({ children }) => {
     return () => {
       active = false;
     };
-  }, [language]);
-
-  useEffect(() => {
-    const breakingNewsTemplates = [
-      {
-        title: "Global Muslim Charity Raises Record $50 Million for Humanitarian Relief",
-        titleAr: "جمعية خيرية إسلامية تسجل رقماً قياسياً بجمع 50 مليون دولار للإغاثة",
-        source: "Global Relief",
-        sourceAr: "الإغاثة العالمية",
-        image: "🤝"
-      },
-      {
-        title: "Renovation of Cordoba Historical Islamic Library Begins",
-        titleAr: "بدء مشروع ترميم المكتبة الإسلامية التاريخية في قرطبة",
-        source: "Andalusia Trust",
-        sourceAr: "وقف الأندلس",
-        image: "📚"
-      },
-      {
-        title: "Islamic Studies Program Launched at Tokyo University",
-        titleAr: "إطلاق برنامج الدراسات الإسلامية لأول مرة بجامعة طوكيو",
-        source: "Tokyo Academic",
-        sourceAr: "أكاديميا طوكيو",
-        image: "🎓"
-      }
-    ];
-
-    const interval = setInterval(() => {
-      const template = breakingNewsTemplates[Math.floor(Math.random() * breakingNewsTemplates.length)];
-      const randId = `breaking-${Date.now()}`;
-      
-      const breakingItem = {
-        id: randId,
-        title: template.title,
-        titleAr: template.titleAr,
-        source: language === 'ar' ? template.sourceAr : template.source,
-        sourceAr: template.sourceAr,
-        date: language === 'ar' ? "الآن" : "Just now",
-        summary: language === 'ar' 
-          ? `خبر عاجل: تم الإعلان اليوم عن ${template.titleAr} وسط ترحيب وتفاعل واسع من المتابعين والمهتمين بالعمل الإنساني والثقافي حول العالم.` 
-          : `Breaking: ${template.title} has been announced today, sparking positive engagement and reviews across global community circles.`,
-        summaryAr: `خبر عاجل: تم الإعلان اليوم عن ${template.titleAr} وسط ترحيب وتفاعل واسع من المتابعين والمهتمين بالعمل الإنساني والثقافي حول العالم.`,
-        image: template.image,
-        likes: 0,
-        commentsCount: 0,
-        breaking: true
-      };
-      
-      setNewsList(prev => [breakingItem, ...prev]);
-    }, 120000);
-
-    return () => clearInterval(interval);
   }, [language]);
 
   // Tasmee audio submissions state
