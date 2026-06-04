@@ -683,62 +683,37 @@ export default function Home({ setActivePage }) {
           </div>
         </section>
 
-        {/* ================= RIGHT COLUMN: Sponsored Bookstore (Amazon Showcase) ================= */}
+        {/* ================= RIGHT COLUMN: Community Reflections ================= */}
         <aside style={styles.rightCol} className="glass-panel">
           <div style={styles.storeHeader}>
-            <ShoppingBag size={18} color="var(--text-gold)" />
-            <h3 style={styles.rightColTitle}>{language === 'ar' ? "المتجر الإسلامي الموصى به" : "Recommended Literature"}</h3>
+            <MessageCircle size={18} color="var(--text-gold)" />
+            <h3 style={styles.rightColTitle}>{language === 'ar' ? "خواطر وتأملات الأعضاء" : "Member Reflections"}</h3>
           </div>
           <p style={styles.storeSubtitle}>
-            {language === 'ar' ? "كتب ومنتجات حائزة على أعلى التقييمات في موقع أمازون" : "Affiliate handpicked publications on Amazon."}
+            {language === 'ar' ? "آخر الخواطر والرسائل الإيمانية المنشورة" : "Latest spiritual reflections from our community."}
           </p>
 
           <div style={styles.amazonList}>
-            {amazonProducts.map(p => (
-              <div key={p.id} style={styles.amazonCard} className="glass-panel">
-                {/* Fixed centered icon/illustration */}
-                <div style={styles.amazonImageWrapper}>
-                  <span style={styles.amazonEmoji}>{p.image}</span>
-                </div>
-
-                <div style={styles.amazonCardBody}>
-                  <span style={styles.amazonCategory}>{language === 'ar' ? p.categoryAr : p.category}</span>
-                  <h4 style={styles.amazonProductTitle}>{language === 'ar' ? p.titleAr : p.title}</h4>
-                  
-                  {/* Rating Stars Grid */}
-                  <div style={styles.ratingRow}>
-                    <div style={styles.stars}>
-                      {[...Array(5)].map((_, i) => (
-                        <Star 
-                          key={i} 
-                          size={10} 
-                          fill={i < Math.floor(p.rating) ? "var(--gold-primary)" : "none"} 
-                          color="var(--gold-primary)" 
-                        />
-                      ))}
-                    </div>
-                    <span style={styles.starsLabel}>{p.rating}</span>
-                  </div>
-
-                  <p style={styles.amazonDesc}>
-                    {language === 'ar' ? p.descriptionAr : p.description}
-                  </p>
-
-                  <div style={styles.amazonCardDivider}></div>
-
-                  <div style={styles.amazonFooter}>
-                    <span style={styles.amazonPrice}>{p.price}</span>
-                    <a 
-                      href={getAffiliateLink(p.link)} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="btn-primary" 
-                      style={styles.amazonBuyBtn}
+            {communityPosts.slice(0, 4).map(p => (
+              <div key={p.id} style={{ ...styles.amazonCard, padding: '14px' }} className="glass-panel">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
+                  <span style={{ fontSize: '1.2rem', cursor: 'pointer' }} onClick={() => viewUserProfileByName(p.author)}>{p.avatar}</span>
+                  <div>
+                    <h4 
+                      style={{ fontSize: '0.8rem', fontWeight: '700', margin: 0, color: 'var(--text-gold)', cursor: 'pointer' }}
+                      onClick={() => viewUserProfileByName(p.author)}
                     >
-                      <span>{language === 'ar' ? "أمازون" : "View"}</span>
-                      <ArrowRight size={10} />
-                    </a>
+                      {p.author}
+                    </h4>
+                    <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>{p.timestamp}</span>
                   </div>
+                </div>
+                <p style={{ fontSize: '0.76rem', color: 'var(--text-secondary)', lineHeight: '1.45', margin: '4px 0', whiteSpace: 'pre-wrap' }}>
+                  {language === 'ar' ? p.contentAr : p.content}
+                </p>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '8px', fontSize: '0.68rem', color: 'var(--text-muted)' }}>
+                  <span>❤️ {p.likes} {language === 'ar' ? "إعجاب" : "likes"}</span>
+                  <span>💬 {p.comments ? p.comments.length : 0} {language === 'ar' ? "تعليق" : "comments"}</span>
                 </div>
               </div>
             ))}
@@ -1374,5 +1349,24 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     gap: '8px',
+  },
+  ctaBox: {
+    padding: '24px 20px',
+    borderRadius: '16px',
+    background: 'rgba(212, 175, 55, 0.03)',
+    border: '1px solid var(--border-gold)',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '12px',
+    textAlign: 'center',
+    marginTop: '10px',
+    marginBottom: '10px',
+  },
+  ctaTitle: {
+    fontSize: '1.02rem',
+    fontWeight: '700',
+    margin: 0,
+    lineHeight: '1.3',
   }
 };

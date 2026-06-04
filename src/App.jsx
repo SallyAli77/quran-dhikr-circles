@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AppProvider, useApp } from './context/AppContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -15,8 +15,28 @@ import Legal from './pages/Legal';
 import Products from './pages/Products';
 
 function AppContent() {
-  const [activePage, setActivePage] = useState("home");
+  const [activePage, setActivePage] = useState(() => {
+    const path = window.location.pathname.replace(/^\//, '');
+    return path || "home";
+  });
   const { language, selectedUserProfile, setSelectedUserProfile } = useApp();
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname.replace(/^\//, '') || 'home';
+      setActivePage(path);
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  useEffect(() => {
+    const currentPath = window.location.pathname.replace(/^\//, '') || 'home';
+    if (currentPath !== activePage) {
+      const displayPath = activePage === 'home' ? '/' : `/${activePage}`;
+      window.history.pushState({ page: activePage }, '', displayPath);
+    }
+  }, [activePage]);
 
   // Simple clean client-side page router
   const renderActivePage = () => {
