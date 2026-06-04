@@ -73,7 +73,7 @@ const juzSurahs = {
 };
 
 export default function Quran({ setActivePage }) {
-  const { language, searchQuery, bookmarks, toggleBookmark, addTasmeeSubmission, t } = useApp();
+  const { language, searchQuery, bookmarks, toggleBookmark, addTasmeeSubmission, quranLaunchMode, setQuranLaunchMode, t } = useApp();
   
   // Custom Quran page flow state variables
   const [quranMode, setQuranMode] = useState(null); // 'recitation', 'listening', or null
@@ -105,6 +105,18 @@ export default function Quran({ setActivePage }) {
   const audioChunksRef = useRef([]);
 
   const audioRef = useRef(null);
+
+  // Handle deep-link redirection from homepage bento grid action shortcuts
+  useEffect(() => {
+    if (quranLaunchMode === 'listening') {
+      setQuranMode('listening');
+      setQuranLaunchMode(null);
+    } else if (quranLaunchMode === 'recitation_setup') {
+      setQuranMode(null);
+      setShowOptionsModal(true);
+      setQuranLaunchMode(null);
+    }
+  }, [quranLaunchMode, setQuranLaunchMode]);
 
   // Fetch all 114 Surahs meta details on mount
   useEffect(() => {

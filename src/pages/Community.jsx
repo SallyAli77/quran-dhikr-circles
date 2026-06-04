@@ -23,6 +23,8 @@ export default function Community() {
     addDailyScorePoints,
     completeDailyGoal,
     botSettings,
+    triggerCreateCircleModal,
+    setTriggerCreateCircleModal,
     t
   } = useApp();
 
@@ -61,6 +63,14 @@ export default function Community() {
   const [newCircleDuration, setNewCircleDuration] = useState(10);
   const [newCircleType, setNewCircleType] = useState("adhkar"); // "quran", "adhkar", "salawat", "istighfar"
   const [newCircleRecitationRule, setNewCircleRecitationRule] = useState("Tajweed");
+
+  // Open circle creation modal when triggered from Home page Bento grid
+  useEffect(() => {
+    if (triggerCreateCircleModal) {
+      setShowCreateModal(true);
+      setTriggerCreateCircleModal(false);
+    }
+  }, [triggerCreateCircleModal, setTriggerCreateCircleModal]);
 
   // Dynamic Page Filter States
   const [circlesActiveTab, setCirclesActiveTab] = useState("all"); // "all", "quran", "adhkar", "tasbih"

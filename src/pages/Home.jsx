@@ -26,7 +26,9 @@ export default function Home({ setActivePage }) {
     tasbihCount,
     friendsList,
     sendFriendRequest,
-    friendRequestsSent
+    friendRequestsSent,
+    setQuranLaunchMode,
+    setTriggerCreateCircleModal
   } = useApp();
 
   // Social feed states
@@ -159,9 +161,140 @@ export default function Home({ setActivePage }) {
     return 0;
   });
 
+  const bentoItems = [
+    {
+      id: 'quran',
+      titleEn: 'Noble Quran',
+      titleAr: 'القرآن الكريم',
+      descEn: 'Listen to Tilawah, practice Memorization, or study Tajweed',
+      descAr: 'استمع للتلاوات العطرة، ابدأ تسميع وحفظ القرآن، وتدبر معانيه',
+      icon: <BookOpen size={24} color="var(--text-gold)" />,
+      className: 'bento-card bento-wide',
+      actions: [
+        {
+          labelEn: 'Play & Listen',
+          labelAr: 'تشغيل واستماع',
+          action: () => {
+            setQuranLaunchMode('listening');
+            setActivePage('quran');
+          }
+        },
+        {
+          labelEn: 'Memorize & Recite',
+          labelAr: 'تسميع وحفظ',
+          action: () => {
+            setQuranLaunchMode('recitation_setup');
+            setActivePage('quran');
+          }
+        }
+      ]
+    },
+    {
+      id: 'community',
+      titleEn: 'Worship Circles',
+      titleAr: 'حلقات الذكر والقرآن',
+      descEn: 'Create or join active circles with teachers and friends',
+      descAr: 'أنشئ حلقة جديدة للذكر أو التسميع والتحق بالمعلمين والطلاب',
+      icon: <Users size={24} color="var(--text-gold)" />,
+      className: 'bento-card',
+      actions: [
+        {
+          labelEn: 'Create a Circle',
+          labelAr: 'إنشاء حلقة',
+          action: () => {
+            setTriggerCreateCircleModal(true);
+            setActivePage('community');
+          }
+        }
+      ]
+    },
+    {
+      id: 'articles',
+      titleEn: 'Articles & News',
+      titleAr: 'المقالات والأخبار',
+      descEn: 'Educational and spiritual knowledge without videos',
+      descAr: 'ثقافة إسلامية ومقالات متكاملة لتعلم العربية والتدبر',
+      icon: <FileText size={24} color="var(--text-gold)" />,
+      className: 'bento-card',
+      actions: [
+        {
+          labelEn: 'Browse Articles',
+          labelAr: 'تصفح المقالات',
+          action: () => {
+            setActivePage('articles');
+          }
+        }
+      ]
+    },
+    {
+      id: 'prayer',
+      titleEn: 'Prayer & Dhikr',
+      titleAr: 'الصلاة والأذكار',
+      descEn: 'Local prayer times and interactive tasbih',
+      descAr: 'مواقيت الصلاة الدقيقة والمسبحة الإلكترونية الذكية',
+      icon: <Compass size={24} color="var(--text-gold)" />,
+      className: 'bento-card bento-wide'
+    },
+    {
+      id: 'products',
+      titleEn: 'Bilingual Bookstore',
+      titleAr: 'متجر الكتب الإسلامية',
+      descEn: 'Handpicked books, textbooks & Islamic resources',
+      descAr: 'كتب ومصاحف ومراجع ثنائية اللغة لتعميق دراستك',
+      icon: <ShoppingBag size={24} color="var(--text-gold)" />,
+      className: 'bento-card bento-wide'
+    }
+  ];
+
   return (
     <div className="home-page container fade-in" style={{ paddingBottom: '80px', paddingTop: '30px' }}>
       
+      {/* Bento Grid Header */}
+      <div className="bento-container">
+        {bentoItems.map((item) => (
+          <div 
+            key={item.id} 
+            className={item.className}
+            onClick={() => setActivePage(item.id)}
+          >
+            <div>
+              <div className="bento-icon-wrapper">
+                {item.icon}
+              </div>
+              <h3 className="bento-title">
+                {language === 'ar' ? item.titleAr : item.titleEn}
+              </h3>
+              <p className="bento-desc">
+                {language === 'ar' ? item.descAr : item.descEn}
+              </p>
+
+              {item.actions && (
+                <div className="bento-actions">
+                  {item.actions.map((act, idx) => (
+                    <button
+                      key={idx}
+                      className="bento-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        act.action();
+                      }}
+                    >
+                      {language === 'ar' ? act.labelAr : act.labelEn}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            
+            {!item.actions && (
+              <div style={{ position: 'absolute', bottom: '24px', right: '24px', opacity: 0.5 }}>
+                <ArrowRight size={18} color="var(--text-gold)" />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
       {/* 3-Column Facebook-style Framework */}
       <div style={styles.fbLayout}>
         
@@ -174,7 +307,7 @@ export default function Home({ setActivePage }) {
             <span style={styles.briefAvatar}>{isAuthenticated ? user.avatar : "🕌"}</span>
             <div>
               <h3 style={styles.briefName} className="gold-gradient-text">
-                {isAuthenticated ? user.name : "Zair Muslim"}
+                {isAuthenticated ? user.name : (language === 'ar' ? 'زائر' : 'Visitor')}
               </h3>
               <span style={styles.briefRole}>
                 {isAuthenticated ? user.role : t('navLogin')}
