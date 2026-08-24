@@ -254,6 +254,8 @@ export default function Login({ setActivePage }) {
     updateUserRole,
     amazonAffiliateTag,
     setAmazonAffiliateTag,
+    googleAdsenseId,
+    setGoogleAdsenseId,
     viewUserProfileByName
   } = useApp();
 
@@ -1528,6 +1530,49 @@ export default function Login({ setActivePage }) {
                     style={{ padding: '10px 18px', fontSize: '0.82rem' }}
                   >
                     {language === 'ar' ? "حفظ" : "Save Tag"}
+                  </button>
+                </div>
+              </div>
+
+              {/* Google AdSense ID Input Card */}
+              <div style={{ ...styles.botSettingsCard, padding: '20px', borderRadius: '16px', marginBottom: '20px' }} className="glass-panel">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+                  <Bookmark size={18} color="var(--text-gold)" />
+                  <h4 style={{ ...styles.adminCardTitle, margin: 0 }}>
+                    {language === 'ar' ? "إعدادات جوجل أدسنس (Google AdSense)" : "Google AdSense Configuration"}
+                  </h4>
+                </div>
+                <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: '1.4', marginBottom: '14px' }}>
+                  {language === 'ar' 
+                    ? "أدخل كود الناشر الخاص بك من جوجل أدسنس (يبدأ بـ pub-). سيتم استخدامه في ملف ads.txt وإعلانات الموقع تلقائياً لتسهيل ربط الأرباح بالحساب الجديد."
+                    : "Enter your Google AdSense Publisher ID (starts with pub-). It will be dynamically injected into ads.txt and site ad units."
+                  }
+                </p>
+                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                  <input
+                    type="text"
+                    value={googleAdsenseId}
+                    onChange={(e) => setGoogleAdsenseId(e.target.value)}
+                    placeholder="e.g. pub-1234567890123456"
+                    style={{
+                      flexGrow: 1,
+                      background: 'rgba(0,0,0,0.2)',
+                      border: '1px solid var(--border-gold)',
+                      borderRadius: '8px',
+                      padding: '10px 14px',
+                      color: 'var(--text-primary)',
+                      fontSize: '0.85rem',
+                      outline: 'none',
+                    }}
+                  />
+                  <button 
+                    onClick={() => {
+                      confetti({ particleCount: 20, colors: ['#d4af37', '#ffffff'] });
+                    }} 
+                    className="btn-primary"
+                    style={{ padding: '10px 18px', fontSize: '0.82rem' }}
+                  >
+                    {language === 'ar' ? "حفظ" : "Save ID"}
                   </button>
                 </div>
               </div>

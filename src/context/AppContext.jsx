@@ -1371,6 +1371,10 @@ export const AppProvider = ({ children }) => {
     return localStorage.getItem('arabicmuslim_affiliate_tag') || 'sallyali77-20';
   });
 
+  const [googleAdsenseId, setGoogleAdsenseId] = useState(() => {
+    return localStorage.getItem('arabicmuslim_adsense_id') || '';
+  });
+
   // Localization state
   const [language, setLanguage] = useState(() => {
     const saved = localStorage.getItem('arabicmuslim_lang');
@@ -1982,6 +1986,10 @@ export const AppProvider = ({ children }) => {
     localStorage.setItem('arabicmuslim_affiliate_tag', amazonAffiliateTag);
   }, [amazonAffiliateTag]);
 
+  useEffect(() => {
+    localStorage.setItem('arabicmuslim_adsense_id', googleAdsenseId);
+  }, [googleAdsenseId]);
+
   // Sync state changes with localStorage
   useEffect(() => {
     localStorage.setItem('arabicmuslim_lang', language);
@@ -2374,6 +2382,8 @@ export const AppProvider = ({ children }) => {
       viewUserProfileByName,
       amazonAffiliateTag,
       setAmazonAffiliateTag,
+      googleAdsenseId,
+      setGoogleAdsenseId,
       getAffiliateLink,
       t
     }}>
